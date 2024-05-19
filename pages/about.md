@@ -7,10 +7,10 @@ permalink: /about
 # Impressum
 
 ## Angaben gemäß § 5 TMG:
-Spektakel Production
-Martin Hilz
-Höhenfeldstraße 14
-84036 Landshut
+Spektakel Production\
+Martin Hilz\
+Höhenfeldstraße 14\
+84036 Landshut\
 
 ## Kontaktaufnahme:
 E-Mail: stadtspektakel@gmail.com
