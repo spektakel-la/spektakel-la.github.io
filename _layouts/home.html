@@ -3,20 +3,60 @@ layout: default
 title: Home
 ---
 
-{% for post in paginator.posts %}
-  {% include featured-post.html %}
-{% endfor %}
+<img class="logo-image" src="{{ site.github.url }}/assets/img/spektakel-logo.png">
 
-<!-- Pagination links -->
-<div class="pagination">
-  {% if paginator.next_page %}
-    <a class="pagination-button pagination-active next" href="{{ site.github.url }}{{ paginator.next_page_path }}">{{ site.data.settings.pagination.previous_page }}</a>
-  {% else %}
-    <span class="pagination-button">{{ site.data.settings.pagination.previous_page }}</span>
-  {% endif %}
-  {% if paginator.previous_page %}
-    <a class="pagination-button pagination-active" href="{{ site.baseurl }}{{ paginator.previous_page_path }}">{{ site.data.settings.pagination.next_page }}</a>
-  {% else %}
-    <span class="pagination-button">{{ site.data.settings.pagination.next_page }}</span>
-  {% endif %}
+<div class="intro">
+<h1>Terminankündigungen</h1>
+<ul>
+  <li>18. Spektakel Landshut vom 11. - 15. September 2024</li>
+  <li>Mittwoch, 11. September - Theater beim Spektakel Landshut<br>Vorpremiere "Der kleine Prinz" im Rathaus Prunksaal Landshut</li>
+  <li>Donnerstag, 12. September - BMW Spektakel Gala im Theaterzelt Landshut<br>Ticketverkauf ab Juli 2024 bei Messe Landshut</li>
+  <li>Freitag, 13. September - Sonntag, 15. September 2024<br>18. Spektakel Landshut in der Altstadt, Neustadt, Salzstadel, Rathaus Prunksaal und Bernlochner</li>
+  <li>Lineup 2024 wird im Juli 2024 auf der Homepage veröffentlicht</li>
+</ul>
 </div>
+
+<article>
+  <a href="{{ site.github.url }}/program">
+    <div class="featured-post" style="background-image:url({{ site.github.url }}/assets/img/page/program.webp)">
+      <h2><span>Programm</span></h2>
+    </div>
+  </a>
+</article>
+
+<article>
+  <a href="{{ site.github.url }}/artists">
+    <div class="featured-post" style="background-image:url({{ site.github.url }}/assets/img/page/artists.webp)">
+      <h2><span>Künstler</span></h2>
+    </div>
+  </a>
+</article>
+
+<article>
+  <a href="{{ site.github.url }}/sponsors">
+    <div class="featured-post" style="background-image:url({{ site.github.url }}/assets/img/page/sponsors.jpeg)">
+      <h2><span>Sponsoren</span></h2>
+    </div>
+  </a>
+</article>
+
+{% comment %}
+<!-- Disabled automatic posts -->
+  {% for post in paginator.posts %}
+    {% include featured-post.html %}
+  {% endfor %}
+
+  <!-- Pagination links -->
+  <div class="pagination">
+    {% if paginator.next_page %}
+      <a class="pagination-button pagination-active next" href="{{ site.github.url }}{{ paginator.next_page_path }}">{{ site.data.settings.pagination.previous_page }}</a>
+    {% else %}
+      <span class="pagination-button">{{ site.data.settings.pagination.previous_page }}</span>
+    {% endif %}
+    {% if paginator.previous_page %}
+      <a class="pagination-button pagination-active" href="{{ site.baseurl }}{{ paginator.previous_page_path }}">{{ site.data.settings.pagination.next_page }}</a>
+    {% else %}
+      <span class="pagination-button">{{ site.data.settings.pagination.next_page }}</span>
+    {% endif %}
+  </div>
+{% endcomment %}
