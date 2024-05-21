@@ -1,0 +1,13 @@
+---
+layout: page
+title: Sponsoren
+permalink: /sponsors
+---
+
+<div class="gallery">
+    {% for item in site.data.settings.sponsors %}
+    <div class="box">
+        <img src="{{ site.github.url }}/{{ item.logo }}" alt="{{ item.name }}">
+    </div>
+    {% endfor %}
+</div>
