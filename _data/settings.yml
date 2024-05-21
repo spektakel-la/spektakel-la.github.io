@@ -1,7 +1,7 @@
 # Change 'comments' to true for Disqus comments
 disqus:
   comments: false
-  disqus_shortname: 'millennial-3'
+  disqus_shortname: 'spektakel-la'
 
 # If you are not using Google Analytics, please change 'google-ID' to an empty string
 google-ID: ''
@@ -11,7 +11,10 @@ menu:
 #- {name: 'Learning Resources', url: 'resources'}
 #- {name: 'Sample Posts',       url: 'sample-posts'}
 #- {name: 'Documentation',      url: 'documentation'}
-- {name: 'Impressum',          url: 'about'}
+- {name: 'Programm',          url: 'program'}
+- {name: 'Künstler',          url: 'artists'}
+- {name: 'Sponsoren',          url: 'sponsors'}
+- {name: 'Impressum',          url: 'impressum'}
 - {name: 'Kontakt',            url: 'contact'}
 
 # Available social icons are powered by Font Awesome, so you can use any icon that they offer
