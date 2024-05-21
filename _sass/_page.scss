@@ -4,3 +4,54 @@
   margin: 10px auto 10px;
   padding: 0px 10px 10px;
 }
+.featured-image img {
+  align: middle;
+  margin: 5px auto 25px;
+  display: block;
+  max-width: 600px;
+}
+@media (max-width: $container-width) {
+  .page-content {
+    width: 60vw;
+    display: block;
+    margin: 10px auto 10px;
+  }
+  .featured-image img {
+    align: middle;
+    margin: 5px auto 25px;
+    display: block;
+    max-width: 60vw;
+  }
+}
+@media (max-width: $tablet-width) {
+  .page-content {
+    width: 95vw;
+    display: block;
+    margin: 10px auto 10px;
+  }
+  .featured-image img {
+    align: middle;
+    margin: 5px auto 25px;
+    display: block;
+    max-width: 95vw;
+  }
+}
+
+.gallery {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  justify-content: center;
+
+  .box {
+    flex-basis: 25%;
+    width: 80%;
+    padding: 10px;
+    margin: 2px;
+
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+}
