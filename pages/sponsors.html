@@ -5,9 +5,9 @@ permalink: /sponsors
 ---
 
 <div class="gallery">
-    {% for item in site.data.settings.sponsors %}
+    {% for sponsor in site.data.settings.sponsors %}
     <div class="box">
-        <img src="{{ site.github.url }}/{{ item.logo }}" alt="{{ item.name }}">
+        <img src="{{ site.github.url }}/{{ sponsor.logo }}" alt="{{ sponsor.name }}">
     </div>
     {% endfor %}
 </div>

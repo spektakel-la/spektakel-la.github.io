@@ -1,0 +1,23 @@
+---
+layout: page
+title: Locations
+permalink: /locations
+---
+
+<div class="leaflet-map"></div>
+
+<script>
+  const map = L.map(document.querySelector('.leaflet-map')).setView([48.53596, 12.15161], 18);
+  map.attributionControl.setPrefix(false)
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map);
+  L.control.locate().addTo(map);
+
+  for(let location of {{site.data.settings.locations | jsonify}}) {
+    L.marker([location.lat, location.lon]).addTo(map);
+  }
+  </script>
+
+
