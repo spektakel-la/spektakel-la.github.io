@@ -20,36 +20,48 @@ const artists = {{ site.data.artists | jsonify }};
   const createIconMarkup = (locationObj) => `
   <div class="leaflet-location-container">
     <div class="leaflet-location-content">
-      ${locationObj.name}
+      ${locationObj.id}
     </div>
   </div>
   `;
 
-  const createScheduleMarkupForLocation = (locationName) => {
-    const scheduleForLocation = schedule.filter((schedule)=>schedule.location_name === locationName);
+  const createScheduleMarkupForLocation = (locationId) => {
+    const scheduleForLocation = schedule.filter((entry) => entry.location_id === locationId);
+    const scheduleForLocationWithArtist = scheduleForLocation.map((entry) => {
+      const artist = artists.find((artist) => artist.id === entry.artist_id);
+      if (artist?.name){
+        entry.artist_name = artist?.name;
+        return entry;
+      } else {
+        console.error("Error processing schedule entry");
+        console.dir(entry);
+      }
+    });
+    const tableRows = scheduleForLocationWithArtist.map((sched) => `
+      <tr>
+        <td>${sched.time}</td>
+        <td>${sched.artist_name}</td>
+      </tr>
+    `).join('\n');
 
-    return `
-      <table>
-        <tr>
-          <th>Zeit</th>
-          <th>Künstler</th>
-        </tr>
-        <tr>
-          <td>17.09.2024 14.00</td>
-          <td>Künstler 1</td>
-        </tr>
-        <tr>
-          <td>17.09.2024 15.00</td>
-          <td>Künstler 2</td>
-        </tr>
-      </table>`;
+    if(!tableRows){
+      return '';
+    } else {
+      return `
+        <table>
+          <tr>
+           <th>Zeit</th>
+            <th>Künstler</th>
+          </tr>
+          ${tableRows}
+        </table>`;
+    }
   }
 
   const createPopupMarkup = (locationObj) => `
   <div>
-    <div>Location ${locationObj.name}</div>
-    <div>${locationObj.description} </div>
-    <div>${createScheduleMarkupForLocation(locationObj.name)}</div>
+    <div>Location ${locationObj.id} - ${locationObj.description}</div>
+    <div>${createScheduleMarkupForLocation(locationObj.id)}</div>
   </div>
   `;
 
