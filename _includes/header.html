@@ -1,6 +1,8 @@
 <header class="site-header">
   <h3 class="site-title">
-    <a href="{{ site.github.url }}/">{{ site.title }}</a>
+    {% if page.url != '/' %}
+    {% endif %}
+      <a href="{{ site.github.url }}/">{{ site.data.settings.menu_home_label }}</a>
   </h3>
   <nav class="menu-list">
     {% for item in site.data.settings.menu %}

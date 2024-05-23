@@ -14,6 +14,8 @@ menu:
 - {name: 'Impressum',          url: 'impressum'}
 - {name: 'Kontakt',            url: 'contact'}
 
+menu_home_label: 'Startseite'
+
 # Available social icons are powered by Font Awesome, so you can use any icon that they offer
 social:
 #- {icon: 'twitter', link:    'https://twitter.com/paululele'}
@@ -56,11 +58,6 @@ sponsors:
 - {name: 'Vhs', logo: 'assets/img/sponsors/vhs.jpg'}
 - {name: 'Vrbank', logo: 'assets/img/sponsors/vrbank.png'}
 - {name: 'Wittman', logo: 'assets/img/sponsors/wittman.jpg'}
-
-locations:
-- {name: '1', lat: 48.53627, lon: 12.15182 }
-- {name: '2', lat: 48.53579, lon: 12.15147 }
-- {name: '3', lat: 48.53555, lon: 12.15129 }
 
 offline_map:
   # use share functionality from https://www.openstreetmap.org/
