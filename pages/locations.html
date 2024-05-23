@@ -5,19 +5,70 @@ permalink: /locations
 ---
 
 <div class="leaflet-map"></div>
+<div class="leaflet-map-attribution">
+  &copy; <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>
+</div>
 
 <script>
-  const map = L.map(document.querySelector('.leaflet-map')).setView([48.53596, 12.15161], 18);
-  map.attributionControl.setPrefix(false)
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-  }).addTo(map);
-  L.control.locate().addTo(map);
 
-  for(let location of {{site.data.settings.locations | jsonify}}) {
-    L.marker([location.lat, location.lon]).addTo(map);
+  const createIconMarkup = (locationObj) => `
+  <div class="leaflet-location-container">
+    <div class="leaflet-location-content">
+      ${locationObj.name}
+    </div>
+  </div>
+  `;
+
+  const createPopupMarkup = (locationObj) => `
+  <div>
+    <div>Location ${locationObj.name}</div>
+    <div>Infos für ${locationObj.name} hier einfügen. Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum </div>
+  </div>
+  `;
+
+  const maxBounds = {{ site.data.settings.offline_map.bounding_rect | jsonify }};
+
+  const map = L.map(document.querySelector('.leaflet-map'), {
+    minZoom: 16,
+    maxZoom: 19,
+    maxBounds,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  });
+  map.attributionControl.setPrefix(false)
+
+
+  // const tileLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  //   maxZoom: 19,
+  //   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  // })
+  // tileLayer.addTo(map);
+
+  const imageUrl = '{{ site.github.url }}/assets/img/map.png';
+  const imageLayer = L.imageOverlay(imageUrl, maxBounds);
+  imageLayer.addTo(map);
+
+  const geoLocation = L.control.locate();
+  geoLocation.addTo(map);
+
+  const clusterGroup = L.markerClusterGroup();
+  clusterGroup.addTo(map);
+  const locations = {{ site.data.settings.locations | jsonify }};
+  for(let location of locations) {
+    const iconSize = {{ site.data.settings.offline_map.icon_size | jsonify }};
+    const iconAnchor = {{ site.data.settings.offline_map.icon_anchor | jsonify }};
+    const myIcon = L.divIcon({className: 'leaflet-location-icon', html: createIconMarkup(location), iconSize, iconAnchor});
+    const myMarker = L.marker([location.lat, location.lon], {icon: myIcon});
+    // myMarker.on('click', () => {
+    //   map.setView([location.lat, location.lon]);
+    // });
+    myMarker.bindPopup(createPopupMarkup(location))
+    clusterGroup.addLayer(myMarker);
+
+    // debug position
+    // L.marker([location.lat, location.lon]).addTo(map);
   }
+
+  map.fitBounds(L.latLngBounds(locations.map(location => [location.lat, location.lon])));
   </script>
 
 

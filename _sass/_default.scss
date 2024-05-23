@@ -62,5 +62,30 @@
 }
 
 .leaflet-map {
-  height: 500px;
+  height: 60vh;
+}
+
+.leaflet-map-attribution {
+  font-size: 10px;
+  text-align: right;
+
+  a {
+    color: $osm-color;
+    text-decoration: none;
+  }
+}
+
+.leaflet-location-icon {
+  position: relative;
+  background-image: url("/assets/img/star2.png");
+  background-repeat:no-repeat;
+  background-size:contain;
+
+  .leaflet-location-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+  }
 }
