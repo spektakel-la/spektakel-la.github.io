@@ -4,12 +4,18 @@ title: Locations
 permalink: /locations
 ---
 
+
+
 <div class="leaflet-map"></div>
 <div class="leaflet-map-attribution">
   &copy; <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>
 </div>
 
 <script>
+
+const locations = {{ site.data.locations | jsonify }};
+const schedule = {{ site.data.schedule | jsonify }};
+const artists = {{ site.data.artists | jsonify }};
 
   const createIconMarkup = (locationObj) => `
   <div class="leaflet-location-container">
@@ -19,10 +25,31 @@ permalink: /locations
   </div>
   `;
 
+  const createScheduleMarkupForLocation = (locationName) => {
+    const scheduleForLocation = schedule.filter((schedule)=>schedule.location_name === locationName);
+
+    return `
+      <table>
+        <tr>
+          <th>Zeit</th>
+          <th>Künstler</th>
+        </tr>
+        <tr>
+          <td>17.09.2024 14.00</td>
+          <td>Künstler 1</td>
+        </tr>
+        <tr>
+          <td>17.09.2024 15.00</td>
+          <td>Künstler 2</td>
+        </tr>
+      </table>`;
+  }
+
   const createPopupMarkup = (locationObj) => `
   <div>
     <div>Location ${locationObj.name}</div>
-    <div>Infos für ${locationObj.name} hier einfügen. Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum </div>
+    <div>${locationObj.description} </div>
+    <div>${createScheduleMarkupForLocation(locationObj.name)}</div>
   </div>
   `;
 
@@ -36,23 +63,24 @@ permalink: /locations
   });
   map.attributionControl.setPrefix(false)
 
-
-  // const tileLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  //   maxZoom: 19,
-  //   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-  // })
-  // tileLayer.addTo(map);
-
   const imageUrl = '{{ site.github.url }}/assets/img/map.png';
   const imageLayer = L.imageOverlay(imageUrl, maxBounds);
   imageLayer.addTo(map);
 
-  const geoLocation = L.control.locate();
+  const geoLocation = L.control.locate({
+    strings: {
+      title: "Zeig mir wo ich bin",
+      metersUnit: "Meter",
+      feetUnit: "Fuß",
+      popup: "Du befindest dich innerhalb {distance} {unit} von diesem Punkt",
+      outsideMapBoundsMsg: "Du scheinst Dich außerhalb der verfügbaren Kartenregion zu befinden"
+    }
+  });
   geoLocation.addTo(map);
 
   const clusterGroup = L.markerClusterGroup();
   clusterGroup.addTo(map);
-  const locations = {{ site.data.settings.locations | jsonify }};
+
   for(let location of locations) {
     const iconSize = {{ site.data.settings.offline_map.icon_size | jsonify }};
     const iconAnchor = {{ site.data.settings.offline_map.icon_anchor | jsonify }};
