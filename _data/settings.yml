@@ -58,9 +58,16 @@ sponsors:
 - {name: 'Wittman', logo: 'assets/img/sponsors/wittman.jpg'}
 
 locations:
-- {name: 'p1', lat: 48.53627, lon: 12.15182 }
-- {name: 'p2', lat: 48.53579, lon: 12.15147 }
-- {name: 'p3', lat: 48.53555, lon: 12.15129 }
+- {name: '1', lat: 48.53627, lon: 12.15182 }
+- {name: '2', lat: 48.53579, lon: 12.15147 }
+- {name: '3', lat: 48.53555, lon: 12.15129 }
+
+offline_map:
+  # use share functionality from https://www.openstreetmap.org/
+  # https://render.openstreetmap.org/cgi-bin/export?bbox=12.148033213008594,48.53177335021352,12.155014923924032,48.53906565601472&scale=1750&format=png
+  bounding_rect: [[48.53177335021352, 12.148033213008594], [48.53906565601472, 12.155014923924032]]
+  icon_anchor: [16, 16]
+  icon_size: [32, 32]
 
 # Customize site text
 pagination:
