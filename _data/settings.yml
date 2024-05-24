@@ -7,12 +7,13 @@ disqus:
 google-ID: ''
 
 menu:
-- {name: 'Programm',          url: 'program'}
-- {name: 'Locations',          url: 'locations'}
-- {name: 'Künstler',          url: 'artists'}
-- {name: 'Sponsoren',          url: 'sponsors'}
-- {name: 'Impressum',          url: 'impressum'}
-# - {name: 'Kontakt',            url: 'contact'}
+- {name: 'Programm',      url: 'program'}
+- {name: 'Locations',     url: 'locations'}
+- {name: 'Künstler',      url: 'artists'}
+- {name: 'Impressionen',  url: 'impressions'}
+- {name: 'Sponsoren',     url: 'sponsors'}
+- {name: 'Impressum',     url: 'impressum'}
+# - {name: 'Kontakt'        url: 'contact'}
 
 menu_home_label: 'Startseite'
 
