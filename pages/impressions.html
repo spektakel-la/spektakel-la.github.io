@@ -2,8 +2,31 @@
 layout: page
 title: Impressionen
 permalink: /impressions
-image: page/impressions.webp
 ---
 
-<div>Hier einige Impressionen der letzten Jahre</div>
+{%  comment  %}
+From the projects `assets/img/impressions` directory, excecute:
 
+    $ rm -rf thumbs && mkdir thumbs && magick mogrify  -format jpg -path thumbs -thumbnail 240x240 *.jpg
+{% endcomment %}
+
+<div id="animated-thumbnails-gallery" class="justified-grid-gallery">
+    {% for file in site.static_files %}
+        {% if file.path contains '/assets/img/impressions/' %}
+            {%  unless file.path contains '/assets/img/impressions/thumbs/' %}
+                {% assign thumb_path = file.path | replace: '/assets/img/impressions/', '/assets/img/impressions/thumbs/' %}
+                <a class="gallery-item" href="{{ file.path }}">
+                    <img src="{{ thumb_path }}" />
+                </a>
+            {% endunless %}
+        {% endif %}
+    {% endfor %}
+</div>
+
+<script>
+    lightGallery(document.getElementById('animated-thumbnails-gallery'), {
+        plugins: [lgAutoplay, lgZoom, lgThumbnail],
+        thumbnail: true,
+    });
+
+</script>

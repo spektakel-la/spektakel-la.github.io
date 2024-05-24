@@ -1,0 +1,40 @@
+.justified-grid-gallery {
+
+    display: flex;
+    flex-wrap: wrap;
+
+    .gallery-item {
+
+        margin: 2px;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 0.9;
+        }
+
+        img {
+            user-select: none;
+            width: 100%;
+            vertical-align: middle;
+        }
+
+    }
+
+    &::after {
+        content: '';
+        flex-grow: 99999;
+        min-width: calc(100vw / 4);
+    }
+
+    //Full width in mobile
+    @media (max-width: 460px) {
+
+        flex-direction: column;
+
+        a {
+            width: 100% !important;
+        }
+
+    }
+
+}
