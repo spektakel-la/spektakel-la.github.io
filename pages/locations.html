@@ -4,8 +4,8 @@ title: Locations
 permalink: /locations
 ---
 
-<div class="leaflet-map"></div>
-<div class="leaflet-map-attribution">
+<div class="spektakel-leaflet-map"></div>
+<div class="spektakel-leaflet-map-attribution">
   &copy; <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>
 </div>
 
@@ -16,8 +16,8 @@ permalink: /locations
   const SCHEDULE = {{ site.data.schedule | jsonify }};
 
   const createIconMarkup = (locationObj) => `
-  <div class="leaflet-location-container">
-    <div class="leaflet-location-content">
+  <div class="spektakel-leaflet-location-icon-container">
+    <div>
       ${locationObj.location_id}
     </div>
   </div>
@@ -69,7 +69,7 @@ permalink: /locations
 
   const maxBounds = {{ site.data.settings.offline_map.bounding_rect | jsonify }};
 
-  const map = L.map(document.querySelector('.leaflet-map'), {
+  const map = L.map(document.querySelector('.spektakel-leaflet-map'), {
     minZoom: 16,
     maxZoom: 19,
     maxBounds,
@@ -98,20 +98,20 @@ permalink: /locations
   for(let location of LOCATIONS) {
     const iconSize = {{ site.data.settings.offline_map.icon_size | jsonify }};
     const iconAnchor = {{ site.data.settings.offline_map.icon_anchor | jsonify }};
-    const myIcon = L.divIcon({className: 'leaflet-location-icon', html: createIconMarkup(location), iconSize, iconAnchor});
+    const myIcon = L.divIcon({className: 'spektakel-leaflet-location-icon', html: createIconMarkup(location), iconSize, iconAnchor});
     const [lat, lon] = location.gps;
     const myMarker = L.marker([lat, lon], {icon: myIcon});
     // myMarker.on('click', () => {
     //   map.setView([lat, long]);
     // });
-    myMarker.bindPopup(createPopupMarkup(location))
+    myMarker.bindPopup(createPopupMarkup(location), {className: 'spektakel-leaflet-popup', keepInView: true})
     clusterGroup.addLayer(myMarker);
 
     // debug position
-    // L.marker([lat, long]).addTo(map);
+    // L.marker([lat, lon]).addTo(map);
   }
 
   map.fitBounds(L.latLngBounds(LOCATIONS.map(location => location.gps)));
-  </script>
+</script>
 
 
