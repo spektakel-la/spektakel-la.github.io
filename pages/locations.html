@@ -4,8 +4,6 @@ title: Locations
 permalink: /locations
 ---
 
-
-
 <div class="leaflet-map"></div>
 <div class="leaflet-map-attribution">
   &copy; <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>
@@ -13,9 +11,9 @@ permalink: /locations
 
 <script>
 
-const LOCATIONS = {{ site.locations | jsonify }};
-const ARTISTS = {{ site.artists | jsonify }};
-const SCHEDULE = {{ site.data.schedule | jsonify }};
+  const LOCATIONS = {{ site.locations | jsonify }};
+  const ARTISTS = {{ site.artists | jsonify }};
+  const SCHEDULE = {{ site.data.schedule | jsonify }};
 
   const createIconMarkup = (locationObj) => `
   <div class="leaflet-location-container">
@@ -57,15 +55,16 @@ const SCHEDULE = {{ site.data.schedule | jsonify }};
             <th>Kategorien</th>
           </tr>
           ${tableRows}
-        </table>`;
+        </table>
+      `;
     }
   }
 
   const createPopupMarkup = (locationObj) => `
-  <div>
-    <div>Location ${locationObj.location_id} - ${locationObj.description}</div>
-    <div>${createScheduleMarkupForLocation(locationObj.location_id)}</div>
-  </div>
+    <div>
+      <div>Location ${locationObj.location_id} - ${locationObj.description}</div>
+      <div>${createScheduleMarkupForLocation(locationObj.location_id)}</div>
+    </div>
   `;
 
   const maxBounds = {{ site.data.settings.offline_map.bounding_rect | jsonify }};
