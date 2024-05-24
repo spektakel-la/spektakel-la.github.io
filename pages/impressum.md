@@ -13,7 +13,7 @@ Höhenfeldstraße 14\
 84036 Landshut
 
 ## Kontaktaufnahme:
-E-Mail: stadtspektakel@gmail.com
+[E-Mail](mailto:{{ 'stadtspektakel@gmail.com' | encode_email }})
 
 ## Haftungsausschluss – Disclaimer:
 ### Haftung für Inhalte

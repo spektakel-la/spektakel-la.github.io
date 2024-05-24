@@ -13,24 +13,25 @@ permalink: /locations
 
 <script>
 
-const locations = {{ site.data.locations | jsonify }};
-const schedule = {{ site.data.schedule | jsonify }};
-const artists = {{ site.data.artists | jsonify }};
+const LOCATIONS = {{ site.locations | jsonify }};
+const ARTISTS = {{ site.artists | jsonify }};
+const SCHEDULE = {{ site.data.schedule | jsonify }};
 
   const createIconMarkup = (locationObj) => `
   <div class="leaflet-location-container">
     <div class="leaflet-location-content">
-      ${locationObj.id}
+      ${locationObj.location_id}
     </div>
   </div>
   `;
 
   const createScheduleMarkupForLocation = (locationId) => {
-    const scheduleForLocation = schedule.filter((entry) => entry.location_id === locationId);
+    const scheduleForLocation = SCHEDULE.filter((entry) => entry.location_id === locationId);
     const scheduleForLocationWithArtist = scheduleForLocation.map((entry) => {
-      const artist = artists.find((artist) => artist.id === entry.artist_id);
+      const artist = ARTISTS.find((artist) => artist.artist_id === entry.artist_id);
       if (artist?.name){
         entry.artist_name = artist?.name;
+        entry.categories = artist?.categories;
         return entry;
       } else {
         console.error("Error processing schedule entry");
@@ -39,8 +40,9 @@ const artists = {{ site.data.artists | jsonify }};
     });
     const tableRows = scheduleForLocationWithArtist.map((sched) => `
       <tr>
-        <td>${sched.time}</td>
+        <td>${dateFns.fp.parseISO(sched.time).toLocaleString()}</td>
         <td>${sched.artist_name}</td>
+        <td>${sched.categories.join(', ')}</td>
       </tr>
     `).join('\n');
 
@@ -52,6 +54,7 @@ const artists = {{ site.data.artists | jsonify }};
           <tr>
            <th>Zeit</th>
             <th>Künstler</th>
+            <th>Kategorien</th>
           </tr>
           ${tableRows}
         </table>`;
@@ -60,8 +63,8 @@ const artists = {{ site.data.artists | jsonify }};
 
   const createPopupMarkup = (locationObj) => `
   <div>
-    <div>Location ${locationObj.id} - ${locationObj.description}</div>
-    <div>${createScheduleMarkupForLocation(locationObj.id)}</div>
+    <div>Location ${locationObj.location_id} - ${locationObj.description}</div>
+    <div>${createScheduleMarkupForLocation(locationObj.location_id)}</div>
   </div>
   `;
 
@@ -93,22 +96,23 @@ const artists = {{ site.data.artists | jsonify }};
   const clusterGroup = L.markerClusterGroup();
   clusterGroup.addTo(map);
 
-  for(let location of locations) {
+  for(let location of LOCATIONS) {
     const iconSize = {{ site.data.settings.offline_map.icon_size | jsonify }};
     const iconAnchor = {{ site.data.settings.offline_map.icon_anchor | jsonify }};
     const myIcon = L.divIcon({className: 'leaflet-location-icon', html: createIconMarkup(location), iconSize, iconAnchor});
-    const myMarker = L.marker([location.lat, location.lon], {icon: myIcon});
+    const [lat, lon] = location.gps;
+    const myMarker = L.marker([lat, lon], {icon: myIcon});
     // myMarker.on('click', () => {
-    //   map.setView([location.lat, location.lon]);
+    //   map.setView([lat, long]);
     // });
     myMarker.bindPopup(createPopupMarkup(location))
     clusterGroup.addLayer(myMarker);
 
     // debug position
-    // L.marker([location.lat, location.lon]).addTo(map);
+    // L.marker([lat, long]).addTo(map);
   }
 
-  map.fitBounds(L.latLngBounds(locations.map(location => [location.lat, location.lon])));
+  map.fitBounds(L.latLngBounds(LOCATIONS.map(location => location.gps)));
   </script>
 
 
