@@ -1,38 +1,5 @@
+---
+---
 <!-- Google tag (gtag.js) -->
 <script src="https://www.googletagmanager.com/gtag/js?id={{ site.data.settings.google-tag }}"></script>
-
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag() { dataLayer.push(arguments); }
-</script>
-
-<script>
-  function getConsentGranted() {
-    try {
-      return localStorage.getItem('consentGranted') || 'false';
-    } catch(_err){}
-    return 'false';
-  }
-
-  function setConsentGranted(isGranted) {
-    try {
-      const newValue = isGranted ? 'granted': 'denied';
-      gtag('consent', 'update', {
-            'ad_user_data': newValue,
-            'ad_personalization': newValue,
-            'ad_storage': newValue,
-            'analytics_storage': newValue,
-            // 'wait_for_update': 500,
-        });
-        gtag('config', '{{ site.data.settings.google-tag }}', {
-            'send_page_view': isGranted
-        });
-      localStorage.setItem("consentGranted", `${isGranted}`);
-    } catch(_err){}
-  }
-</script>
-
-<script>
-  dataLayer.push({'gtm.start': new Date().getTime(), 'event': 'gtm.js'});
-  setConsentGranted(false);
-</script>
+<script type="module" src="{{ site.github.url }}/assets/js/cookieconsent-config.js"></script>
