@@ -25,11 +25,20 @@ From the projects `assets/img/impressions` directory, excecute:
 
 <script>
     // https://www.lightgalleryjs.com/docs/settings/
-    lightGallery(document.getElementById('animated-thumbnails-gallery'), {
+    const defaultSettings = {
         plugins: [lgAutoplay, lgFullscreen, lgThumbnail, lgZoom],
         thumbnail: true,
         autoautoplay: true,
         slideShowAutoplay: true,
         download: false,
+    };
+
+    lightGallery(document.getElementById('animated-thumbnails-gallery'), {
+        ...defaultSettings,
+        mobileSettings: {
+            // https://www.lightgalleryjs.com/docs/settings/#mobileSettings
+            ...defaultSettings,
+            showCloseIcon: true,
+        }
     });
 </script>
