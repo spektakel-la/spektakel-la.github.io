@@ -54,6 +54,15 @@ CookieConsent.run({
         setConsent(consent);
     },
 
+    guiOptions: {
+        consentModal: {
+            equalWeightButtons: false,
+        },
+        preferencesModal: {
+            equalWeightButtons: false,
+        }
+    },
+
     language: {
         default: 'de',
         translations: {
