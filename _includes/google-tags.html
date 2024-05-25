@@ -1,5 +1,5 @@
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.data.settings.google-tag }}"></script>
+<script src="https://www.googletagmanager.com/gtag/js?id={{ site.data.settings.google-tag }}"></script>
 
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -23,6 +23,9 @@
             'ad_storage': newValue,
             'analytics_storage': newValue,
             // 'wait_for_update': 500,
+        });
+        gtag('config', '{{ site.data.settings.google-tag }}', {
+            'send_page_view': isGranted
         });
       localStorage.setItem("consentGranted", `${isGranted}`);
     } catch(_err){}
