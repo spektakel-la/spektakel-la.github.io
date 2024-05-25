@@ -22,12 +22,12 @@ CookieConsent.run({
     },
 
     onConsent: ({cookie}) => {
-        const analyticsEnabled = cookie.categories.includes('analytics');
+        const analyticsEnabled = CookieConsent.acceptedCategory('analytics');
         setConsentGranted(analyticsEnabled);
     },
 
     onChange: ({cookie, changedCategories, changedServices}) => {
-        const analyticsEnabled = cookie.categories.includes('analytics');
+        const analyticsEnabled = CookieConsent.acceptedCategory('analytics');
         setConsentGranted(analyticsEnabled);
     },
 

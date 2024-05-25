@@ -16,23 +16,15 @@
 
   function setConsentGranted(isGranted) {
     try {
-      if (isGranted){
-        gtag('consent', 'update', {
-            ad_user_data: 'granted',
-            ad_personalization: 'granted',
-            ad_storage: 'granted',
-            analytics_storage: 'granted'
+      const newValue = isGranted ? 'granted': 'denied';
+      gtag('consent', 'update', {
+            'ad_user_data': newValue,
+            'ad_personalization': newValue,
+            'ad_storage': newValue,
+            'analytics_storage': newValue,
+            // 'wait_for_update': 500,
         });
-      } else {
-        gtag('consent', 'default', {
-          'ad_user_data': 'denied',
-          'ad_personalization': 'denied',
-          'ad_storage': 'denied',
-          'analytics_storage': 'denied',
-          'wait_for_update': 500,
-        });
-        localStorage.setItem("consentGranted", `${isGranted}`);
-      }
+      localStorage.setItem("consentGranted", `${isGranted}`);
     } catch(_err){}
   }
 </script>
