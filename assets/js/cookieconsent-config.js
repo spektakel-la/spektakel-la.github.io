@@ -1,3 +1,20 @@
+const setConsent = (consent) => {
+    try {
+        const consentMode = {
+            'functionality_storage': consent.necessary ? 'granted': 'denied',
+            'security_storage': consent.necessary ? 'granted': 'denied',
+            'ad_storage': consent.analytics ? 'granted': 'denied',
+            'ad_personalization': consent.analytics ? 'granted': 'denied',
+            'ad_user_data': consent.analytics ? 'granted': 'denied',
+            'analytics_storage': consent.analytics ? 'granted': 'denied',
+            'personalization_storage': consent.analytics ? 'granted': 'denied',
+        };
+        gtag('consent', 'update', consentMode);
+        localStorage.setItem('consentMode', JSON.stringify(consentMode));
+    } catch(_err){}
+}
+
+
 /**
  * All config. options available here:
  * https://cookieconsent.orestbida.com/reference/configuration-reference.html
@@ -22,13 +39,19 @@ CookieConsent.run({
     },
 
     onConsent: ({cookie}) => {
-        const analyticsEnabled = CookieConsent.acceptedCategory('analytics');
-        setConsentGranted(analyticsEnabled);
+        const consent = {
+            necessary: CookieConsent.acceptedCategory('necessary'),
+            analytics: CookieConsent.acceptedCategory('analytics')
+        }
+        setConsent(consent);
     },
 
     onChange: ({cookie, changedCategories, changedServices}) => {
-        const analyticsEnabled = CookieConsent.acceptedCategory('analytics');
-        setConsentGranted(analyticsEnabled);
+        const consent = {
+            necessary: CookieConsent.acceptedCategory('necessary'),
+            analytics: CookieConsent.acceptedCategory('analytics')
+        }
+        setConsent(consent);
     },
 
     language: {
