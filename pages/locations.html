@@ -92,6 +92,13 @@ permalink: /locations
   });
   geoLocation.addTo(map);
 
+  const fullScreen = L.control
+	.fullscreen({
+		position: 'topright',
+		forceSeparateButton: true,
+	});
+	fullScreen.addTo(map);
+
   const clusterGroup = L.markerClusterGroup();
   clusterGroup.addTo(map);
 
