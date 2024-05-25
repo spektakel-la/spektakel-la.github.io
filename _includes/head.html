@@ -14,6 +14,26 @@
   <!-- Use Atom -->
   {% feed_meta %}
 
+  <!-- Default consent -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+
+    if (localStorage.getItem('consentMode') === null) {
+      gtag('consent', 'default', {
+        'functionality_storage': 'denied',
+        'security_storage': 'denied',
+        'ad_storage': 'denied',
+        'ad_personalization': 'denied',
+        'ad_user_data': 'denied',
+        'analytics_storage': 'denied',
+        'personalization_storage': 'denied',
+      });
+    } else {
+      gtag('consent', 'default', JSON.parse(localStorage.getItem('consentMode')));
+    }
+  </script>
+
   <!-- Google Tag Manager -->
   <script>
     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -23,6 +43,11 @@
     })(window,document,'script','dataLayer','{{ site.data.settings.google-tagmanager-id }}');
   </script>
   <!-- End Google Tag Manager -->
+
+  <!-- cookieconsent -->
+  <link rel="stylesheet" href="https://unpkg.com/vanilla-cookieconsent@3.0.1/dist/cookieconsent.css" />
+  <script src="https://unpkg.com/vanilla-cookieconsent@3.0.1/dist/cookieconsent.umd.js" charset="utf-8"></script>
+  <script type="module" src="{{ site.github.url }}/assets/js/cookieconsent-config.js"></script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Source+Code+Pro">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
