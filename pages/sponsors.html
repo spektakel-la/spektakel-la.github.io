@@ -1,13 +1,15 @@
 ---
 layout: page
-title: Sponsoren
+title: Unsere Sponsoren
 permalink: /sponsors
 ---
 
-<div class="gallery">
-    {% for sponsor in site.data.settings.sponsors %}
-    <div class="box">
-        <img src="{{ site.github.url }}/{{ sponsor.logo }}" alt="{{ sponsor.name }}">
-    </div>
+<div class="sponsors-gallery">
+    {% for file in site.static_files %}
+        {% if file.path contains '/assets/img/sponsors/' %}
+            <div class="box">
+                <img src="{{ file.path }}" alt="{{ file.path }}">
+            </div>
+        {% endif %}
     {% endfor %}
 </div>

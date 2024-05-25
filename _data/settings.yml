@@ -26,40 +26,6 @@ social:
 # - {icon: 'rss-square', link: 'feed.xml'}
 # - {icon: 'rss-square', link: 'rss-feed.xml'}
 
-sponsors:
-- {name: 'Aok', logo: 'assets/img/sponsors/aok.jpg'}
-- {name: 'Barta', logo: 'assets/img/sponsors/barta.png'}
-- {name: 'Bmw', logo: 'assets/img/sponsors/bmw.jpg'}
-- {name: 'Chocolat', logo: 'assets/img/sponsors/chocolat.jpg'}
-- {name: 'Draexlmeier', logo: 'assets/img/sponsors/draexlmeier.jpg'}
-- {name: 'Ebmpapst', logo: 'assets/img/sponsors/ebmpapst.jpg'}
-- {name: 'Esd', logo: 'assets/img/sponsors/esd.jpg'}
-- {name: 'Ferstl', logo: 'assets/img/sponsors/ferstl.jpg'}
-- {name: 'Flottweg', logo: 'assets/img/sponsors/flottweg.jpg'}
-- {name: 'Habe', logo: 'assets/img/sponsors/habe.jpg'}
-- {name: 'IngenieurbueroKienlein', logo: 'assets/img/sponsors/ingenieurbuero_kienlein.jpg'}
-- {name: 'IsarResidenz', logo: 'assets/img/sponsors/isar_residenz.jpg'}
-- {name: 'Jungheinrich', logo: 'assets/img/sponsors/jungheinrich.jpg'}
-- {name: 'Kaliber42', logo: 'assets/img/sponsors/kaliber42.jpg'}
-- {name: 'KueffnerKanzlei', logo: 'assets/img/sponsors/kueffner_kanzlei.jpg'}
-- {name: 'Kuhlmey', logo: 'assets/img/sponsors/kuhlmey.jpg'}
-- {name: 'KulturstiftungNiederbayern', logo: 'assets/img/sponsors/kulturstiftung_niederbayern.jpg'}
-- {name: 'LandestheatherNiederbayern', logo: 'assets/img/sponsors/landestheather_niederbayern.jpg'}
-- {name: 'LandshuterKulturFestival', logo: 'assets/img/sponsors/landshuter_kultur_festival.jpg'}
-- {name: 'LandshuterZeitung', logo: 'assets/img/sponsors/landshuter_zeitung.jpg'}
-- {name: 'MediengruppeAttenkofer', logo: 'assets/img/sponsors/mediengruppe_attenkofer.png'}
-- {name: 'Oberpaur', logo: 'assets/img/sponsors/oberpaur.jpg'}
-- {name: 'Pinsker', logo: 'assets/img/sponsors/pinsker.png'}
-- {name: 'RadioGalaxy', logo: 'assets/img/sponsors/radio_galaxy.jpg'}
-- {name: 'RadioTrausnitz', logo: 'assets/img/sponsors/radio_trausnitz.jpg'}
-- {name: 'Solar', logo: 'assets/img/sponsors/solar.jpg'}
-- {name: 'Sparkasse', logo: 'assets/img/sponsors/sparkasse.jpg'}
-- {name: 'StadtLandshut', logo: 'assets/img/sponsors/stadt_landshut.jpg'}
-- {name: 'StadtwerkeLandshut', logo: 'assets/img/sponsors/stadtwerke_landshut.jpg'}
-- {name: 'Vhs', logo: 'assets/img/sponsors/vhs.jpg'}
-- {name: 'Vrbank', logo: 'assets/img/sponsors/vrbank.png'}
-- {name: 'Wittman', logo: 'assets/img/sponsors/wittman.jpg'}
-
 offline_map:
   # use share functionality from https://www.openstreetmap.org/
   # https://render.openstreetmap.org/cgi-bin/export?bbox=12.148033213008594,48.53177335021352,12.155014923924032,48.53906565601472&scale=1750&format=png
