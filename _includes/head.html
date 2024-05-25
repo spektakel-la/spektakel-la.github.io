@@ -10,32 +10,38 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="{{ site.github.url }}/assets/css/main.css">
   <link rel="stylesheet" href="{{ site.github.url }}/assets/css/syntax.css">
+
+  <!-- Use Jekyll SEO plugin -->
+  {% seo %}
+
   <!-- Use Atom -->
   {% feed_meta %}
-  <!-- RSS-v2.0
-  <link href="{{ site.github.url }}/rss-feed.xml" type="application/rss+xml" rel="alternate" title="{{ site.title }} | {{ site.description }}"/>
-  //-->
+
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','{{ site.data.settings.google-tagmanager-id }}');
+  </script>
+  <!-- End Google Tag Manager -->
+
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Source+Code+Pro">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
   <script type="text/javascript" async
     src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
   </script>
 
-  <!-- Google Analytics -->
+  <!-- Google Tags -->
   {% comment  %}
-    {% include google-analytics.html %}
+  {% include google-tags.html %}
   {% endcomment %}
 
-  <!-- Google Tags -->
-  {% include google-tags.html %}
-
-  <!-- Use Jekyll SEO plugin -->
-  {% seo %}
-
   <!-- cookieconsent -->
-  <link rel="stylesheet" href="https://unpkg.com/vanilla-cookieconsent@3.0.1/dist/cookieconsent.css" />
+  <!-- <link rel="stylesheet" href="https://unpkg.com/vanilla-cookieconsent@3.0.1/dist/cookieconsent.css" />
   <script src="https://unpkg.com/vanilla-cookieconsent@3.0.1/dist/cookieconsent.umd.js" charset="utf-8"></script>
-  <script type="module" src="{{ site.github.url }}/assets/js/cookieconsent-config.js"></script>
+  <script type="module" src="{{ site.github.url }}/assets/js/cookieconsent-config.js"></script> -->
 
   <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
