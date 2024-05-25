@@ -69,10 +69,10 @@ CookieConsent.run({
             de: {
                 consentModal: {
                     title: 'Wir nutzen Cookies',
-                    description: 'Wir verwenden Cookies auf der Website, um Ihren Besuch benutzerfreundlicher zu gestalten. Darüber hinaus sammeln wir auch Informationen, wie die Besucher unser Angebot nutzen.',
+                    description: 'Wir verwenden Cookies auf der Website, um Ihren Besuch benutzerfreundlicher zu gestalten. Mit Ihrer Erlaubnis, sammeln wir dabei auch Informationen, wie Sie unser Angebot nutzen.',
                     acceptAllBtn: 'Akzeptieren',
                     acceptNecessaryBtn: 'Ablehnen',
-                    showPreferencesBtn: 'Präferenzen einstellen'
+                    showPreferencesBtn: 'Einstellungen'
                 },
                 preferencesModal: {
                     title: 'Cookie Präferenzen',
@@ -83,7 +83,7 @@ CookieConsent.run({
                     sections: [
                         {
                             title: 'Warum verwenden wir Cookies?',
-                            description: 'Wir verwenden Cookies auf der Website, um Ihren Besuch benutzerfreundlicher zu gestalten. Darüber hinaus sammeln wir auch Informationen, wie die Besucher unser Angebot nutzen.'
+                            description: 'Wir verwenden Cookies auf der Website, um Ihren Besuch benutzerfreundlicher zu gestalten. Mit Ihrer Erlaubnis, sammeln wir dabei auch Informationen, wie Sie unser Angebot nutzen.'
                         },
                         {
                             title: 'Notwendig / Essenziell',
@@ -94,7 +94,7 @@ CookieConsent.run({
                         },
                         {
                             title: 'Performance / Analytics',
-                            description: 'Diese Cookies sammeln Informationen darüber, wie unsere Besucher die Website nutzen. Alle Daten sind annonymisiert und können nicht verwendet werden, um Sie zu identifizieren.',
+                            description: 'Diese Cookies sammeln Informationen darüber, wie Besucher die Website nutzen. Alle Daten sind annonymisiert und können nicht verwendet werden, um Sie zu identifizieren.',
                             linkedCategory: 'analytics'
                         },
                         {
