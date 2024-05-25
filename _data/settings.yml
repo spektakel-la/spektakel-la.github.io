@@ -4,8 +4,8 @@ disqus:
   disqus_shortname: 'spektakel-la'
 
 # If you are not using Google Analytics, please change 'google-ID' to an empty string
-google-ID: ''
-google-tag: 'G-V8PX2QY82M'
+# google-tag: 'G-V8PX2QY82M'
+google-tagmanager-id: 'GTM-TK5422TV'
 
 
 menu:
