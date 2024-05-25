@@ -7,15 +7,15 @@ permalink: /impressions
 {%  comment  %}
 From the projects `assets/img/impressions` directory, excecute:
 
-    $ rm -rf thumbs && mkdir thumbs && magick mogrify  -format jpg -path thumbs -thumbnail 240x240 *.jpg
+    $ rm -rf thumbs && mkdir thumbs && magick mogrify -format jpg -path thumbs -thumbnail 300x300 *.jpg
 {% endcomment %}
 
-<div id="animated-thumbnails-gallery" class="justified-grid-gallery">
+<div id="animated-thumbnails-gallery" class="masonry">
     {% for file in site.static_files %}
         {% if file.path contains '/assets/img/impressions/' %}
             {%  unless file.path contains '/assets/img/impressions/thumbs/' %}
                 {% assign thumb_path = file.path | replace: '/assets/img/impressions/', '/assets/img/impressions/thumbs/' %}
-                <a class="gallery-item" href="{{ file.path }}">
+                <a href="{{ file.path }}">
                     <img src="{{ thumb_path }}" />
                 </a>
             {% endunless %}
@@ -24,9 +24,12 @@ From the projects `assets/img/impressions` directory, excecute:
 </div>
 
 <script>
+    // https://www.lightgalleryjs.com/docs/settings/
     lightGallery(document.getElementById('animated-thumbnails-gallery'), {
-        plugins: [lgAutoplay, lgZoom, lgThumbnail],
+        plugins: [lgAutoplay, lgFullscreen, lgThumbnail, lgZoom],
         thumbnail: true,
+        autoautoplay: true,
+        slideShowAutoplay: true,
+        download: false,
     });
-
 </script>
