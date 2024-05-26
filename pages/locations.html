@@ -18,7 +18,7 @@ permalink: /locations
   const createIconMarkup = (locationObj) => `
   <div class="spektakel-leaflet-location-icon-container">
     <div>
-      ${locationObj.location_id}
+      ${locationObj.location_id.toUpperCase()}
     </div>
   </div>
   `;
@@ -36,20 +36,39 @@ permalink: /locations
         console.dir(entry);
       }
     });
-    const tableRows = scheduleForLocationWithArtist.map((sched) => `
-      <tr>
-        <td>${dateFns.fp.parseISO(sched.time).toLocaleString()}</td>
-        <td>${sched.artist_name}</td>
-        <td>${sched.categories.join(', ')}</td>
-      </tr>
-    `).join('\n');
+
+    let sectionDateString = null;
+    const tableRows = scheduleForLocationWithArtist.map((sched) => {
+      const now = new Date();
+      const scheduleDate = dateFns.fp.parseISO(sched.time);
+      if (now > scheduleDate) {  // ignore old dates
+        return '';
+      }
+
+      const currentDateString = scheduleDate.toLocaleDateString();
+      let maybeDateSection = '';
+      if (currentDateString !== sectionDateString) {
+        maybeDateSection = `
+          <tr class="day-section">
+            <td colspan="3">${currentDateString}</td>
+          </tr>`;
+          sectionDateString = currentDateString;
+      }
+      return `
+        ${maybeDateSection}
+        <tr>
+          <td>${scheduleDate.toLocaleTimeString()}</td>
+          <td>${sched.artist_name}</td>
+          <td>${sched.categories.join(', ')}</td>
+        </tr>`;
+    }).join('\n');
 
     if(!tableRows){
       return '';
     } else {
       return `
         <table>
-          <tr>
+          <tr class="sticky">
            <th>Zeit</th>
             <th>Künstler</th>
             <th>Kategorien</th>
@@ -61,9 +80,11 @@ permalink: /locations
   }
 
   const createPopupMarkup = (locationObj) => `
-    <div>
-      <div>Location ${locationObj.location_id} - ${locationObj.description}</div>
-      <div>${createScheduleMarkupForLocation(locationObj.location_id)}</div>
+    <div class="leaflet-popup-content">
+      <div>Location ${locationObj.location_id.toUpperCase()} - ${locationObj.description}</div>
+      <div class="table-wrapper">
+        ${createScheduleMarkupForLocation(locationObj.location_id)}
+        </div>
     </div>
   `;
 
