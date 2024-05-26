@@ -81,8 +81,8 @@ permalink: /locations
 
   const createPopupMarkup = (locationObj) => `
     <div class="leaflet-popup-content">
-      <div>Location ${locationObj.location_id.toUpperCase()} - ${locationObj.description}</div>
-      <div class="table-wrapper">
+      <div class="location-title">Location ${locationObj.location_id.toUpperCase()} - ${locationObj.description}</div>
+      <div class="location-table-wrapper">
         ${createScheduleMarkupForLocation(locationObj.location_id)}
         </div>
     </div>
