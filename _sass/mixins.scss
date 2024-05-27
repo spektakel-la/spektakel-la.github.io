@@ -1,0 +1,14 @@
+@mixin enlarge-click-area($outline: false, $top: -20px, $right: -20px, $bottom: -20px, $left: -20px) { /* stylelint-disable-line at-rule-no-unknown */
+    &::after {
+        content: "";
+        position: absolute;
+        top: $top;
+        right: $right;
+        bottom: $bottom;
+        left: $left;
+
+        @if $outline { /* stylelint-disable-line at-rule-no-unknown */
+            outline: 1px solid red;
+        }
+    }
+}
