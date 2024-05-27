@@ -23,6 +23,11 @@ permalink: /locations
   </div>
   `;
 
+  const toggleArtistDetails = (artistMainRow) => {
+    artistMainRow.classList.toggle('expanded');
+    artistMainRow.nextElementSibling.classList.toggle('visible');
+  }
+
   const createScheduleMarkupForLocation = (locationId) => {
     const scheduleForLocation = SCHEDULE.filter((entry) => entry.location_id === locationId);
     const scheduleForLocationWithArtist = scheduleForLocation.map((entry) => {
@@ -38,7 +43,7 @@ permalink: /locations
     });
 
     let sectionDateString = null;
-    const tableRows = scheduleForLocationWithArtist.map((sched) => {
+    const tableRows = scheduleForLocationWithArtist.map((sched, idx) => {
       const now = new Date();
       const scheduleDate = dateFns.fp.parseISO(sched.time);
       if (now > scheduleDate) {  // ignore old dates
@@ -47,20 +52,36 @@ permalink: /locations
 
       const currentDateString = scheduleDate.toLocaleDateString();
       let maybeDateSection = '';
-      if (currentDateString !== sectionDateString) {
+      if (currentDateString !== now.toLocaleDateString() // don't show date-section for today
+         && currentDateString !== sectionDateString) {
         maybeDateSection = `
           <tr class="day-section">
-            <td colspan="3">${currentDateString}</td>
+            <td colspan="2">${currentDateString}</td>
           </tr>`;
           sectionDateString = currentDateString;
       }
       return `
         ${maybeDateSection}
-        <tr>
-          <td>${scheduleDate.toLocaleTimeString()}</td>
+        <tr class="schedule-details" onclick="toggleArtistDetails(this);">
+          <td>
+            <i class="expand-icon fa fa-caret-down" aria-hidden="true"></i>
+            <i class="collapse-icon fa fa-caret-up" aria-hidden="true"></i>
+            &nbsp;${scheduleDate.toLocaleTimeString()}</td>
           <td>${sched.artist_name}</td>
-          <td>${sched.categories.join(', ')}</td>
-        </tr>`;
+        </tr>
+        <tr class="artist-details">
+            <td colspan="2">
+              <div>
+                <div>
+                  <span>Kategorie(n)</span>: ${sched.categories.join(', ')}
+                </div>
+                <div>
+                  <span>Kurzprofil</span>: Künstler ${sched.artist_name} ist ein internationaler Künstler, der x y z
+                </div>
+              </div>
+            </td>
+        </tr>
+        `;
     }).join('\n');
 
     if(!tableRows){
@@ -69,9 +90,8 @@ permalink: /locations
       return `
         <table>
           <tr class="sticky">
-           <th>Zeit</th>
+           <th class="schedule-time">Zeit</th>
             <th>Künstler</th>
-            <th>Kategorien</th>
           </tr>
           ${tableRows}
         </table>
