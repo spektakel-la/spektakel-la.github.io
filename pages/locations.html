@@ -28,19 +28,20 @@ permalink: /locations
     rowElement.nextElementSibling.classList.toggle('visible');
   };
 
-  const toggleFavorite = (iconElement, event) => {
+  const toggleFavorite = (iconElement, event, artistId) => {
     event.stopPropagation();
-    iconElement.classList.toggle('fa-regular');
-    iconElement.classList.toggle('fa-solid');
+    iconElement.classList.toggle('fa-star-o');
+    const favoriteIsSet = iconElement.classList.toggle('fa-star');
   };
 
   const createScheduleMarkupForLocation = (locationId) => {
     const scheduleForLocation = SCHEDULE.filter((entry) => entry.location_id === locationId);
     const scheduleForLocationWithArtist = scheduleForLocation.map((entry) => {
       const artist = ARTISTS.find((artist) => artist.artist_id === entry.artist_id);
-      if (artist?.name){
+      if (artist){
         entry.artist_name = artist?.name;
-        entry.categories = artist?.categories;
+        entry.artist_categories = artist?.categories;
+        entry.artist_content = artist?.content;
         return entry;
       } else {
         console.error("Error processing schedule entry");
@@ -78,7 +79,7 @@ permalink: /locations
               <span>
                 ${sched.artist_name}
               </span>
-              <i class="fa-regular fa-star" onclick="toggleFavorite(this, event);"></i>
+              <i class="favorite-toggle fa fa-star-o" aria-hidden="true" onclick="toggleFavorite(this, event, ${sched.artist_id});"></i>
             </div>
 
           </td>
@@ -87,10 +88,10 @@ permalink: /locations
             <td colspan="2">
               <div>
                 <div>
-                  <span>Kategorie(n)</span>: ${sched.categories.join(', ')}
+                  ${sched.artist_content}
                 </div>
                 <div>
-                  <span>Kurzprofil</span>: Künstler ${sched.artist_name} ist ein internationaler Künstler, der x y z
+                  (${sched.artist_categories.join(', ')})
                 </div>
               </div>
             </td>

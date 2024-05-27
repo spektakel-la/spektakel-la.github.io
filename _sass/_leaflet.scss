@@ -1,3 +1,5 @@
+@import "mixins";
+
 .leaflet-container {
     // background: $background-color !important;
     background: #fafafa !important;
@@ -43,6 +45,8 @@
 
 .spektakel-leaflet-popup {
     .leaflet-popup-content {
+        font-family: $body-font-family;
+        font-size: 14px;
         margin: 0 !important;
 
         --stickyBackground: #f5f5f5;
@@ -57,7 +61,7 @@
             width: 260px;
             margin: 5px;
 
-            font-size: 12px;
+            font-size: 14px;
             line-height: 1.4;
 
             overflow-y: auto;
@@ -85,10 +89,12 @@
                 // white-space: nowrap;
                 // word-break: break-all;
                 border-bottom: 1px solid var(--borderColor);
+                border-right: 0;
+                border-left: 0;
             }
 
             th.schedule-time {
-                width: 70px;
+                width: 80px;
             }
 
             tr:last-child td {
@@ -133,6 +139,11 @@
                     display: grid;
                     grid-template-columns: 1fr auto;
                     align-items: center;
+
+                    .favorite-toggle {
+                        position: relative;
+                        @include enlarge-click-area(false, -5px, -5px, -5px, -5px);
+                        }
                 }
             }
 
@@ -140,6 +151,10 @@
                 display: none;
                 &.visible{
                     display: table-row;
+                }
+
+                p {
+                    margin: 0;
                 }
             }
         }
