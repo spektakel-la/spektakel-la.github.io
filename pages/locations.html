@@ -31,7 +31,8 @@ permalink: /locations
   const toggleFavorite = (iconElement, event, artistId) => {
     event.stopPropagation();
     iconElement.classList.toggle('fa-star-o');
-    const favoriteIsSet = iconElement.classList.toggle('fa-star');
+    iconElement.classList.toggle('fa-star');
+    toggleArtistFavorite(artistId);
   };
 
   const createScheduleMarkupForLocation = (locationId) => {
@@ -49,6 +50,7 @@ permalink: /locations
       }
     });
 
+    const artistFavorites = getArtistFavorites();
     let sectionDateString = null;
     const tableRows = scheduleForLocationWithArtist.map((sched, idx) => {
       const now = new Date();
@@ -79,7 +81,9 @@ permalink: /locations
               <span>
                 ${sched.artist_name}
               </span>
-              <i class="favorite-toggle fa fa-star-o" aria-hidden="true" onclick="toggleFavorite(this, event, ${sched.artist_id});"></i>
+              <i class="favorite-toggle fa ${artistFavorites.includes(sched.artist_id) ? 'fa-star' : 'fa-star-o'}"
+                aria-hidden="true"
+                onclick="toggleFavorite(this, event, '${sched.artist_id}');"></i>
             </div>
 
           </td>
