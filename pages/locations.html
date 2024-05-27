@@ -132,7 +132,7 @@ permalink: /locations
     // myMarker.on('click', () => {
     //   map.setView([lat, long]);
     // });
-    myMarker.bindPopup(createPopupMarkup(location), {className: 'spektakel-leaflet-popup', keepInView: true})
+    myMarker.bindPopup(createPopupMarkup(location), {className: 'spektakel-leaflet-popup'})
     clusterGroup.addLayer(myMarker);
 
     // debug position
