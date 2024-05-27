@@ -1,10 +1,14 @@
+:root {
+  --headerZIndex: 1000;
+}
+
 .site-header {
   min-height: 56px;
   width: $container-width;
   position: fixed;
   background-color: $background-color;
   box-shadow: 0 5px 6px -6px #bbb;
-  z-index: 100;
+  z-index: var(--headerZIndex);
 }
 @media (max-width: $container-width) {
   .site-header {
@@ -13,7 +17,7 @@
     position: fixed;
     background-color: $background-color;
     box-shadow: 0 5px 6px -6px #bbb;
-    z-index: 100;
+    z-index: var(--headerZIndex);
   }
 }
 .site-header a {
@@ -68,6 +72,7 @@
     display: inline-block;
     position: absolute;
     right: 0;
+    z-index: var(--headerZIndex);
   }
   .dropdown-content {
     display: none;
@@ -76,7 +81,7 @@
     background-color: #f9f9f9;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 10000000;
+    z-index: var(--headerZIndex);
   }
   .dropdown-content a {
     color: black;
