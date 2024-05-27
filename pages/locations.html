@@ -23,10 +23,16 @@ permalink: /locations
   </div>
   `;
 
-  const toggleArtistDetails = (artistMainRow) => {
-    artistMainRow.classList.toggle('expanded');
-    artistMainRow.nextElementSibling.classList.toggle('visible');
-  }
+  const toggleArtistDetails = (rowElement) => {
+    rowElement.classList.toggle('expanded');
+    rowElement.nextElementSibling.classList.toggle('visible');
+  };
+
+  const toggleFavorite = (iconElement, event) => {
+    event.stopPropagation();
+    iconElement.classList.toggle('fa-regular');
+    iconElement.classList.toggle('fa-solid');
+  };
 
   const createScheduleMarkupForLocation = (locationId) => {
     const scheduleForLocation = SCHEDULE.filter((entry) => entry.location_id === locationId);
@@ -67,7 +73,15 @@ permalink: /locations
             <i class="expand-icon fa fa-caret-down" aria-hidden="true"></i>
             <i class="collapse-icon fa fa-caret-up" aria-hidden="true"></i>
             &nbsp;${scheduleDate.toLocaleTimeString()}</td>
-          <td>${sched.artist_name}</td>
+          <td>
+            <div class="artist-and-favorite-toggle">
+              <span>
+                ${sched.artist_name}
+              </span>
+              <i class="fa-regular fa-star" onclick="toggleFavorite(this, event);"></i>
+            </div>
+
+          </td>
         </tr>
         <tr class="artist-details">
             <td colspan="2">

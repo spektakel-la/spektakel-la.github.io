@@ -128,6 +128,12 @@
                         display: inline-block;
                     }
                 }
+
+                .artist-and-favorite-toggle {
+                    display: grid;
+                    grid-template-columns: 1fr auto;
+                    align-items: center;
+                }
             }
 
             tr.artist-details {
