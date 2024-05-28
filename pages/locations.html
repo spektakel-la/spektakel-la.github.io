@@ -14,6 +14,9 @@ permalink: /locations
   const LOCATIONS = {{ site.locations | jsonify }};
   const ARTISTS = {{ site.artists | jsonify }};
   const SCHEDULE = {{ site.data.schedule | jsonify }};
+  const MAP_BOUNDS = {{ site.data.settings.offline_map.bounding_rect | jsonify }};
+  const MARKER_ICON_SIZE = {{ site.data.settings.offline_map.icon_size | jsonify }};
+  const MARKER_ICON_ANCHOR = {{ site.data.settings.offline_map.icon_anchor | jsonify }};
 
   const createIconMarkup = (locationObj) => `
   <div class="spektakel-leaflet-location-icon-container">
@@ -140,66 +143,66 @@ permalink: /locations
     </div>
   `;
 
-  const maxBounds = {{ site.data.settings.offline_map.bounding_rect | jsonify }};
+  const setupLeafletMap = () => {
+    const map = L.map(document.querySelector('.spektakel-leaflet-map'), {
+      minZoom: 16,
+      maxZoom: 19,
+      MAP_BOUNDS,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    });
+    map.attributionControl.setPrefix(false)
 
-  const map = L.map(document.querySelector('.spektakel-leaflet-map'), {
-    minZoom: 16,
-    maxZoom: 19,
-    maxBounds,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-  });
-  map.attributionControl.setPrefix(false)
+    const imageUrl = '{{ site.github.url }}/assets/img/map/map.png';
+    const imageLayer = L.imageOverlay(imageUrl, MAP_BOUNDS);
+    imageLayer.addTo(map);
 
-  const imageUrl = '{{ site.github.url }}/assets/img/map/map.png';
-  const imageLayer = L.imageOverlay(imageUrl, maxBounds);
-  imageLayer.addTo(map);
+    const geoLocation = L.control.locate({
+      strings: {
+        title: "Zeig mir wo ich bin",
+        metersUnit: "Meter",
+        feetUnit: "Fuß",
+        popup: "Du befindest dich innerhalb {distance} {unit} von diesem Punkt",
+        outsideMapBoundsMsg: "Du scheinst Dich außerhalb der verfügbaren Kartenregion zu befinden"
+      }
+    });
+    geoLocation.addTo(map);
 
-  const geoLocation = L.control.locate({
-    strings: {
-      title: "Zeig mir wo ich bin",
-      metersUnit: "Meter",
-      feetUnit: "Fuß",
-      popup: "Du befindest dich innerhalb {distance} {unit} von diesem Punkt",
-      outsideMapBoundsMsg: "Du scheinst Dich außerhalb der verfügbaren Kartenregion zu befinden"
-    }
-  });
-  geoLocation.addTo(map);
+    const fullScreen = L.control
+    .fullscreen({
+      position: 'topright',
+      forceSeparateButton: true,
+    });
+    fullScreen.addTo(map);
 
-  const fullScreen = L.control
-	.fullscreen({
-		position: 'topright',
-		forceSeparateButton: true,
-	});
-	fullScreen.addTo(map);
+    const clusterGroup = L.markerClusterGroup();
+    clusterGroup.addTo(map);
 
-  const clusterGroup = L.markerClusterGroup();
-  clusterGroup.addTo(map);
+    LOCATIONS.forEach((location) => {
+      const markerIcon = L.divIcon({
+        className: 'spektakel-leaflet-location-icon',
+        html: createIconMarkup(location),
+        iconSize: MARKER_ICON_SIZE,
+        iconAnchor: MARKER_ICON_ANCHOR});
+      const [lat, lon] = location.gps;
+      const marker = L.marker([lat, lon], {icon: markerIcon});
+      marker
+        .bindPopup('', {className: 'spektakel-leaflet-popup'})
+        .on("popupopen", function (event) {
+          // Dynamically create the content on `popupopen`-event
+          event.popup.setContent(createPopupMarkup(location))
+        });
+      clusterGroup.addLayer(marker);
 
-  for(let location of LOCATIONS) {
-    const iconSize = {{ site.data.settings.offline_map.icon_size | jsonify }};
-    const iconAnchor = {{ site.data.settings.offline_map.icon_anchor | jsonify }};
-    const myIcon = L.divIcon({className: 'spektakel-leaflet-location-icon', html: createIconMarkup(location), iconSize, iconAnchor});
-    const [lat, lon] = location.gps;
-    const marker = L.marker([lat, lon], {icon: myIcon});
-    // myMarker.on('click', () => {
-    //   map.setView([lat, long]);
-    // });
+      // debug position
+      // L.marker([lat, lon]).addTo(map);
+    });
 
-    marker
-      .bindPopup('', {className: 'spektakel-leaflet-popup'})
-      .on("popupopen", function (event) {
-        // Dynamically create the content on `popupopen`-event
-        event.popup.setContent(createPopupMarkup(location))
-      });
-    clusterGroup.addLayer(marker);
+    map.fitBounds(L.latLngBounds(LOCATIONS.map(location => location.gps)));
 
-    // debug position
-    // L.marker([lat, lon]).addTo(map);
   }
 
-  map.fitBounds(L.latLngBounds(LOCATIONS.map(location => location.gps)));
-
   sanityCheckSchedule();
+  setupLeafletMap();
 </script>
 
 

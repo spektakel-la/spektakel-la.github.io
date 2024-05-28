@@ -40,7 +40,8 @@
 }
 
 .leaflet-container a.leaflet-popup-close-button  {
-    top: 2px;
+    top: 2px !important;
+    right: 2px !important;
     font-size: 24px !important;
 }
 
