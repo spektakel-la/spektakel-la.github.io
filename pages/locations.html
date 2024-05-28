@@ -35,6 +35,19 @@ permalink: /locations
     toggleArtistFavorite(artistId);
   };
 
+  const sanityCheckSchedule = () => {
+    SCHEDULE.forEach((entry) => {
+      const locationForEntry = LOCATIONS.find((loc) => entry.location_id === loc.location_id);
+      if (!locationForEntry) {
+        throw new Error(`Schedule entry with invalid location_id: '${JSON.stringify(entry)}'`);
+      }
+      const artistForEntry = ARTISTS.find((art) => entry.artist_id === art.artist_id);
+      if (!artistForEntry) {
+        throw new Error(`Schedule entry with invalid artist_id: '${JSON.stringify(entry)}'`);
+      }
+    });
+  };
+
   const createScheduleMarkupForLocation = (locationId) => {
     const scheduleForLocation = SCHEDULE.filter((entry) => entry.location_id === locationId);
     const scheduleForLocationWithArtist = scheduleForLocation.map((entry) => {
@@ -167,18 +180,26 @@ permalink: /locations
     const iconAnchor = {{ site.data.settings.offline_map.icon_anchor | jsonify }};
     const myIcon = L.divIcon({className: 'spektakel-leaflet-location-icon', html: createIconMarkup(location), iconSize, iconAnchor});
     const [lat, lon] = location.gps;
-    const myMarker = L.marker([lat, lon], {icon: myIcon});
+    const marker = L.marker([lat, lon], {icon: myIcon});
     // myMarker.on('click', () => {
     //   map.setView([lat, long]);
     // });
-    myMarker.bindPopup(createPopupMarkup(location), {className: 'spektakel-leaflet-popup'})
-    clusterGroup.addLayer(myMarker);
+
+    marker
+      .bindPopup('', {className: 'spektakel-leaflet-popup'})
+      .on("popupopen", function (event) {
+        // Dynamically create the content on `popupopen`-event
+        event.popup.setContent(createPopupMarkup(location))
+      });
+    clusterGroup.addLayer(marker);
 
     // debug position
     // L.marker([lat, lon]).addTo(map);
   }
 
   map.fitBounds(L.latLngBounds(LOCATIONS.map(location => location.gps)));
+
+  sanityCheckSchedule();
 </script>
 
 
