@@ -4,7 +4,7 @@ title: Home
 ---
 
 <div class="featured-image">
-  <img class="logo-image" src="{{ site.github.url }}/assets/img/spektakel-logo-neu.png">
+  <img class="logo-image" src="./assets/img/spektakel-logo-neu.png">
 </div>
 
 <div class="intro">
@@ -19,40 +19,40 @@ title: Home
 </div>
 
 <article>
-  <a href="{{ site.github.url }}/program">
-    <div class="featured-post" style="background-image:url({{ site.github.url }}/assets/img/page/program.jpg)">
+  <a href="./program">
+    <div class="featured-post" style="background-image:url(./assets/img/page/program.jpg)">
       <h2><span>Programm</span></h2>
     </div>
   </a>
 </article>
 
 <article>
-  <a href="{{ site.github.url }}/locations">
-    <div class="featured-post" style="background-image:url({{ site.github.url }}/assets/img/page/map_small.jpg)">
+  <a href="./locations">
+    <div class="featured-post" style="background-image:url(./assets/img/page/map_small.jpg)">
       <h2><span>Locations</span></h2>
     </div>
   </a>
 </article>
 
 <article>
-  <a href="{{ site.github.url }}/artists">
-    <div class="featured-post" style="background-image:url({{ site.github.url }}/assets/img/page/artists.jpg)">
+  <a href="./artists">
+    <div class="featured-post" style="background-image:url(./assets/img/page/artists.jpg)">
       <h2><span>Künstler</span></h2>
     </div>
   </a>
 </article>
 
 <article>
-  <a href="{{ site.github.url }}/impressions">
-    <div class="featured-post" style="background-image:url({{ site.github.url }}/assets/img/page/impressions.jpg)">
+  <a href="./impressions">
+    <div class="featured-post" style="background-image:url(./assets/img/page/impressions.jpg)">
       <h2><span>Impressionen</span></h2>
     </div>
   </a>
 </article>
 
 <article>
-  <a href="{{ site.github.url }}/sponsors">
-    <div class="featured-post" style="background-image:url({{ site.github.url }}/assets/img/page/sponsors.jpeg)">
+  <a href="./sponsors">
+    <div class="featured-post" style="background-image:url(./assets/img/page/sponsors.jpeg)">
       <h2><span>Sponsoren</span></h2>
     </div>
   </a>
@@ -67,7 +67,7 @@ title: Home
   <!-- Pagination links -->
   <div class="pagination">
     {% if paginator.next_page %}
-      <a class="pagination-button pagination-active next" href="{{ site.github.url }}{{ paginator.next_page_path }}">{{ site.data.settings.pagination.previous_page }}</a>
+      <a class="pagination-button pagination-active next" href=".{{ paginator.next_page_path }}">{{ site.data.settings.pagination.previous_page }}</a>
     {% else %}
       <span class="pagination-button">{{ site.data.settings.pagination.previous_page }}</span>
     {% endif %}

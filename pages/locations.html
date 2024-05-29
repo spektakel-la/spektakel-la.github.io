@@ -152,7 +152,7 @@ permalink: /locations
     });
     map.attributionControl.setPrefix(false)
 
-    const imageUrl = '{{ site.github.url }}/assets/img/map/map.png';
+    const imageUrl = './assets/img/map/map.png';
     const imageLayer = L.imageOverlay(imageUrl, MAP_BOUNDS);
     imageLayer.addTo(map);
 
