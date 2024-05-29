@@ -1,14 +1,13 @@
 <head>
   <title>
     {% if page.title == "Home" %}
-      {{ site.title }} | {{ site.description }}
+      {{ site.data.settings.menu_home_label }} | {{ site.title }}
     {% else %}
       {{ page.title }} | {{ site.title }}
     {% endif %}
   </title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
-  <link rel="stylesheet" href="{{ site.github.url }}/assets/css/main.css">
 
   <!-- Use Atom -->
   {% feed_meta %}
@@ -44,53 +43,52 @@
   <!-- End Google Tag Manager -->
 
   <!-- cookieconsent -->
-  <link rel="stylesheet" href="https://unpkg.com/vanilla-cookieconsent@3.0.1/dist/cookieconsent.css" />
-  <script src="https://unpkg.com/vanilla-cookieconsent@3.0.1/dist/cookieconsent.umd.js" charset="utf-8"></script>
-  <script type="module" src="{{ site.github.url }}/assets/js/cookieconsent-config.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/vanilla-cookieconsent@3.0.1/dist/cookieconsent.css" crossorigin="anonymous"/>
+  <script src="https://unpkg.com/vanilla-cookieconsent@3.0.1/dist/cookieconsent.umd.js" charset="utf-8" crossorigin="anonymous"></script>
+  <script type="module" src="./assets/js/cookieconsent-config.js"></script>
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Source+Code+Pro">
-  <link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Source+Code+Pro"  crossorigin="anonymous"/>
+  <link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"  crossorigin="anonymous"/>
 
   <!-- Use Jekyll SEO plugin -->
   {% seo %}
 
   <!-- Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="anonymous"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="anonymous"></script>
 
   <!-- Leaflet locate -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.locatecontrol@0.81.0/dist/L.Control.Locate.min.css" />
-  <script src="https://unpkg.com/leaflet.locatecontrol@0.81.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.locatecontrol@0.81.0/dist/L.Control.Locate.min.css" crossorigin="anonymous"/>
+  <script src="https://unpkg.com/leaflet.locatecontrol@0.81.0/dist/L.Control.Locate.min.js" charset="utf-8" crossorigin="anonymous"></script>
 
   <!-- Leaflet fullscreen -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.fullscreen@3.0.2/Control.FullScreen.css" />
-  <script src="https://unpkg.com/leaflet.fullscreen@3.0.2/Control.FullScreen.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.fullscreen@3.0.2/Control.FullScreen.css" crossorigin="anonymous"/>
+  <script src="https://unpkg.com/leaflet.fullscreen@3.0.2/Control.FullScreen.js" charset="utf-8" crossorigin="anonymous"></script>
 
   <!-- Leaflet marker cluster -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css " />
-  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" crossorigin="anonymous"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css " crossorigin="anonymous"/>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js" charset="utf-8" crossorigin="anonymous"></script>
 
   <!-- lightgallery -->
-  <link rel="stylesheet" href="https://unpkg.com/lightgallery@2.7.2/css/lightgallery-bundle.min.css" />
-  <link type="text/css" rel="stylesheet" href="https://unpkg.com/lightgallery@2.7.2/css/lg-autoplay.css" />
-  <link type="text/css" rel="stylesheet" href="https://unpkg.com/lightgallery@2.7.2/css/lg-fullscreen.css" />
-  <link type="text/css" rel="stylesheet" href="https://unpkg.com/lightgallery@2.7.2/css/lg-thumbnail.css" />
-  <link type="text/css" rel="stylesheet" href="https://unpkg.com/lightgallery@2.7.2/css/lg-zoom.css" />
+  <link rel="stylesheet" href="https://unpkg.com/lightgallery@2.7.2/css/lightgallery-bundle.min.css" crossorigin="anonymous"/>
+  <link type="text/css" rel="stylesheet" href="https://unpkg.com/lightgallery@2.7.2/css/lg-autoplay.css" crossorigin="anonymous"/>
+  <link type="text/css" rel="stylesheet" href="https://unpkg.com/lightgallery@2.7.2/css/lg-fullscreen.css" crossorigin="anonymous"/>
+  <link type="text/css" rel="stylesheet" href="https://unpkg.com/lightgallery@2.7.2/css/lg-thumbnail.css" crossorigin="anonymous"/>
+  <link type="text/css" rel="stylesheet" href="https://unpkg.com/lightgallery@2.7.2/css/lg-zoom.css" crossorigin="anonymous"/>
   <script src="https://unpkg.com/lightgallery@2.7.2/lightgallery.min.js" charset="utf-8"></script>
-  <script src="https://unpkg.com/lightgallery@2.7.2/plugins/autoplay/lg-autoplay.min.js" charset="utf-8"></script>
-  <script src="https://unpkg.com/lightgallery@2.7.2/plugins/fullscreen/lg-fullscreen.min.js" charset="utf-8"></script>
-  <script src="https://unpkg.com/lightgallery@2.7.2/plugins/thumbnail/lg-thumbnail.min.js" charset="utf-8"></script>
-  <script src="https://unpkg.com/lightgallery@2.7.2/plugins/zoom/lg-zoom.min.js" charset="utf-8"></script>
+  <script src="https://unpkg.com/lightgallery@2.7.2/plugins/autoplay/lg-autoplay.min.js" charset="utf-8" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/lightgallery@2.7.2/plugins/fullscreen/lg-fullscreen.min.js" charset="utf-8" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/lightgallery@2.7.2/plugins/thumbnail/lg-thumbnail.min.js" charset="utf-8" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/lightgallery@2.7.2/plugins/zoom/lg-zoom.min.js" charset="utf-8" crossorigin="anonymous"></script>
 
   <!-- date-fns -->
-  <script src="https://unpkg.com/date-fns@3.6.0/fp/cdn.min.js" charset="utf-8"></script>
+  <script src="https://unpkg.com/date-fns@3.6.0/fp/cdn.min.js" charset="utf-8" crossorigin="anonymous"></script>
 
   <!-- artit favorites -->
-  <script src="{{ site.github.url }}/assets/js/artist-favorites.js"></script>
+  <script src="./assets/js/artist-favorites.js"></script>
+
+  <!-- site's stylesheet comes last for higher priority -->
+  <link rel="stylesheet" href="./assets/css/main.css">
 </head>
 
