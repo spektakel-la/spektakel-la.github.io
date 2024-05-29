@@ -147,7 +147,7 @@ permalink: /locations
     const map = L.map(document.querySelector('.spektakel-leaflet-map'), {
       minZoom: 16,
       maxZoom: 19,
-      MAP_BOUNDS,
+      maxBounds: MAP_BOUNDS,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
     map.attributionControl.setPrefix(false)
