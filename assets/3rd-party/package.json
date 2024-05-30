@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "date-fns": "^3.6.0",
+    "font-awesome": "^4.7.0",
+    "leaflet": "^1.9.4",
+    "leaflet.fullscreen": "^3.0.2",
+    "leaflet.locatecontrol": "^0.81.1",
+    "leaflet.markercluster": "^1.5.3",
+    "lightgallery": "^2.7.2",
+    "vanilla-cookieconsent": "^3.0.1"
+  }
+}
