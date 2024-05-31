@@ -971,4 +971,4 @@ var Zoom = /** @class */ (function () {
 }());
 
 export default Zoom;
-//# sourceMappingURL=lg-zoom.es5.js.map
+

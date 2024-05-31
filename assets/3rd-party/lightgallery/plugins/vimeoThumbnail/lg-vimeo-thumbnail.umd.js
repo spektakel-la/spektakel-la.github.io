@@ -187,4 +187,4 @@
     return VimeoThumbnail;
 
 })));
-//# sourceMappingURL=lg-vimeo-thumbnail.umd.js.map
+

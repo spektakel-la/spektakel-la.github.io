@@ -255,4 +255,4 @@
     return Autoplay;
 
 })));
-//# sourceMappingURL=lg-autoplay.umd.js.map
+

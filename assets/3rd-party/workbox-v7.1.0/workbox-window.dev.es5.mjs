@@ -1009,4 +1009,4 @@ function _catch(body, recover) {
 }
 
 export { Workbox, WorkboxEvent, messageSW };
-//# sourceMappingURL=workbox-window.dev.es5.mjs.map
+
