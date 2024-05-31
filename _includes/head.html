@@ -14,6 +14,22 @@
   <!-- Use Atom -->
   {% feed_meta %}
 
+  <!-- service-worker -->
+  <script>
+    // Don't register the service worker until the page has fully loaded
+    window.addEventListener('load', () => {
+      // Is service worker available?
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').then(() => {
+          console.log('Service worker registered!');
+        }).catch((error) => {
+          console.warn('Error registering service worker:');
+          console.warn(error);
+        });
+      }
+    });
+  </script>
+
   <!-- Default consent -->
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -45,47 +61,47 @@
   <!-- End Google Tag Manager -->
 
   <!-- cookieconsent -->
-  <link rel="stylesheet" href="./assets/3rd-party/node_modules/vanilla-cookieconsent/dist/cookieconsent.css" crossorigin="anonymous"/>
-  <script src="./assets/3rd-party/node_modules/vanilla-cookieconsent/dist/cookieconsent.umd.js" charset="utf-8" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./assets/3rd-party/vanilla-cookieconsent/cookieconsent.css" crossorigin="anonymous"/>
+  <script src="./assets/3rd-party/vanilla-cookieconsent/cookieconsent.umd.js" charset="utf-8" crossorigin="anonymous"></script>
   <script type="module" src="./assets/js/cookieconsent-config.js"></script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Source+Code+Pro"  crossorigin="anonymous"/>
-  <link rel="stylesheet" href="./assets/3rd-party/node_modules/font-awesome/css/font-awesome.min.css"  crossorigin="anonymous"/>
+  <link rel="stylesheet" href="./assets/3rd-party/font-awesome/css/font-awesome.min.css"  crossorigin="anonymous"/>
 
   <!-- Use Jekyll SEO plugin -->
   {% seo %}
 
   <!-- Leaflet -->
-  <link rel="stylesheet" href="./assets/3rd-party/node_modules/leaflet/dist/leaflet.css" crossorigin="anonymous"/>
-  <script src="./assets/3rd-party/node_modules/leaflet/dist/leaflet.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./assets/3rd-party/leaflet/dist/leaflet.css" crossorigin="anonymous"/>
+  <script src="./assets/3rd-party/leaflet/dist/leaflet.js" crossorigin="anonymous"></script>
 
   <!-- Leaflet locate -->
-  <link rel="stylesheet" href="./assets/3rd-party/node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.css" crossorigin="anonymous"/>
-  <script src="./assets/3rd-party/node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./assets/3rd-party/leaflet.locatecontrol/dist/L.Control.Locate.min.css" crossorigin="anonymous"/>
+  <script src="./assets/3rd-party/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8" crossorigin="anonymous"></script>
 
   <!-- Leaflet fullscreen -->
-  <link rel="stylesheet" href="./assets/3rd-party/node_modules/leaflet.fullscreen/Control.FullScreen.css" crossorigin="anonymous"/>
-  <script src="./assets/3rd-party/node_modules/leaflet.fullscreen/Control.FullScreen.js" charset="utf-8" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./assets/3rd-party/leaflet.fullscreen/Control.FullScreen.css" crossorigin="anonymous"/>
+  <script src="./assets/3rd-party/leaflet.fullscreen/Control.FullScreen.js" charset="utf-8" crossorigin="anonymous"></script>
 
   <!-- Leaflet marker cluster -->
-  <link rel="stylesheet" href="./assets/3rd-party/node_modules/leaflet.markercluster/dist/MarkerCluster.css" crossorigin="anonymous"/>
-  <link rel="stylesheet" href="./assets/3rd-party/node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css " crossorigin="anonymous"/>
-  <script src="./assets/3rd-party/node_modules/leaflet.markercluster/dist/leaflet.markercluster.js" charset="utf-8" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./assets/3rd-party/leaflet.markercluster/dist/MarkerCluster.css" crossorigin="anonymous"/>
+  <link rel="stylesheet" href="./assets/3rd-party/leaflet.markercluster/dist/MarkerCluster.Default.css " crossorigin="anonymous"/>
+  <script src="./assets/3rd-party/leaflet.markercluster/dist/leaflet.markercluster.js" charset="utf-8" crossorigin="anonymous"></script>
 
   <!-- lightgallery -->
-  <link rel="stylesheet" href="./assets/3rd-party/node_modules/lightgallery/css/lightgallery-bundle.min.css" crossorigin="anonymous"/>
-  <link type="text/css" rel="stylesheet" href="./assets/3rd-party/node_modules/lightgallery/css/lg-autoplay.css" crossorigin="anonymous"/>
-  <link type="text/css" rel="stylesheet" href="./assets/3rd-party/node_modules/lightgallery/css/lg-fullscreen.css" crossorigin="anonymous"/>
-  <link type="text/css" rel="stylesheet" href="./assets/3rd-party/node_modules/lightgallery/css/lg-thumbnail.css" crossorigin="anonymous"/>
-  <link type="text/css" rel="stylesheet" href="./assets/3rd-party/node_modules/lightgallery/css/lg-zoom.css" crossorigin="anonymous"/>
-  <script src="./assets/3rd-party/node_modules/lightgallery/lightgallery.min.js" charset="utf-8"></script>
-  <script src="./assets/3rd-party/node_modules/lightgallery/plugins/autoplay/lg-autoplay.min.js" charset="utf-8" crossorigin="anonymous"></script>
-  <script src="./assets/3rd-party/node_modules/lightgallery/plugins/fullscreen/lg-fullscreen.min.js" charset="utf-8" crossorigin="anonymous"></script>
-  <script src="./assets/3rd-party/node_modules/lightgallery/plugins/thumbnail/lg-thumbnail.min.js" charset="utf-8" crossorigin="anonymous"></script>
-  <script src="./assets/3rd-party/node_modules/lightgallery/plugins/zoom/lg-zoom.min.js" charset="utf-8" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./assets/3rd-party/lightgallery/css/lightgallery-bundle.min.css" crossorigin="anonymous"/>
+  <link type="text/css" rel="stylesheet" href="./assets/3rd-party/lightgallery/css/lg-autoplay.css" crossorigin="anonymous"/>
+  <link type="text/css" rel="stylesheet" href="./assets/3rd-party/lightgallery/css/lg-fullscreen.css" crossorigin="anonymous"/>
+  <link type="text/css" rel="stylesheet" href="./assets/3rd-party/lightgallery/css/lg-thumbnail.css" crossorigin="anonymous"/>
+  <link type="text/css" rel="stylesheet" href="./assets/3rd-party/lightgallery/css/lg-zoom.css" crossorigin="anonymous"/>
+  <script src="./assets/3rd-party/lightgallery/lightgallery.min.js" charset="utf-8"></script>
+  <script src="./assets/3rd-party/lightgallery/plugins/autoplay/lg-autoplay.min.js" charset="utf-8" crossorigin="anonymous"></script>
+  <script src="./assets/3rd-party/lightgallery/plugins/fullscreen/lg-fullscreen.min.js" charset="utf-8" crossorigin="anonymous"></script>
+  <script src="./assets/3rd-party/lightgallery/plugins/thumbnail/lg-thumbnail.min.js" charset="utf-8" crossorigin="anonymous"></script>
+  <script src="./assets/3rd-party/lightgallery/plugins/zoom/lg-zoom.min.js" charset="utf-8" crossorigin="anonymous"></script>
 
   <!-- date-fns -->
-  <script src="./assets/3rd-party/node_modules/date-fns/fp/cdn.min.js" charset="utf-8" crossorigin="anonymous"></script>
+  <script src="./assets/3rd-party/date-fns/fp/cdn.min.js" charset="utf-8" crossorigin="anonymous"></script>
 
   <!-- artit favorites -->
   <script src="./assets/js/artist-favorites.js"></script>
