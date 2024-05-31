@@ -31,7 +31,7 @@ CookieConsent.run({
             autoClear: {
                 cookies: [
                     {
-                        name: /\b(?!cc_cookie\b).*?\b/      // match for all but cc_cookie
+                        name: /^(?!cc_cookie).*/      //regex
                     }
                 ]
             }
