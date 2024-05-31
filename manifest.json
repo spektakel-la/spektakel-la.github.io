@@ -1,7 +1,7 @@
 {
 "name": "Spektakel Landshut",
 "short_name": "Spektakel-La",
-"start_url": "https://spektakel.la",
+"start_url": "https://spektakel.la/",
 "display": "standalone",
 "description": "App des Festivals Spektakel Landshut",
 "lang": "de",
