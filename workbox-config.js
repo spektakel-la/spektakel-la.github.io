@@ -5,8 +5,9 @@ module.exports = {
 	],
 	globIgnores: [
 		'workbox-config.js',
-		'assets/screenshots',
-		'assets/img/impressions/**/*'
+		'assets/screenshots/**/*',
+		'assets/img/impressions/**/*',
+		'assets/img/sponsors/**/*'
 	],
 	swSrc: 'sw.js',
 	swDest: '_site/sw.js'
