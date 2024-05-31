@@ -1,3 +1,4 @@
+// https://developer.chrome.com/docs/workbox/modules/workbox-build#method-injectManifest
 module.exports = {
 	globDirectory: '_site/',
 	globPatterns: [
