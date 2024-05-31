@@ -33,7 +33,8 @@ CookieConsent.run({
                     {
                         name: /^(?!cc_cookie).*/      //regex
                     }
-                ]
+                ],
+                reloadPage: true
             }
         }
     },
