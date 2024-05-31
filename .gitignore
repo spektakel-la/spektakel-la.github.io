@@ -6,3 +6,6 @@ Gemfile.lock
 .jekyll-cache
 *.gem
 .venv
+/package.json
+/package-lock.json
+/node_modules

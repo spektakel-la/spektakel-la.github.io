@@ -47,6 +47,12 @@ jobs:
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
+      # https://fredrickb.com/2019/07/25/turning-jekyll-site-into-a-progressive-web-app/
+      - name: Workbox
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+        run: npm i workbox-cli && npx workbox injectManifest workbox-config.js
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v3
