@@ -14,22 +14,6 @@
   <!-- Use Atom -->
   {% feed_meta %}
 
-  <!-- service-worker -->
-  <script>
-    // Don't register the service worker until the page has fully loaded
-    window.addEventListener('load', () => {
-      // Is service worker available?
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js').then(() => {
-          console.log('Service worker registered!');
-        }).catch((error) => {
-          console.warn('Error registering service worker:');
-          console.warn(error);
-        });
-      }
-    });
-  </script>
-
   <!-- Default consent -->
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -64,6 +48,9 @@
   <link rel="stylesheet" href="./assets/3rd-party/vanilla-cookieconsent/cookieconsent.css" crossorigin="anonymous"/>
   <script src="./assets/3rd-party/vanilla-cookieconsent/cookieconsent.umd.js" charset="utf-8" crossorigin="anonymous"></script>
   <script type="module" src="./assets/js/cookieconsent-config.js"></script>
+
+  <!-- service-worker -->
+  <script type="module" src="./assets/js/setup-serviceworker.mjs"></script>
 
   <!-- font-awesome -->
   <link rel="stylesheet" href="./assets/3rd-party/font-awesome/css/font-awesome.min.css"  crossorigin="anonymous"/>
