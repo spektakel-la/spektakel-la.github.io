@@ -540,4 +540,4 @@
     return Video;
 
 })));
-//# sourceMappingURL=lg-video.umd.js.map
+

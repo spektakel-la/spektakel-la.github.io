@@ -137,4 +137,4 @@
     return MediumZoom;
 
 })));
-//# sourceMappingURL=lg-medium-zoom.umd.js.map
+

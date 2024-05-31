@@ -279,4 +279,4 @@
     return Rotate;
 
 })));
-//# sourceMappingURL=lg-rotate.umd.js.map
+

@@ -51,7 +51,7 @@ this.workbox.recipes = (function (exports, registerRoute_js, StaleWhileRevalidat
 
     /**
      * @memberof workbox-recipes
-     
+
      * @param {Object} options
      * @param {string[]} options.urls Paths to warm the strategy's cache with
      * @param {Strategy} options.strategy Strategy to use
@@ -265,4 +265,4 @@ this.workbox.recipes = (function (exports, registerRoute_js, StaleWhileRevalidat
     return exports;
 
 })({}, workbox.routing, workbox.strategies, workbox.strategies, workbox.cacheableResponse, workbox.expiration, workbox.strategies, workbox.routing, workbox.precaching);
-//# sourceMappingURL=workbox-recipes.dev.js.map
+

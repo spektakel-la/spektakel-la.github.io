@@ -842,4 +842,4 @@ class Workbox extends WorkboxEventTarget {
  */
 
 export { Workbox, WorkboxEvent, messageSW };
-//# sourceMappingURL=workbox-window.dev.mjs.map
+

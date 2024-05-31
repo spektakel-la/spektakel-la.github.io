@@ -224,4 +224,4 @@
     return Share;
 
 })));
-//# sourceMappingURL=lg-share.umd.js.map
+
