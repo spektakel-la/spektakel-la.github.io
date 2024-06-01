@@ -7,3 +7,78 @@ image: page/program.jpg
 
 <div>Bleiben Sie gespannt, es wird ein fantastisches Programm.</div>
 
+{%  comment  %}
+{% assign sortedLocations = site.locations | sort: 'location_id' %}
+{% assign groupedSchedule = site.data.schedule | group_by: 'time' | sort: 'name' %}
+{% for group in groupedSchedule %}
+    {% assign scheduleEntryDate = group.name |  date: "%d.%m.%Y" %}
+    {% assign scheduleEntryTime = group.name |  date: "%H:%M:%S" %}
+
+    {% if scheduleEntryDate != lastRenderedDate %}
+        <div>{{ scheduleEntryDate }}</div>
+        {% assign lastRenderedDate = scheduleEntryDate %}
+    {% endif %}
+
+    {% assign entriesSortedByLocation = group.items | sort: "location_id" %}
+
+    {% for entry in entriesSortedByLocation %}
+        {% assign location = site.locations | where: 'location_id', entry.location_id | first %}
+        {% assign artist = site.artists | where: 'artist_id', entry.artist_id | first %}
+
+        <div>{{ scheduleEntryTime }} - Location({{ location.location_id }}) - {{ artist.name }}</div>
+    {% endfor %}
+{% endfor %}
+{% endcomment %}
+
+
+
+{% assign sortedLocations = site.locations | sort: 'location_id' %}
+<table>
+    <thead>
+        <tr>
+            <th></th>
+            {% for location in sortedLocations %}
+                <th>
+                    <div class="table-header-location-id">
+                        {{ location.location_id }}
+                    </div>
+                    <div class="table-header-location-description">
+                        {{ location.description }}
+                    </div>
+                </th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% assign groupedSchedule = site.data.schedule | group_by: 'time' | sort: 'name' %}
+        {% for group in groupedSchedule %}
+            {% assign scheduleEntryDate = group.name | date: "%d.%m.%Y" %}
+            {% assign scheduleEntryTime = group.name | date: "%H:%M:%S" %}
+
+            {% if scheduleEntryDate != lastRenderedDate %}
+                <tr>
+                    <td colspan="{{ sortedLocations | size | plus:1 }}">
+                        {{ scheduleEntryDate }}
+                    </td>
+                </tr>
+                {% assign lastRenderedDate = scheduleEntryDate %}
+            {% endif %}
+
+            <tr>
+                <td>{{ scheduleEntryTime }}</td>
+                {% assign scheduledActsAtTime = group.items %}
+                {% for location in sortedLocations %}
+                    {% assign entryAtLocation = scheduledActsAtTime | where: 'location_id', location.location_id | first %}
+                    {% if entryAtLocation %}
+                        <td>
+                            {% assign artist = site.artists | where: 'artist_id', entryAtLocation.artist_id | first %}
+                            {{ artist.name }}
+                        </td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
