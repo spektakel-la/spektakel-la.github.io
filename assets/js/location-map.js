@@ -2,7 +2,7 @@
 ---
 const LOCATIONS = {{ site.locations | jsonify }};
 const ARTISTS = {{ site.artists | jsonify }};
-const SCHEDULE = {{ site.data.schedule | jsonify }};
+const SCHEDULE = {{ site.data.schedule | sort: 'time' | jsonify }};
 const MAP_BOUNDS = {{ site.data.settings.offline_map.bounding_rect | jsonify }};
 const MARKER_ICON_SIZE = {{ site.data.settings.offline_map.icon_size | jsonify }};
 const MARKER_ICON_ANCHOR = {{ site.data.settings.offline_map.icon_anchor | jsonify }};
