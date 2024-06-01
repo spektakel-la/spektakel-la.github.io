@@ -139,7 +139,7 @@ const setupLeafletMap = (mapContainer) => {
     });
     map.attributionControl.setPrefix(false)
 
-    const imageUrl = './assets/img/map/map.png';
+    const imageUrl = '/assets/img/map/map.png';
     const imageLayer = L.imageOverlay(imageUrl, MAP_BOUNDS);
     imageLayer.addTo(map);
 
