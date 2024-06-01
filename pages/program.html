@@ -40,7 +40,7 @@ image: page/program.jpg
             {% for location in sortedLocations %}
                 <th>
                     <div class="table-header-location-id">
-                        {{ location.location_id }}
+                        {{ location.location_id | upcase}}
                     </div>
                     <div class="table-header-location-description">
                         {{ location.description }}
