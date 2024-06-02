@@ -1,0 +1,18 @@
+---
+layout: page
+title: Künstler
+permalink: /artists
+image: page/artists.jpg
+---
+
+<div class="artists-list">
+    {% assign sortedArtists = site.artists |  sort: 'name' %}
+    {% for artist in sortedArtists %}
+        <div class="artist">
+            <h2>{{ artist.name }}</h2>
+            <p><strong>Kategorie:</strong> {{ artist.categories | join: ',' }}</p>
+            <img src="{{ artist.image }}" alt="{{ artist.name }}">
+            <p>{{ artist.content | markdownify }}</p>
+        </div>
+    {% endfor %}
+</div>
