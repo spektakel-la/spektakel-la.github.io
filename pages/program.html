@@ -14,7 +14,7 @@ image: page/program.jpg
             {% for location in sortedLocations %}
                 <th>
                     <div class="table-header-location-id">
-                        {{ location.location_id | upcase}}
+                        {{ location.location_id | upcase }}
                     </div>
                     <div class="table-header-location-description">
                         {{ location.description }}
@@ -49,12 +49,12 @@ image: page/program.jpg
                             {% assign artist = site.artists | where: 'artist_id', entryAtLocation.artist_id | first %}
                             {% assign location = site.locations | where: 'location_id', entryAtLocation.location_id | first %}
 
-                            <span itemscope itemtype="https://schema.org/PerformingArtsEvent">
+                            <span itemscope itemtype="https://schema.org/Event">
                                 <span itemprop="name">{{ artist.name }}</span>
-                                <span class="hidden">
-                                    <time itemprop="startDate" datetime="{{ scheduleEntryDateTime }}"></time>
+                                <span hidden>
+                                    <meta itemprop="startDate" content="{{ scheduleEntryDateTime }}">
                                     <span itemscope itemtype="https://schema.org/Place" itemprop="location">
-                                        <span itemprop="name">{{ location.description }}</span>
+                                        <meta itemprop="name" content="{{ location.description }}">
                                         <span itemscope itemtype="https://schema.org/GeoCoordinates" itemprop="geo">
                                             <meta itemprop="latitude" content="{{ location.gps[0] }}">
                                             <meta itemprop="longitude" content="{{ location.gps[1] }}">
@@ -62,10 +62,6 @@ image: page/program.jpg
                                     </span>
                                 </span>
                             </span>
-
-
-
-
                         </td>
                     {% else %}
                         <td></td>
