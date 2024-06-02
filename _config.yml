@@ -1,22 +1,35 @@
 # Site Build Settings
+# Build settings
+markdown:           kramdown
+highlighter:        rouge
+permalink:          /:title
+plugins:            [jekyll-paginate, jekyll-sitemap, jekyll-feed, jekyll-seo-tag, jekyll-email-protect]
+
+
+# Customise seo-settings
+# author:              "Martin Hilz"
+title:		          "Spektakel Landshut"
+description:	      "Internationales Straßenkünstler Festival"
+locale:             "de_DE"
+logo:               "/assets/img/spektakel-logo.png"
+social:
+  name:             "Spektakel Landshut"
+  links:
+    - https://www.facebook.com/Spektakel.Landshut
+    - https://www.instagram.com/spektakel.landshut
+festival_start:     2024-09-11
+festival_end:       2024-09-15
+
+
 
 # jekyll-paginate configuration
-paginate:            5
+paginate:           5
 
-# Build settings
-markdown:            kramdown
-highlighter:         rouge
-permalink:           /:title
-plugins:             [jekyll-paginate, jekyll-sitemap, jekyll-feed, jekyll-seo-tag, jekyll-email-protect]
-
-# Customise atom feed settings (this is where Jekyll-Feed gets configuration information)
-title:		           "Spektakel Landshut"
-description:	       "Internationales Festival"
-author:              "a big fan"
 
 # RSS 2.0 can be used instead of Atom by uncommenting following two lines
 #feed:
 #  path: rss-feed.xml
+
 
 collections:
   artists:

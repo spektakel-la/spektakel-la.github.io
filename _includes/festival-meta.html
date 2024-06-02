@@ -1,0 +1,34 @@
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Festival",
+      "name": "{{ site.title}} - {{ site.description}}",
+      "startDate": "{{ site.festival_start}}",
+      "endDate": "{{ site.festival_end}}",
+      "location": {
+        "@type": "Place",
+        "name": "Landshut",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Altstadt",
+          "addressLocality": "Landshut",
+          "postalCode": "84028",
+          "addressCountry": "DE"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "48.5363577357527",
+          "longitude": "12.151756891702782"
+        }
+      },
+      "performer": [
+        {% for artist in site.artists %}
+            {
+                "@type": "Person",
+                "name": "{{ artist.name }}",
+                "jobTitle": {{ artist.categories | jsonify }}
+            }{% if forloop.last == false%}, {% endif %}
+        {% endfor %}
+      ]
+    }
+</script>

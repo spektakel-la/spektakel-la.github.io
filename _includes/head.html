@@ -11,8 +11,6 @@
   <link rel="manifest" href="/manifest.json">
   <link rel="stylesheet" href="/assets/css/main.css">
 
-  <!-- Use Atom -->
-  {% feed_meta %}
 
   <!-- Default consent -->
   <script>
@@ -57,6 +55,7 @@
 
   <!-- Use Jekyll SEO plugin -->
   {% seo %}
+  {% include festival-meta.html %}
 
   <!-- Leaflet -->
   <link rel="stylesheet" href="/assets/3rd-party/leaflet/dist/leaflet.css" crossorigin="anonymous"/>
