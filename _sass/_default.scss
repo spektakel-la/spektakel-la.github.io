@@ -2,6 +2,10 @@
   Site container
 */
 
+html, body {
+  background-color: $background-color;
+}
+
 .container {
   background-color: $background-color;
   width: $container-width;
