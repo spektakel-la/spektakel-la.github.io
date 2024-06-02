@@ -5,69 +5,70 @@ permalink: /program
 image: page/program.jpg
 ---
 
-
-{% assign sortedLocations = site.locations | sort: 'location_id' %}
-<table>
-    <thead>
-        <tr>
-            <th></th>
-            {% for location in sortedLocations %}
-                <th>
-                    <div class="table-header-location-id">
-                        {{ location.location_id | upcase }}
-                    </div>
-                    <div class="table-header-location-description">
-                        {{ location.description }}
-                    </div>
-                </th>
-            {% endfor %}
-        </tr>
-    </thead>
-    <tbody>
-        {% assign groupedSchedule = site.data.schedule | group_by: 'time' | sort: 'name' %}
-        {% for group in groupedSchedule %}
-            {% assign scheduleEntryDateTime = group.name %}
-            {% assign scheduleEntryDate = scheduleEntryDateTime | date: "%d.%m.%Y" %}
-            {% assign scheduleEntryTime = scheduleEntryDateTime | date: "%H:%M:%S" %}
-
-            {% if scheduleEntryDate != lastRenderedDate %}
-                <tr>
-                    <td colspan="{{ sortedLocations | size | plus:1 }}">
-                        {{ scheduleEntryDate }}
-                    </td>
-                </tr>
-                {% assign lastRenderedDate = scheduleEntryDate %}
-            {% endif %}
-
-            <tr>
-                <td>{{ scheduleEntryTime }}</td>
-                {% assign scheduledActsAtTime = group.items %}
+<div class="program-table-wrapper">
+    {% assign sortedLocations = site.locations | sort: 'location_id' %}
+    <table>
+        <thead>
+            <tr class="sticky">
+                <th></th>
                 {% for location in sortedLocations %}
-                    {% assign entryAtLocation = scheduledActsAtTime | where: 'location_id', location.location_id | first %}
-                    {% if entryAtLocation %}
-                        <td>
-                            {% assign artist = site.artists | where: 'artist_id', entryAtLocation.artist_id | first %}
-                            {% assign location = site.locations | where: 'location_id', entryAtLocation.location_id | first %}
+                    <th>
+                        <div class="table-header-location-id">
+                            {{ location.location_id | upcase }}
+                        </div>
+                        <div class="table-header-location-description">
+                            {{ location.description }}
+                        </div>
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% assign groupedSchedule = site.data.schedule | group_by: 'time' | sort: 'name' %}
+            {% for group in groupedSchedule %}
+                {% assign scheduleEntryDateTime = group.name %}
+                {% assign scheduleEntryDate = scheduleEntryDateTime | date: "%d.%m.%Y" %}
+                {% assign scheduleEntryTime = scheduleEntryDateTime | date: "%H:%M:%S" %}
 
-                            <span itemscope itemtype="https://schema.org/Event">
-                                <span itemprop="name">{{ artist.name }}</span>
-                                <span hidden>
-                                    <meta itemprop="startDate" content="{{ scheduleEntryDateTime }}">
-                                    <span itemscope itemtype="https://schema.org/Place" itemprop="location">
-                                        <meta itemprop="name" content="{{ location.description }}">
-                                        <span itemscope itemtype="https://schema.org/GeoCoordinates" itemprop="geo">
-                                            <meta itemprop="latitude" content="{{ location.gps[0] }}">
-                                            <meta itemprop="longitude" content="{{ location.gps[1] }}">
+                {% if scheduleEntryDate != lastRenderedDate %}
+                    <tr class="day-section">
+                        <td colspan="{{ sortedLocations | size | plus:1 }}">
+                            {{ scheduleEntryDate }}
+                        </td>
+                    </tr>
+                    {% assign lastRenderedDate = scheduleEntryDate %}
+                {% endif %}
+
+                <tr>
+                    <td>{{ scheduleEntryTime }}</td>
+                    {% assign scheduledActsAtTime = group.items %}
+                    {% for location in sortedLocations %}
+                        {% assign entryAtLocation = scheduledActsAtTime | where: 'location_id', location.location_id | first %}
+                        {% if entryAtLocation %}
+                            <td>
+                                {% assign artist = site.artists | where: 'artist_id', entryAtLocation.artist_id | first %}
+                                {% assign location = site.locations | where: 'location_id', entryAtLocation.location_id | first %}
+
+                                <span itemscope itemtype="https://schema.org/Event">
+                                    <span itemprop="name">{{ artist.name }}</span>
+                                    <span hidden>
+                                        <meta itemprop="startDate" content="{{ scheduleEntryDateTime }}">
+                                        <span itemscope itemtype="https://schema.org/Place" itemprop="location">
+                                            <meta itemprop="name" content="{{ location.description }}">
+                                            <span itemscope itemtype="https://schema.org/GeoCoordinates" itemprop="geo">
+                                                <meta itemprop="latitude" content="{{ location.gps[0] }}">
+                                                <meta itemprop="longitude" content="{{ location.gps[1] }}">
+                                            </span>
                                         </span>
                                     </span>
                                 </span>
-                            </span>
-                        </td>
-                    {% else %}
-                        <td></td>
-                    {% endif %}
-                {% endfor %}
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+                            </td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
