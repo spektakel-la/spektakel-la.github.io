@@ -51,9 +51,6 @@
         font-size: 16px;
         margin: 0 !important;
 
-        --stickyBackground: #f5f5f5;
-        --borderColor: #C9D1DC;
-
         .location-title {
             margin: 5px;
         }
@@ -75,7 +72,7 @@
 
             table, th, td {
                 border-spacing: 0;
-                border: 1px solid var(--borderColor);
+                border: 1px solid $table-border-color;
             }
 
             thead {
@@ -90,7 +87,7 @@
                 padding: 5px;
                 // white-space: nowrap;
                 // word-break: break-all;
-                border-bottom: 1px solid var(--borderColor);
+                border-bottom: 1px solid $table-border-color;
                 border-right: 0;
                 border-left: 0;
             }
@@ -112,12 +109,12 @@
                 position: sticky;
                 top: 0;
                 z-index: 400;
-                background: var(--stickyBackground);
+                background: $table-sticky-background-color;
             }
 
             tr.day-section {
                 // box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
-                background: var(--stickyBackground);
+                background: $table-sticky-background-color;
             }
 
             tr.schedule-details {
