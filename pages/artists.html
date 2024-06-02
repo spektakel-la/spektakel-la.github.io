@@ -10,7 +10,7 @@ image: page/artists.jpg
     {% for artist in sortedArtists %}
         <div class="artist">
             <h2>{{ artist.name }}</h2>
-            <p><strong>Kategorie:</strong> {{ artist.categories | join: ',' }}</p>
+            <p><strong>Kategorie:</strong> {{ artist.categories | join: ', ' }}</p>
             <img src="{{ artist.image }}" alt="{{ artist.name }}">
             <p>{{ artist.content | markdownify }}</p>
         </div>
