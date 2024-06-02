@@ -112,8 +112,8 @@ const createScheduleMarkupForLocation = (locationId) => {
         return `
             <table>
                 <tr class="sticky">
-                <th class="schedule-time">Zeit</th>
-                <th>Künstler</th>
+                    <th class="schedule-time">Zeit</th>
+                    <th>Künstler</th>
                 </tr>
                 ${tableRows}
             </table>
