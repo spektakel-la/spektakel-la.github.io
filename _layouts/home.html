@@ -37,7 +37,26 @@ title: Home
   </div>
 </div>
 
+<div class="youtube-video-meta-container">
+  <div class="youtube-video-container">
+    <div class="no-user-consent">
+      <a href="#" data-cc="show-preferencesModal">
+      <img class="youtube-play-button" src="/assets/img/youtube/youtube-play-button.png">
+      <p>Um das Video sehen zu können müssen Sie allen Cookies zustimmen und die Seite neu laden.</p>
+      </a>
+    </div>
+    <iframe id="youtube-spektakel-2023" width="560" height="315"
+      title="Spektakel Landshut 2023" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+</div>
 
+<script>
+  const consent = JSON.parse(localStorage.getItem('consentMode')) || {};
+  if (consent?.analytics_storage === 'granted'){
+    document.getElementById('youtube-spektakel-2023').src = 'https://www.youtube-nocookie.com/embed/DeXdXV5E7XQ?si=Y8_ZTebOA4-uY0eW';
+  }
+</script>
 
 
 
