@@ -1,13 +1,6 @@
-@mixin social-media-icon($color, $transition){
-  -webkit-transition: $transition;
-  -o-transition: $transition;
-  -ms-transition: $transition;
-  -moz-transition: $transition;
-  transition: $transition;
-  &:hover{
-    color: $color;
-  }
-}
+@import "mixins";
+
+$icon-transition-time: 1.0s;
 
 .fa-envelope {
   padding: 5px;

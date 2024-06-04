@@ -1,7 +1,7 @@
 ---
-artist_id: "3"
-name: "Artist 3"
-image: /assets/img/artists/placeholder.png
+artist_id: "daianalou"
+name: "Daiana Lou"
+image: /assets/img/artists/daianalou.jpg
 categories:
     - Tanz
     - Akrobatik
