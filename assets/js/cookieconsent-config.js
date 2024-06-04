@@ -11,9 +11,16 @@ const setConsent = (consent) => {
         };
         gtag('consent', 'update', consentMode);
         localStorage.setItem('consentMode', JSON.stringify(consentMode));
+
+        const consentChangedEvent = new CustomEvent("consentChanged", {
+            detail: consent,
+            bubbles: true,
+            cancelable: true,
+            composed: false,
+          });
+          window.dispatchEvent(consentChangedEvent);
     } catch(_err){}
 }
-
 
 /**
  * All config. options available here:

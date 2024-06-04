@@ -42,7 +42,7 @@ title: Home
     <div class="no-user-consent">
       <a href="#" data-cc="show-preferencesModal">
       <img class="youtube-play-button" src="/assets/img/youtube/youtube-play-button.png">
-      <p>Um das Video sehen zu können müssen Sie allen Cookies zustimmen und die Seite neu laden.</p>
+      <p>Um das Video sehen zu können müssen Sie allen Cookies zustimmen.</p>
       </a>
     </div>
     <iframe id="youtube-spektakel-2023" width="560" height="315"
@@ -52,10 +52,22 @@ title: Home
 </div>
 
 <script>
-  const consent = JSON.parse(localStorage.getItem('consentMode')) || {};
-  if (consent?.analytics_storage === 'granted'){
-    document.getElementById('youtube-spektakel-2023').src = 'https://www.youtube-nocookie.com/embed/DeXdXV5E7XQ?si=Y8_ZTebOA4-uY0eW';
+  const maybeEnableVideo = () => {
+    const consentAnalytics = CookieConsent.acceptedCategory('analytics');
+    const ytIFrame = document.getElementById('youtube-spektakel-2023');
+    if (consentAnalytics){
+      ytIFrame.src = 'https://www.youtube-nocookie.com/embed/DeXdXV5E7XQ?si=Y8_ZTebOA4-uY0eW';
+    }
+    // else {
+    //   // nothing to do here, disabling analytics will reload the page!
+    // }
   }
+  window.addEventListener("load", (event) => {
+    maybeEnableVideo();
+  });
+  window.addEventListener("consentChanged", (event) => {
+   maybeEnableVideo();
+  });
 </script>
 
 
