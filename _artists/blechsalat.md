@@ -2,6 +2,7 @@
 artist_id: "blechsalat"
 name: "Blechsalat"
 image: /assets/img/artists/blechsalat.jpg
+image_position: top
 categories:
     - Musik
 ---

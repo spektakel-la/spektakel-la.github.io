@@ -6,16 +6,16 @@ permalink: /artists
 ---
 
 <div class="artists-list">
-    {% assign sortedArtists = site.artists |  sort: 'artist_id' %}
+    {% assign sortedArtists = site.artists | sort: 'artist_id' %}
     {% for artist in sortedArtists %}
         <div class="artist" id="artist-{{ artist.artist_id }}" itemscope itemtype="http://schema.org/Person">
             <h2 itemprop="name">{{ artist.name }}</h2>
             <p class="artist-category">
-                {% for category in  artist.categories %}
+                {% for category in artist.categories %}
                     <span itemprop="jobTitle">{{ category }}</span>{% if forloop.last == false %}, {% endif %}
                 {% endfor %}
             </p>
-            <img src="{{ artist.image }}" alt="{{ artist.name }}" itemprop="image">
+            <img src="{{ artist.image }}" alt="{{ artist.name }}" itemprop="image" class="custom-position-{% if artist.image_position %}{{ artist.image_position }}{% else %}center{% endif %}">
             <p>{{ artist.content | markdownify }}</p>
         </div>
     {% endfor %}
