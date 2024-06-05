@@ -10,7 +10,7 @@ image: page/program.jpg
     <table>
         <thead>
             <tr class="sticky">
-                <th></th>
+                <th>Zeit</th>
                 {% for location in sortedLocations %}
                     <th>
                         <div class="table-header-location-id">
@@ -28,12 +28,12 @@ image: page/program.jpg
             {% for group in groupedSchedule %}
                 {% assign scheduleEntryDateTime = group.name %}
                 {% assign scheduleEntryDate = scheduleEntryDateTime | date: "%d.%m.%Y" %}
-                {% assign scheduleEntryTime = scheduleEntryDateTime | date: "%H:%M:%S" %}
+                {% assign scheduleEntryTime = scheduleEntryDateTime | date: "%H:%M" %}
 
                 {% if scheduleEntryDate != lastRenderedDate %}
                     <tr class="day-section">
                         <td colspan="{{ sortedLocations | size | plus:1 }}">
-                            {{ scheduleEntryDate }}
+                            <strong>{{ scheduleEntryDate }}</strong>
                         </td>
                     </tr>
                     {% assign lastRenderedDate = scheduleEntryDate %}
