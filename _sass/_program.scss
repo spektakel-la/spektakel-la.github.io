@@ -29,10 +29,6 @@
             background: $table-sticky-background-color;
         }
 
-        th.schedule-time {
-            width: 80px;
-        }
-
         tr:last-child td {
             border-bottom: none;
         }
@@ -65,51 +61,6 @@
             background: $table-sticky-background-color;
             font-weight: bold;
             text-align: center;
-        }
-
-        /* Schedule Details Row */
-        tr.schedule-details {
-            .expand-icon {
-                display: inline-block;
-            }
-
-            .collapse-icon {
-                display: none;
-            }
-
-            &.expanded {
-                .expand-icon {
-                    display: none;
-                }
-
-                .collapse-icon {
-                    display: inline-block;
-                }
-            }
-
-            .artist-and-favorite-toggle {
-                display: grid;
-                grid-template-columns: 1fr auto;
-                align-items: center;
-
-                .favorite-toggle {
-                    position: relative;
-                    @include enlarge-click-area(false, -5px, -5px, -5px, -5px);
-                }
-            }
-        }
-
-        /* Artist Details Row */
-        tr.artist-details {
-            display: none;
-
-            &.visible {
-                display: table-row;
-            }
-
-            p {
-                margin: 0;
-            }
         }
     }
 }
