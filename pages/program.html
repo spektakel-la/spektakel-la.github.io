@@ -32,9 +32,10 @@ image: page/program.jpg
 
                 {% if scheduleEntryDate != lastRenderedDate %}
                     <tr class="day-section">
-                        <td colspan="{{ sortedLocations | size | plus:1 }}">
-                            <strong>{{ scheduleEntryDate }}</strong>
-                        </td>
+                        <td>{{ scheduleEntryDate }}</td>
+                        {% for cell in sortedLocations %}
+                            <td></td>
+                        {% endfor %}
                     </tr>
                     {% assign lastRenderedDate = scheduleEntryDate %}
                 {% endif %}

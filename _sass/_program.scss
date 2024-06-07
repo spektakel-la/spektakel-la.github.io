@@ -4,6 +4,7 @@
     font-size: 16px;
     line-height: 1.2;
     overflow-x: auto; /* Horizontales Scrollen ermöglichen */
+    // height: 300px;
 
     table {
         margin-bottom: 0;
@@ -19,6 +20,7 @@
             border: 1px solid $table-border-color;
             text-align: left;
             width: auto; /* Automatische Breite */
+            text-align: center;
         }
 
         thead {
@@ -61,6 +63,10 @@
             background: $table-sticky-background-color;
             font-weight: bold;
             text-align: center;
+
+            td {
+                border: 0;
+            }
         }
     }
 }
