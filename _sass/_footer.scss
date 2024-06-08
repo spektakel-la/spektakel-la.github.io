@@ -3,7 +3,7 @@
   color: $text-color;
   text-align: center;
   min-height: 56px;
-  line-height: 45px;
+  line-height: 35px;
   width: $container-width;
 }
 .footer a {
@@ -17,13 +17,13 @@
     color: $text-color;
     text-align: center;
     min-height: 56px;
-    line-height: 45px;
+    line-height: 35px;
     width: 95vw;
   }
 }
 .footer-description {
   display: block;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
   color: $footer-description-color;
   font-size:0.8rem;
 }

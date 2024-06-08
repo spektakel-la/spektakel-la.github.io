@@ -1,8 +1,11 @@
 <header class="site-header">
+  <a href="/">
+    <img class="site-logo" src="/assets/img/spektakel-logo.png">
+  </a>
   <h3 class="site-title">
     {% if page.url != '/' %}
+      {{ page.title }}
     {% endif %}
-      <a href="./">{{ site.data.settings.menu_home_label }}</a>
   </h3>
   <nav class="menu-list">
     {% for item in site.data.settings.menu %}
