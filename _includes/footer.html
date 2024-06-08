@@ -1,12 +1,12 @@
 <footer class="footer">
-  {% for item in site.data.settings.social %}
-    <a href="{{ item.link }}" class="menu-link" target="_blank"><i class="fa fa-{{ item.icon }}" aria-hidden="true"></i></a>
-  {% endfor %}
   <div class="footer-description">
     <div>
-      <a href="./">{{ site.title }} | {{ site.description }}</a>
-      <br>
-      <a data-cc="show-preferencesModal" href="#">Cookie-Einstellungen anpassen</a>
+      <div>
+        <a href="./">{{ site.title }} | {{ site.description }}</a>
+      </div>
+      <div>
+        <a data-cc="show-preferencesModal" href="#">Cookie-Einstellungen anpassen</a>
+      </div>
     </div>
   </div>
 </footer>
