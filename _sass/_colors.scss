@@ -1,10 +1,10 @@
 // extracted from logo
 $yellow: #FFC107;
-$pink: #E91E63;
+$pink: hsl(340, 82%, 52%);
 $black: #000000;
 $purple: #9C27B0;
 $green: #4CAF50;
-$blue: #2196F3;
+$blue: #4871B5;
 $red: #F44336;
 
 
@@ -12,15 +12,15 @@ $text-color: $black;
 $text-color-soft: #9a9a9a;
 $text-color-inverted: white;
 $background-color: white;
-$background-color-soft: #f9f9f9;
+$background-color-soft: lighten($blue, 47%);
 $link-color: $black;
 $link-extern-color: $purple;
 $border-color: #C9D1DC;
 
 $footer-description-color: $text-color-soft;
 $header-dropdown-text-color: $black;
-$header-dropdown-background-color: $background-color-soft;
-$header-dropdown-hover-background-color: $background-color-soft;
+$header-dropdown-background-color: $background-color;
+$header-dropdown-hover-background-color: $background-color;
 
 // tables
 $table-border-color: $border-color;
