@@ -14,13 +14,14 @@
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        text-align: center;
+        align-items: flex-start; // Inhalte am Anfang ausrichten
+        // text-align: center;
 
         img {
             width: 100%;
             height: 250px; // Erhöhte Höhe
             object-fit: cover; // Bild skalieren und zuschneiden
+            margin-bottom: 10px; // Abstand zwischen Bild und Text
         }
 
         img.custom-position-top {
@@ -33,6 +34,10 @@
 
         img.custom-position-bottom {
             object-position: bottom;
+        }
+
+        h2, p {
+            margin-top: 10px; // Abstand für den Text direkt unter dem Bild
         }
     }
 }
