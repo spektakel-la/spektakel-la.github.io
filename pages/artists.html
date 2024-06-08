@@ -9,7 +9,8 @@ permalink: /artists
     {% assign sortedArtists = site.artists | sort: 'artist_id' %}
     {% for artist in sortedArtists %}
         <div class="artist" id="artist-{{ artist.artist_id }}" itemscope itemtype="http://schema.org/Person">
-            <h2 itemprop="name">{{ artist.name }}</h2>
+            <h3 itemprop="name">{{ artist.name }}</h3>
+            <p>{{ artist.country }}</p>
             <p class="artist-category">
                 {% for category in artist.categories %}
                     <span itemprop="jobTitle">{{ category }}</span>{% if forloop.last == false %}, {% endif %}
