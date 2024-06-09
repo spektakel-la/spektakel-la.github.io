@@ -2,6 +2,19 @@
     .artist {
         width: calc(33.333% - 40px);
 
+        .card-header p {
+            margin: 0;
+        }
+
+        .favorite-toggle {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 30px;
+            color: $yellow;
+            @include enlarge-click-area(false, -5px, -5px, -5px, -5px);
+        }
+
         img {
             width: 100%;
             height: 250px; // Erhöhte Höhe
