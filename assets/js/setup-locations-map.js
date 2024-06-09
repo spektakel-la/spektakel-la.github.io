@@ -1,12 +1,5 @@
 ---
 ---
-const LOCATIONS = {{ site.locations | jsonify }};
-const ARTISTS = {{ site.artists | jsonify }};
-const SCHEDULE = {{ site.data.schedule | sort: 'time' | jsonify }};
-const MAP_BOUNDS = {{ site.data.settings.offline_map.bounding_rect | jsonify }};
-const MARKER_ICON_SIZE = {{ site.data.settings.offline_map.icon_size | jsonify }};
-const MARKER_ICON_ANCHOR = {{ site.data.settings.offline_map.icon_anchor | jsonify }};
-
 const createIconMarkup = (locationObj) => `
     <div class="spektakel-leaflet-location-icon-container">
         <div>
@@ -20,11 +13,18 @@ const toggleArtistDetails = (rowElement) => {
     rowElement.nextElementSibling.classList.toggle('visible');
 };
 
-const toggleFavorite = (iconElement, event, artistId) => {
+const toggleFavoriteOnLocationTable = (iconElement, event, artistId) => {
     event.stopPropagation();
-    iconElement.classList.toggle('fa-star-o');
-    iconElement.classList.toggle('fa-star');
+
+    // persist favorite-setting in localStorage
     toggleArtistFavorite(artistId);
+
+    // update ui
+    const allFavoriteTogglesForArtist = document.querySelectorAll(`i[${DATA_ATTRIBUTE_FAVORITE_TOGGLE}="${artistId}"]`);
+    allFavoriteTogglesForArtist.forEach((iconElement) => {
+        iconElement.classList.toggle(CSS_CLASS_NO_FAVORITE);
+        iconElement.classList.toggle(CSS_CLASS_FAVORITE);
+    });
 };
 
 const sanityCheckSchedule = () => {
@@ -85,20 +85,21 @@ const createScheduleMarkupForLocation = (locationId) => {
                 <td>
                     <div class="artist-and-favorite-toggle">
                         <span>${sched.artist_name}</span>
-                        <i class="favorite-toggle fa ${artistFavorites.includes(sched.artist_id) ? 'fa-star' : 'fa-star-o'}"
+                        <i class="favorite-toggle fa ${artistFavorites.includes(sched.artist_id) ? CSS_CLASS_FAVORITE : CSS_CLASS_NO_FAVORITE}"
                         aria-hidden="true"
-                        onclick="toggleFavorite(this, event, '${sched.artist_id}');"></i>
+                        ${DATA_ATTRIBUTE_FAVORITE_TOGGLE}="${sched.artist_id}"
+                        onclick="toggleFavoriteOnLocationTable(this, event, '${sched.artist_id}');"></i>
                     </div>
                 </td>
             </tr>
             <tr class="artist-details">
                 <td colspan="2">
                     <div>
-                        <div>
-                            ${sched.artist_content}
+                        <div class="artist-details-categories">
+                            ${sched.artist_categories.join(', ')}
                         </div>
-                        <div>
-                            (${sched.artist_categories.join(', ')})
+                        <div class="artist-details-description">
+                            ${sched.artist_content}
                         </div>
                     </div>
                 </td>

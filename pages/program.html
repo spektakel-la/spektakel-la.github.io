@@ -46,7 +46,7 @@ permalink: /program
                     {% for location in sortedLocations %}
                         {% assign entryAtLocation = scheduledActsAtTime | where: 'location_id', location.location_id | first %}
                         {% if entryAtLocation %}
-                            <td>
+                            <td data-artist-id="{{ entryAtLocation.artist_id }}">
                                 {% assign artist = site.artists | where: 'artist_id', entryAtLocation.artist_id | first %}
                                 {% assign location = site.locations | where: 'location_id', entryAtLocation.location_id | first %}
 
@@ -73,3 +73,11 @@ permalink: /program
         </tbody>
     </table>
 </div>
+
+<script>
+    const favorites = getArtistFavorites();
+    favorites.forEach((favorite) => {
+        const tdElements = document.querySelectorAll(`[data-artist-id="${favorite}"]`);
+        tdElements.forEach((tdElement) => tdElement.classList.toggle('favorite'));
+    });
+</script>

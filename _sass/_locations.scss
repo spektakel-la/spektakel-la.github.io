@@ -140,20 +140,23 @@
                     align-items: center;
 
                     .favorite-toggle {
+                        color: $yellow;
                         position: relative;
                         @include enlarge-click-area(false, -5px, -5px, -5px, -5px);
-                        }
+                    }
                 }
             }
 
             tr.artist-details {
                 display: none;
+
                 &.visible{
                     display: table-row;
                 }
 
                 p {
                     margin: 0;
+                    line-height: 1;
                 }
             }
         }

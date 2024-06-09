@@ -10,6 +10,9 @@ permalink: /artists
     {% for artist in sortedArtists %}
         <div class="artist card" id="artist-{{ artist.artist_id }}" itemscope itemtype="http://schema.org/Person">
             <div class="card-header">
+                <i class="favorite-toggle fa fa-star-o"
+                    data-artist-favorite-toggle="{{ artist.artist_id }}"
+                    onclick="toggleFavoriteOnArtistsList(this, event, '{{ artist.artist_id }}');"></i>
                 <h2 itemprop="name">{{ artist.name }}</h2>
                 <p>{{ artist.country }}</p>
                 <p class="artist-category">
@@ -25,3 +28,24 @@ permalink: /artists
         </div>
     {% endfor %}
 </div>
+
+<script>
+    const toggleFavoriteOnArtistsList = (iconElement, event, artistId) => {
+        event.stopPropagation();
+
+        // persist favorite-setting in localStorage
+        toggleArtistFavorite(artistId);
+
+        // update ui
+        iconElement.classList.toggle('fa-star-o');
+        iconElement.classList.toggle('fa-star');
+    };
+
+    const favorites = getArtistFavorites();
+    favorites.forEach((favorite) => {
+        const iconElement = document.querySelector(`i[data-artist-favorite-toggle="${favorite}"]`);
+            iconElement.classList.toggle(CSS_CLASS_NO_FAVORITE);
+            iconElement.classList.toggle(CSS_CLASS_FAVORITE);
+
+    });
+</script>
