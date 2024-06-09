@@ -1,21 +1,6 @@
 .artists-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 0;
-    margin: 0 auto;
-    max-width: $container-width;
-
     .artist {
-        border: 1px solid $border-color;
-        padding: 20px;
         width: calc(33.333% - 40px);
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start; // Inhalte am Anfang ausrichten
-        // text-align: center;
 
         img {
             width: 100%;
@@ -35,10 +20,6 @@
         img.custom-position-bottom {
             object-position: bottom;
         }
-
-        h2, p {
-            margin-top: 10px; // Abstand für den Text direkt unter dem Bild
-        }
     }
 }
 
@@ -48,7 +29,8 @@
     }
 }
 
-@media (max-width: $phone-width) {
+// @media (max-width: $phone-width) {
+@media (max-width: 600px) {
     .artists-list .artist {
         width: calc(100% - 40px);
     }
