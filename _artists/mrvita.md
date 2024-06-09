@@ -3,6 +3,7 @@ artist_id: "mrvita"
 name: "Mr. Vita"
 country: Spanien
 image: /assets/img/artists/mrvita.jpg
+image_position: top
 categories:
     - Akrobatik
     - Comedy
