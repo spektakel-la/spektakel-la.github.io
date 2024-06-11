@@ -1,0 +1,91 @@
+---
+layout: page
+title: Programm
+permalink: /program2
+---
+
+
+{% assign sortedLocations = site.locations | sort: 'location_id' %}
+{% assign groupedSchedule = site.data.schedule | group_by: 'time' | sort: 'name' %}
+
+{% assign festivalEventDays = '' | split: ',' %}
+{% for event in site.data.schedule %}
+    {% assign eventDate = event.time | date: "%d.%m.%Y" %}
+    {% unless festivalEventDays contains eventDate %}
+        {% assign festivalEventDays = festivalEventDays | push: eventDate %} <!-- Tag zur Liste hinzufügen, wenn nicht vorhanden -->
+    {% endunless %}
+{% endfor %}
+
+{% for scheduleDay in festivalEventDays %}
+    <h1>{{ scheduleDay }}</h1>
+    <div class="program-table-wrapper">
+        <table>
+            <thead>
+                <tr class="sticky">
+                    <th>Zeit</th>
+                    {% for location in sortedLocations %}
+                        <th>
+                            <div class="table-header-location-id">
+                                {{ location.location_id | upcase }}
+                            </div>
+                            <div class="table-header-location-description">
+                                {{ location.description }}
+                            </div>
+                        </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% assign groupedSchedule = site.data.schedule | group_by: 'time' | sort: 'name' %}
+                {% for group in groupedSchedule %}
+                    {% assign scheduleEntryDateTime = group.name %}
+                    {% assign scheduleEntryDate = scheduleEntryDateTime | date: "%d.%m.%Y" %}
+                    {% assign scheduleEntryTime = scheduleEntryDateTime | date: "%H:%M" %}
+
+                    {% if scheduleEntryDate != scheduleDay %}
+                        {% continue %}
+                    {% endif %}
+
+                    <tr>
+                        <td>{{ scheduleEntryTime }}</td>
+                        {% assign scheduledActsAtTime = group.items %}
+                        {% for location in sortedLocations %}
+                            {% assign entryAtLocation = scheduledActsAtTime | where: 'location_id', location.location_id | first %}
+                            {% if entryAtLocation %}
+                                <td data-artist-id="{{ entryAtLocation.artist_id }}">
+                                    {% assign artist = site.artists | where: 'artist_id', entryAtLocation.artist_id | first %}
+                                    {% assign location = site.locations | where: 'location_id', entryAtLocation.location_id | first %}
+
+                                    <span itemscope itemtype="https://schema.org/Event">
+                                        <span itemprop="name">{{ artist.name }}</span>
+                                        <span hidden>
+                                            <meta itemprop="startDate" content="{{ scheduleEntryDateTime }}">
+                                            <span itemscope itemtype="https://schema.org/Place" itemprop="location">
+                                                <meta itemprop="name" content="{{ location.description }}">
+                                                <span itemscope itemtype="https://schema.org/GeoCoordinates" itemprop="geo">
+                                                    <meta itemprop="latitude" content="{{ location.gps[0] }}">
+                                                    <meta itemprop="longitude" content="{{ location.gps[1] }}">
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endfor %}
+
+<script>
+    const favorites = getArtistFavorites();
+    favorites.forEach((favorite) => {
+        const tdElements = document.querySelectorAll(`[data-artist-id="${favorite}"]`);
+        tdElements.forEach((tdElement) => tdElement.classList.toggle('favorite'));
+    });
+</script>
