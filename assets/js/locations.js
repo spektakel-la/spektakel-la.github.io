@@ -48,6 +48,7 @@ const createScheduleMarkupForLocation = (locationId) => {
             entry.artist_name = artist?.name;
             entry.artist_categories = artist?.categories;
             entry.artist_image = artist?.image;
+            entry.image_position = artist?.image_position;
             return entry;
         } else {
             console.error("Error processing schedule entry");
@@ -95,11 +96,16 @@ const createScheduleMarkupForLocation = (locationId) => {
             <tr class="artist-details">
                 <td colspan="2">
                     <div>
-                        <div class="artist-details-categories">
-                            ${sched.artist_categories.join(', ')}
-                        </div>
+                        <!--
+                            <div class="artist-details-categories">
+                                ${sched.artist_categories.join(', ')}
+                            </div>
+                        -->
                         <div class="artist-details-image">
-                            <img src="${sched.artist_image}" alt="${sched.artist_name}" />
+                            <img
+                                src="${sched.artist_image}"
+                                alt="${sched.artist_name}"
+                                class="custom-position-${sched.image_position ? sched.image_position : 'center'}"/>
                         </div>
                         <div class="artist-details-link">
                             <a href="/artists#${sched.artist_id}">Zum Künstlerprofil</a>
