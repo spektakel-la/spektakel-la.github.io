@@ -21,7 +21,11 @@ permalink: /artists
                 </p>
             </div>
             <div class="card-body">
-                <img src="{{ artist.image }}" alt="{{ artist.name }}" itemprop="image" class="custom-position-{% if artist.image_position %}{{ artist.image_position }}{% else %}center{% endif %}">
+                <picture>
+                    <source srcset="{{ artist.image }}" type="image/webp">
+                    <source srcset="{{ artist.image | replace:'.webp','.jpg' }}" type="image/jpeg">
+                    <img src="{{ artist.image | replace:'.webp','.jpg' }}" alt="{{ artist.name }}" itemprop="image" class="custom-position-{% if artist.image_position %}{{ artist.image_position }}{% else %}center{% endif %}">
+                </picture>
                 <p>{{ artist.content | markdownify }}</p>
             </div>
         </div>
@@ -33,7 +37,7 @@ permalink: /artists
         event.stopPropagation();
 
         // persist favorite-setting in localStorage
-        toggleArtistFavorite(artistId);
+        spektakel.favorites.toggleArtistFavorite(artistId);
 
         // update ui
         iconElement.classList.toggle('fa-star-o');
@@ -46,11 +50,11 @@ permalink: /artists
     };
 
 
-    const favorites = getArtistFavorites();
+    const favorites = spektakel.favorites.getArtistFavorites();
     favorites.forEach((favorite) => {
         const iconElement = document.querySelector(`i[data-artist-favorite-toggle="${favorite}"]`);
-            iconElement.classList.toggle(CSS_CLASS_NO_FAVORITE);
-            iconElement.classList.toggle(CSS_CLASS_FAVORITE);
+            iconElement.classList.toggle(spektakel.constants.CSS_CLASS_NO_FAVORITE);
+            iconElement.classList.toggle(spektakel.constants.CSS_CLASS_FAVORITE);
 
     });
 </script>

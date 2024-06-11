@@ -83,7 +83,7 @@ permalink: /program2
 {% endfor %}
 
 <script>
-    const favorites = getArtistFavorites();
+    const favorites = spektakel.favorites.getArtistFavorites();
     favorites.forEach((favorite) => {
         const tdElements = document.querySelectorAll(`[data-artist-id="${favorite}"]`);
         tdElements.forEach((tdElement) => tdElement.classList.toggle('favorite'));
