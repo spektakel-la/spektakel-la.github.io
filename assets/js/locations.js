@@ -47,7 +47,7 @@ const createScheduleMarkupForLocation = (locationId) => {
         if (artist){
             entry.artist_name = artist?.name;
             entry.artist_categories = artist?.categories;
-            entry.artist_content = artist?.content;
+            entry.artist_image = artist?.image;
             return entry;
         } else {
             console.error("Error processing schedule entry");
@@ -98,8 +98,11 @@ const createScheduleMarkupForLocation = (locationId) => {
                         <div class="artist-details-categories">
                             ${sched.artist_categories.join(', ')}
                         </div>
-                        <div class="artist-details-description">
-                            ${sched.artist_content}
+                        <div class="artist-details-image">
+                            <img src="${sched.artist_image}" alt="${sched.artist_name}" />
+                        </div>
+                        <div class="artist-details-link">
+                            <a href="/artists#${sched.artist_id}">Zum Künstlerprofil</a>
                         </div>
                     </div>
                 </td>
@@ -140,7 +143,7 @@ const setupLeafletMap = (mapContainer) => {
     });
     map.attributionControl.setPrefix(false)
 
-    const imageUrl = '/assets/img/map/map.png';
+    const imageUrl = '/assets/img/map/map.webp';
     const imageLayer = L.imageOverlay(imageUrl, MAP_BOUNDS);
     imageLayer.addTo(map);
 
