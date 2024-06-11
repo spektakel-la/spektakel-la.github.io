@@ -2,7 +2,7 @@
 artist_id: "elflechanegra"
 name: "El Flecha Negra"
 country: Chile, Peru, Spanien, Argentinien
-image: /assets/img/artists/elflechanegra.jpg
+image: /assets/img/artists/elflechanegra.webp
 categories:
     - Musik
 ---

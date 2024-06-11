@@ -2,7 +2,7 @@
 artist_id: "samanthaguineu"
 name: "Samantha Guineu"
 country: Australien
-image: /assets/img/artists/samanthaguineu.jpg
+image: /assets/img/artists/samanthaguineu.webp
 image_position: top
 categories:
     - Akrobatik

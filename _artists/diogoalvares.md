@@ -2,7 +2,7 @@
 artist_id: "diogoalvares"
 name: "Diogo Alvares"
 country: Argentinien
-image: /assets/img/artists/diogoalvares.jpg
+image: /assets/img/artists/diogoalvares.webp
 image_position: top
 categories:
     - Zauber

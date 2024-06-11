@@ -2,7 +2,7 @@
 artist_id: "shunya"
 name: "Shunya"
 country: England
-image: /assets/img/artists/shunya.jpg
+image: /assets/img/artists/shunya.webp
 image_position: top
 categories:
     - Musik

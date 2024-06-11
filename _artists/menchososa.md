@@ -2,7 +2,7 @@
 artist_id: "menchososa"
 name: "Mencho Sosa"
 country: Argentinien
-image: /assets/img/artists/menchososa.jpg
+image: /assets/img/artists/menchososa.webp
 categories:
     - Comedy
     - Jonglage

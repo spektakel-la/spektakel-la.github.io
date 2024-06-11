@@ -2,7 +2,7 @@
 artist_id: "rorycharles"
 name: "Rory Charles"
 country: England
-image: /assets/img/artists/rorycharles.jpg
+image: /assets/img/artists/rorycharles.webp
 categories:
     - Musik
 ---

@@ -2,7 +2,7 @@
 artist_id: "lottastina"
 name: "Lotta & Stina"
 country: Finnland
-image: /assets/img/artists/lottastina.jpg
+image: /assets/img/artists/lottastina.webp
 categories:
     - Akrobatik
     - Theater

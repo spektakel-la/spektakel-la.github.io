@@ -2,7 +2,7 @@
 artist_id: "staki"
 name: "S-Taki"
 country: Spanien
-image: /assets/img/artists/staki.jpg
+image: /assets/img/artists/staki.webp
 categories:
     - Musik
 ---

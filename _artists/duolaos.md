@@ -2,7 +2,7 @@
 artist_id: "duolaos"
 name: "Duo Laos"
 country: Argentinien
-image: /assets/img/artists/duolaos.jpg
+image: /assets/img/artists/duolaos.webp
 categories:
     - Akrobatik
 ---

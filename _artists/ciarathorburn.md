@@ -2,7 +2,7 @@
 artist_id: "ciarathorburn"
 name: "Ciara Thorburn"
 country: Australien
-image: /assets/img/artists/ciarathorburn.jpg
+image: /assets/img/artists/ciarathorburn.webp
 image_position: top
 categories:
     - Akrobatik

@@ -2,7 +2,7 @@
 artist_id: "hermajestyssecretcircus"
 name: "Her Majesty's Secret Circus"
 country: USA
-image: /assets/img/artists/hermajestyssecretcircus.jpg
+image: /assets/img/artists/hermajestyssecretcircus.webp
 image_position: top
 categories:
     - Akrobatik

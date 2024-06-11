@@ -2,7 +2,7 @@
 artist_id: "jongleurflorian"
 name: "Jongleur Florian"
 country: Deutschland
-image: /assets/img/artists/jongleurflorian.jpg
+image: /assets/img/artists/jongleurflorian.webp
 image_position: top
 categories:
     - Jonglage

@@ -2,7 +2,7 @@
 artist_id: "brunitus"
 name: "Brunitus"
 country: Argentinien
-image: /assets/img/artists/brunitus.jpg
+image: /assets/img/artists/brunitus.webp
 image_position: top
 categories:
     - Akrobatik

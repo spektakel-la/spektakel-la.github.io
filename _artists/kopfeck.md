@@ -2,7 +2,7 @@
 artist_id: "kopfeck"
 name: "Kopfeck"
 country: Deutschland
-image: /assets/img/artists/kopfeck.jpg
+image: /assets/img/artists/kopfeck.webp
 categories:
     - Musik
 ---

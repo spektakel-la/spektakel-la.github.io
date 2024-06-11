@@ -2,7 +2,7 @@
 artist_id: "samgoodburn"
 name: "Sam Goodburn"
 country: England
-image: /assets/img/artists/samgoodburn.jpg
+image: /assets/img/artists/samgoodburn.webp
 image_position: top
 categories:
     - Akrobatik
