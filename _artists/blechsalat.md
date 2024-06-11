@@ -2,7 +2,7 @@
 artist_id: "blechsalat"
 name: "Blechsalat"
 country: Österreich
-image: /assets/img/artists/blechsalat.jpg
+image: /assets/img/artists/blechsalat.webp
 image_position: top
 categories:
     - Musik

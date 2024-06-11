@@ -2,7 +2,7 @@
 artist_id: "cronopia"
 name: "Cronopia"
 country: Argentinien
-image: /assets/img/artists/cronopia.jpg
+image: /assets/img/artists/cronopia.webp
 categories:
     - Akrobatik
 ---

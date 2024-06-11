@@ -2,7 +2,7 @@
 artist_id: "ageofglass"
 name: "Age of glass"
 country: England
-image: /assets/img/artists/ageofglass.jpg
+image: /assets/img/artists/ageofglass.webp
 categories:
     - Musik
 ---

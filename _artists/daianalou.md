@@ -2,7 +2,7 @@
 artist_id: "daianalou"
 name: "Daiana Lou"
 country: Italien
-image: /assets/img/artists/daianalou.jpg
+image: /assets/img/artists/daianalou.webp
 image_position: top
 categories:
     - Musik

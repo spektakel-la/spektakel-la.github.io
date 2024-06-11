@@ -2,7 +2,7 @@
 artist_id: "maxmaber"
 name: "Maxmaber Orkestar"
 country: Italien, Kroatien
-image: /assets/img/artists/maxmaber.jpg
+image: /assets/img/artists/maxmaber.webp
 categories:
     - Musik
 ---

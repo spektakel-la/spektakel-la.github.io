@@ -2,7 +2,7 @@
 artist_id: "fluteloops"
 name: "Fluteloops"
 country: Irland
-image: /assets/img/artists/fluteloops.jpg
+image: /assets/img/artists/fluteloops.webp
 image_position: top
 categories:
     - Musik

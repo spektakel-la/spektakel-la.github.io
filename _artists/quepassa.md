@@ -2,7 +2,7 @@
 artist_id: "quepassa"
 name: "Que Passa"
 country: Polen
-image: /assets/img/artists/quepassa.jpg
+image: /assets/img/artists/quepassa.webp
 categories:
     - Musik
 ---

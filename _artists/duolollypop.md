@@ -2,7 +2,7 @@
 artist_id: "duolollypop"
 name: "Duo Lollypop"
 country: Spanien
-image: /assets/img/artists/duolollypop.jpg
+image: /assets/img/artists/duolollypop.webp
 categories:
     - Comedy
     - Theater

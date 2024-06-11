@@ -2,7 +2,7 @@
 artist_id: "matricardo"
 name: "Mat Ricardo"
 country: England
-image: /assets/img/artists/matricardo.jpg
+image: /assets/img/artists/matricardo.webp
 categories:
     - Akrobatik
     - Jonglage

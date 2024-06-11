@@ -2,7 +2,7 @@
 artist_id: "thismaag"
 name: "This Maag"
 country: Spanien
-image: /assets/img/artists/thismaag.jpg
+image: /assets/img/artists/thismaag.webp
 categories:
     - Comedy
     - Theater

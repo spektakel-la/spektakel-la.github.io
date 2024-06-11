@@ -2,7 +2,7 @@
 artist_id: "annakrasy"
 name: "Anna Krasy"
 country: Estland
-image: /assets/img/artists/annakrasy.jpg
+image: /assets/img/artists/annakrasy.webp
 categories:
     - Akrobatik
     - Tanz

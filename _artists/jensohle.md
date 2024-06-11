@@ -2,7 +2,7 @@
 artist_id: "jensohle"
 name: "Jens Ohle"
 country: Deutschland
-image: /assets/img/artists/jensohle.jpg
+image: /assets/img/artists/jensohle.webp
 categories:
     - Akrobatik
     - Theater
