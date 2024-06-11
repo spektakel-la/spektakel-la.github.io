@@ -2,7 +2,7 @@
 module.exports = {
 	globDirectory: '_site/',
 	globPatterns: [
-		'**/*.{html,json,css,png,jpg,webp,jpeg,svg,js,mjs,ico,woff,woff2}'
+		'**/*.{html,json,css,png,jpg,jpeg,webp,svg,js,mjs,ico,woff,woff2}'
 	],
 	globIgnores: [
 		'workbox-config.js',
