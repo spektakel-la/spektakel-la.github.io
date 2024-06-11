@@ -118,7 +118,9 @@
             }
 
             tr.schedule-details {
+                cursor: pointer;
                 .expand-icon {
+                    color: $yellow;
                     display: inline-block;
                 }
                 .collapse-icon {
@@ -130,6 +132,7 @@
                         display: none;
                     }
                     .collapse-icon {
+                        color: $yellow;
                         display: inline-block;
                     }
                 }
@@ -157,6 +160,25 @@
                 p {
                     margin: 0;
                     line-height: 1;
+                }
+
+                img {
+                    width: 100%;
+                    height: 200px; // Erhöhte Höhe
+                    object-fit: cover; // Bild skalieren und zuschneiden
+                    margin-bottom: 10px; // Abstand zwischen Bild und Text
+                }
+
+                img.custom-position-top {
+                    object-position: top;
+                }
+
+                img.custom-position-center {
+                    object-position: center;
+                }
+
+                img.custom-position-bottom {
+                    object-position: bottom;
                 }
             }
         }
