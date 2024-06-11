@@ -1,26 +1,39 @@
-const setConsent = (consent) => {
-    try {
-        const consentMode = {
-            'functionality_storage': consent.necessary ? 'granted': 'denied',
-            'security_storage': consent.necessary ? 'granted': 'denied',
-            'ad_storage': consent.analytics ? 'granted': 'denied',
-            'ad_personalization': consent.analytics ? 'granted': 'denied',
-            'ad_user_data': consent.analytics ? 'granted': 'denied',
-            'analytics_storage': consent.analytics ? 'granted': 'denied',
-            'personalization_storage': consent.analytics ? 'granted': 'denied',
-        };
-        gtag('consent', 'update', consentMode);
-        localStorage.setItem('consentMode', JSON.stringify(consentMode));
+(function () {
+    const setConsent = (consent) => {
+        try {
+            const consentMode = {
+                'functionality_storage': consent.necessary ? 'granted': 'denied',
+                'security_storage': consent.necessary ? 'granted': 'denied',
+                'ad_storage': consent.analytics ? 'granted': 'denied',
+                'ad_personalization': consent.analytics ? 'granted': 'denied',
+                'ad_user_data': consent.analytics ? 'granted': 'denied',
+                'analytics_storage': consent.analytics ? 'granted': 'denied',
+                'personalization_storage': consent.analytics ? 'granted': 'denied',
+            };
+            gtag('consent', 'update', consentMode);
+            localStorage.setItem('consentMode', JSON.stringify(consentMode));
 
-        const consentChangedEvent = new CustomEvent("consentChanged", {
-            detail: consent,
-            bubbles: true,
-            cancelable: true,
-            composed: false,
-          });
-          window.dispatchEvent(consentChangedEvent);
-    } catch(_err){}
-}
+            const consentChangedEvent = new CustomEvent("consentChanged", {
+                detail: consent,
+                bubbles: true,
+                cancelable: true,
+                composed: false,
+              });
+              window.dispatchEvent(consentChangedEvent);
+        } catch(_err){}
+    }
+
+    /*
+     * Namespace setup
+     */
+    const spektakel = window.spektakel || {};
+    spektakel.consent = (function() {
+        return {
+            setConsent
+        }
+    })();
+    window.spektakel = spektakel;
+})();
 
 /**
  * All config. options available here:
@@ -51,7 +64,7 @@ CookieConsent.run({
             necessary: CookieConsent.acceptedCategory('necessary'),
             analytics: CookieConsent.acceptedCategory('analytics')
         }
-        setConsent(consent);
+        spektakel.consent.setConsent(consent);
     },
 
     onChange: ({cookie, changedCategories, changedServices}) => {
@@ -59,7 +72,7 @@ CookieConsent.run({
             necessary: CookieConsent.acceptedCategory('necessary'),
             analytics: CookieConsent.acceptedCategory('analytics')
         }
-        setConsent(consent);
+        spektakel.consent.setConsent(consent);
     },
 
     guiOptions: {
