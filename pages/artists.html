@@ -2,13 +2,12 @@
 layout: page
 title: Künstler
 permalink: /artists
-# image: page/artists.jpg
 ---
 
 <div class="artists-list cards-list">
     {% assign sortedArtists = site.artists | sort: 'artist_id' %}
     {% for artist in sortedArtists %}
-        <div class="artist card" id="artist-{{ artist.artist_id }}" itemscope itemtype="http://schema.org/Person">
+        <div class="artist card" id="{{ artist.artist_id }}" itemscope itemtype="http://schema.org/Person">
             <div class="card-header">
                 <i class="favorite-toggle fa fa-star-o"
                     data-artist-favorite-toggle="{{ artist.artist_id }}"
