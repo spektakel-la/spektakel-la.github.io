@@ -37,8 +37,14 @@ permalink: /artists
 
         // update ui
         iconElement.classList.toggle('fa-star-o');
-        iconElement.classList.toggle('fa-star');
+        const isFavorite = iconElement.classList.toggle('fa-star');
+
+        Toast.fire({
+            icon: isFavorite ? "success" : "info",
+            title: isFavorite ? "Künstler wurde als Favorit markiert und wird in Spielplänen hervorgehoben." : "Künstler wurde von Favoriten entfernt."
+        });
     };
+
 
     const favorites = getArtistFavorites();
     favorites.forEach((favorite) => {
