@@ -6,9 +6,13 @@ permalink: /sponsors
 
 <div class="sponsors-gallery">
     {% for file in site.static_files %}
-        {% if file.path contains '/assets/img/sponsors/' %}
+        {% if file.path contains '/assets/img/sponsors/' and  file.path contains '.webp'%}
             <div class="box">
-                <img src="{{ file.path }}" alt="{{ file.path }}">
+                <picture>
+                    <source srcset="{{ file.path }}" type="image/webp">
+                    <source srcset="{{ file.path | replace:'.webp','.jpg' }}" type="image/jpeg">
+                    <img src="{{ file.path | replace:'.webp','.jpg' }}" alt="{{ file.path }}">
+                </picture>
             </div>
         {% endif %}
     {% endfor %}

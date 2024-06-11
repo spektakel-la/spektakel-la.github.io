@@ -6,7 +6,15 @@ module.exports = {
 	],
 	globIgnores: [
 		'workbox-config.js',
-		'assets/screenshots/**/*',
+
+		// we only cache webp and ignore the jpg/png-siblings
+		'assets/img/artists/*.jpg',
+		'assets/img/map/*.jpg',
+		'assets/img/youtube/*.jpg',
+		'assets/img/youtube/*.png',
+
+		// some sections/categories won't be precached
+		'assets/img/screenshots/**/*',
 		'assets/img/impressions/**/*',
 		'assets/img/sponsors/**/*'
 	],

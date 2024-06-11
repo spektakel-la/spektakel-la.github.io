@@ -82,7 +82,7 @@
             }
             return `
                 ${maybeDateSection}
-                <tr class="schedule-details" onclick="toggleArtistDetails(this);">
+                <tr class="schedule-details" onclick="spektakel.locations.toggleArtistDetails(this);">
                     <td>
                         <i class="expand-icon fa fa-caret-down" aria-hidden="true"></i>
                         <i class="collapse-icon fa fa-caret-up" aria-hidden="true"></i>
@@ -147,7 +147,9 @@
         </div>
         `;
 
-    const setupLeafletMap = (mapContainer) => {
+
+
+    const setupLeafletMap = async (mapContainer) => {
         const map = L.map(mapContainer, {
             minZoom: 16,
             maxZoom: 19,
@@ -156,7 +158,8 @@
         });
         map.attributionControl.setPrefix(false)
 
-        const imageUrl = '/assets/img/map/map.webp';
+        const hasWebpSupport = await spektakel.featuredetection.hasWebpSupport();
+        const imageUrl = `/assets/img/map/map.${hasWebpSupport ? 'webp' : 'jpg'}`;
         const imageLayer = L.imageOverlay(imageUrl, spektakel.constants.MAP_BOUNDS);
         imageLayer.addTo(map);
 
@@ -210,6 +213,7 @@
     const spektakel = window.spektakel || {};
     spektakel.locations = (function() {
         return {
+            toggleArtistDetails,
             toggleFavoriteOnLocationTable,
             sanityCheckSchedule,
             setupLeafletMap
