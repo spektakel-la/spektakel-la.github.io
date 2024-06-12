@@ -74,9 +74,9 @@ permalink: /program
 </div>
 
 <script>
-    const favorites = getArtistFavorites();
-    favorites.forEach((favorite) => {
-        const tdElements = document.querySelectorAll(`[data-artist-id="${favorite}"]`);
+    const artistFavorites = spektakel.favorites.getArtistFavorites();
+    artistFavorites.forEach((artistFavorite) => {
+        const tdElements = document.querySelectorAll(`[data-artist-id="${artistFavorite}"]`);
         tdElements.forEach((tdElement) => tdElement.classList.toggle('favorite'));
     });
 </script>

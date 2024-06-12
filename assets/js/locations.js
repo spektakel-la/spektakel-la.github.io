@@ -25,10 +25,10 @@
 
         // update ui
         const allFavoriteTogglesForArtist = document.querySelectorAll(
-            `i[${spektakel.constants.DATA_ATTRIBUTE_FAVORITE_TOGGLE}="${artistId}"]`);
+            `i[data-artist-id="${artistId}"]`);
         allFavoriteTogglesForArtist.forEach((iconElement) => {
-            iconElement.classList.toggle(spektakel.constants.CSS_CLASS_NO_FAVORITE);
-            iconElement.classList.toggle(spektakel.constants.CSS_CLASS_FAVORITE);
+            iconElement.classList.toggle('fa-star-o');
+            iconElement.classList.toggle('fa-star');
         });
     };
 
@@ -92,10 +92,10 @@
                         <div class="artist-and-favorite-toggle">
                             <span>${sched.artist_name}</span>
                             <i class="favorite-toggle fa ${artistFavorites.includes(sched.artist_id) ?
-                                                            spektakel.constants.CSS_CLASS_FAVORITE :
-                                                            spektakel.constants.CSS_CLASS_NO_FAVORITE}"
+                                                            'fa-star' :
+                                                            'fa-star-o'}"
                             aria-hidden="true"
-                            ${spektakel.constants.DATA_ATTRIBUTE_FAVORITE_TOGGLE}="${sched.artist_id}"
+                            data-artist-id="${sched.artist_id}"
                             onclick="spektakel.locations.toggleFavoriteOnLocationTable(this, event, '${sched.artist_id}');"></i>
                         </div>
                     </td>

@@ -53,8 +53,8 @@ permalink: /artists
     const favorites = spektakel.favorites.getArtistFavorites();
     favorites.forEach((favorite) => {
         const iconElement = document.querySelector(`i[data-artist-favorite-toggle="${favorite}"]`);
-            iconElement.classList.toggle(spektakel.constants.CSS_CLASS_NO_FAVORITE);
-            iconElement.classList.toggle(spektakel.constants.CSS_CLASS_FAVORITE);
+            iconElement.classList.toggle('fa-star-o');
+            iconElement.classList.toggle('fa-star');
 
     });
 </script>
