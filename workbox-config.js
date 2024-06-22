@@ -14,6 +14,7 @@ module.exports = {
 		'assets/img/youtube/*.png',
 
 		// some sections/categories won't be precached
+		'assets/img/pages/**/*',
 		'assets/img/screenshots/**/*',
 		'assets/img/impressions/**/*',
 		'assets/img/sponsors/**/*'
