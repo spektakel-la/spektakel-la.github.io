@@ -3,6 +3,10 @@ artist_id: "jensohle"
 name: "Jens Ohle"
 country: Deutschland
 image: /assets/img/artists/jensohle.webp
+facebook: https://www.facebook.com/jens.ohle
+instagram: https://www.instagram.com/jens.ohle/
+video: https://www.youtube.com/watch?v=fuhy9teEI3s
+homepage: https://www.artistische-comedy.de
 categories:
     - Akrobatik
     - Theater

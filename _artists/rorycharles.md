@@ -3,6 +3,10 @@ artist_id: "rorycharles"
 name: "Rory Charles"
 country: England
 image: /assets/img/artists/rorycharles.webp
+facebook: https://www.facebook.com/rory.charlesmusic
+instagram: https://www.instagram.com/rorycharles.music/
+video: https://www.youtube.com/watch?v=lO-1WgZ_KbY
+homepage: https://rorycharles.bandcamp.com/album/rory-charles
 categories:
     - Musik
 ---

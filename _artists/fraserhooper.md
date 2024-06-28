@@ -3,6 +3,10 @@ artist_id: "fraserhooper"
 name: "Fraser Hooper"
 country: Neuseeland
 image: /assets/img/artists/fraserhooper.webp
+facebook: https://www.facebook.com/fraser.hooper.7
+instagram: https://www.instagram.com/fraser_hooper/
+video: https://www.youtube.com/watch?v=KXd-Gv65J2U
+homepage: https://fraserhooper.com/
 categories:
     - Comedy
     - Theater

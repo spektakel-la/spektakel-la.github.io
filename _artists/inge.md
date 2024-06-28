@@ -4,6 +4,10 @@ name: "Lachyoga mit Inge"
 country: Deutschland
 image: /assets/img/artists/inge.webp
 image_position: top
+facebook:
+instagram:
+video:
+homepage:
 categories:
     - Yoga
 ---

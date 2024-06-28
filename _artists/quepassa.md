@@ -3,6 +3,10 @@ artist_id: "quepassa"
 name: "Que Passa"
 country: Polen
 image: /assets/img/artists/quepassa.webp
+facebook: https://www.facebook.com/people/Que-Passa/100064087807629/
+instagram:
+video: https://www.youtube.com/watch?v=FKP76_ZBivU
+homepage:
 categories:
     - Musik
 ---

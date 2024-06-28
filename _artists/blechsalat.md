@@ -4,6 +4,10 @@ name: "Blechsalat"
 country: Österreich
 image: /assets/img/artists/blechsalat.webp
 image_position: top
+facebook: https://www.facebook.com/BlechsalatLinz/
+instagram: https://www.instagram.com/blechsalat/
+video: https://www.youtube.com/watch?v=m2ZZcxMnvtA
+homepage: https://www.blechsalat.at/
 categories:
     - Musik
 ---

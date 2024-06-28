@@ -4,6 +4,10 @@ name: "Mr. Vita"
 country: Spanien
 image: /assets/img/artists/mrvita.webp
 image_position: top
+facebook: https://www.facebook.com/kiki.ray.9
+instagram: https://www.instagram.com/kiki.vita.artist/
+video: https://www.youtube.com/watch?v=Ok2aN_qUZGw
+homepage: https://www.lascossasnostra.com/the-tnt-show----eng
 categories:
     - Akrobatik
     - Comedy

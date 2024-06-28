@@ -18,7 +18,7 @@ menu_home_label: 'Startseite'
 # Available social icons are powered by Font Awesome, so you can use any icon that they offer
 social:
 #- {icon: 'twitter', link:    'https://twitter.com/paululele'}
-- {icon: 'facebook', link:   'https://www.facebook.com/Spektakel.Landshut'}
+- {icon: 'facebook', link:   'https://www.facebook.com/groups/102139009844851'}
 - {icon: 'instagram', link:  'https://www.instagram.com/spektakel.landshut'}
 # - {icon: 'envelope', link:   'mailto:hello@paulle.ca'}
 
