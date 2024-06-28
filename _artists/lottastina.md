@@ -3,6 +3,10 @@ artist_id: "lottastina"
 name: "Lotta & Stina"
 country: Finnland
 image: /assets/img/artists/lottastina.webp
+facebook: https://www.facebook.com/lottaandstina
+instagram: https://www.instagram.com/lottaandstina/
+video: https://vimeo.com/190350667
+homepage: https://www.lottaandstina.com/
 categories:
     - Akrobatik
     - Theater

@@ -4,6 +4,10 @@ name: "Daiana Lou"
 country: Italien
 image: /assets/img/artists/daianalou.webp
 image_position: top
+facebook: https://www.facebook.com/DaianaLouOfficial
+instagram: https://www.instagram.com/daianalou/
+video: https://www.youtube.com/watch?v=6zrfDt82988
+homepage: https://daianalou.company.site/
 categories:
     - Musik
 ---

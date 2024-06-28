@@ -4,6 +4,10 @@ name: "Her Majesty's Secret Circus"
 country: USA
 image: /assets/img/artists/hermajestyssecretcircus.webp
 image_position: top
+facebook: https://www.facebook.com/SecretCircusShow
+instagram: https://www.instagram.com/secretcircusshow/
+video: https://vimeo.com/236970513
+homepage: https://secretcircusshow.com/
 categories:
     - Akrobatik
     - Comedy

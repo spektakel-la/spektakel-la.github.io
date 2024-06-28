@@ -3,6 +3,10 @@ artist_id: "duolollypop"
 name: "Duo Lollypop"
 country: Spanien
 image: /assets/img/artists/duolollypop.webp
+facebook: https://www.facebook.com/alerisorio
+instagram: https://www.instagram.com/duo.lollypop/
+video:
+homepage: https://alerisorio.com/en/shows/
 categories:
     - Comedy
     - Theater

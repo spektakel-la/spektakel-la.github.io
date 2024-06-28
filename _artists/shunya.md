@@ -4,6 +4,10 @@ name: "Shunya"
 country: England
 image: /assets/img/artists/shunya.webp
 image_position: top
+facebook: https://www.facebook.com/shunyamusic
+instagram: https://www.instagram.com/shunya_music/
+video: https://www.youtube.com/watch?v=y7NsaqYiq14
+homepage: https://www.shunyamusic.com/
 categories:
     - Musik
 ---
