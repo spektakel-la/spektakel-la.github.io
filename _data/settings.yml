@@ -24,9 +24,7 @@ social:
 
 
 offline_map:
-  # use share functionality from https://www.openstreetmap.org/
-  # https://render.openstreetmap.org/cgi-bin/export?bbox=12.148033213008594,48.53177335021352,12.155014923924032,48.53906565601472&scale=1750&format=png
-  bounding_rect: [[48.53177335021352, 12.148033213008594], [48.53906565601472, 12.155014923924032]]
+  bounding_rect: [[48.5314991, 12.1457491], [48.5418557, 12.1562020]]
   icon_anchor: [16, 16]
   icon_size: [32, 32]
 
