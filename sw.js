@@ -1,4 +1,4 @@
-const SW_VERSION = '1.0.0';
+const SW_VERSION = '1.1.0';
 
 importScripts('/assets/3rd-party/workbox-v7.1.0/workbox-sw.js');
 workbox.setConfig({
@@ -16,9 +16,41 @@ self.addEventListener('message', (event) => {
   }
 });
 
-const {precacheAndRoute} = workbox.precaching;
+const { precacheAndRoute } = workbox.precaching;
+const { registerRoute } = workbox.routing;
+const { CacheFirst } = workbox.strategies;
+const { CacheableResponsePlugin } = workbox.cacheableResponse;
+const { ExpirationPlugin } = workbox.expiration;
+
 precacheAndRoute(self.__WB_MANIFEST || []);
 
+// Cache tiles for the map
+registerRoute(
+  ({url}) => url.pathname.startsWith('/assets/img/map/tiles/'),
+  new CacheFirst({
+    cacheName: 'map-tiles-cache',
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+      new ExpirationPlugin({
+        maxEntries: 100, // maximale Anzahl von gecachten Einträgen
+        maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Tage
+      }),
+    ],
+  })
+);
 
-// Use a stale-while-revalidate strategy to handle requests by default.
-// workbox.routing.setDefaultHandler(new workbox.strategies.StaleWhileRevalidate());
+// Delete old caches on activation of a new serviceWorker
+self.addEventListener('activate', (event) => {
+  const currentCaches = ['map-tiles-cache'];
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return cacheNames.filter((cacheName) => currentCaches.includes(cacheName));
+    }).then((cachesToDelete) => {
+      return Promise.all(cachesToDelete.map((cacheToDelete) => {
+        return caches.delete(cacheToDelete);
+      }));
+    }).then(() => self.clients.claim())
+  );
+});
