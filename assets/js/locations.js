@@ -160,7 +160,7 @@
 
         const hasWebpSupport = await spektakel.featuredetection.hasWebpSupport();
         const tilesLayer = L.tileLayer(`/assets/img/map/tiles/{z}/{x}/{y}.${hasWebpSupport ? 'webp' : 'jpg'}`,
-            { minZoom: 16, maxZoom: 19, tms: false});
+            { minZoom: 16, maxZoom: 19, tms: false, attribution: '© OpenStreetMap'});
         tilesLayer.addTo(map);
 
         const geoLocation = L.control.locate({
