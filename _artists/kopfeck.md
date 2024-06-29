@@ -5,7 +5,7 @@ country: Deutschland
 image: /assets/img/artists/kopfeck.webp
 facebook: https://www.facebook.com/Kopfeck
 instagram: https://www.instagram.com/kopfeck.band/
-video: https://www.youtube.com/watch?v=iP8uRThtGDs
+youtube: https://www.youtube.com/watch?v=iP8uRThtGDs
 homepage: https://kopfeck.band/
 categories:
     - Musik

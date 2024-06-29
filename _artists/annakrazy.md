@@ -5,7 +5,7 @@ country: Estland
 image: /assets/img/artists/annakrazy.webp
 facebook: https://www.facebook.com/annakr.azy/
 instagram: https://www.instagram.com/annakr.eations/
-video: https://www.youtube.com/watch?v=8LD6dDwFs_A
+youtube: https://www.youtube.com/watch?v=8LD6dDwFs_A
 homepage: https://www.annakreations.com/all-strings-attached
 categories:
     - Akrobatik

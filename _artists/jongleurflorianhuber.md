@@ -6,7 +6,7 @@ image: /assets/img/artists/jongleurflorianhuber.webp
 image_position: top
 facebook: https://www.facebook.com/jongleurflorianhuber
 instagram: https://www.instagram.com/jongleur_florian_huber/
-video: https://www.youtube.com/watch?v=7Y9QWTTxwLI
+youtube: https://www.youtube.com/watch?v=7Y9QWTTxwLI
 homepage: https://jongleur-florian-huber.com/
 categories:
     - Jonglage

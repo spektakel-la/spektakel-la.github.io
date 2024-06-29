@@ -5,7 +5,7 @@ country: Argentinien
 image: /assets/img/artists/menchososa.webp
 facebook: https://www.facebook.com/people/Mencho-Sosa/pfbid02PWDvpf87uvDG8xoDMjYpZEpdcXHzoQdHXgHtbtbjyHadftGuAQ3a4T1CcepMyKZSl/
 instagram: https://www.instagram.com/mencho_sosa/
-video: https://www.youtube.com/watch?v=xzfHMmtOots
+youtube: https://www.youtube.com/watch?v=xzfHMmtOots
 homepage:
 categories:
     - Comedy

@@ -6,7 +6,7 @@ image: /assets/img/artists/samanthaguineu.webp
 image_position: top
 facebook: https://www.facebook.com/1amelia
 instagram: https://www.instagram.com/ameliacadwallader/
-video: https://www.youtube.com/watch?v=RyhphfqNKIs
+youtube: https://www.youtube.com/watch?v=RyhphfqNKIs
 homepage:
 categories:
     - Akrobatik

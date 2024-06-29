@@ -27,6 +27,28 @@ permalink: /artists
                     <img src="{{ artist.image | replace:'.webp','.jpg' }}" alt="{{ artist.name }}" itemprop="image" class="custom-position-{% if artist.image_position %}{{ artist.image_position }}{% else %}center{% endif %}">
                 </picture>
                 <p>{{ artist.content | markdownify }}</p>
+                <div class="social-media-links">
+                    {% if artist.facebook %}
+                        <a href="{{ artist.facebook }}" target="_blank" rel="noopener noreferrer">
+                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                        </a>
+                    {% endif %}
+                    {% if artist.instagram %}
+                        <a href="{{ artist.instagram }}" target="_blank" rel="noopener noreferrer">
+                            <i class="fa fa-instagram" aria-hidden="true"></i>
+                        </a>
+                    {% endif %}
+                    {% if artist.youtube %}
+                        <a href="{{ artist.youtube }}" target="_blank" rel="noopener noreferrer">
+                            <i class="fa fa-youtube" aria-hidden="true"></i>
+                        </a>
+                    {% endif %}
+                    {% if artist.vimeo %}
+                        <a href="{{ artist.vimeo }}" target="_blank" rel="noopener noreferrer">
+                            <i class="fa fa-vimeo" aria-hidden="true"></i>
+                        </a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     {% endfor %}

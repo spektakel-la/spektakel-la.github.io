@@ -5,7 +5,7 @@ country: England
 image: /assets/img/artists/ageofglass.webp
 facebook: https://www.facebook.com/theageofglass
 instagram: https://www.instagram.com/theageofglass/
-video: https://www.youtube.com/watch?v=uQocwv7sEaM
+youtube: https://www.youtube.com/watch?v=uQocwv7sEaM
 homepage: https://ageofglass.bandcamp.com/album/live-at-castle-rock-studios
 categories:
     - Musik

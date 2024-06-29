@@ -6,7 +6,7 @@ image: /assets/img/artists/samgoodburn.webp
 image_position: top
 facebook: https://www.facebook.com/sam.goodburn
 instagram: https://www.instagram.com/samgoodburn/
-video: https://www.youtube.com/watch?v=_8Zt7m-VNR8
+youtube: https://www.youtube.com/watch?v=_8Zt7m-VNR8
 homepage: https://www.samgoodburn.com/
 categories:
     - Akrobatik

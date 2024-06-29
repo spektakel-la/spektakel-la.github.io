@@ -56,3 +56,13 @@ $icon-transition-time: 1.0s;
   padding: 5px;
   @include color-transition-on-hover($rss-color, $icon-transition-time);
 }
+
+.fa-youtube {
+  padding: 5px;
+  @include color-transition-on-hover($rss-color, $icon-transition-time);
+}
+
+.fa-vimeo {
+  padding: 5px;
+  @include color-transition-on-hover($rss-color, $icon-transition-time);
+}

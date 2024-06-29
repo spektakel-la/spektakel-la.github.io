@@ -5,7 +5,7 @@ country: Argentinien
 image: /assets/img/artists/cronopia.webp
 facebook: https://www.facebook.com/contorsiones.cronopia
 instagram: https://www.instagram.com/cronopia.contorsiones
-video: https://vimeo.com/363739104
+vimeo: https://vimeo.com/363739104
 homepage: https://cronopiacontorsiones.com/
 categories:
     - Akrobatik
