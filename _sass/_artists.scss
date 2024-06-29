@@ -1,7 +1,7 @@
 .artists-list {
     .artist {
         width: calc(33.333% - 40px);
-        padding-bottom: 30px;
+        padding-bottom: 1.4rem;
 
         .card-header p {
             margin: 0;
@@ -38,7 +38,7 @@
         .social-media-links {
             position: absolute;
             right: 0;
-            bottom: 20px; // Abstand vom unteren Rand der Card
+            bottom: 1rem; // Abstand vom unteren Rand der Card
             left: 0;
             display: flex;
             gap: 15px;
