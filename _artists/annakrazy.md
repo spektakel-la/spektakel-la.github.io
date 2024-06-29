@@ -1,5 +1,5 @@
 ---
-artist_id: "annakrasy"
+artist_id: "annakrazy"
 name: "Anna Krazy"
 country: Estland
 image: /assets/img/artists/annakrazy.webp

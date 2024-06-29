@@ -159,9 +159,9 @@
         map.attributionControl.setPrefix(false)
 
         const hasWebpSupport = await spektakel.featuredetection.hasWebpSupport();
-        const imageUrl = `/assets/img/map/map.${hasWebpSupport ? 'webp' : 'jpg'}`;
-        const imageLayer = L.imageOverlay(imageUrl, spektakel.constants.MAP_BOUNDS);
-        imageLayer.addTo(map);
+        const tilesLayer = L.tileLayer(`/assets/img/map/tiles/{z}/{x}/{y}.${hasWebpSupport ? 'webp' : 'jpg'}`,
+            { minZoom: 16, maxZoom: 19, tms: false});
+        tilesLayer.addTo(map);
 
         const geoLocation = L.control.locate({
             strings: {
