@@ -1,6 +1,7 @@
 .artists-list {
     .artist {
         width: calc(33.333% - 40px);
+        padding-bottom: 30px;
 
         .card-header p {
             margin: 0;
@@ -32,6 +33,23 @@
 
         img.custom-position-bottom {
             object-position: bottom;
+        }
+
+        .social-media-links {
+            position: absolute;
+            right: 0;
+            bottom: 20px; // Abstand vom unteren Rand der Card
+            left: 0;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .social-media-links a {
+            color: $link-color;
+            font-size: 1.5em;
         }
     }
 }

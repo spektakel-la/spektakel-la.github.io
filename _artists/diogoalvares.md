@@ -6,7 +6,7 @@ image: /assets/img/artists/diogoalvares.webp
 image_position: top
 facebook: https://www.facebook.com/MagicDiogoAlvares
 instagram: https://www.instagram.com/diogoalvares
-video: https://www.youtube.com/watch?v=1ONqXuDcS5w
+youtube: https://www.youtube.com/watch?v=1ONqXuDcS5w
 homepage: https://www.ungimmick.com/
 categories:
     - Zauber

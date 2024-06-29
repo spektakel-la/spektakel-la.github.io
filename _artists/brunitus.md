@@ -6,7 +6,7 @@ image: /assets/img/artists/brunitus.webp
 image_position: top
 facebook: https://www.facebook.com/profile.php?id=100004550522188
 instagram: https://www.instagram.com/brunitus.arte/
-video: https://www.youtube.com/watch?v=_pR6E4_neq8
+youtube: https://www.youtube.com/watch?v=_pR6E4_neq8
 homepage: http://www.brunitus.com/eng/bio.html
 categories:
     - Akrobatik

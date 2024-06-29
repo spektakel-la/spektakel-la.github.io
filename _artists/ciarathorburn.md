@@ -6,7 +6,7 @@ image: /assets/img/artists/ciarathorburn.webp
 image_position: top
 facebook: https://www.facebook.com/ciara.thorburn
 instagram: https://www.instagram.com/ciara_thorburn
-video: https://www.youtube.com/watch?v=2Xi1ty771Xs
+youtube: https://www.youtube.com/watch?v=2Xi1ty771Xs
 homepage: https://www.ciarathorburn.com/
 categories:
     - Akrobatik
