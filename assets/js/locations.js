@@ -181,8 +181,8 @@
         });
         fullScreen.addTo(map);
 
-        const clusterGroup = L.markerClusterGroup();
-        clusterGroup.addTo(map);
+        // const clusterGroup = L.markerClusterGroup();
+        // clusterGroup.addTo(map);
 
         spektakel.constants.LOCATIONS.forEach((location) => {
             const markerIcon = L.divIcon({
@@ -198,7 +198,8 @@
                     // Dynamically create the content on `popupopen`-event
                     event.popup.setContent(createPopupMarkup(location))
                 });
-            clusterGroup.addLayer(marker);
+            // clusterGroup.addLayer(marker);
+            marker.addTo(map);
 
             // debug position
             // L.marker([lat, lon]).addTo(map);
