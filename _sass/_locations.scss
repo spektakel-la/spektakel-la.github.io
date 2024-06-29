@@ -11,7 +11,12 @@
 }
 
 .spektakel-leaflet-map {
-    height: 60vh;
+    // height: 60vh;
+    position: absolute;
+    top: 65px;
+    bottom: 0px;
+    width: 95vw;
+    overflow: hidden;
 }
 
 .spektakel-leaflet-map-attribution {
