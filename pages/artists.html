@@ -48,6 +48,11 @@ permalink: /artists
                             <i class="fa fa-vimeo" aria-hidden="true"></i>
                         </a>
                     {% endif %}
+                    {% if artist.homepage %}
+                        <a href="{{ artist.homepage }}" target="_blank" rel="noopener noreferrer">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>

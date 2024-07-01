@@ -6,7 +6,7 @@ image: /assets/img/artists/afuma.webp
 image_position: top
 facebook: https://www.facebook.com/profile.php?id=100064649503475
 instagram: https://www.instagram.com/afuma12/
-youtube: https://www.youtube.com/watch?v=8g5LqWVb1T0&t=29s
+youtube: https://www.youtube.com/watch?v=8g5LqWVb1T0
 homepage: https://afuma.org/fr
 categories:
     - Akrobatik

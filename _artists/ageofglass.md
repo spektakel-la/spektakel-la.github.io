@@ -1,6 +1,6 @@
 ---
 artist_id: "ageofglass"
-name: "Age of glass"
+name: "Age of Glass"
 country: England
 image: /assets/img/artists/ageofglass.webp
 facebook: https://www.facebook.com/theageofglass
