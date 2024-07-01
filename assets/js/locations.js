@@ -91,12 +91,14 @@
                     <td>
                         <div class="artist-and-favorite-toggle">
                             <span>${sched.artist_name}</span>
-                            <i class="favorite-toggle fa ${artistFavorites.includes(sched.artist_id) ?
-                                                            'fa-star' :
-                                                            'fa-star-o'}"
-                            aria-hidden="true"
-                            data-artist-id="${sched.artist_id}"
-                            onclick="spektakel.locations.toggleFavoriteOnLocationTable(this, event, '${sched.artist_id}');"></i>
+                            <!--
+                                <i class="favorite-toggle fa ${artistFavorites.includes(sched.artist_id) ?
+                                                                'fa-star' :
+                                                                'fa-star-o'}"
+                                aria-hidden="true"
+                                data-artist-id="${sched.artist_id}"
+                                onclick="spektakel.locations.toggleFavoriteOnLocationTable(this, event, '${sched.artist_id}');"></i>
+                            -->
                         </div>
                     </td>
                 </tr>
@@ -191,7 +193,7 @@
 
             const [lat, lon] = location.gps;
             const marker = L.marker([lat, lon], {icon: markerIcon});
-            marker.bindPopup('', {className: 'spektakel-leaflet-popup'})
+            marker.bindPopup('', {className: 'spektakel-leaflet-popup', offset: [0, -38]})
                 .on("popupopen", function (event) {
                     // Dynamically create the content on `popupopen`-event
                     event.popup.setContent(createPopupMarkup(location))

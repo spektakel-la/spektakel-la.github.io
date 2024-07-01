@@ -25,8 +25,8 @@ social:
 
 offline_map:
   bounding_rect: [[48.5314991, 12.1457491], [48.5418557, 12.1562020]]
-  icon_anchor: [13, 42]
-  icon_size: [35, 46]
+  icon_anchor: [15, 47]
+  icon_size: [35, 47]
 
 
 post_date_prefix: 'Veröffentlicht am'
