@@ -64,5 +64,10 @@ $icon-transition-time: 1.0s;
 
 .fa-vimeo {
   padding: 5px;
-  @include color-transition-on-hover($rss-color, $icon-transition-time);
+  @include color-transition-on-hover($twitter-color, $icon-transition-time);
+}
+
+.fa-home {
+  padding: 5px;
+  @include color-transition-on-hover($envelope-color, $icon-transition-time);
 }

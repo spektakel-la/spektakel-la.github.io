@@ -11,12 +11,17 @@
 }
 
 .spektakel-leaflet-map {
-    // height: 60vh;
     position: absolute;
     top: 65px;
     bottom: 0px;
-    width: 95vw;
+    width: $container-width;
     overflow: hidden;
+}
+
+@media (max-width: $container-width) {
+    .spektakel-leaflet-map {
+        width: 95vw;
+    }
 }
 
 .spektakel-leaflet-map-attribution {
@@ -31,16 +36,16 @@
 
 .spektakel-leaflet-location-icon {
     position: relative;
-    background-image: url("/assets/img/star2.png");
+    background-image: url("/assets/img/marker.png");
     background-repeat: no-repeat;
     background-size: contain;
 
     .spektakel-leaflet-location-icon-container {
-        display: flex;
+        position: absolute;
         width: 100%;
-        height: 100%;
-        justify-content: center;
-        align-items: center;
+        top: 6px;
+        text-align: center;
+        right: 3px;
     }
 }
 

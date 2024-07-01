@@ -140,7 +140,7 @@
 
     const createPopupMarkup = (locationObj) => `
         <div class="leaflet-popup-content">
-            <div class="location-title">Location ${locationObj.location_id.toUpperCase()} - ${locationObj.description}</div>
+            <div class="location-title">${locationObj.location_id.toUpperCase()} - ${locationObj.description}</div>
             <div class="location-table-wrapper">
                 ${createScheduleMarkupForLocation(locationObj.location_id)}
             </div>
@@ -181,9 +181,6 @@
         });
         fullScreen.addTo(map);
 
-        // const clusterGroup = L.markerClusterGroup();
-        // clusterGroup.addTo(map);
-
         spektakel.constants.LOCATIONS.forEach((location) => {
             const markerIcon = L.divIcon({
             className: 'spektakel-leaflet-location-icon',
@@ -191,6 +188,7 @@
                 iconSize: spektakel.constants.MARKER_ICON_SIZE,
                 iconAnchor: spektakel.constants.MARKER_ICON_ANCHOR
             });
+
             const [lat, lon] = location.gps;
             const marker = L.marker([lat, lon], {icon: markerIcon});
             marker.bindPopup('', {className: 'spektakel-leaflet-popup'})
@@ -198,7 +196,6 @@
                     // Dynamically create the content on `popupopen`-event
                     event.popup.setContent(createPopupMarkup(location))
                 });
-            // clusterGroup.addLayer(marker);
             marker.addTo(map);
 
             // debug position

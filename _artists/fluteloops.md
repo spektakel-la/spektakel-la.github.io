@@ -6,7 +6,7 @@ image: /assets/img/artists/fluteloops.webp
 image_position: top
 facebook: https://www.facebook.com/fluteloopsmusic
 instagram: https://www.instagram.com/fluteloopsmusic/
-youtube: https://www.youtube.com/watch?v=wognEbaBY1Q&t=174s
+youtube: https://www.youtube.com/watch?v=wognEbaBY1Q
 homepage: http://fluteloopsmusic.com/
 categories:
     - Musik
