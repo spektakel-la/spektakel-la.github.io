@@ -34,9 +34,8 @@
     }
 }
 
-.spektakel-leaflet-location-icon {
+@mixin spektakel-leaflet-location-icon {
     position: relative;
-    background-image: url("/assets/img/marker.png");
     background-repeat: no-repeat;
     background-size: contain;
 
@@ -47,6 +46,53 @@
         text-align: center;
         right: 3px;
     }
+}
+.spektakel-leaflet-location-icon-pink {
+    @include spektakel-leaflet-location-icon;
+    background-image: image-set(
+        url("/assets/img/map/marker-pink.webp") type("image/webp"),
+        url("/assets/img/map/marker-pink.png") type("image/jpeg")
+    );
+}
+
+.spektakel-leaflet-location-icon-blue {
+    @include spektakel-leaflet-location-icon;
+    background-image: image-set(
+        url("/assets/img/map/marker-blue.webp") type("image/webp"),
+        url("/assets/img/map/marker-blue.png") type("image/jpeg")
+    );
+}
+
+.spektakel-leaflet-location-icon-purple {
+    @include spektakel-leaflet-location-icon;
+    background-image: image-set(
+        url("/assets/img/map/marker-purple.webp") type("image/webp"),
+        url("/assets/img/map/marker-purple.png") type("image/jpeg")
+    );
+}
+
+.spektakel-leaflet-location-icon-yellow {
+    @include spektakel-leaflet-location-icon;
+    background-image: image-set(
+        url("/assets/img/map/marker-yellow.webp") type("image/webp"),
+        url("/assets/img/map/marker-yellow.png") type("image/jpeg")
+    );
+}
+
+.spektakel-leaflet-location-icon-red {
+    @include spektakel-leaflet-location-icon;
+    background-image: image-set(
+        url("/assets/img/map/marker-red.webp") type("image/webp"),
+        url("/assets/img/map/marker-red.png") type("image/jpeg")
+    );
+}
+
+.spektakel-leaflet-location-icon-green {
+    @include spektakel-leaflet-location-icon;
+    background-image: image-set(
+        url("/assets/img/map/marker-green.webp") type("image/webp"),
+        url("/assets/img/map/marker-green.png") type("image/jpeg")
+    );
 }
 
 .leaflet-container a.leaflet-popup-close-button  {

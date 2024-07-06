@@ -7,7 +7,7 @@
     const createIconMarkup = (locationObj) => `
         <div class="spektakel-leaflet-location-icon-container">
             <div>
-                ${locationObj.location_id.toUpperCase()}
+                ${locationObj.location_label ? locationObj.location_label : locationObj.location_id}
             </div>
         </div>
         `;
@@ -142,7 +142,9 @@
 
     const createPopupMarkup = (locationObj) => `
         <div class="leaflet-popup-content">
-            <div class="location-title">${locationObj.location_id.toUpperCase()} - ${locationObj.description}</div>
+            <div class="location-title">
+                ${locationObj.location_id} - ${locationObj.description}
+                </div>
             <div class="location-table-wrapper">
                 ${createScheduleMarkupForLocation(locationObj.location_id)}
             </div>
@@ -184,8 +186,9 @@
         fullScreen.addTo(map);
 
         spektakel.constants.LOCATIONS.forEach((location) => {
+            const markerColor = location.marker_color ? location.marker_color : 'pink';
             const markerIcon = L.divIcon({
-            className: 'spektakel-leaflet-location-icon',
+            className: `spektakel-leaflet-location-icon-${markerColor}`,
                 html: createIconMarkup(location),
                 iconSize: spektakel.constants.MARKER_ICON_SIZE,
                 iconAnchor: spektakel.constants.MARKER_ICON_ANCHOR

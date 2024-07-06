@@ -8,6 +8,7 @@ module.exports = {
 		'workbox-config.js',
 
 		// we only cache webp and ignore the jpg/png-siblings
+		'assets/img/map/*.jpg',
 		'assets/img/artists/*.jpg',
 		'assets/img/youtube/*.jpg',
 		'assets/img/youtube/*.png',
