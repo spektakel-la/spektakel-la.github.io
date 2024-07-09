@@ -5,7 +5,7 @@ permalink: /artists
 ---
 
 <div class="artists-list cards-list">
-    {% assign sortedArtists = site.artists | sort: 'artist_id' %}
+    {% assign sortedArtists = site.artists | where_exp: "artist", "artist.organizational != true" | sort: 'artist_id' %}
     {% for artist in sortedArtists %}
         <div class="artist card" id="{{ artist.artist_id }}" itemscope itemtype="http://schema.org/Person">
             <div class="card-header">
@@ -80,8 +80,9 @@ permalink: /artists
     const favorites = spektakel.favorites.getArtistFavorites();
     favorites.forEach((favorite) => {
         const iconElement = document.querySelector(`i[data-artist-favorite-toggle="${favorite}"]`);
+        if (iconElement) {
             iconElement.classList.toggle('fa-star-o');
             iconElement.classList.toggle('fa-star');
-
+        }
     });
 </script>

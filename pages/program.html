@@ -5,7 +5,7 @@ permalink: /program
 ---
 
 
-{% assign sortedLocations = site.locations | sort: 'location_id' %}
+{% assign sortedLocations = site.locations | where_exp: "location", "location.organizational != true" | sort: 'location_id' %}
 {% assign groupedSchedule = site.data.schedule | group_by: 'time' | sort: 'name' %}
 
 {% assign festivalEventDays = '' | split: ',' %}
@@ -57,7 +57,11 @@ permalink: /program
                                     {% assign location = site.locations | where: 'location_id', entryAtLocation.location_id | first %}
 
                                     <span itemscope itemtype="https://schema.org/Event">
-                                        <span itemprop="name">{{ artist.name }}</span>
+                                        <span itemprop="name">{{ artist.name }}
+                                            {% if entryAtLocation.notes %}
+                                                &nbsp;{{ entryAtLocation.notes }}
+                                            {% endif %}
+                                        </span>
                                         <span hidden>
                                             <meta itemprop="startDate" content="{{ scheduleEntryDateTime }}">
                                             <span itemscope itemtype="https://schema.org/Place" itemprop="location">
@@ -83,6 +87,9 @@ permalink: /program
 {% endfor %}
 
 <script>
+    document.querySelectorAll('.program-table-wrapper > table')
+        .forEach((tableElement) => spektakel.program.mergeTableCells(tableElement));
+
     const artistFavorites = spektakel.favorites.getArtistFavorites();
     artistFavorites.forEach((artistFavorite) => {
         const tdElements = document.querySelectorAll(`[data-artist-id="${artistFavorite}"]`);
