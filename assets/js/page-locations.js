@@ -1,7 +1,3 @@
----
----
-
-
 (function () {
 
     const createIconMarkup = (locationObj) => `

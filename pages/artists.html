@@ -77,12 +77,17 @@ permalink: /artists
     };
 
 
-    const favorites = spektakel.favorites.getArtistFavorites();
-    favorites.forEach((favorite) => {
-        const iconElement = document.querySelector(`i[data-artist-favorite-toggle="${favorite}"]`);
-        if (iconElement) {
-            iconElement.classList.toggle('fa-star-o');
-            iconElement.classList.toggle('fa-star');
-        }
-    });
+    const onShow = () => {
+        const favorites = spektakel.favorites.getArtistFavorites();
+        favorites.forEach((favorite) => {
+            const iconElement = document.querySelector(`i[data-artist-favorite-toggle="${favorite}"]`);
+            if (iconElement) {
+                iconElement.classList.remove('fa-star-o');
+                iconElement.classList.add('fa-star');
+            }
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", onShow);
+    // window.addEventListener("pageshow", onShow);
 </script>

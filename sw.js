@@ -2,7 +2,7 @@ const SW_VERSION = '1.1.0';
 
 importScripts('/assets/3rd-party/workbox-v7.1.0/workbox-sw.js');
 workbox.setConfig({
-    // debug: true,
+    debug: false,
     modulePathPrefix: '/assets/3rd-party/workbox-v7.1.0/',
 });
 

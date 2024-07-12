@@ -7,8 +7,13 @@ permalink: /locations
 <div class="spektakel-leaflet-map"></div>
 
 <script>
-  spektakel.locations.sanityCheckSchedule();
-  spektakel.locations.setupLeafletMap(document.querySelector('.spektakel-leaflet-map'));
+    const onShow = () => {
+        spektakel.locations.sanityCheckSchedule();
+        spektakel.locations.setupLeafletMap(document.querySelector('.spektakel-leaflet-map'));
+    }
+
+    document.addEventListener("DOMContentLoaded", onShow);
+    // window.addEventListener("pageshow", onShow);
 </script>
 
 

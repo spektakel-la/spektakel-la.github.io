@@ -1,7 +1,3 @@
----
----
-
-
 (function () {
     const cellsAreEqual = (cellA, cellB) => {
         const artistA = cellA?.querySelector('span[itemprop="name"]')?.innerText;
