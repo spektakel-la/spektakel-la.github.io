@@ -26,3 +26,5 @@ collections:
     output: false
   locations:
     output: false
+  sponsors:
+    output: false
