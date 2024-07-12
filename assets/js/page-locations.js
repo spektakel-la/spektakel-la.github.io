@@ -22,9 +22,16 @@
         // update ui
         const allFavoriteTogglesForArtist = document.querySelectorAll(
             `i[data-artist-id="${artistId}"]`);
+
+        let isFavorite;
         allFavoriteTogglesForArtist.forEach((iconElement) => {
             iconElement.classList.toggle('fa-star-o');
-            iconElement.classList.toggle('fa-star');
+            isFavorite = iconElement.classList.toggle('fa-star');
+        });
+
+        Toast.fire({
+            icon: isFavorite ? "success" : "info",
+            title: isFavorite ? "Künstler wurde als Favorit markiert und wird in Spielplänen hervorgehoben." : "Künstler wurde von Favoriten entfernt."
         });
     };
 
@@ -43,7 +50,24 @@
 
     const createScheduleMarkupForLocation = (locationId) => {
         const scheduleForLocation = spektakel.constants.SCHEDULE.filter((entry) => entry.location_id === locationId);
-        const scheduleForLocationWithArtist = scheduleForLocation.map((entry) => {
+
+        /*
+         * The schedule is setup with 30 minutes blocks. If an artist acts for 1 hour, he occupies 2 blocks.
+         * The user doesn't care about these blocks, so we just remove successive entries with the same artist.
+         */
+        const prunedScheduleForLocation= scheduleForLocation.reduce((acc, entry) => {
+            const maybeLastEntry = acc[acc.length - 1];
+            if (maybeLastEntry &&
+                maybeLastEntry.artist_id === entry.artist_id &&
+                dateFns.fp.differenceInHours(dateFns.fp.parseISO(maybeLastEntry.time), dateFns.fp.parseISO(entry.time)) < 1
+            ) {
+                return acc;
+            } else {
+                return [...acc, entry];
+            }
+        }, []);
+
+        const scheduleForLocationWithArtist = prunedScheduleForLocation.map((entry) => {
             const artist = spektakel.constants.ARTISTS.find((artist) => artist.artist_id === entry.artist_id);
             if (artist){
                 entry.artist_name = artist?.name;
@@ -87,14 +111,6 @@
                     <td>
                         <div class="artist-and-favorite-toggle">
                             <span>${sched.artist_name}</span>
-                            <!--
-                                <i class="favorite-toggle fa ${artistFavorites.includes(sched.artist_id) ?
-                                                                'fa-star' :
-                                                                'fa-star-o'}"
-                                aria-hidden="true"
-                                data-artist-id="${sched.artist_id}"
-                                onclick="spektakel.locations.toggleFavoriteOnLocationTable(this, event, '${sched.artist_id}');"></i>
-                            -->
                         </div>
                     </td>
                 </tr>
@@ -114,6 +130,13 @@
                             </div>
                             <div class="artist-details-link">
                                 <a href="/artists#${sched.artist_id}">Zum Künstlerprofil</a>
+                                <span></span>
+                                <i class="favorite-toggle fa ${artistFavorites.includes(sched.artist_id) ?
+                                                                'fa-star' :
+                                                                'fa-star-o'}"
+                                aria-hidden="true"
+                                data-artist-id="${sched.artist_id}"
+                                onclick="spektakel.locations.toggleFavoriteOnLocationTable(this, event, '${sched.artist_id}');"></i>
                             </div>
                         </div>
                     </td>

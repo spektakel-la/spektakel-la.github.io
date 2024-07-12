@@ -193,16 +193,18 @@
                     }
                 }
 
-                .artist-and-favorite-toggle {
-                    display: grid;
-                    grid-template-columns: 1fr auto;
-                    align-items: center;
+            }
+            .artist-details-link {
+                display: grid;
+                grid-template-columns: auto 1fr auto;
+                align-items: center;
 
-                    .favorite-toggle {
-                        color: $yellow;
-                        position: relative;
-                        @include enlarge-click-area(false, -5px, -5px, -5px, -5px);
-                    }
+                .favorite-toggle {
+                    cursor: pointer;
+                    color: $yellow;
+                    position: relative;
+                    font-size: 1.5rem;
+                    @include enlarge-click-area(false, -5px, -5px, -5px, -5px);
                 }
             }
 
