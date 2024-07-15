@@ -13,4 +13,4 @@ categories:
 ---
 Jens ist ein artistischer Comedian aus Hamburg. Sein Showprogramm ist zum Schieflachen! In der Show verschmilzt das Beste aus zwei Welten - spektakulärste Artistik auf hohem Niveau und Dauerlachen. Jens Ohle, der Comedian aus dem Schmidt Theater Hamburg und dem Quatsch Comedy Club gibt erstmalig einen Gastauftritt in Landshut.
 
-Stand Up Comedy in Höchstgeschwindigkeit … TopTipp!
+**Stand Up Comedy in Höchstgeschwindigkeit... TopTipp!**

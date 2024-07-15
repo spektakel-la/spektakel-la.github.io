@@ -14,4 +14,4 @@ Der Lolly & Pop, zwei atypische Charaktere, die immer zum Feiern bereit sind. Ko
 
 Eine große Hommage an die menschliche Idiotie.
 
-Spektakel-Premiere 2024 - Comedy-Import aus Spanien
+**Spektakel-Premiere 2024 - Comedy-Import aus Spanien**
