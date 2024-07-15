@@ -175,8 +175,16 @@
 
             tr.schedule-details {
                 cursor: pointer;
+
+
+                &.favorite {
+                    background-color: $favorite-background-color;
+                    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.5) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.5) 75%, transparent 75%, transparent);
+                    background-size: 10px 10px; // Größe des Musters anpassen
+                }
+
                 .expand-icon {
-                    color: $yellow;
+                    // color: $yellow;
                     display: inline-block;
                 }
                 .collapse-icon {
@@ -188,7 +196,7 @@
                         display: none;
                     }
                     .collapse-icon {
-                        color: $yellow;
+                        // color: $yellow;
                         display: inline-block;
                     }
                 }
