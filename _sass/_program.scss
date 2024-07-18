@@ -69,10 +69,27 @@
             }
         }
 
+        td[data-artist-id] {
+            cursor: pointer;
+            position:relative
+        }
+
         td.favorite {
             background-color: $favorite-highlight-color;
             background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.5) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.5) 75%, transparent 75%, transparent);
             background-size: 10px 10px; // Größe des Musters anpassen
+        }
+
+        .popover-content {
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            position: absolute;
+            z-index: 3000;
+
+            &.hidden {
+                display: none;
+            }
         }
     }
 }

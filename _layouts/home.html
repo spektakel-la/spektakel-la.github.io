@@ -90,22 +90,24 @@ title: Home
 </div>
 
 <script>
-  const maybeEnableVideo = () => {
-    const consentAnalytics = CookieConsent.acceptedCategory('analytics');
-    const ytIFrame = document.getElementById('youtube-spektakel-2023');
-    if (consentAnalytics){
-      ytIFrame.src = 'https://www.youtube-nocookie.com/embed/DeXdXV5E7XQ?si=Y8_ZTebOA4-uY0eW';
+    const maybeEnableVideo = () => {
+        const consentAnalytics = CookieConsent.acceptedCategory('analytics');
+        const ytIFrame = document.getElementById('youtube-spektakel-2023');
+        if (consentAnalytics){
+            ytIFrame.src = 'https://www.youtube-nocookie.com/embed/DeXdXV5E7XQ?si=Y8_ZTebOA4-uY0eW';
+        }
+        // else {
+        //   // nothing to do here, disabling analytics will reload the page!
+        // }
     }
-    // else {
-    //   // nothing to do here, disabling analytics will reload the page!
-    // }
-  }
-  window.addEventListener("load", (event) => {
-    maybeEnableVideo();
-  });
-  window.addEventListener("consentChanged", (event) => {
-   maybeEnableVideo();
-  });
+
+    window.addEventListener("DOMContentLoaded", (event) => {
+        maybeEnableVideo();
+    });
+
+    window.addEventListener("consentChanged", (event) => {
+        maybeEnableVideo();
+    });
 </script>
 
 

@@ -13,29 +13,6 @@
         rowElement.nextElementSibling.classList.toggle('visible');
     };
 
-    const toggleFavoriteOnLocationTable = (_iconElement, event, artistId) => {
-        event.stopPropagation();
-
-        // persist favorite-setting in localStorage
-        spektakel.favorites.toggleArtistFavorite(artistId);
-
-        let isFavorite;
-        // update the favorite icon
-        document.querySelectorAll(`i[data-artist-id="${artistId}"]`).forEach((iconElement) => {
-            iconElement.classList.toggle('fa-star-o');
-            isFavorite = iconElement.classList.toggle('fa-star');
-        });
-        // update the favorite background
-        document.querySelectorAll(`.schedule-details[data-artist-id="${artistId}"]`).forEach((scheduleDetail) => {
-            scheduleDetail.classList.toggle('favorite');
-        });
-
-        Toast.fire({
-            icon: isFavorite ? "success" : "info",
-            title: isFavorite ? "Künstler wurde als Favorit markiert und wird in Spielplänen hervorgehoben." : "Künstler wurde von Favoriten entfernt."
-        });
-    };
-
     const sanityCheckSchedule = () => {
         spektakel.constants.SCHEDULE.forEach((entry) => {
             const locationForEntry = spektakel.constants.LOCATIONS.find((loc) => entry.location_id === loc.location_id);
@@ -50,6 +27,8 @@
     };
 
     const createPopupMarkupForLocation = (locationId) => {
+        const artistFavorites = spektakel.favorites.getArtistFavorites();
+
         const scheduleForLocation = spektakel.constants.SCHEDULE.filter((entry) => entry.location_id === locationId);
 
         /*
@@ -60,7 +39,7 @@
             const maybeLastEntry = acc[acc.length - 1];
             if (maybeLastEntry &&
                 maybeLastEntry.artist_id === entry.artist_id &&
-                dateFns.fp.differenceInHours(dateFns.fp.parseISO(maybeLastEntry.time), dateFns.fp.parseISO(entry.time)) < 1
+                dateFns.differenceInHours(dateFns.parseISO(maybeLastEntry.time), dateFns.parseISO(entry.time)) < 1
             ) {
                 return acc;
             } else {
@@ -82,11 +61,10 @@
             }
         });
 
-        const artistFavorites = spektakel.favorites.getArtistFavorites();
         let sectionDateString = null;
         const tableRows = scheduleForLocationWithArtist.map((sched, idx) => {
             const now = new Date();
-            const scheduleDate = dateFns.fp.parseISO(sched.time);
+            const scheduleDate = dateFns.parseISO(sched.time);
             if (now > scheduleDate) {  // ignore old dates
                 return '';
             }
@@ -101,13 +79,15 @@
                     </tr>`;
                 sectionDateString = currentDateString;
             }
+
             return `
                 ${maybeDateSection}
-                <tr class="schedule-details" data-artist-id="${sched.artist_id}" onclick="spektakel.locations.toggleArtistDetails(this);">
+                <tr class="schedule-details${artistFavorites.includes(sched.artist_id) ? ' favorite': ''}"
+                    data-artist-id="${sched.artist_id}" onclick="spektakel.locations.toggleArtistDetails(this);">
                     <td>
                         <i class="expand-icon fa fa-caret-down" aria-hidden="true"></i>
                         <i class="collapse-icon fa fa-caret-up" aria-hidden="true"></i>
-                        &nbsp;${scheduleDate.toLocaleTimeString()}
+                        &nbsp;${dateFns.format(scheduleDate, 'HH:mm')}
                     </td>
                     <td>
                         <div class="artist-name">
@@ -117,29 +97,7 @@
                 </tr>
                 <tr class="artist-details">
                     <td colspan="2">
-                        <div>
-                            <!--
-                                <div class="artist-details-categories">
-                                    ${sched.artist_categories.join(', ')}
-                                </div>
-                            -->
-                            <div class="artist-details-image">
-                                <img
-                                    src="${sched.artist_image}"
-                                    alt="${sched.artist_name}"
-                                    class="custom-position-${sched.image_position ? sched.image_position : 'center'}"/>
-                            </div>
-                            <div class="artist-details-link">
-                                <a href="/artists#${sched.artist_id}">Zum Künstlerprofil</a>
-                                <span></span>
-                                <i class="favorite-toggle fa ${artistFavorites.includes(sched.artist_id) ?
-                                                                'fa-star' :
-                                                                'fa-star-o'}"
-                                aria-hidden="true"
-                                data-artist-id="${sched.artist_id}"
-                                onclick="spektakel.locations.toggleFavoriteOnLocationTable(this, event, '${sched.artist_id}');"></i>
-                            </div>
-                        </div>
+                        ${spektakel.popover.createPopoverContentHtml(sched.artist_id)}
                     </td>
                 </tr>
             `;
@@ -170,18 +128,6 @@
             </div>
         </div>
         `;
-
-    const refreshFavoritesHighlightInPopup = ()=> {
-        const artistFavorites = spektakel.favorites.getArtistFavorites();
-        const scheduleDetails = document.querySelectorAll(`.schedule-details`);
-        scheduleDetails.forEach((artistDetail) => {
-            const artistId = artistDetail.getAttribute('data-artist-id');
-            if (artistFavorites.includes(artistId)) {
-                artistDetail.classList.add('favorite');
-            }
-        });
-    };
-
 
     const setupLeafletMap = async (mapContainer) => {
         const map = L.map(mapContainer, {
@@ -230,9 +176,6 @@
                 .on("popupopen", function (event) {
                     // Dynamically create the content on `popupopen`-event
                     event.popup.setContent(createPopupMarkup(location));
-
-                    // Highlight favorites
-                    refreshFavoritesHighlightInPopup();
                 });
             marker.addTo(map);
 
@@ -250,7 +193,6 @@
     spektakel.locations = (function() {
         return {
             toggleArtistDetails,
-            toggleFavoriteOnLocationTable,
             sanityCheckSchedule,
             setupLeafletMap
         }

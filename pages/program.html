@@ -87,17 +87,57 @@ permalink: /program
 {% endfor %}
 
 <script>
-    const onShow = () => {
+     const onShow = () => {
         document.querySelectorAll('.program-table-wrapper > table')
         .forEach((tableElement) => spektakel.program.mergeTableCells(tableElement));
 
         const artistFavorites = spektakel.favorites.getArtistFavorites();
-        artistFavorites.forEach((artistFavorite) => {
-            const tdElements = document.querySelectorAll(`[data-artist-id="${artistFavorite}"]`);
-            tdElements.forEach((tdElement) => tdElement.classList.add('favorite'));
+        document.querySelectorAll(`td[data-artist-id]`).forEach((tdElement) => {
+            const artistId = tdElement.getAttribute('data-artist-id');
+
+            // Create tooltips
+            tippy(tdElement, {
+                theme: 'light-border',
+                trigger: 'click',
+                interactive: true,
+                allowHTML: true,
+                content: 'Lade Künstler...',
+                onShow: (instance) => instance.setContent(spektakel.popover.createPopoverContentHtml(artistId)),
+            });
+
+            // Highlight favorite artists
+            if (artistFavorites.includes(artistId)) {
+                tdElement.classList.add('favorite');
+            }
         });
     }
 
     document.addEventListener("DOMContentLoaded", onShow);
     // window.addEventListener("pageshow", onShow);
+
+    window.addEventListener("favoritesChanged", (event) => {
+        const newFavorites = event.detail;
+
+        // update the favorite background
+        document.querySelectorAll(`td[data-artist-id]`).forEach((scheduleDetail) => {
+            const artistId = scheduleDetail.getAttribute('data-artist-id');
+            if (newFavorites.includes(artistId)) {
+                scheduleDetail.classList.add('favorite');
+            } else {
+                scheduleDetail.classList.remove('favorite');
+            }
+        });
+
+        // update the favorite icon
+        document.querySelectorAll(`i[data-artist-id]`).forEach((iconElement) => {
+            const artistId = iconElement.getAttribute('data-artist-id');
+            if (newFavorites.includes(artistId)) {
+                iconElement.classList.add('fa-star');
+                iconElement.classList.remove('fa-star-o');
+            } else {
+                iconElement.classList.add('fa-star-o');
+                iconElement.classList.remove('fa-star');
+            }
+        });
+    });
 </script>

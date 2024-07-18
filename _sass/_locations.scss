@@ -149,7 +149,7 @@
             }
 
             th.schedule-time {
-                width: 80px;
+                width: 70px;
             }
 
             tr:last-child td {
@@ -202,49 +202,12 @@
                 }
 
             }
-            .artist-details-link {
-                display: grid;
-                grid-template-columns: auto 1fr auto;
-                align-items: center;
-
-                .favorite-toggle {
-                    cursor: pointer;
-                    color: $yellow;
-                    position: relative;
-                    font-size: 1.5rem;
-                    @include enlarge-click-area(false, -5px, -5px, -5px, -5px);
-                }
-            }
 
             tr.artist-details {
                 display: none;
 
                 &.visible{
                     display: table-row;
-                }
-
-                p {
-                    margin: 0;
-                    line-height: 1;
-                }
-
-                img {
-                    width: 100%;
-                    height: 200px; // Erhöhte Höhe
-                    object-fit: cover; // Bild skalieren und zuschneiden
-                    margin-bottom: 10px; // Abstand zwischen Bild und Text
-                }
-
-                img.custom-position-top {
-                    object-position: top;
-                }
-
-                img.custom-position-center {
-                    object-position: center;
-                }
-
-                img.custom-position-bottom {
-                    object-position: bottom;
                 }
             }
         }

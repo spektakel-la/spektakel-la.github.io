@@ -10,8 +10,8 @@ permalink: /artists
         <div class="artist card" id="{{ artist.artist_id }}" itemscope itemtype="http://schema.org/Person">
             <div class="card-header">
                 <i class="favorite-toggle fa fa-star-o"
-                    data-artist-favorite-toggle="{{ artist.artist_id }}"
-                    onclick="toggleFavoriteOnArtistsList(this, event, '{{ artist.artist_id }}');"></i>
+                    data-artist-id="{{ artist.artist_id }}"
+                    onclick="spektakel.favorites.toggleArtistFavorite('{{ artist.artist_id }}');"></i>
                 <h2 itemprop="name">{{ artist.name }}</h2>
                 <p>{{ artist.country }}</p>
                 <p class="artist-category">
@@ -60,27 +60,10 @@ permalink: /artists
 </div>
 
 <script>
-    const toggleFavoriteOnArtistsList = (iconElement, event, artistId) => {
-        event.stopPropagation();
-
-        // persist favorite-setting in localStorage
-        spektakel.favorites.toggleArtistFavorite(artistId);
-
-        // update ui
-        iconElement.classList.toggle('fa-star-o');
-        const isFavorite = iconElement.classList.toggle('fa-star');
-
-        Toast.fire({
-            icon: isFavorite ? "success" : "info",
-            title: isFavorite ? "Künstler wurde als Favorit markiert und wird in Spielplänen hervorgehoben." : "Künstler wurde von Favoriten entfernt."
-        });
-    };
-
-
     const onShow = () => {
         const favorites = spektakel.favorites.getArtistFavorites();
         favorites.forEach((favorite) => {
-            const iconElement = document.querySelector(`i[data-artist-favorite-toggle="${favorite}"]`);
+            const iconElement = document.querySelector(`i[data-artist-id="${favorite}"]`);
             if (iconElement) {
                 iconElement.classList.remove('fa-star-o');
                 iconElement.classList.add('fa-star');
@@ -90,4 +73,21 @@ permalink: /artists
 
     document.addEventListener("DOMContentLoaded", onShow);
     // window.addEventListener("pageshow", onShow);
+
+    window.addEventListener("favoritesChanged", (event) => {
+        const newFavorites = event.detail;
+
+        // update the favorite icon
+        document.querySelectorAll(`i[data-artist-id]`).forEach((iconElement) => {
+            const artistId = iconElement.getAttribute('data-artist-id');
+            if (newFavorites.includes(artistId)) {
+                iconElement.classList.add('fa-star');
+                iconElement.classList.remove('fa-star-o');
+            } else {
+                iconElement.classList.add('fa-star-o');
+                iconElement.classList.remove('fa-star');
+            }
+        });
+
+    });
 </script>
