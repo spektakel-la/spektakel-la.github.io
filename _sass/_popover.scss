@@ -1,6 +1,10 @@
 div[data-tippy-root] {
     width: 264px !important;
     max-width: 264px !important;
+
+    > div.tippy-box {
+        box-shadow: 0 3px 14px rgb(0 0 0 / 80%) !important;
+    }
 }
 
 .popover-artist-details {
