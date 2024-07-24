@@ -1,7 +1,7 @@
 ---
 artist_id: "staki"
 name: "S-Taki"
-country: Spanien
+country: Spanien, Ecuador
 image: /assets/img/artists/staki.webp
 facebook: https://www.facebook.com/taki.ec
 instagram:

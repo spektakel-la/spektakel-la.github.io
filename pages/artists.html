@@ -13,6 +13,9 @@ permalink: /artists
                     data-artist-id="{{ artist.artist_id }}"
                     onclick="spektakel.favorites.toggleArtistFavorite('{{ artist.artist_id }}');"></i>
                 <h2 itemprop="name">{{ artist.name }}</h2>
+                {% if artist.name_sub %}
+                    <strong>{{ artist.name_sub }}</strong>
+                {% endif %}
                 <p>{{ artist.country }}</p>
                 <p class="artist-category">
                     {% for category in artist.categories %}

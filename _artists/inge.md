@@ -12,3 +12,5 @@ categories:
     - Yoga
 ---
 Das grundlose Lachen mit Anleitung steht im Vordergrund. Einfach einmal für 30 Minuten loslassen. Lachen in der Gruppe führt dazu entspannter, gesünder und fröhlicher zu werden. „Lachen ist ansteckend“ und bringt mehr Sauerstoff in Körper und Gehirn. Es darf ohne Grund laut und herzlich gelacht werden!
+
+**Samstag, 14.9. - 15:00 - 15:30 Uhr im Salzstadel**

@@ -17,8 +17,11 @@
 
     const _toggleFavorite = (storageKey, itemKey) => {
         try {
-            const newFavorites = _addOrRemove(_getFavorites(storageKey), itemKey)
+            const oldFavorites = _getFavorites(storageKey);
+            const newFavorites = _addOrRemove(oldFavorites, itemKey);
             localStorage.setItem(storageKey, JSON.stringify(newFavorites));
+
+            const favoriteWasAdded = newFavorites.length > oldFavorites.length;
 
             const favoritesChangedEvent = new CustomEvent("favoritesChanged", {
                 detail: newFavorites,
@@ -29,8 +32,8 @@
             window.dispatchEvent(favoritesChangedEvent);
 
             Toast.fire({
-                icon: "success",
-                title: "Favoriten wurden aktualisiert. Favorisierte Künstler werden in Spielplänen farblich hervorghoben."
+                icon: favoriteWasAdded ? "success" : "info",
+                title: favoriteWasAdded ? "Künstler wird in Spielplänen hervorghoben." : "Künstler aus Favoriten entfernt."
             });
         } catch(_err){}
     }
