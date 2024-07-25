@@ -7,7 +7,7 @@ menu:
 - {name: 'Startseite',  url: ''}
 # - {name: 'Programm',      url: 'program'}
 # - {name: 'Lageplan',     url: 'locations'}
-# - {name: 'Künstler',      url: 'artists'}
+- {name: 'Künstler',      url: 'artists'}
 - {name: 'Impressionen',  url: 'impressions'}
 - {name: 'Sponsoren',     url: 'sponsors'}
 - {name: 'Impressum',     url: 'impressum'}
