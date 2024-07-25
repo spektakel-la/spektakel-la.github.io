@@ -10,7 +10,7 @@ menu:
 - {name: 'Künstler',      url: 'artists'}
 - {name: 'Impressionen',  url: 'impressions'}
 - {name: 'Sponsoren',     url: 'sponsors'}
-- {name: 'Impressum',     url: 'impressum'}
+# - {name: 'Impressum',     url: 'impressum'}
 # - {name: 'Kontakt'        url: 'contact'}
 
 menu_home_label: 'Startseite'
