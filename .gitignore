@@ -1,5 +1,6 @@
 _site
 Gemfile.lock
+change-author.sh
 .sass-cache
 .jekyll-metadata
 .DS_Store
