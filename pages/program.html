@@ -4,20 +4,32 @@ title: Programm
 permalink: /program
 ---
 
+{% assign daysOfWeek = 'Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday' | split: ',' %}
+{% assign daysOfWeekDe = 'Sonntag,Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag' | split: ',' %}
 
 {% assign sortedLocations = site.locations | where_exp: "location", "location.organizational != true" | sort: 'location_id' %}
 {% assign groupedSchedule = site.data.schedule | group_by: 'time' | sort: 'name' %}
 
-{% assign festivalEventDays = '' | split: ',' %}
+{% assign festivalEventDates = '' | split: ',' %}
 {% for event in site.data.schedule %}
     {% assign eventDate = event.time | date: "%d.%m.%Y" %}
-    {% unless festivalEventDays contains eventDate %}
-        {% assign festivalEventDays = festivalEventDays | push: eventDate %} <!-- Tag zur Liste hinzufügen, wenn nicht vorhanden -->
+    {% unless festivalEventDates contains eventDate %}
+        {% assign festivalEventDates = festivalEventDates | push: eventDate %} <!-- Tag zur Liste hinzufügen, wenn nicht vorhanden -->
     {% endunless %}
 {% endfor %}
 
-{% for scheduleDay in festivalEventDays %}
-    <h1>{{ scheduleDay }}</h1>
+{% for festivalDate in festivalEventDates %}
+    {% assign dayOfWeek = festivalDate | date: "%A" %}
+    {% assign dayOfWeekIndex = -1 %}
+    {% for day in daysOfWeek %}
+      {% if day == dayOfWeek %}
+        {% assign dayOfWeekIndex = forloop.index0 %}
+      {% endif %}
+    {% endfor %}
+    {% assign dayOfWeekDe = daysOfWeekDe[dayOfWeekIndex] %}
+
+
+    <h1>{{ dayOfWeekDe }} {{ festivalDate }}</h1>
     <div class="program-table-wrapper">
         <table>
             <thead>
@@ -25,12 +37,14 @@ permalink: /program
                     <th>Zeit</th>
                     {% for location in sortedLocations %}
                         <th>
-                            <div class="table-header-location-id">
-                                {{ location.location_id | upcase }}
-                            </div>
-                            <div class="table-header-location-description">
-                                {{ location.description }}
-                            </div>
+                            <a href="locations/#{{ location.location_id }}">
+                                <div class="table-header-location-id">
+                                    {{ location.location_id | upcase }}
+                                </div>
+                                <div class="table-header-location-description">
+                                    {{ location.description }}
+                                </div>
+                            </a>
                         </th>
                     {% endfor %}
                 </tr>
@@ -42,7 +56,7 @@ permalink: /program
                     {% assign scheduleEntryDate = scheduleEntryDateTime | date: "%d.%m.%Y" %}
                     {% assign scheduleEntryTime = scheduleEntryDateTime | date: "%H:%M" %}
 
-                    {% if scheduleEntryDate != scheduleDay %}
+                    {% if scheduleEntryDate != festivalDate %}
                         {% continue %}
                     {% endif %}
 

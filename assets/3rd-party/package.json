@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@gnatih/leaflet.legend": "^1.0.1",
     "@khmyznikov/pwa-install": "^0.3.9",
     "date-fns": "^3.6.0",
     "font-awesome": "^4.7.0",

@@ -58,6 +58,10 @@
             left: 0;
         }
 
+        thead a {
+            text-decoration: none;
+        }
+
         /* Day Section */
         tr.day-section {
             background: $table-sticky-background-color;
