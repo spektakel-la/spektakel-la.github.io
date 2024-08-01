@@ -84,6 +84,11 @@
             background-size: 10px 10px; // Größe des Musters anpassen
         }
 
+        .artist-notes {
+            color: lighten($text-color, 40%);
+            font-size: smaller;
+        }
+
         .popover-content {
             background-color: white;
             border: 1px solid #ccc;

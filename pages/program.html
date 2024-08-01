@@ -18,6 +18,8 @@ permalink: /program
     {% endunless %}
 {% endfor %}
 
+<p>Änderungen vorbehalten!</p>
+
 {% for festivalDate in festivalEventDates %}
     {% assign dayOfWeek = festivalDate | date: "%A" %}
     {% assign dayOfWeekIndex = -1 %}
@@ -29,7 +31,7 @@ permalink: /program
     {% assign dayOfWeekDe = daysOfWeekDe[dayOfWeekIndex] %}
 
 
-    <h1>{{ dayOfWeekDe }} {{ festivalDate }}</h1>
+    <h2>{{ dayOfWeekDe }} {{ festivalDate }}</h2>
     <div class="program-table-wrapper">
         <table>
             <thead>
@@ -71,11 +73,10 @@ permalink: /program
                                     {% assign location = site.locations | where: 'location_id', entryAtLocation.location_id | first %}
 
                                     <span itemscope itemtype="https://schema.org/Event">
-                                        <span itemprop="name">{{ artist.name }}
-                                            {% if entryAtLocation.notes %}
-                                                &nbsp;{{ entryAtLocation.notes }}
-                                            {% endif %}
-                                        </span>
+                                        <span itemprop="name">{{ artist.name }}</span>
+                                        {% if entryAtLocation.notes %}
+                                            <span class="artist-notes">({{ entryAtLocation.notes }})</span>
+                                        {% endif %}
                                         <span hidden>
                                             <meta itemprop="startDate" content="{{ scheduleEntryDateTime }}">
                                             <span itemscope itemtype="https://schema.org/Place" itemprop="location">
