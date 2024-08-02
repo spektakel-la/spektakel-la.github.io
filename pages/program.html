@@ -39,7 +39,7 @@ permalink: /program
                     <th>Zeit</th>
                     {% for location in sortedLocations %}
                         <th>
-                            <a href="locations/#{{ location.location_id }}">
+                            <a href="{{ site.baseurl }}/locations#{{ location.location_id }}">
                                 <div class="table-header-location-id">
                                     {{ location.location_id | upcase }}
                                 </div>
