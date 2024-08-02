@@ -19,7 +19,10 @@
     };
 
     const createPopoverContentCategoryHtml = (artist) => {
-        return artist.categories.join(', ');
+        if (!artist.categories) {
+            return '';
+        }
+        return `(${artist.categories.join(', ')})`;
     }
 
     const createPopoverContentHtml = (artistId) => {
@@ -35,7 +38,7 @@
                         ${createPopoverContentImageHtml(artist)}
                     </div>
                     <div class="popover-artist-details-category">
-                        (${createPopoverContentCategoryHtml(artist)})
+                        ${createPopoverContentCategoryHtml(artist)}
                     </div>
                     <div class="popover-artist-details-link">
                         <a href="/artists#${artistId}">Zum Künstlerprofil</a>
