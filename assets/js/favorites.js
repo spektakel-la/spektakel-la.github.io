@@ -33,7 +33,7 @@
 
             Toast.fire({
                 icon: favoriteWasAdded ? "success" : "info",
-                title: favoriteWasAdded ? "Künstler wird in Spielplänen hervorghoben." : "Künstler aus Favoriten entfernt."
+                title: favoriteWasAdded ? "Künstler wird in Spielplänen hervorgehoben." : "Künstler aus Favoriten entfernt."
             });
         } catch(_err){}
     }
