@@ -1,6 +1,7 @@
 ---
 artist_id: "hermajestyssecretcircus"
 name: "Her Majesty's Secret Circus"
+short_name: "Secret Circus"
 country: USA
 image: /assets/img/artists/hermajestyssecretcircus.webp
 image_position: top

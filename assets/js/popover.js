@@ -18,6 +18,10 @@
         }
     };
 
+    const createPopoverContentCategoryHtml = (artist) => {
+        return artist.categories.join(', ');
+    }
+
     const createPopoverContentHtml = (artistId) => {
         const artist = spektakel.constants.ARTISTS.find(a => a.artist_id === artistId);
         const artistFavorites = spektakel.favorites.getArtistFavorites();
@@ -29,6 +33,9 @@
                 <div class="popover-artist-details">
                     <div class="popover-artist-details-image">
                         ${createPopoverContentImageHtml(artist)}
+                    </div>
+                    <div class="popover-artist-details-category">
+                        (${createPopoverContentCategoryHtml(artist)})
                     </div>
                     <div class="popover-artist-details-link">
                         <a href="/artists#${artistId}">Zum Künstlerprofil</a>

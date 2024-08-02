@@ -33,6 +33,13 @@ div[data-tippy-root] {
         object-position: bottom;
     }
 
+    .popover-artist-details-category {
+        text-align: center;
+        margin-bottom: 5px;
+        color: lighten($text-color, 40%);
+        font-size: smaller;
+    }
+
     .popover-artist-details-link {
         display: grid;
         grid-template-columns: auto 1fr auto;

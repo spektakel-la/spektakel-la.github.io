@@ -1,6 +1,7 @@
 ---
 artist_id: "jongleurflorianhuber"
 name: "Jongleur Florian Huber"
+short_name: "Florian Huber"
 country: Deutschland
 image: /assets/img/artists/jongleurflorianhuber.webp
 image_position: top

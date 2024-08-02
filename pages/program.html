@@ -73,7 +73,13 @@ permalink: /program
                                     {% assign location = site.locations | where: 'location_id', entryAtLocation.location_id | first %}
 
                                     <span itemscope itemtype="https://schema.org/Event">
-                                        <span itemprop="name">{{ artist.name }}</span>
+                                        <span itemprop="name">
+                                            {% if artist.short_name %}
+                                                {{ artist.short_name }}
+                                            {% else %}
+                                                {{ artist.name }}
+                                            {% endif %}
+                                        </span>
                                         {% if entryAtLocation.notes %}
                                             <span class="artist-notes">({{ entryAtLocation.notes }})</span>
                                         {% endif %}
@@ -110,19 +116,22 @@ permalink: /program
         document.querySelectorAll(`td[data-artist-id]`).forEach((tdElement) => {
             const artistId = tdElement.getAttribute('data-artist-id');
 
-            // Create tooltips
-            tippy(tdElement, {
-                theme: 'light-border',
-                trigger: 'click',
-                interactive: true,
-                allowHTML: true,
-                content: 'Lade Künstler...',
-                onShow: (instance) => instance.setContent(spektakel.popover.createPopoverContentHtml(artistId)),
-            });
+            const artist = spektakel.constants.ARTISTS.find((artist) => artist.artist_id === artistId);
+            if (!artist.organizational) {
+                // Create tooltips
+                tippy(tdElement, {
+                    theme: 'light-border',
+                    trigger: 'click',
+                    interactive: true,
+                    allowHTML: true,
+                    content: 'Lade Künstler...',
+                    onShow: (instance) => instance.setContent(spektakel.popover.createPopoverContentHtml(artistId)),
+                });
 
-            // Highlight favorite artists
-            if (artistFavorites.includes(artistId)) {
-                tdElement.classList.add('favorite');
+                // Highlight favorite artists
+                if (artistFavorites.includes(artistId)) {
+                    tdElement.classList.add('favorite');
+                }
             }
         });
     }

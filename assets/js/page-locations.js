@@ -1,12 +1,19 @@
 (function () {
 
-    const createIconMarkup = (locationObj) => `
-        <div class="spektakel-leaflet-location-icon-container">
-            <div>
-                ${locationObj.location_label ? locationObj.location_label : locationObj.location_id}
-            </div>
-        </div>
-        `;
+    const createIconMarkup = (locationObj) => {
+        let label = '';
+        if (locationObj.marker_color === 'yellow') {
+            label =  `<i class="fa fa-info" aria-hidden="true"></i>`;
+        } else {
+            label = locationObj?.location_label ? locationObj.location_label : locationObj.location_id
+        }
+        return `
+            <div class="spektakel-leaflet-location-icon-container">
+                <div>
+                    ${label}
+                </div>
+            </div>`
+    };
 
     const toggleArtistDetails = (rowElement) => {
         rowElement.classList.toggle('expanded');
