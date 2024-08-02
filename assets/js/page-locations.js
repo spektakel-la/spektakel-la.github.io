@@ -180,9 +180,12 @@
             const [lat, lon] = location.gps;
             const marker = L.marker([lat, lon], {icon: markerIcon});
             marker.bindPopup('', {className: 'spektakel-leaflet-popup', offset: [0, -38]})
-                .on("popupopen", function (event) {
-                    // Dynamically create the content on `popupopen`-event
+                .on("popupopen", (event) => {
+                    window.location.hash = `${location.location_id}`;
                     event.popup.setContent(createPopupMarkup(location));
+                })
+                .on("popupclose", (event) => {
+                    window.location.hash = '';
                 });
             marker.addTo(map);
 
