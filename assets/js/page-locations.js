@@ -57,7 +57,7 @@
         const scheduleForLocationWithArtist = prunedScheduleForLocation.map((entry) => {
             const artist = spektakel.constants.ARTISTS.find((artist) => artist.artist_id === entry.artist_id);
             if (artist){
-                entry.artist_name = artist?.name;
+                entry.artist_name = artist?.short_name ? artist?.short_name : artist?.name;
                 entry.artist_categories = artist?.categories;
                 entry.artist_image = artist?.image;
                 entry.image_position = artist?.image_position;
