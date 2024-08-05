@@ -15,4 +15,4 @@ Der irische Musiker Sean Regan präsentiert eine rasante Fusion aus wilden Beats
 
 Mit Mikrofon, Gitarre, Flöte und Loop-Station improvisiert er live.
 
-**Spektakel-Premiere und Deutschland-Premiere in Landshut**
+_Spektakel-Premiere und Deutschland-Premiere in Landshut_

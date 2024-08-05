@@ -14,4 +14,4 @@ categories:
 ---
 Kiki ist ein alter Bekannter und eine feste Größe des Landshuter Festivals. Perfekte Jonglagetechnik, seine Comedy und seine Wurftechnik mit Gabeln, nicht Messer! Für jedes Alter, für Groß und Klein.
 
-**Absoluter Publikumsliebling und TopTipp**
+_Absoluter Publikumsliebling und TopTipp_

@@ -12,4 +12,4 @@ categories:
 ---
 Die polnische Flamenco-Jazz Formation aus Krakau um den Gitarristen und Komponisten Jarek Dzien kommen wieder nach Landshut. Die 4 unglaublichen guten Musiker erreichen ihr Publikum mit packenden Gypsy-Grooves und einer ergreifenden Dynamik. Flamenco meets Jazz – sonnige Melodien und feurige Rhythmen von südspanischer Zigeunertradition bis zu zeitgenössischer Jazz-Fusion. Que Passa kommen mit zwei Akustikgitarren, Akkordeon, E-Bass und Cajon aus Polen und bringen andalusische Gefühle mit!
 
-**Man muss dieses Ensemble einfach lieben.**
+_Man muss dieses Ensemble einfach lieben._
