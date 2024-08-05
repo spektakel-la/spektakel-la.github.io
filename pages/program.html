@@ -109,8 +109,10 @@ permalink: /program
 
 <script>
      const onShow = () => {
-        document.querySelectorAll('.program-table-wrapper > table')
-        .forEach((tableElement) => spektakel.program.mergeTableCells(tableElement));
+        document.querySelectorAll('.program-table-wrapper > table').forEach((tableElement) => {
+            spektakel.program.dropEmptyColumns(tableElement);
+            spektakel.program.mergeTableCells(tableElement);
+        });
 
         const artistFavorites = spektakel.favorites.getArtistFavorites();
         document.querySelectorAll(`td[data-artist-id]`).forEach((tdElement) => {

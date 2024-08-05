@@ -38,6 +38,40 @@
         cellsToRemove.forEach(cell => cell.parentNode.removeChild(cell));
     };
 
+    const dropEmptyColumns = (tableElement) => {
+        var rows = tableElement.getElementsByTagName("tr");
+
+        if (rows.length === 0) {
+            return; // Keine Zeilen in der Tabelle
+        }
+        let cellsToRemove = [];
+
+        const columns = rows[0].getElementsByTagName("th").length; // Anzahl der Spalten anhand der Headerzeilen
+        for (let col = 0; col < columns; col++) {
+            let empty = true;
+            for (var i = 1; i < rows.length; i++) {
+                var cell = rows[i].getElementsByTagName("td")[col];
+                if (cell && cell.innerText.trim() !== "") {
+                    empty = false;
+                    break;
+                }
+            }
+
+            if (empty) {
+                for (var i = 0; i < rows.length; i++) {
+                    const row = rows[i];
+                    var cell = row.getElementsByTagName("th")[col] || row.getElementsByTagName("td")[col];
+                    if (cell) {
+                        cellsToRemove.push(cell);
+                    }
+                }
+            }
+        }
+
+        // Entferne die gesammelten Zellen außerhalb der Schleife
+        cellsToRemove.forEach(cell => cell.parentNode.removeChild(cell));
+    };
+
 
     /*
      * Namespace setup
@@ -45,6 +79,7 @@
     const spektakel = window.spektakel || {};
     spektakel.program = (function() {
         return {
+            dropEmptyColumns,
             mergeTableCells
         }
     })();
