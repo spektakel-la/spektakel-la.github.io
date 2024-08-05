@@ -197,38 +197,6 @@
             return { marker, location_id: location.location_id };
         });
 
-        const legend = L.control.Legend({
-            title: 'Legende',
-            position: 'bottomleft',
-            collapsed: true,
-            opacity: 1,
-            column: 2,
-            legends: [
-                {
-                    label: 'Bühne',
-                    type: 'image',
-                    url: `/assets/img/map/marker-blue.${hasWebpSupport?'webp':'jpg'}`,
-                },
-                {
-                    label: 'Bühne',
-                    type: 'image',
-                    url: `/assets/img/map/marker-purple.${hasWebpSupport?'webp':'jpg'}`,
-                },
-                {
-                    label: 'Spielort',
-                    type: 'image',
-                    url: `/assets/img/map/marker-pink.${hasWebpSupport?'webp':'jpg'}`
-                },
-                {
-                    label: 'Information',
-                    type: 'image',
-                    url: `/assets/img/map/marker-yellow.${hasWebpSupport?'webp':'jpg'}`
-                }
-            ]
-        });
-        // legend.addTo(map);
-
-
         map.on('load', () => {
             const hash = window.location.hash.substring(1); // Entfernt das '#' Zeichen
             const targetMarker = markers.find(m => m.location_id === hash);
