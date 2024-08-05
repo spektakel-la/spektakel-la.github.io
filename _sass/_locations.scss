@@ -109,6 +109,11 @@
         font-size: 16px;
         margin: 0 !important;
 
+        a {
+            color: $link-extern-color;
+            text-decoration: none;
+        }
+
         .location-title {
             margin: 5px;
         }
@@ -207,6 +212,7 @@
 
             tr.artist-details {
                 display: none;
+                scroll-margin-top: 150px;
 
                 &.visible{
                     display: table-row;

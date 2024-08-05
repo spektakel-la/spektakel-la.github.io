@@ -5,6 +5,11 @@
     line-height: 1.2;
     overflow-x: auto; /* Horizontales Scrollen ermöglichen */
 
+    a {
+        color: $link-extern-color;
+        text-decoration: none;
+    }
+
     table {
         margin-bottom: 0;
         table-layout: auto;

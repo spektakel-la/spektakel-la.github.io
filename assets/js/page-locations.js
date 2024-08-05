@@ -17,7 +17,9 @@
 
     const toggleArtistDetails = (rowElement) => {
         rowElement.classList.toggle('expanded');
-        rowElement.nextElementSibling.classList.toggle('visible');
+        const element = rowElement.nextElementSibling;
+        element.classList.toggle('visible');
+        element.scrollIntoView({behavior: "smooth", block: "center"});
     };
 
     const sanityCheckSchedule = () => {

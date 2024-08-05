@@ -1,7 +1,7 @@
 .artists-list {
     .artist {
         width: calc(33.333% - 40px);
-        padding-bottom: 1.4rem;
+        padding-bottom: 2rem;
 
         .card-header p {
             margin: 0;
@@ -33,6 +33,17 @@
 
         img.custom-position-bottom {
             object-position: bottom;
+        }
+
+        .schedule {
+            margin-top: 30px;
+            margin-bottom: 10px;
+
+            li {
+                margin: 0;
+                padding: 0;
+                border-bottom: 0;
+            }
         }
 
         .social-media-links {

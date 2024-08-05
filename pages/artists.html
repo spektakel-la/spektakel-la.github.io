@@ -30,6 +30,48 @@ permalink: /artists
                     <img src="{{ artist.image | replace:'.webp','.jpg' }}" alt="{{ artist.name }}" itemprop="image" class="custom-position-{% if artist.image_position %}{{ artist.image_position }}{% else %}center{% endif %}">
                 </picture>
                 <p>{{ artist.content | markdownify }}</p>
+
+                {% assign sortedEvents = site.data.schedule | where_exp: "event", "event.artist_id == artist.artist_id" | sort: 'time' %}
+                {% if sortedEvents.size > 0 %}
+                    <div class="schedule">
+                        <!-- <h4>Auftritte</h4> -->
+                        <ul>
+                            {% assign previous_time = nil %}
+                            {% assign previous_date = nil %}
+                            {% for event in sortedEvents %}
+                                {% assign current_time = event.time | date: "%s" %}
+                                {% assign current_date = event.time | date: "%Y-%m-%d" %}
+                                {% if previous_date != current_date %}
+                                    <h5>{{ current_date | date: "%d.%m.%Y" }}</h5>
+                                    {% assign previous_date = current_date %}
+                                {% endif %}
+                                {% if previous_time == nil %}
+                                    {% assign previous_time = current_time %}
+                                    <li>
+                                        <time datetime="{{ event.time }}">{{ event.time | date: "%H:%M" }}</time>
+                                        {% assign location = site.locations | where: 'location_id', event.location_id | first %}
+                                        <a href="{{ site.baseurl }}/locations#{{ location.location_id }}">
+                                            {{ location.description }}
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    {% assign time_difference = current_time | minus: previous_time %}
+                                    {% if time_difference >= 3600 %}
+                                        {% assign previous_time = current_time %}
+                                        <li>
+                                            <time datetime="{{ event.time }}">{{ event.time | date: "%H:%M" }}</time>
+                                            {% assign location = site.locations | where: 'location_id', event.location_id | first %}
+                                            <a href="{{ site.baseurl }}/locations#{{ location.location_id }}">
+                                                {{ location.description }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
                 <div class="social-media-links">
                     {% if artist.facebook %}
                         <a href="{{ artist.facebook }}" target="_blank" rel="noopener noreferrer">
