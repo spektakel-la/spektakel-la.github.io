@@ -4,6 +4,9 @@ title: Künstler
 permalink: /artists
 ---
 
+{% assign daysOfWeek = 'Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday' | split: ',' %}
+{% assign daysOfWeekDe = 'Sonntag,Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag' | split: ',' %}
+
 <div class="artists-list cards-list">
     {% assign sortedArtists = site.artists | where_exp: "artist", "artist.organizational != true" | sort: 'artist_id' %}
     {% for artist in sortedArtists %}
@@ -34,7 +37,6 @@ permalink: /artists
                 {% assign sortedEvents = site.data.schedule | where_exp: "event", "event.artist_id == artist.artist_id" | sort: 'time' %}
                 {% if sortedEvents.size > 0 %}
                     <div class="schedule">
-                        <!-- <h4>Auftritte</h4> -->
                         <ul>
                             {% assign previous_time = nil %}
                             {% assign previous_date = nil %}
@@ -42,7 +44,17 @@ permalink: /artists
                                 {% assign current_time = event.time | date: "%s" %}
                                 {% assign current_date = event.time | date: "%Y-%m-%d" %}
                                 {% if previous_date != current_date %}
-                                    <h5>{{ current_date | date: "%d.%m.%Y" }}</h5>
+
+                                    {% assign dayOfWeek = current_date | date: "%A" %}
+                                    {% assign dayOfWeekIndex = -1 %}
+                                    {% for day in daysOfWeek %}
+                                        {% if day == dayOfWeek %}
+                                            {% assign dayOfWeekIndex = forloop.index0 %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% assign dayOfWeekDe = daysOfWeekDe[dayOfWeekIndex] %}
+
+                                    <h5>{{dayOfWeekDe}} {{ current_date | date: "%d.%m.%Y" }}</h5>
                                     {% assign previous_date = current_date %}
                                 {% endif %}
                                 {% if previous_time == nil %}

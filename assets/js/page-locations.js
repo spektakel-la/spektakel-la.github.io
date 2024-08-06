@@ -84,7 +84,9 @@
                 && currentDateString !== sectionDateString) {
                 maybeDateSection = `
                     <tr class="day-section">
-                        <td colspan="2">${currentDateString}</td>
+                        <td colspan="2">
+                            <strong>${dateFns.format(scheduleDate, 'EEEE dd.MM.yyyy', { locale: dateFns.locale.de })}</strong>
+                        </td>
                     </tr>`;
                 sectionDateString = currentDateString;
             }
