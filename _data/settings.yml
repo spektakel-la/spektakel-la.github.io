@@ -5,9 +5,9 @@ google-tagmanager-id: 'GTM-TK5422TV'
 
 menu:
 - {name: 'Startseite',  url: ''}
-# - {name: 'Programm',      url: 'program'}
-# - {name: 'Lageplan',     url: 'locations'}
 - {name: 'Künstler',      url: 'artists'}
+- {name: 'Programm',      url: 'program'}
+- {name: 'Lageplan',     url: 'locations'}
 - {name: 'Impressionen',  url: 'impressions'}
 - {name: 'Sponsoren',     url: 'sponsors'}
 # - {name: 'Impressum',     url: 'impressum'}
