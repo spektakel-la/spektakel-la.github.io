@@ -14,3 +14,5 @@ categories:
 Das grundlose Lachen mit Anleitung steht im Vordergrund. Einfach einmal für 30 Minuten loslassen. Lachen in der Gruppe führt dazu entspannter, gesünder und fröhlicher zu werden. „Lachen ist ansteckend“ und bringt mehr Sauerstoff in Körper und Gehirn. Es darf ohne Grund laut und herzlich gelacht werden!
 
 _Samstag, 14.9. - 15:00 - 15:30 Uhr im Salzstadel_
+
+Ab Montag 28.10.2024 Termine beim [Christlichen Bildungswerk Landshut e.V.](https://www.cbw-landshut.de)
