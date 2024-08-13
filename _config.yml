@@ -12,6 +12,7 @@ description:	      "Internationales Festival"
 url:                "https://spektakel.la"
 locale:             "de_DE"
 logo:               "/assets/img/spektakel-logo.png"
+image:              "/assets/img/spektakel-logo.png"
 social:
   name:             "Spektakel Landshut"
   links:
