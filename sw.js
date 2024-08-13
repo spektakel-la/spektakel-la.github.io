@@ -34,7 +34,7 @@ registerRoute(
         statuses: [0, 200, 404],
       }),
       new ExpirationPlugin({
-        maxEntries: 100, // maximale Anzahl von gecachten Einträgen
+        maxEntries: 300, // maximale Anzahl von gecachten Einträgen
         maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Tage
       }),
     ],
