@@ -39,7 +39,7 @@
     };
 
     const dropEmptyColumns = (tableElement) => {
-        var rows = tableElement.getElementsByTagName("tr");
+        const rows = tableElement.getElementsByTagName("tr");
 
         if (rows.length === 0) {
             return; // Keine Zeilen in der Tabelle
@@ -72,6 +72,66 @@
         cellsToRemove.forEach(cell => cell.parentNode.removeChild(cell));
     };
 
+    const dropEmptyRows = (tableElement) => {
+        const rows = tableElement.getElementsByTagName("tr");
+
+        if (rows.length === 0) {
+            return; // Keine Zeilen in der Tabelle
+        }
+        let rowsToRemove = [];
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = rows[i];
+            let empty = true;
+            for (var j = 0; j < row.cells.length; j++) {
+                const innerText = row.cells[j].innerText;
+                const isCellTimeInfo = /\d{2}:\d{2}/.test(innerText);
+                const isCellEmpty = innerText.trim() === "";
+                if (!isCellTimeInfo && !isCellEmpty) {
+                    empty = false;
+                    break;
+                }
+            }
+
+            if (empty) {
+                rowsToRemove.push(row);
+            }
+        }
+
+        // Entferne die gesammelten Zeilen außerhalb der Schleife
+        rowsToRemove.forEach(row => row.parentNode.removeChild(row));
+    };
+
+    const highlightTimeInfoCell = (tableElement, className) => {
+        const rows = tableElement.getElementsByTagName("tr");
+        if (rows.length < 1) {
+            return; // Keine Zeilen in der Tabelle
+        }
+
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i];
+            const timeInfoCell = row.cells[0];
+            const datetimeString = timeInfoCell.dataset?.datetime;
+            if (datetimeString) {
+                const rowTime = dateFns.parseISO(datetimeString);
+                const rowTimePlus30 = dateFns.addMinutes(rowTime, 30);
+                const now = new Date();
+                const isNowInRow = (dateFns.isEqual(now, rowTime) || dateFns.isAfter(now, rowTime)) &&
+                                    dateFns.isBefore(now, rowTimePlus30);
+
+                if (isNowInRow) {
+                    // Altes highlight entfernen
+                    const oldHighlightedInfoCell = tableElement.querySelector(className);
+                    if(oldHighlightedInfoCell !== timeInfoCell){
+                        oldHighlightedInfoCell?.classList.remove(className);
+                    }
+
+                    timeInfoCell.classList.add(className);
+                }
+            }
+        }
+    }
+
 
     /*
      * Namespace setup
@@ -80,7 +140,9 @@
     spektakel.program = (function() {
         return {
             dropEmptyColumns,
-            mergeTableCells
+            dropEmptyRows,
+            mergeTableCells,
+            highlightTimeInfoCell
         }
     })();
     window.spektakel = spektakel;

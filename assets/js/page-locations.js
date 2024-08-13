@@ -131,9 +131,20 @@
 
     const createPopupMarkup = (locationObj) => `
         <div class="leaflet-popup-content">
-            <div class="location-title">
-                ${locationObj.location_id} - ${locationObj.description}
+            <div class="location-title-grid">
+                <div class="location-title">
+                    ${locationObj.location_id} - ${locationObj.description}
                 </div>
+                <div>
+                    <a href="/${locationObj.nightlife ? 'nightlife' : 'program'}">
+                        <picture>
+                            <source srcset="/assets/img/map/schedule-pink.webp" type="image/webp">
+                            <source srcset="/assets/img/map/schedule-pink.png" type="image/png">
+                            <img class="schedule-image" src="/assets/img/map/schedule-pink.png" >
+                        </picture>
+                    </a>
+                </div>
+            </div>
             <div class="location-table-wrapper">
                 ${createPopupMarkupForLocation(locationObj.location_id)}
             </div>
@@ -185,11 +196,11 @@
             const marker = L.marker([lat, lon], {icon: markerIcon});
             marker.bindPopup('', {className: 'spektakel-leaflet-popup', offset: [0, -38]})
                 .on("popupopen", (event) => {
-                    window.location.hash = `${location.location_id}`;
+                    history.replaceState(null, null, `#${location.location_id}`);
                     event.popup.setContent(createPopupMarkup(location));
                 })
                 .on("popupclose", (event) => {
-                    window.location.hash = '';
+                    history.replaceState(null, null, ' ');
                 });
             marker.addTo(map);
 

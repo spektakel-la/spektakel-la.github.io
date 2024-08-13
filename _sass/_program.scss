@@ -67,6 +67,12 @@
             left: 0;
         }
 
+        th:first-child,
+        td:first-child {
+            width: 1%;
+            white-space: nowrap;
+        }
+
         thead a {
             text-decoration: none;
         }
@@ -93,6 +99,11 @@
             background-size: 10px 10px; // Größe des Musters anpassen
         }
 
+        td.highlight-time-info {
+            color: $text-color-inverted;
+            background-color: $green !important;
+        }
+
         .artist-notes {
             color: lighten($text-color, 40%);
             font-size: smaller;
@@ -109,5 +120,16 @@
                 display: none;
             }
         }
+    }
+}
+
+.other-schedule-hint {
+
+    margin-top: 20px;
+    margin-bottom: 50px;
+
+    a {
+        color: $link-extern-color;
+        text-decoration: none;
     }
 }

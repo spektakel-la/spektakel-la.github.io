@@ -98,9 +98,9 @@
 }
 
 .leaflet-container a.leaflet-popup-close-button  {
-    top: 2px !important;
-    right: 2px !important;
-    font-size: 24px !important;
+    top: 4px !important;
+    right: 5px !important;
+    font-size: 33px !important;
 }
 
 .spektakel-leaflet-popup {
@@ -114,8 +114,19 @@
             text-decoration: none;
         }
 
+        .location-title-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            padding-right: 50px;
+        }
+
         .location-title {
-            margin: 5px;
+            margin: 5px 0 5px 8px;
+            font-size: 18px;
+        }
+
+        .schedule-image {
+            width: 21px;
         }
 
         .location-table-wrapper {

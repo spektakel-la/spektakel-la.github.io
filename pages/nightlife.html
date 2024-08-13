@@ -1,20 +1,29 @@
 ---
 layout: page
-title: Programm
-permalink: /program
+title: Nachtleben
+permalink: /nightlife
 ---
 
 {% assign daysOfWeek = 'Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday' | split: ',' %}
 {% assign daysOfWeekDe = 'Sonntag,Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag' | split: ',' %}
 
-{% assign sortedLocations = site.locations | where_exp: "location", "location.organizational != true"| where_exp: "location", "location.nightlife != true" | sort: 'location_id' %}
-{% assign groupedSchedule = site.data.schedule | group_by: 'time' | sort: 'name' %}
+{% assign sortedLocations = site.locations | where_exp: "location", "location.nightlife == true" | sort: 'location_id' %}
+{% assign groupedSchedule = site.data.nightlife | group_by: 'time' | sort: 'name' %}
 
 {% assign festivalEventDates = '' | split: ',' %}
-{% for event in site.data.schedule %}
-    {% assign eventDate = event.time | date: "%d.%m.%Y" %}
-    {% unless festivalEventDates contains eventDate %}
-        {% assign festivalEventDates = festivalEventDates | push: eventDate %} <!-- Tag zur Liste hinzufügen, wenn nicht vorhanden -->
+{% for event in site.data.nightlife %}
+    {% assign eventHour = event.time | date: "%H" | plus: 0 %}
+    {% assign eventDateUnix = event.time | date: "%s" %}
+
+    {% if eventHour < 12 %}
+        {% assign adjustedUnixDate = eventDateUnix | minus: 86400 %} <!-- 86400 Sekunden = 1 Tag -->
+    {% else %}
+        {% assign adjustedUnixDate = eventDateUnix %}
+    {% endif %}
+
+    {% assign adjustedDate = adjustedUnixDate | date: "%d.%m.%Y" %}
+    {% unless festivalEventDates contains adjustedDate %}
+        {% assign festivalEventDates = festivalEventDates | push: adjustedDate %} <!-- Tag zur Liste hinzufügen, wenn nicht vorhanden -->
     {% endunless %}
 {% endfor %}
 
@@ -24,12 +33,11 @@ permalink: /program
     {% assign dayOfWeek = festivalDate | date: "%A" %}
     {% assign dayOfWeekIndex = -1 %}
     {% for day in daysOfWeek %}
-      {% if day == dayOfWeek %}
+        {% if day == dayOfWeek %}
         {% assign dayOfWeekIndex = forloop.index0 %}
-      {% endif %}
+        {% endif %}
     {% endfor %}
     {% assign dayOfWeekDe = daysOfWeekDe[dayOfWeekIndex] %}
-
 
     <h2>{{ dayOfWeekDe }} {{ festivalDate }}</h2>
 
@@ -53,18 +61,24 @@ permalink: /program
                 </tr>
             </thead>
             <tbody>
-                {% assign groupedSchedule = site.data.schedule | group_by: 'time' | sort: 'name' %}
                 {% for group in groupedSchedule %}
                     {% assign scheduleEntryDateTime = group.name %}
-                    {% assign scheduleEntryDate = scheduleEntryDateTime | date: "%d.%m.%Y" %}
-                    {% assign scheduleEntryTime = scheduleEntryDateTime | date: "%H:%M" %}
+                    {% assign scheduleEntryDateUnix = scheduleEntryDateTime | date: "%s" %}
+                    {% assign scheduleEntryHour = scheduleEntryDateTime | date: "%H" | plus: 0 %}
 
-                    {% if scheduleEntryDate != festivalDate %}
+                    {% if scheduleEntryHour < 12 %}
+                        {% assign adjustedUnixDate = scheduleEntryDateUnix | minus: 86400 %}
+                    {% else %}
+                        {% assign adjustedUnixDate = scheduleEntryDateUnix %}
+                    {% endif %}
+
+                    {% assign adjustedDate = adjustedUnixDate | date: "%d.%m.%Y" %}
+                    {% if adjustedDate != festivalDate %}
                         {% continue %}
                     {% endif %}
 
                     <tr>
-                        <td data-datetime="{{ scheduleEntryDateTime }}">{{ scheduleEntryTime }}</td>
+                        <td data-datetime="{{ scheduleEntryDateTime }}">{{ scheduleEntryDateTime | date: "%H:%M" }}</td>
                         {% assign scheduledActsAtTime = group.items %}
                         {% for location in sortedLocations %}
                             {% assign entryAtLocation = scheduledActsAtTime | where: 'location_id', location.location_id | first %}
@@ -105,36 +119,19 @@ permalink: /program
             </tbody>
         </table>
     </div>
-
-    {% unless forloop.last %}
-        <div class="other-schedule-hint">
-            Für Nachtschwärmer gibt es unser <a href="{{ site.baseurl }}/nightlife">Spektakel Nachtleben</a>.
-        </div>
-    {% endunless %}
 {% endfor %}
 
-<script>
-    let nextTimeout;
-    const updateTimeInfoCell = () => {
-        document.querySelectorAll('.program-table-wrapper > table').forEach((tableElement) => {
-            spektakel.program.highlightTimeInfoCell(tableElement, 'highlight-time-info');
-        });
-        if(nextTimeout) {
-            clearTimeout(nextTimeout);
-        }
-        nextTimeout = setTimeout(() => {
-            updateTimeInfoCell();
-        }, 5_000);
-    };
+<div class="other-schedule-hint">
+    Hier geht es zum <a href="{{ site.baseurl }}/program">Tagesprogramm</a>.
+</div>
 
+<script>
     const onShow = () => {
         document.querySelectorAll('.program-table-wrapper > table').forEach((tableElement) => {
             spektakel.program.dropEmptyColumns(tableElement);
             // spektakel.program.dropEmptyRows(tableElement);
             spektakel.program.mergeTableCells(tableElement);
         });
-
-        updateTimeInfoCell();
 
         const artistFavorites = spektakel.favorites.getArtistFavorites();
         document.querySelectorAll(`td[data-artist-id]`).forEach((tdElement) => {
