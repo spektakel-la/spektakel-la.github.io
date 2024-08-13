@@ -15,4 +15,4 @@ Das grundlose Lachen mit Anleitung steht im Vordergrund. Einfach einmal für 30 
 
 _Samstag, 14.9. - 15:00 - 15:30 Uhr im Salzstadel_
 
-Ab Montag 28.10.2024 Termine beim [Christlichen Bildungswerk Landshut e.V.](https://www.cbw-landshut.de)
+Ab Montag 28.10.2024 Termine beim [Christlichen Bildungswerk Landshut e.V.](https://www.cbw-landshut.de){:target="_blank"}
