@@ -29,6 +29,8 @@ permalink: /nightlife
 
 <p>Änderungen vorbehalten!</p>
 
+<p>Current Time (Server): {{ 'now' | date: "%Y-%m-%d %H:%M:%S %Z" }}</p>
+
 {% for festivalDate in festivalEventDates %}
     {% assign dayOfWeek = festivalDate | date: "%A" %}
     {% assign dayOfWeekIndex = -1 %}
