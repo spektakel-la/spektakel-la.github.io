@@ -21,6 +21,10 @@
           "longitude": "12.151756891702782"
         }
       },
+      "image": "{{ site.image }}",
+      "description": "{{ site.description | escape }}",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "performer": [
         {% for artist in site.artists %}
             {
