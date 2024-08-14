@@ -6,14 +6,14 @@
       {{ page.title }} | {{ site.title }}
     {% endif %}
   </title>
-  
+
   <meta charset="utf-8">
   <meta http-equiv='content-language' content='de-de'>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+
   <!-- Bing validation -->
   <meta name="msvalidate.01" content="2F5DB5C0DE9A9B48F95A61DFC20DB8C1" />
-  
+
   <link rel="manifest" href="/manifest.json">
   <link rel="stylesheet" href="/assets/css/main.css">
 
@@ -61,6 +61,13 @@
 
   <!-- Use Jekyll SEO plugin -->
   {% seo %}
+
+  <!-- Enforce a site-wide image for search-engines -->
+  <meta property="og:image" content="{{ site.image }}">
+  <meta property="og:image:width" content="800">
+  <meta property="og:image:height" content="1005">
+  <meta property="og:image:alt" content="Spektakel Logo">
+
   {% include festival-meta.html %}
 
   <!-- date-fns -->
