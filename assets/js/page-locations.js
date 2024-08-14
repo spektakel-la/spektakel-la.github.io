@@ -33,12 +33,25 @@
                 throw new Error(`Schedule entry with invalid artist_id: '${JSON.stringify(entry)}'`);
             }
         });
+
+        spektakel.constants.NIGHTLIFE.forEach((entry) => {
+            const locationForEntry = spektakel.constants.LOCATIONS.find((loc) => entry.location_id === loc.location_id);
+            if (!locationForEntry) {
+                throw new Error(`Schedule entry with invalid location_id: '${JSON.stringify(entry)}'`);
+            }
+            const artistForEntry = spektakel.constants.ARTISTS.find((art) => entry.artist_id === art.artist_id);
+            if (!artistForEntry) {
+                throw new Error(`Schedule entry with invalid artist_id: '${JSON.stringify(entry)}'`);
+            }
+        });
     };
 
-    const createPopupMarkupForLocation = (locationId) => {
+    const createPopupMarkupForLocation = (locationObj) => {
+        const locationId = locationObj.location_id;
         const artistFavorites = spektakel.favorites.getArtistFavorites();
 
-        const scheduleForLocation = spektakel.constants.SCHEDULE.filter((entry) => entry.location_id === locationId);
+        const schedule = locationObj.nightlife ? spektakel.constants.NIGHTLIFE : spektakel.constants.SCHEDULE;
+        const scheduleForLocation = schedule.filter((entry) => entry.location_id === locationId);
 
         /*
          * The schedule is setup with 30 minutes blocks. If an artist acts for 1 hour, he occupies 2 blocks.
@@ -146,7 +159,7 @@
                 </div>
             </div>
             <div class="location-table-wrapper">
-                ${createPopupMarkupForLocation(locationObj.location_id)}
+                ${createPopupMarkupForLocation(locationObj)}
             </div>
         </div>
         `;
