@@ -86,12 +86,22 @@ permalink: /program
                                         {% endif %}
                                         <span hidden>
                                             <meta itemprop="startDate" content="{{ scheduleEntryDateTime }}">
+                                            <meta itemprop="eventStatus" content="https://schema.org/EventScheduled">
+                                            <meta itemprop="eventAttendanceMode" content="https://schema.org/OfflineEventAttendanceMode">
+                                            <meta itemprop="image" content="{{ artist.image }}">
+                                            <meta itemprop="description" content="{{ artist.content | escape }}">
+
                                             <span itemscope itemtype="https://schema.org/Place" itemprop="location">
                                                 <meta itemprop="name" content="{{ location.description }}">
                                                 <span itemscope itemtype="https://schema.org/GeoCoordinates" itemprop="geo">
                                                     <meta itemprop="latitude" content="{{ location.gps[0] }}">
                                                     <meta itemprop="longitude" content="{{ location.gps[1] }}">
                                                 </span>
+                                            </span>
+
+                                            <span itemscope itemtype="https://schema.org/Person" itemprop="performer">
+                                                <meta itemprop="name" content="{{ artist.name }}">
+                                                <meta itemprop="jobTitle" content="{{ artist.categories | join: ', ' }}">
                                             </span>
                                         </span>
                                     </span>
