@@ -6,11 +6,9 @@
       <img class="site-logo" src="/assets/img/spektakel-logo.png" alt="spektakel-logo">
     </picture>
   </a>
-  <h3 class="site-title">
-    {% if page.url != '/' %}
-      {{ page.title }}
-    {% endif %}
-  </h3>
+  {% if page.url != '/' %}
+  <h1 class="site-title">{{ page.title }}</h1>
+  {% endif %}
   <nav class="menu-list">
     {% for item in site.data.settings.menu %}
       <a href="./{{ item.url }}" class="menu-link">{{ item.name }}</a>

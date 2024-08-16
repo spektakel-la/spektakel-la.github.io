@@ -10,7 +10,7 @@ plugins:            [jekyll-sitemap, jekyll-seo-tag, jekyll-email-protect]
 # Customise seo-settings
 title:		          "Spektakel Landshut"
 url:                "https://spektakel.la"
-description:	      "Website des internationalen Straßenkunst-Festivals Spektakel Landshut. Hier finden Sie alle Informationen zu Künstlern, Programm, Lageplan, etc."
+description:	      "Website des internationalen Straßenkunstfestivals Spektakel Landshut. Hier finden Sie alle Informationen zu Künstlern, Programm, Lageplan, etc."
 description_short:	"Internationales Festival"
 locale:             "de_DE"
 logo:               "/assets/img/spektakel-logo.png"
