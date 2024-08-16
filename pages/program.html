@@ -39,7 +39,7 @@ permalink: /program
                 <tr class="sticky">
                     <th>Zeit</th>
                     {% for location in sortedLocations %}
-                        <th>
+                        <th data-location-id="{{ location.location_id }}">
                             <a href="{{ site.baseurl }}/locations#{{ location.location_id }}">
                                 <div class="table-header-location-id">
                                     {{ location.location_id | upcase }}
@@ -168,6 +168,15 @@ permalink: /program
                 }
             }
         });
+
+        setTimeout(() => {
+            const locationId = window.location.hash.substring(1);
+            document.querySelectorAll('.program-table-wrapper > table').forEach((tableElement) => {
+                if(locationId) {
+                    spektakel.program.scrollToLocationId(tableElement, locationId);
+                }
+            });
+        }, 200);
     }
 
     document.addEventListener("DOMContentLoaded", onShow);

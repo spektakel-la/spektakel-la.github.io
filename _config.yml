@@ -15,6 +15,7 @@ description_short:	"Internationales Festival"
 locale:             "de_DE"
 logo:               "/assets/img/spektakel-logo.png"
 image:              "/assets/img/spektakel-logo.png"
+image_opaque:       "/assets/img/spektakel-logo.jpg"
 social:
   name:             "Spektakel Landshut"
   links:

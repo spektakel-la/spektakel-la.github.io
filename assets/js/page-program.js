@@ -130,8 +130,16 @@
                 }
             }
         }
-    }
+    };
 
+    const scrollToLocationId = (tableElement, locationId) => {
+        const columnLocation = tableElement.querySelector(`th[data-location-id="${locationId}"]`);
+        if (columnLocation) {
+            const offsetLeft = columnLocation.offsetLeft;
+            const columnTimeWidth = 68; // tableElement.querySelector(`th:first-child`)?.offsetWidth || 0;
+            tableElement.parentElement.scrollTo({ left: offsetLeft - columnTimeWidth, behavior: "smooth" });
+        }
+    };
 
     /*
      * Namespace setup
@@ -142,7 +150,8 @@
             dropEmptyColumns,
             dropEmptyRows,
             mergeTableCells,
-            highlightTimeInfoCell
+            highlightTimeInfoCell,
+            scrollToLocationId
         }
     })();
     window.spektakel = spektakel;

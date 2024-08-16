@@ -55,10 +55,13 @@
   {% seo %}
 
   <!-- Enforce a site-wide image for search-engines -->
-  <meta property="og:image" content="{{ site.image }}">
+  <meta property="og:image" content="{{ site.url }}{{ site.image_opaque }}">
+  <meta property="og:image:url" content="{{ site.url }}{{ site.image_opaque }}">
+  <meta property="og:image:secure_url" content="{{ site.url }}{{ site.image_opaque }}">
+  <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="800">
   <meta property="og:image:height" content="1005">
-  <meta property="og:image:alt" content="Spektakel Logo">
+  <meta property="og:image:alt" content="Website Image">
 
   {% include festival-meta.html %}
 

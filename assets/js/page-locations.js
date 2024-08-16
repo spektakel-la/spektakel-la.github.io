@@ -142,14 +142,16 @@
         }
     }
 
-    const createPopupMarkup = (locationObj) => `
+    const createPopupMarkup = (locationObj) => {
+        const linkToProgram = locationObj.nightlife ? '/nightlife' : `/program#${locationObj.location_id}`;
+        return `
         <div class="leaflet-popup-content">
             <div class="location-title-grid">
                 <div class="location-title">
                     ${locationObj.location_id} - ${locationObj.description}
                 </div>
                 <div>
-                    <a href="/${locationObj.nightlife ? 'nightlife' : 'program'}">
+                    <a href="${linkToProgram}">
                         <picture>
                             <source srcset="/assets/img/map/schedule-pink.webp" type="image/webp">
                             <source srcset="/assets/img/map/schedule-pink.png" type="image/png">
@@ -163,6 +165,7 @@
             </div>
         </div>
         `;
+    };
 
     const setupLeafletMap = async (mapContainer) => {
         const map = L.map(mapContainer, {
