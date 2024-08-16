@@ -133,11 +133,21 @@
     };
 
     const scrollToLocationId = (tableElement, locationId) => {
-        const columnLocation = tableElement.querySelector(`th[data-location-id="${locationId}"]`);
-        if (columnLocation) {
-            const offsetLeft = columnLocation.offsetLeft;
-            const columnTimeWidth = 68; // tableElement.querySelector(`th:first-child`)?.offsetWidth || 0;
-            tableElement.parentElement.scrollTo({ left: offsetLeft - columnTimeWidth, behavior: "smooth" });
+        const column = tableElement.querySelector(`th[data-location-id="${locationId}"]`);
+        if (column) {
+            const container = tableElement.parentElement;
+            const stickyColumnWidth = tableElement.querySelector("thead th:first-child").offsetWidth;
+            const columnLeft = column.offsetLeft;
+            const columnRight = columnLeft + column.offsetWidth;
+
+            // Prüfen, ob die Spalte sichtbar ist
+            if (columnRight > container.scrollLeft + container.clientWidth) {
+                // Scrollen, sodass die Spalte am rechten Rand sichtbar wird
+                container.scrollTo({ left: columnRight - container.clientWidth, behavior: 'smooth' });
+            } else if (columnLeft < container.scrollLeft + stickyColumnWidth) {
+                // Scrollen, sodass die Spalte am linken Rand sichtbar wird, aber sticky Spalte beachten
+                container.scrollTo({ left: columnLeft - stickyColumnWidth, behavior: 'smooth' });
+            }
         }
     };
 

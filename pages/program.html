@@ -169,14 +169,14 @@ permalink: /program
             }
         });
 
-        // setTimeout(() => {
-        //     const locationId = window.location.hash.substring(1);
-        //     document.querySelectorAll('.program-table-wrapper > table').forEach((tableElement) => {
-        //         if(locationId) {
-        //             spektakel.program.scrollToLocationId(tableElement, locationId);
-        //         }
-        //     });
-        // }, 200);
+        setTimeout(() => {
+            const locationId = window.location.hash.substring(1);
+            document.querySelectorAll('.program-table-wrapper > table').forEach((tableElement) => {
+                if(locationId) {
+                    spektakel.program.scrollToLocationId(tableElement, locationId);
+                }
+            });
+        }, 400);
     }
 
     document.addEventListener("DOMContentLoaded", onShow);
