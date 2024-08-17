@@ -13,6 +13,7 @@
             right: 15px;
             font-size: 30px;
             color: $yellow;
+            cursor: pointer;
             @include enlarge-click-area(false, -5px, -5px, -5px, -5px);
         }
 
