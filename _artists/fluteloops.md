@@ -1,6 +1,6 @@
 ---
 artist_id: "fluteloops"
-name: "Fluteloops"
+name: "Flute Loops"
 country: Irland
 image: /assets/img/artists/fluteloops.webp
 image_position: top

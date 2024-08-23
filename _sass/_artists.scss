@@ -45,6 +45,11 @@
                 padding: 0;
                 border-bottom: 0;
             }
+
+            .schedule-event-notes {
+                color: lighten($text-color, 40%);
+                font-size: smaller;
+            }
         }
 
         .social-media-links {
