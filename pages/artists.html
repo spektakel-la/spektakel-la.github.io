@@ -10,7 +10,7 @@ permalink: /artists
 <div class="artists-list cards-list">
     {% assign sortedArtists = site.artists | where_exp: "artist", "artist.organizational != true" | sort: 'artist_id' %}
     {% for artist in sortedArtists %}
-        <div class="artist card" id="{{ artist.artist_id }}" itemscope itemtype="http://schema.org/Person">
+        <div class="artist card" data-artist-id="{{ artist.artist_id }}" itemscope itemtype="http://schema.org/Person">
             <div class="card-header">
                 <i class="favorite-toggle fa fa-star-o"
                     data-artist-id="{{ artist.artist_id }}"
@@ -119,6 +119,24 @@ permalink: /artists
 </div>
 
 <script>
+    const scrollToArtist = () => {
+        const headerHeight = document.querySelector('header').offsetHeight || 0; // Höhe des Headers
+        const hash = window.location.hash.substring(1); // Entfernt das '#' Zeichen
+
+        if (hash) {
+            const targetElement = document.querySelector(`div.artist[data-artist-id="${hash}"]`);
+            if (targetElement) {
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 10; // 20px zusätzlichen Abstand hinzufügen
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+            }
+        }
+    }
+
     const onShow = () => {
         const favorites = spektakel.favorites.getArtistFavorites();
         favorites.forEach((favorite) => {
@@ -128,6 +146,7 @@ permalink: /artists
                 iconElement.classList.add('fa-star');
             }
         });
+        scrollToArtist();
     }
 
     document.addEventListener("DOMContentLoaded", onShow);
