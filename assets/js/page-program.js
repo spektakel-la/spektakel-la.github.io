@@ -108,6 +108,12 @@
             return; // Keine Zeilen in der Tabelle
         }
 
+        // Altes highlight entfernen
+        const oldHighlightedInfoCell = tableElement.querySelector(className);
+        if(oldHighlightedInfoCell){
+            oldHighlightedInfoCell?.classList.remove(className);
+        }
+
         for (var i = 1; i < rows.length; i++) {
             var row = rows[i];
             const timeInfoCell = row.cells[0];
@@ -119,13 +125,8 @@
                 const isNowInRow = (dateFns.isEqual(now, rowTime) || dateFns.isAfter(now, rowTime)) &&
                                     dateFns.isBefore(now, rowTimePlus30);
 
+                // Neues highlight setzen
                 if (isNowInRow) {
-                    // Altes highlight entfernen
-                    const oldHighlightedInfoCell = tableElement.querySelector(className);
-                    if(oldHighlightedInfoCell !== timeInfoCell){
-                        oldHighlightedInfoCell?.classList.remove(className);
-                    }
-
                     timeInfoCell.classList.add(className);
                 }
             }
