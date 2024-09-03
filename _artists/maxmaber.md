@@ -3,6 +3,7 @@ artist_id: "maxmaber"
 name: "Maxmaber Orkestar"
 country: Italien, Kroatien
 image: /assets/img/artists/maxmaber.webp
+image_position: bottom
 facebook: https://www.facebook.com/maxmaber
 instagram: https://www.instagram.com/maxmaberorkestar/
 youtube: https://www.youtube.com/watch?v=F7JYeH8PZGg
