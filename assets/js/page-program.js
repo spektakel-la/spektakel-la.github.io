@@ -109,9 +109,9 @@
         }
 
         // Altes highlight entfernen
-        const oldHighlightedInfoCell = tableElement.querySelector(className);
-        if(oldHighlightedInfoCell){
-            oldHighlightedInfoCell?.classList.remove(className);
+        const oldHighlightedInfoCells = tableElement.querySelectorAll(`.${className}`);
+        if(oldHighlightedInfoCells && oldHighlightedInfoCells.length > 0){
+            oldHighlightedInfoCells.forEach((cell) => {cell?.classList.remove(className)});
         }
 
         for (var i = 1; i < rows.length; i++) {
