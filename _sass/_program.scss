@@ -1,5 +1,10 @@
 @import "mixins";
 
+.latest-schedule-update {
+    color: lighten($text-color, 40%);
+    font-size: smaller;
+}
+
 .program-table-wrapper {
     font-size: 16px;
     line-height: 1.2;
