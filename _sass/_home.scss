@@ -6,6 +6,10 @@ img.vorpremiere {
   width: 100%;
 }
 
+.center-announcement {
+  margin: 25px;
+}
+
 /*
  * Partner-Festival
  * START
@@ -61,8 +65,15 @@ img.vorpremiere {
   position: relative;
   width: 100%;
   overflow: hidden;
-  background: url('/assets/img/youtube/spektakel-2023-thumbnail.jpg');
   background-size: contain;
+
+  &.bg2023{
+    background: url('/assets/img/youtube/spektakel-2023-thumbnail.jpg');
+  }
+
+  &.bg2024{
+    background: url('/assets/img/youtube/spektakel-2024-thumbnail.jpg');
+  }
 }
 
 .youtube-video-container::after {
