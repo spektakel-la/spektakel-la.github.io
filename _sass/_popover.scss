@@ -3,7 +3,7 @@ div[data-tippy-root] {
     max-width: 264px !important;
 
     > div.tippy-box {
-        box-shadow: 0 3px 14px rgb(0 0 0 / 80%) !important;
+        box-shadow: 0 3px 14px rgba(0, 0, 0, 0.8) !important;
     }
 }
 
