@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Programm
+locale: de_DE
 permalink: /program
 ---
 
@@ -96,6 +97,12 @@ permalink: /program
                                                 <span itemscope itemtype="https://schema.org/GeoCoordinates" itemprop="geo">
                                                     <meta itemprop="latitude" content="{{ location.gps[0] }}">
                                                     <meta itemprop="longitude" content="{{ location.gps[1] }}">
+                                                </span>
+                                                <span itemscope itemtype="https://schema.org/PostalAddress" itemprop="address">
+                                                    <meta itemprop="addressLocality" content="Landshut">
+                                                    <meta itemprop="streetAddress" content="{{ location.description }}">
+                                                    <meta itemprop="postalCode" content="84028">
+                                                    <meta itemprop="addressCountry" content="DE">
                                                 </span>
                                             </span>
 

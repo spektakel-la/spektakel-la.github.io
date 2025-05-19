@@ -1,10 +1,11 @@
 ---
 layout: page
 title: Impressum
+locale: de_DE
 permalink: /impressum
 ---
 # Angaben gemäß § 5 TMG:
-Spektakel Production\
+{{ site.organizer.name }}\
 Martin Hilz
 
 # Kontaktaufnahme:

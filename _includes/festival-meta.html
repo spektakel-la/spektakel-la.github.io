@@ -5,6 +5,10 @@
       "name": "{{ site.title }} - {{ site.description_short }}",
       "startDate": "{{ site.festival_start }}",
       "endDate": "{{ site.festival_end }}",
+      "organizer": {
+        "@type": "Person",
+        "name": "{{ site.organizer.name }}",
+      },
       "location": {
         "@type": "Place",
         "name": "Landshut",

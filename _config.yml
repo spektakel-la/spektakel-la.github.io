@@ -1,5 +1,6 @@
 # Site Build Settings
 # Build settings
+encoding:           UTF-8
 timezone:           Europe/Berlin
 markdown:           kramdown
 highlighter:        rouge
@@ -12,7 +13,8 @@ title:		          "Spektakel Landshut"
 url:                "https://spektakel.la"
 description:	      "Website des internationalen Straßenkunstfestivals Spektakel Landshut. Hier finden Sie alle Informationen zu Künstlern, Programm, Lageplan, etc."
 description_short:	"Internationales Festival"
-locale:             "de_DE"
+organizer:
+  name:             "Spektakel Production"
 logo:               "/assets/img/spektakel-logo.png"
 image:              "/assets/img/spektakel-logo.png"
 image_opaque:       "/assets/img/spektakel-logo.jpg"
@@ -21,8 +23,8 @@ social:
   links:
     - https://www.facebook.com/Spektakel.Landshut
     - https://www.instagram.com/spektakel.landshut
-festival_start:     2024-09-11
-festival_end:       2024-09-15
+festival_start:     2025-09-18
+festival_end:       2025-09-21
 
 
 collections:
