@@ -6,8 +6,8 @@
   <!-- Bing validation -->
   <meta name="msvalidate.01" content="2F5DB5C0DE9A9B48F95A61DFC20DB8C1" />
 
-  <link rel="manifest" href="/manifest.json">
-  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="manifest" href="{{ "/manifest.json" | prepend: site.baseurl_root }}">
+  <link rel="stylesheet" href="{{ "/assets/css/main.css" | prepend: site.baseurl_root }}">
 
 
   <!-- Default consent -->
@@ -41,15 +41,15 @@
   <!-- End Google Tag Manager -->
 
   <!-- cookieconsent -->
-  <link rel="stylesheet" href="/assets/3rd-party/vanilla-cookieconsent/cookieconsent.css" crossorigin="anonymous"/>
-  <script src="/assets/3rd-party/vanilla-cookieconsent/cookieconsent.umd.js" charset="utf-8" crossorigin="anonymous"></script>
-  <script type="module" src="/assets/js/setup-cookieconsent.js"></script>
+  <link rel="stylesheet" href="{{ "/assets/3rd-party/vanilla-cookieconsent/cookieconsent.css" | prepend: site.baseurl_root }}" crossorigin="anonymous"/>
+  <script src="{{ "/assets/3rd-party/vanilla-cookieconsent/cookieconsent.umd.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
+  <script type="module" src="{{ "/assets/js/setup-cookieconsent.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
 
   <!-- service-worker -->
-  <script type="module" src="/assets/js/setup-workbox.mjs"></script>
+  <script type="module" src="{{ "/assets/js/setup-workbox.mjs" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
 
   <!-- font-awesome -->
-  <link rel="stylesheet" href="/assets/3rd-party/font-awesome/css/font-awesome.min.css"  crossorigin="anonymous"/>
+  <link rel="stylesheet" href="{{ "/assets/3rd-party/font-awesome/css/font-awesome.min.css" | prepend: site.baseurl_root }}"  crossorigin="anonymous"/>
 
   <!-- Use Jekyll SEO plugin -->
   {% seo %}
@@ -71,53 +71,53 @@
   {% include festival-meta.html %}
 
   <!-- date-fns -->
-  <script src="/assets/3rd-party/date-fns/cdn.min.js" charset="utf-8" crossorigin="anonymous"></script>
-  <script src="/assets/3rd-party/date-fns/locale/de/cdn.min.js" charset="utf-8" crossorigin="anonymous"></script>
-  <script src="/assets/3rd-party/date-fns/locale/en-US/cdn.min.js" charset="utf-8" crossorigin="anonymous"></script>
+  <script src="{{ "/assets/3rd-party/date-fns/cdn.min.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
+  <script src="{{ "/assets/3rd-party/date-fns/locale/de/cdn.min.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
+  <script src="{{ "/assets/3rd-party/date-fns/locale/en-US/cdn.min.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
 
   <!-- Leaflet -->
-  <link rel="stylesheet" href="/assets/3rd-party/leaflet/dist/leaflet.css" crossorigin="anonymous"/>
-  <script src="/assets/3rd-party/leaflet/dist/leaflet.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{{ "/assets/3rd-party/leaflet/dist/leaflet.css" | prepend: site.baseurl_root }}" crossorigin="anonymous"/>
+  <script src="{{ "/assets/3rd-party/leaflet/dist/leaflet.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
 
   <!-- Leaflet locate -->
-  <link rel="stylesheet" href="/assets/3rd-party/leaflet.locatecontrol/dist/L.Control.Locate.min.css" crossorigin="anonymous"/>
-  <script src="/assets/3rd-party/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{{ "/assets/3rd-party/leaflet.locatecontrol/dist/L.Control.Locate.min.css" | prepend: site.baseurl_root }}" crossorigin="anonymous"/>
+  <script src="{{ "/assets/3rd-party/leaflet.locatecontrol/dist/L.Control.Locate.min.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
 
   <!-- Leaflet fullscreen -->
-  <link rel="stylesheet" href="/assets/3rd-party/leaflet.fullscreen/Control.FullScreen.css" crossorigin="anonymous"/>
-  <script src="/assets/3rd-party/leaflet.fullscreen/Control.FullScreen.js" charset="utf-8" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{{ "/assets/3rd-party/leaflet.fullscreen/Control.FullScreen.css" | prepend: site.baseurl_root }}" crossorigin="anonymous"/>
+  <script src="{{ "/assets/3rd-party/leaflet.fullscreen/Control.FullScreen.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
 
   <!-- lightgallery -->
-  <link rel="stylesheet" href="/assets/3rd-party/lightgallery/css/lightgallery-bundle.min.css" crossorigin="anonymous"/>
-  <link type="text/css" rel="stylesheet" href="/assets/3rd-party/lightgallery/css/lg-autoplay.css" crossorigin="anonymous"/>
-  <link type="text/css" rel="stylesheet" href="/assets/3rd-party/lightgallery/css/lg-fullscreen.css" crossorigin="anonymous"/>
-  <link type="text/css" rel="stylesheet" href="/assets/3rd-party/lightgallery/css/lg-thumbnail.css" crossorigin="anonymous"/>
-  <link type="text/css" rel="stylesheet" href="/assets/3rd-party/lightgallery/css/lg-zoom.css" crossorigin="anonymous"/>
-  <script src="/assets/3rd-party/lightgallery/lightgallery.min.js" charset="utf-8"></script>
-  <script src="/assets/3rd-party/lightgallery/plugins/autoplay/lg-autoplay.min.js" charset="utf-8" crossorigin="anonymous"></script>
-  <script src="/assets/3rd-party/lightgallery/plugins/fullscreen/lg-fullscreen.min.js" charset="utf-8" crossorigin="anonymous"></script>
-  <script src="/assets/3rd-party/lightgallery/plugins/thumbnail/lg-thumbnail.min.js" charset="utf-8" crossorigin="anonymous"></script>
-  <script src="/assets/3rd-party/lightgallery/plugins/zoom/lg-zoom.min.js" charset="utf-8" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{{ "/assets/3rd-party/lightgallery/css/lightgallery-bundle.min.css" | prepend: site.baseurl_root }}" crossorigin="anonymous"/>
+  <link type="text/css" rel="stylesheet" href="{{ "/assets/3rd-party/lightgallery/css/lg-autoplay.css" | prepend: site.baseurl_root }}" crossorigin="anonymous"/>
+  <link type="text/css" rel="stylesheet" href="{{ "/assets/3rd-party/lightgallery/css/lg-fullscreen.css" | prepend: site.baseurl_root }}" crossorigin="anonymous"/>
+  <link type="text/css" rel="stylesheet" href="{{ "/assets/3rd-party/lightgallery/css/lg-thumbnail.css" | prepend: site.baseurl_root }}" crossorigin="anonymous"/>
+  <link type="text/css" rel="stylesheet" href="{{ "/assets/3rd-party/lightgallery/css/lg-zoom.css" | prepend: site.baseurl_root }}" crossorigin="anonymous"/>
+  <script src="{{ "/assets/3rd-party/lightgallery/lightgallery.min.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
+  <script src="{{ "/assets/3rd-party/lightgallery/plugins/autoplay/lg-autoplay.min.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
+  <script src="{{ "/assets/3rd-party/lightgallery/plugins/fullscreen/lg-fullscreen.min.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
+  <script src="{{ "/assets/3rd-party/lightgallery/plugins/thumbnail/lg-thumbnail.min.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
+  <script src="{{ "/assets/3rd-party/lightgallery/plugins/zoom/lg-zoom.min.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
 
   <!-- sweetalert2 -->
-  <link rel="stylesheet" href="/assets/3rd-party/sweetalert2/dist/sweetalert2.min.css" crossorigin="anonymous"/>
-  <script src="/assets/3rd-party/sweetalert2/dist/sweetalert2.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{{ "/assets/3rd-party/sweetalert2/dist/sweetalert2.min.css" | prepend: site.baseurl_root }}" crossorigin="anonymous"/>
+  <script src="{{ "/assets/3rd-party/sweetalert2/dist/sweetalert2.min.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
 
   <!-- tippy.js -->
-  <script src="/assets/3rd-party/@popperjs/core/dist/umd/popper.min.js" crossorigin="anonymous"></script>
-  <script src="/assets/3rd-party/tippy.js/dist/tippy-bundle.umd.min.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="/assets/3rd-party/tippy.js/themes/light-border.css" crossorigin="anonymous"/>
+  <script src="{{ "/assets/3rd-party/@popperjs/core/dist/umd/popper.min.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
+  <script src="{{ "/assets/3rd-party/tippy.js/dist/tippy-bundle.umd.min.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{{ "/assets/3rd-party/tippy.js/themes/light-border.css" | prepend: site.baseurl_root }}" crossorigin="anonymous"/>
 
   <!-- pwa-install -->
-  <!-- <script src="/assets/3rd-party/@khmyznikov/pwa-install/dist/pwa-install.bundle.js" charset="utf-8" crossorigin="anonymous"></script> -->
+  <!-- <script src="{{ "/assets/3rd-party/@khmyznikov/pwa-install/dist/pwa-install.bundle.js" | prepend: site.baseurl_root }}charset="utf-8" crossorigin="anonymous"></script> -->
 
   <!-- artit favorites -->
-  <script src="/assets/js/constants.js"></script>
-  <script src="/assets/js/featuredetection.js"></script>
-  <script src="/assets/js/setup-swal.js"></script>
-  <script src="/assets/js/favorites.js"></script>
-  <script src="/assets/js/page-locations.js"></script>
-  <script src="/assets/js/page-program.js"></script>
-  <script src="/assets/js/popover.js"></script>
+  <script src="{{ "/assets/js/constants.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
+  <script src="{{ "/assets/js/featuredetection.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
+  <script src="{{ "/assets/js/setup-swal.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
+  <script src="{{ "/assets/js/favorites.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
+  <script src="{{ "/assets/js/page-locations.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
+  <script src="{{ "/assets/js/page-program.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
+  <script src="{{ "/assets/js/popover.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
 </head>
 

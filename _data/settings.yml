@@ -4,15 +4,13 @@ google-tagmanager-id: 'GTM-TK5422TV'
 
 
 menu:
-- {name: 'Startseite',    url: ''}
-- {name: 'Künstler',      url: 'artists'}
-- {name: 'Programm',      url: 'program'}
-- {name: 'Nachtleben',    url: 'nightlife'}
-- {name: 'Lageplan',      url: 'locations'}
-- {name: 'Impressionen',  url: 'impressions'}
-- {name: 'Sponsoren',     url: 'sponsors'}
-
-menu_home_label: 'Startseite'
+- {tkey: 'home',        url: ''}
+- {tkey: 'program',     url: 'program'}
+- {tkey: 'artists',     url: 'artists'}
+- {tkey: 'nightlife',   url: 'nightlife'}
+- {tkey: 'locations',   url: 'locations'}
+- {tkey: 'impressions', url: 'impressions'}
+- {tkey: 'sponsors',    url: 'sponsors'}
 
 # Available social icons are powered by Font Awesome, so you can use any icon that they offer
 social:
@@ -26,6 +24,3 @@ offline_map:
   bounding_rect: [[48.5261029,12.1322959], [48.549313,12.169414]]
   icon_anchor: [15, 46]
   icon_size: [35, 46]
-
-
-post_date_prefix: 'Veröffentlicht am'

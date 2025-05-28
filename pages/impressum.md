@@ -1,7 +1,6 @@
 ---
 layout: page
-title: Impressum
-locale: de_DE
+title: impressum
 permalink: /impressum
 ---
 # Angaben gemäß § 5 TMG:

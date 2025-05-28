@@ -2,8 +2,6 @@
   --headerZIndex: 1020;
 }
 
-
-
 .site-header {
   position: fixed;
   display: grid;
@@ -54,6 +52,11 @@
   padding: 5px 10px;
 }
 
+.language-switcher {
+  grid-column: 5;
+  padding: 5px 10px;
+}
+
 /*
   Responsiveness with a dropdown menu
 */
@@ -77,15 +80,21 @@
     background-color: $background-color;
     color: $header-dropdown-text-color;
     padding: 20px;
-    margin-top: 4px;
+    // margin-top: 4px;
     font-size: 16px;
     border: none;
     cursor: pointer;
   }
+
+  .language-switcher {
+    grid-column: 4;
+    padding: 0;
+  }
+
   .dropdown {
     display: inline-block;
-    position: absolute;
-    right: 0;
+    grid-row: 1;
+    grid-column: 5;
     z-index: var(--headerZIndex);
   }
   .dropdown-content {
