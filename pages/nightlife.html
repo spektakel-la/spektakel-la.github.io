@@ -30,16 +30,25 @@ permalink: /nightlife
 <p>{% t pages.nightlife.changesPossible %}</p>
 
 {% for festivalDate in festivalEventDates %}
-    {% assign dayOfWeek = festivalDate | date: "%A" %}
+    {% assign dayOfWeekEn = festivalDate | date: "%A" %}
     {% assign dayOfWeekIndex = -1 %}
     {% for day in daysOfWeek %}
-        {% if day == dayOfWeek %}
+        {% if day == dayOfWeekEn %}
         {% assign dayOfWeekIndex = forloop.index0 %}
         {% endif %}
     {% endfor %}
     {% assign dayOfWeekDe = daysOfWeekDe[dayOfWeekIndex] %}
 
-    <h2>{{ dayOfWeekDe }} {{ festivalDate }}</h2>
+    {% case site.lang %}
+    {% when "de" %}
+        {% assign dayOfWeekToShow = dayOfWeekDe %}
+    {% when "en" %}
+        {% assign dayOfWeekToShow = dayOfWeekEn %}
+    {% else %}
+        {% assign dayOfWeekToShow = dayOfWeekEn %}
+    {% endcase %}
+
+    <h2>{{ dayOfWeekToShow }} {{ festivalDate }}</h2>
 
     <div class="program-table-wrapper">
         <table>
