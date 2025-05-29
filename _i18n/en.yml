@@ -8,10 +8,12 @@ menu:
   sponsors: Sponsors
 pages:
   program:
+    time: Time
     changesPossible: Changes possible!
     nightlifePrefix: For night owls, we have our
     nightlifeSuffix: Spektakel Nightlife
   nightlife:
+    time: Time
     changesPossible: Changes possible!
     programPrefix: Here you can find the
     programSuffix: day program

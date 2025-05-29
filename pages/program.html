@@ -46,7 +46,7 @@ permalink: /program
         <table>
             <thead>
                 <tr class="sticky">
-                    <th></th>
+                    <th>{% t pages.program.time %}</th>
                     {% for location in sortedLocations %}
                         <th data-location-id="{{ location.location_id }}">
                             <a href="{{ site.baseurl }}/locations#{{ location.location_id }}">

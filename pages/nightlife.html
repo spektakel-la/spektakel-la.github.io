@@ -54,7 +54,7 @@ permalink: /nightlife
         <table>
             <thead>
                 <tr class="sticky">
-                    <th></th>
+                    <th>{% t pages.nightlife.time %}</th>
                     {% for location in sortedLocations %}
                         <th>
                             <a href="{{ site.baseurl }}/locations#{{ location.location_id }}">

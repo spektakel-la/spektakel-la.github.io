@@ -9,10 +9,12 @@ menu:
 
 pages:
   program:
+    time: Zeit
     changesPossible: Änderungen vorbehalten!
     nightlifePrefix: Für Nachtschwärmer gibt es unser
     nightlifeSuffix: Spektakel Nachtleben
   nightlife:
+    time: Zeit
     changesPossible: Änderungen vorbehalten!
     programPrefix: Hier geht es zum
     programSuffix: Tagesprogramm
