@@ -23,6 +23,7 @@ exclude:
   - Gemfile.lock
   - .gitignore
   - .ruby-version
+  - vendor
 
 # Translation settings
 languages: ["de", "en"]
