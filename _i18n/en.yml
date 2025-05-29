@@ -6,3 +6,8 @@ menu:
   locations: Locations
   impressions: Impressions
   sponsors: Sponsors
+pages:
+  program:
+    changesPossible: Changes possible!
+    nightlifePrefix: For night owls, we have our
+    nightlifeSuffix: Spektakel Nightlife

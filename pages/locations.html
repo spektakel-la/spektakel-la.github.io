@@ -9,7 +9,7 @@ permalink: /locations
 <script>
     const onShow = () => {
         spektakel.locations.sanityCheckSchedule();
-        spektakel.locations.setupLeafletMap(document.querySelector('.spektakel-leaflet-map'));
+        spektakel.locations.setupLeafletMap(document.querySelector('.spektakel-leaflet-map'), "{{ site.lang }}");
     }
 
     document.addEventListener("DOMContentLoaded", onShow);

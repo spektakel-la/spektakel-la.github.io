@@ -18,30 +18,43 @@
         }
     };
 
-    const createPopoverContentCategoryHtml = (artist) => {
-        if (!artist.categories) {
+    const createPopoverContentCategoryHtml = (artist, lang) => {
+        if (!artist[lang]?.categories) {
             return '';
         }
-        return `(${artist.categories.join(', ')})`;
+        return `(${artist[lang].categories.join(', ')})`;
     }
 
-    const createPopoverContentHtml = (artistId) => {
+    const createPopoverContentHtml = (artistId, lang) => {
         const artist = spektakel.constants.ARTISTS.find(a => a.artist_id === artistId);
         const artistFavorites = spektakel.favorites.getArtistFavorites();
 
         if(!artist) {
             return '';
         } else {
+
+            let artistLinkTitle;
+            let artistLink;
+            if (lang === 'de') {
+                artistLinkTitle = 'Zum Künstlerprofil';
+                artistLink = `/artists#${artistId}`
+            } else if (lang === 'en'){
+                artistLinkTitle = "Visit artist profile";
+                artistLink = `/${lang}/artists#${artistId}`
+            } else {
+                throw new Error(`Language not supported: "${lang}"`)
+            }
+
             return `
                 <div class="popover-artist-details">
                     <div class="popover-artist-details-image">
                         ${createPopoverContentImageHtml(artist)}
                     </div>
                     <div class="popover-artist-details-category">
-                        ${createPopoverContentCategoryHtml(artist)}
+                        ${createPopoverContentCategoryHtml(artist, lang)}
                     </div>
                     <div class="popover-artist-details-link">
-                        <a href="/artists#${artistId}">Zum Künstlerprofil</a>
+                        <a href="${artistLink}">${artistLinkTitle}</a>
                         <span></span>
                         <i class="favorite-toggle fa ${artistFavorites.includes(artistId) ?
                                                         'fa-star' :

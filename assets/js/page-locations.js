@@ -46,7 +46,7 @@
         });
     };
 
-    const createPopupMarkupForLocation = (locationObj) => {
+    const createPopupMarkupForLocation = (locationObj, lang) => {
         const locationId = locationObj.location_id;
         const artistFavorites = spektakel.favorites.getArtistFavorites();
 
@@ -121,7 +121,7 @@
                 </tr>
                 <tr class="artist-details">
                     <td colspan="2">
-                        ${spektakel.popover.createPopoverContentHtml(sched.artist_id)}
+                        ${spektakel.popover.createPopoverContentHtml(sched.artist_id, lang)}
                     </td>
                 </tr>
             `;
@@ -142,7 +142,7 @@
         }
     }
 
-    const createPopupMarkup = (locationObj) => {
+    const createPopupMarkup = (locationObj, lang) => {
         const linkToProgram = locationObj.nightlife ? '/nightlife' : `/program#${locationObj.location_id}`;
         return `
         <div class="leaflet-popup-content">
@@ -161,13 +161,13 @@
                 </div>
             </div>
             <div class="location-table-wrapper">
-                ${createPopupMarkupForLocation(locationObj)}
+                ${createPopupMarkupForLocation(locationObj, lang)}
             </div>
         </div>
         `;
     };
 
-    const setupLeafletMap = async (mapContainer) => {
+    const setupLeafletMap = async (mapContainer, lang) => {
         const map = L.map(mapContainer, {
             minZoom: 16,
             maxZoom: 19,
@@ -213,7 +213,7 @@
             marker.bindPopup('', {className: 'spektakel-leaflet-popup', offset: [0, -38]})
                 .on("popupopen", (event) => {
                     history.replaceState(null, null, `#${location.location_id}`);
-                    event.popup.setContent(createPopupMarkup(location));
+                    event.popup.setContent(createPopupMarkup(location, lang));
                 })
                 .on("popupclose", (event) => {
                     history.replaceState(null, null, ' ');

@@ -4,10 +4,10 @@ title: program
 permalink: /program
 ---
 
-{% assign daysOfWeek = 'Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday' | split: ',' %}
+{% assign daysOfWeekEn = 'Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday' | split: ',' %}
 {% assign daysOfWeekDe = 'Sonntag,Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag' | split: ',' %}
 
-{% assign sortedLocations = site.locations | where_exp: "location", "location.organizational != true"| where_exp: "location", "location.nightlife != true" | sort: 'location_id' %}
+{% assign sortedLocations = site.locations | where_exp: "location", "location.organizational != true"| where_exp: "location", "location.nightlife != true" | sort: 'sort_order' %}
 {% assign groupedSchedule = site.data.schedule | group_by: 'time' | sort: 'name' %}
 
 {% assign festivalEventDates = '' | split: ',' %}
@@ -18,20 +18,29 @@ permalink: /program
     {% endunless %}
 {% endfor %}
 
-<p>Änderungen vorbehalten!</p>
+<p>{% t pages.program.changesPossible %}</p>
 
 {% for festivalDate in festivalEventDates %}
-    {% assign dayOfWeek = festivalDate | date: "%A" %}
+    {% assign dayOfWeekEn = festivalDate | date: "%A" %}
     {% assign dayOfWeekIndex = -1 %}
-    {% for day in daysOfWeek %}
-      {% if day == dayOfWeek %}
+    {% for day in daysOfWeekEn %}
+      {% if day == dayOfWeekEn %}
         {% assign dayOfWeekIndex = forloop.index0 %}
       {% endif %}
     {% endfor %}
     {% assign dayOfWeekDe = daysOfWeekDe[dayOfWeekIndex] %}
 
+    {% case site.lang %}
+    {% when "de" %}
+        {% assign dayOfWeekToShow = dayOfWeekDe %}
+    {% when "en" %}
+        {% assign dayOfWeekToShow = dayOfWeekEn %}
+    {% else %}
+        {% assign dayOfWeekToShow = dayOfWeekEn %}
+    {% endcase %}
 
-    <h2>{{ dayOfWeekDe }} {{ festivalDate }}</h2>
+
+    <h2>{{ dayOfWeekToShow }} {{ festivalDate }}</h2>
 
     <div class="program-table-wrapper">
         <table>
@@ -72,6 +81,7 @@ permalink: /program
                                 <td data-artist-id="{{ entryAtLocation.artist_id }}">
                                     {% assign artist = site.artists | where: 'artist_id', entryAtLocation.artist_id | first %}
                                     {% assign location = site.locations | where: 'location_id', entryAtLocation.location_id | first %}
+                                    {% assign artistTranslations = artist[site.lang] %}
 
                                     <span itemscope itemtype="https://schema.org/Event">
                                         <span itemprop="name">
@@ -89,7 +99,7 @@ permalink: /program
                                             <meta itemprop="eventStatus" content="https://schema.org/EventScheduled">
                                             <meta itemprop="eventAttendanceMode" content="https://schema.org/OfflineEventAttendanceMode">
                                             <meta itemprop="image" content="{{ artist.image }}">
-                                            <meta itemprop="description" content="{{ artist.content | escape }}">
+                                            <meta itemprop="description" content="{{ artistTranslations.description | escape }} {{ artistTranslations.highlight | escape }}">
 
                                             <span itemscope itemtype="https://schema.org/Place" itemprop="location">
                                                 <meta itemprop="name" content="{{ location.description }}">
@@ -107,7 +117,7 @@ permalink: /program
 
                                             <span itemscope itemtype="https://schema.org/Person" itemprop="performer">
                                                 <meta itemprop="name" content="{{ artist.name }}">
-                                                <meta itemprop="jobTitle" content="{{ artist.categories | join: ', ' }}">
+                                                <meta itemprop="jobTitle" content="{{ artistTranslations.categories | join: ', ' }}">
                                             </span>
                                         </span>
                                     </span>
@@ -124,7 +134,7 @@ permalink: /program
 
     {% unless forloop.last %}
         <div class="other-schedule-hint">
-            Für Nachtschwärmer gibt es unser <a href="{{ site.baseurl }}/nightlife">Spektakel Nachtleben</a>.
+            {% t pages.program.nightlifePrefix %} <a href="{{ site.baseurl }}/nightlife">{% t pages.program.nightlifeSuffix %}</a>.
         </div>
     {% endunless %}
 {% endfor %}
@@ -165,7 +175,7 @@ permalink: /program
                     interactive: true,
                     allowHTML: true,
                     content: 'Lade Künstler...',
-                    onShow: (instance) => instance.setContent(spektakel.popover.createPopoverContentHtml(artistId)),
+                    onShow: (instance) => instance.setContent(spektakel.popover.createPopoverContentHtml(artistId, "{{ site.lang }}")),
                 });
 
                 // Highlight favorite artists

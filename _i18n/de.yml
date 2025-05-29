@@ -6,3 +6,9 @@ menu:
   locations: Lageplan
   impressions: Impressionen
   sponsors: Sponsoren
+
+pages:
+  program:
+    changesPossible: Änderungen vorbehalten!
+    nightlifePrefix: Für Nachtschwärmer gibt es unser
+    nightlifeSuffix: Spektakel Nachtleben

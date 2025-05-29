@@ -7,7 +7,7 @@ permalink: /nightlife
 {% assign daysOfWeek = 'Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday' | split: ',' %}
 {% assign daysOfWeekDe = 'Sonntag,Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag' | split: ',' %}
 
-{% assign sortedLocations = site.locations | where_exp: "location", "location.nightlife == true" | sort: 'location_id' %}
+{% assign sortedLocations = site.locations | where_exp: "location", "location.nightlife == true" | sort: 'sort_order' %}
 {% assign groupedSchedule = site.data.nightlife | group_by: 'time' | sort: 'name' %}
 
 {% assign festivalEventDates = '' | split: ',' %}
@@ -156,7 +156,7 @@ permalink: /nightlife
                     interactive: true,
                     allowHTML: true,
                     content: 'Lade Künstler...',
-                    onShow: (instance) => instance.setContent(spektakel.popover.createPopoverContentHtml(artistId)),
+                    onShow: (instance) => instance.setContent(spektakel.popover.createPopoverContentHtml(artistId, "{{ site.lang }}")),
                 });
 
                 // Highlight favorite artists

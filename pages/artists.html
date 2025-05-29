@@ -4,12 +4,14 @@ title: artists
 permalink: /artists
 ---
 
-{% assign daysOfWeek = 'Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday' | split: ',' %}
+{% assign daysOfWeekEn = 'Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday' | split: ',' %}
 {% assign daysOfWeekDe = 'Sonntag,Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag' | split: ',' %}
 
 <div class="artists-list cards-list">
     {% assign sortedArtists = site.artists | where_exp: "artist", "artist.organizational != true" | sort: 'artist_id' %}
     {% for artist in sortedArtists %}
+        {% assign artistTranslations = artist[site.lang] %}
+
         <div class="artist card" id="{{ artist.artist_id }}" itemscope itemtype="http://schema.org/Person">
             <div class="card-header">
                 <i class="favorite-toggle fa fa-star-o"
@@ -19,9 +21,9 @@ permalink: /artists
                 {% if artist.name_sub %}
                     <strong>{{ artist.name_sub }}</strong>
                 {% endif %}
-                <p>{{ artist.country }}</p>
+                <p>{{ artistTranslations.country }}</p>
                 <p class="artist-category">
-                    {% for category in artist.categories %}
+                    {% for category in artistTranslations.categories %}
                         <span itemprop="jobTitle">{{ category }}</span>{% if forloop.last == false %}, {% endif %}
                     {% endfor %}
                 </p>
@@ -32,7 +34,16 @@ permalink: /artists
                     <source srcset="{{ artist.image | replace:'.webp','.jpg' }}" type="image/jpeg">
                     <img src="{{ artist.image | replace:'.webp','.jpg' }}" alt="{{ artist.name }}" itemprop="image" class="custom-position-{% if artist.image_position %}{{ artist.image_position }}{% else %}center{% endif %}">
                 </picture>
-                <p>{{ artist.content | markdownify }}</p>
+
+                <div class="description">
+                    {{ artistTranslations.description | markdownify }}
+                </div>
+
+                <div class="highlight">
+                    {% if artistTranslations.highlight %}
+                        {{ artistTranslations.highlight | markdownify }}
+                    {% endif %}
+                </div>
 
                 {% assign sortedEvents = site.data.schedule | where_exp: "event", "event.artist_id == artist.artist_id" | sort: 'time' %}
                 {% if sortedEvents.size > 0 %}
@@ -45,16 +56,26 @@ permalink: /artists
                                 {% assign current_date = event.time | date: "%Y-%m-%d" %}
                                 {% if previous_date != current_date %}
 
-                                    {% assign dayOfWeek = current_date | date: "%A" %}
+                                    {% assign dayOfWeekEn = current_date | date: "%A" %}
                                     {% assign dayOfWeekIndex = -1 %}
-                                    {% for day in daysOfWeek %}
-                                        {% if day == dayOfWeek %}
+                                    {% for day in daysOfWeekEn %}
+                                        {% if day == dayOfWeekEn %}
                                             {% assign dayOfWeekIndex = forloop.index0 %}
                                         {% endif %}
                                     {% endfor %}
+
                                     {% assign dayOfWeekDe = daysOfWeekDe[dayOfWeekIndex] %}
 
-                                    <h5>{{dayOfWeekDe}} {{ current_date | date: "%d.%m.%Y" }}</h5>
+                                    {% case site.lang %}
+                                    {% when "de" %}
+                                        {% assign dayOfWeekToShow = dayOfWeekDe %}
+                                    {% when "en" %}
+                                        {% assign dayOfWeekToShow = dayOfWeekEn %}
+                                    {% else %}
+                                        {% assign dayOfWeekToShow = dayOfWeekEn %}
+                                    {% endcase %}
+
+                                    <h5>{{ dayOfWeekToShow }} {{ current_date | date: "%d.%m.%Y" }}</h5>
                                     {% assign previous_date = current_date %}
                                 {% endif %}
                                 {% if previous_time == nil %}

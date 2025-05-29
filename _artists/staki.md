@@ -1,16 +1,25 @@
 ---
-artist_id: "staki"
-name: "S-Taki"
-country: Spanien, Ecuador
-image: /assets/img/artists/staki.webp
+artist_id: staki
+name: S-Taki
+image: "/assets/img/artists/staki.webp"
 facebook: https://www.facebook.com/taki.ec
 instagram:
 youtube: https://www.youtube.com/watch?v=lOod6w0Ag0Q
 homepage: https://staki.net/
-categories:
-    - Musik
+de:
+  country: Spanien, Ecuador
+  description: >
+    Die Band mit Wurzeln aus Ecuador kam über Südamerika nach Europa. Tanzbare Musik die Menschen verbinden soll, aus allen Nationen und jeden Alters. S-Taki will das Leben feiern mit einem Mix aus Latin und modernen Rhythmen wie Cumbica und Merengue. Letztes Jahr hat die Band die bekannte Auszeichnung  "Society of Authors and Composers" in Ecuador erhalten.
+    Freuen Sie sich auf ausgelassene Musik mit guter Laune und viel Energie.
+  highlight: Musik die Menschen verbindet - energiegeladener Latinosound
+  categories:
+  - Musik
+en:
+  country: Spain, Ecuador
+  description: >
+    The band with roots from Ecuador made its way to Europe via South America. Their danceable music aims to connect people of all nations and ages. S-Taki wants to celebrate life with a mix of Latin and modern rhythms such as Cumbica and Merengue. Last year, the band received the renowned "Society of Authors and Composers" award in Ecuador.
+    Look forward to lively music filled with good vibes and lots of energy.
+  highlight: Music that connects people – energetic Latino sound
+  categories:
+  - Music
 ---
-Die Band mit Wurzeln aus Ecuador kam über Südamerika nach Europa. Tanzbare Musik die Menschen verbinden soll, aus allen Nationen und jeden Alters. S-Taki will das Leben feiern mit einem Mix aus Latin und modernen Rhythmen wie Cumbica und Merengue. Letztes Jahr hat die Band die bekannte Auszeichnung  "Society of Authors and Composers" in Ecuador erhalten.
-Freuen Sie sich auf ausgelassene Musik mit guter Laune und viel Energie.
-
-_Musik die Menschen verbindet - energiegeladener Latinosound_
