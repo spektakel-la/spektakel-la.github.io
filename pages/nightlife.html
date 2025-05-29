@@ -27,7 +27,7 @@ permalink: /nightlife
     {% endunless %}
 {% endfor %}
 
-<p>Änderungen vorbehalten!</p>
+<p>{% t pages.nightlife.changesPossible %}</p>
 
 {% for festivalDate in festivalEventDates %}
     {% assign dayOfWeek = festivalDate | date: "%A" %}
@@ -132,7 +132,7 @@ permalink: /nightlife
 {% endfor %}
 
 <div class="other-schedule-hint">
-    Hier geht es zum <a href="{{ site.baseurl }}/program">Tagesprogramm</a>.
+    {% t pages.nightlife.programPrefix %} <a href="{{ site.baseurl }}/program">{% t pages.nightlife.programSuffix %}</a>.
 </div>
 
 <script>

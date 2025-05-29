@@ -12,3 +12,7 @@ pages:
     changesPossible: Änderungen vorbehalten!
     nightlifePrefix: Für Nachtschwärmer gibt es unser
     nightlifeSuffix: Spektakel Nachtleben
+  nightlife:
+    changesPossible: Änderungen vorbehalten!
+    programPrefix: Hier geht es zum
+    programSuffix: Tagesprogramm

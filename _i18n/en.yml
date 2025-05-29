@@ -11,3 +11,7 @@ pages:
     changesPossible: Changes possible!
     nightlifePrefix: For night owls, we have our
     nightlifeSuffix: Spektakel Nightlife
+  nightlife:
+    changesPossible: Changes possible!
+    programPrefix: Here you can find the
+    programSuffix: day program
