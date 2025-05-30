@@ -74,6 +74,22 @@ img.vorpremiere {
   &.bg2024{
     background: url('/assets/img/youtube/spektakel-2024-thumbnail.jpg');
   }
+
+  &.preview1{
+    background: url('/assets/img/youtube/preview1.jpg');
+  }
+  &.preview2{
+    background: url('/assets/img/youtube/preview2.jpg');
+  }
+  &.preview3{
+    background: url('/assets/img/youtube/preview3.jpg');
+  }
+  &.preview4{
+    background: url('/assets/img/youtube/preview4.jpg');
+  }
+  &.preview5{
+    background: url('/assets/img/youtube/preview5.jpg');
+  }
 }
 
 .youtube-video-container::after {

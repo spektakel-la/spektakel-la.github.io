@@ -6,7 +6,14 @@ menu:
   locations: Locations
   impressions: Impressions
   sponsors: Sponsors
+
 pages:
+  home:
+    applicationPrefix: The 19th Spektakel Landshut will take place from September 18th - 21st 2025. Inquiries & applications only via
+    applicationInfix: email
+    applicationSuffix: Thank you 👍
+    lineupAnnouncement: Lineup announcement
+    lineupAnnouncementText: At the 19th Spektakel Landshut, you can expect a fantastic lineup of artists from 17 nations. Here’s a little preview...
   program:
     time: Time
     changesPossible: Changes possible!

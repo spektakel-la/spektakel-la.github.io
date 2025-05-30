@@ -8,6 +8,12 @@ menu:
   sponsors: Sponsoren
 
 pages:
+  home:
+    applicationPrefix: Das 19. Spektakel Landshut findet vom 18. - 21. September 2025 statt. Anfragen & Bewerbungen ausschließlich via
+    applicationInfix: Email
+    applicationSuffix: Vielen Dank 👍
+    lineupAnnouncement: Künstler-Ankündigung
+    lineupAnnouncementText: Beim 19. Spektakel Landshut erwartet Sie ein grandioses Lineup von Künstlern aus 17 Nationen. Hier ein kleiner Vorgeschmack...
   program:
     time: Zeit
     changesPossible: Änderungen vorbehalten!

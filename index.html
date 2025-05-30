@@ -18,18 +18,120 @@ title: home
     <h2>19. Spektakel Landshut</h2>
     <p>September 2025</p>
   </div>
-  <div class="card-body spektakel-rosenheim">
-    Das 19. Spektakel Landshut findet vom 18. - 21. September 2025 statt.
-    Anfragen & Bewerbungen ausschließlich via <a href="mailto:{{ 'stadtspektakel@gmail.com' | encode_email }}">Email</a>.
+  <div class="card-body">
+    {% t pages.home.applicationPrefix %} <a href="mailto:{{ 'stadtspektakel@gmail.com' | encode_email }}">{% t pages.home.applicationInfix %}</a>.
     <br><br>
-    Vielen Dank 👍
-    <br><br>
-    <hr>
-    <br>
-    The 19th Spektakel Landshut will take place from September 18th - 21st 2025.
-    Inquiries & applications only via <a href="mailto:{{ 'stadtspektakel@gmail.com' | encode_email }}">email</a>.
-    <br><br>
-    Thank you 👍
+    {% t pages.home.applicationSuffix %}
+  </div>
+</div>
+
+<div class="card center-announcement">
+  <div class="card-header">
+    <h2>{% t pages.home.lineupAnnouncement %}</h2>
+    <p>19. Spektakel Landshut</p>
+  </div>
+  <div class="card-body">
+   {% t pages.home.lineupAnnouncementText %}
+   <br/>
+   <br/>
+
+   <ul class="youtube-carousel">
+      <li>
+        <div class="youtube-video-meta-container" style="margin: 0;">
+        <div class="youtube-video-container preview1">
+          <div class="no-user-consent">
+            <a href="#" data-cc="show-preferencesModal">
+              <picture>
+                <source srcset="/assets/img/youtube/youtube-play-button.webp" type="image/webp">
+                <source srcset="/assets/img/youtube/youtube-play-button.png" type="image/png">
+                <img class="youtube-play-button" src="{{ "/assets/img/youtube/youtube-play-button.png" | prepend: site.baseurl_root }}" alt="Youtube play button">
+              </picture>
+            <p>Um das Video sehen zu können müssen Sie allen Cookies zustimmen.</p>
+            </a>
+          </div>
+          <iframe id="youtube-lineup-preview1" width="560" height="315"
+            title="Jens Ohle" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+      </li>
+      <li>
+        <div class="youtube-video-meta-container" style="margin: 0;">
+        <div class="youtube-video-container preview2">
+          <div class="no-user-consent">
+            <a href="#" data-cc="show-preferencesModal">
+              <picture>
+                <source srcset="/assets/img/youtube/youtube-play-button.webp" type="image/webp">
+                <source srcset="/assets/img/youtube/youtube-play-button.png" type="image/png">
+                <img class="youtube-play-button" src="{{ "/assets/img/youtube/youtube-play-button.png" | prepend: site.baseurl_root }}" alt="Youtube play button">
+              </picture>
+            <p>Um das Video sehen zu können müssen Sie allen Cookies zustimmen.</p>
+            </a>
+          </div>
+          <iframe id="youtube-lineup-preview2" width="560" height="315"
+            title="Jyoti Supernaturel" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+      </li>
+      <li>
+        <div class="youtube-video-meta-container" style="margin: 0;">
+        <div class="youtube-video-container preview3">
+          <div class="no-user-consent">
+            <a href="#" data-cc="show-preferencesModal">
+              <picture>
+                <source srcset="/assets/img/youtube/youtube-play-button.webp" type="image/webp">
+                <source srcset="/assets/img/youtube/youtube-play-button.png" type="image/png">
+                <img class="youtube-play-button" src="{{ "/assets/img/youtube/youtube-play-button.png" | prepend: site.baseurl_root }}" alt="Youtube play button">
+              </picture>
+            <p>Um das Video sehen zu können müssen Sie allen Cookies zustimmen.</p>
+            </a>
+          </div>
+          <iframe id="youtube-lineup-preview3" width="560" height="315"
+            title="Mr. Dyvinetz" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+      </li>
+      <li>
+        <div class="youtube-video-meta-container" style="margin: 0;">
+        <div class="youtube-video-container preview4">
+          <div class="no-user-consent">
+            <a href="#" data-cc="show-preferencesModal">
+              <picture>
+                <source srcset="/assets/img/youtube/youtube-play-button.webp" type="image/webp">
+                <source srcset="/assets/img/youtube/youtube-play-button.png" type="image/png">
+                <img class="youtube-play-button" src="{{ "/assets/img/youtube/youtube-play-button.png" | prepend: site.baseurl_root }}" alt="Youtube play button">
+              </picture>
+            <p>Um das Video sehen zu können müssen Sie allen Cookies zustimmen.</p>
+            </a>
+          </div>
+          <iframe id="youtube-lineup-preview4" width="560" height="315"
+            title="Nadav Tabak" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+      </li>
+      <li>
+        <div class="youtube-video-meta-container" style="margin: 0;">
+        <div class="youtube-video-container preview5">
+          <div class="no-user-consent">
+            <a href="#" data-cc="show-preferencesModal">
+              <picture>
+                <source srcset="/assets/img/youtube/youtube-play-button.webp" type="image/webp">
+                <source srcset="/assets/img/youtube/youtube-play-button.png" type="image/png">
+                <img class="youtube-play-button" src="{{ "/assets/img/youtube/youtube-play-button.png" | prepend: site.baseurl_root }}" alt="Youtube play button">
+              </picture>
+            <p>Um das Video sehen zu können müssen Sie allen Cookies zustimmen.</p>
+            </a>
+          </div>
+          <iframe id="youtube-lineup-preview5" width="560" height="315"
+            title="Reuben DotDotDot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+      </li>
+   </ul>
   </div>
 </div>
 
@@ -86,69 +188,71 @@ title: home
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-header">
-      <h2>18. Spektakel Landshut</h2>
-      <p>11. - 15. September 2024</p>
+  {%  comment  %}
+    <div class="card">
+      <div class="card-header">
+        <h2>18. Spektakel Landshut</h2>
+        <p>11. - 15. September 2024</p>
+      </div>
+      <div class="card-body">
+        <ul>
+          <li>
+            <strong>Hier geht es direkt zu:</strong>
+            <a href="{{ site.baseurl }}/artists">Künstler</a><br><br>
+            <a href="{{ site.baseurl }}/program">Programm</a><br><br>
+            <a href="{{ site.baseurl }}/locations">Lageplan</a><br><br>
+          </li>
+
+          <li>
+            <strong>Donnerstag. 25. Juli</strong>
+
+            Wir freuen uns, das <a href="{{ site.baseurl }}/artists">Lineup des Spektakel Landshut 2024</a> bekannt zu geben.
+            Es erwarten Sie großartige Künstler der internationalen Straßenkunst-Szene, die Sie begeistern werden!
+          </li>
+          <li>
+            <strong>Mittwoch, 11. September<br>19.00 Uhr</strong>
+            Theater beim Spektakel Landshut.<br><br>
+            Vorpremiere "Der kleine Prinz" im Rathaus Prunksaal Landshut.<br><br>
+            Freier Eintritt, begrenzte Plätze - die Mitwirkenden spielen für den Hut...<br><br>
+            <br>
+            <a href="{{ site.baseurl }}/artists#derkleineprinz">
+              <picture>
+                <source srcset="/assets/img/artists/derkleineprinz.webp" type="image/webp">
+                <source srcset="/assets/img/artists/derkleineprinz.jpg" type="image/jpeg">
+                <img class="vorpremiere" src="{{ "/assets/img/artists/derkleineprinz.jpg" | prepend: site.baseurl_root }}" alt="derkleineprinz-logo">
+              </picture>
+            </a>
+          </li>
+          <li>
+            <strong>Donnerstag, 12. September</strong>
+            BMW Spektakel Gala im Theaterzelt Landshut<br><br>
+            <a href="https://www.landshutlive.de/details/spektakel-landshut.html#details" target="_blank">Ticketverkauf ab Juli 2024 bei Messe Landshut</a>
+          </li>
+          <li>
+            <strong>Freitag, 13. September - Sonntag, 15. September 2024</strong>
+            18. Spektakel Landshut in der Altstadt, Neustadt, Salzstadel, Rathaus Prunksaal und Bernlochner
+          </li>
+        </ul>
+      </div>
     </div>
-    <div class="card-body">
-      <ul>
-        <li>
-          <strong>Hier geht es direkt zu:</strong>
-          <a href="{{ site.baseurl }}/artists">Künstler</a><br><br>
-          <a href="{{ site.baseurl }}/program">Programm</a><br><br>
-          <a href="{{ site.baseurl }}/locations">Lageplan</a><br><br>
-        </li>
 
-        <li>
-          <strong>Donnerstag. 25. Juli</strong>
-
-          Wir freuen uns, das <a href="{{ site.baseurl }}/artists">Lineup des Spektakel Landshut 2024</a> bekannt zu geben.
-          Es erwarten Sie großartige Künstler der internationalen Straßenkunst-Szene, die Sie begeistern werden!
-        </li>
-        <li>
-          <strong>Mittwoch, 11. September<br>19.00 Uhr</strong>
-          Theater beim Spektakel Landshut.<br><br>
-          Vorpremiere "Der kleine Prinz" im Rathaus Prunksaal Landshut.<br><br>
-          Freier Eintritt, begrenzte Plätze - die Mitwirkenden spielen für den Hut...<br><br>
-          <br>
-          <a href="{{ site.baseurl }}/artists#derkleineprinz">
+    <div class="card">
+      <div class="card-header">
+        <h2>Partner-Festival Spektakel Rosenheim</h2>
+        <p>2. - 4. August 2024</p>
+      </div>
+      <div class="card-body spektakel-rosenheim">
+          Wir bedanken uns für das großartige und gelungene Partner-Festival in Rosenheim.
+          <a href="https://www.ro-city.de/events/spektakel-rosenheim-2024/" target="_blank">
             <picture>
-              <source srcset="/assets/img/artists/derkleineprinz.webp" type="image/webp">
-              <source srcset="/assets/img/artists/derkleineprinz.jpg" type="image/jpeg">
-              <img class="vorpremiere" src="{{ "/assets/img/artists/derkleineprinz.jpg" | prepend: site.baseurl_root }}" alt="derkleineprinz-logo">
+              <source srcset="/assets/img/pages/spektakel-rosenheim.webp" type="image/webp">
+              <source srcset="/assets/img/pages/spektakel-rosenheim.jpg" type="image/jpeg">
+              <img class="logo-image" style="padding-top: 30px;" src="{{ "/assets/img/pages/spektakel-rosenheim.png" | prepend: site.baseurl_root }}" alt="spektakel-logo">
             </picture>
           </a>
-        </li>
-        <li>
-          <strong>Donnerstag, 12. September</strong>
-          BMW Spektakel Gala im Theaterzelt Landshut<br><br>
-          <a href="https://www.landshutlive.de/details/spektakel-landshut.html#details" target="_blank">Ticketverkauf ab Juli 2024 bei Messe Landshut</a>
-        </li>
-        <li>
-          <strong>Freitag, 13. September - Sonntag, 15. September 2024</strong>
-          18. Spektakel Landshut in der Altstadt, Neustadt, Salzstadel, Rathaus Prunksaal und Bernlochner
-        </li>
-      </ul>
+      </div>
     </div>
-  </div>
-
-  <div class="card">
-    <div class="card-header">
-      <h2>Partner-Festival Spektakel Rosenheim</h2>
-      <p>2. - 4. August 2024</p>
-    </div>
-    <div class="card-body spektakel-rosenheim">
-        Wir bedanken uns für das großartige und gelungene Partner-Festival in Rosenheim.
-        <a href="https://www.ro-city.de/events/spektakel-rosenheim-2024/" target="_blank">
-          <picture>
-            <source srcset="/assets/img/pages/spektakel-rosenheim.webp" type="image/webp">
-            <source srcset="/assets/img/pages/spektakel-rosenheim.jpg" type="image/jpeg">
-            <img class="logo-image" style="padding-top: 30px;" src="{{ "/assets/img/pages/spektakel-rosenheim.png" | prepend: site.baseurl_root }}" alt="spektakel-logo">
-          </picture>
-        </a>
-    </div>
-  </div>
+  {% endcomment %}
 </div>
 
 <script>
@@ -161,6 +265,27 @@ title: home
       elementId: 'youtube-spektakel-2024',
       youtubeUrl: 'https://www.youtube-nocookie.com/embed/JLMxkFEwCkI'
     },
+    // lineup-previews
+    {
+      elementId: 'youtube-lineup-preview1',
+      youtubeUrl: 'https://www.youtube-nocookie.com/embed/fuhy9teEI3s'
+    },
+    {
+      elementId: 'youtube-lineup-preview2',
+      youtubeUrl: 'https://www.youtube-nocookie.com/embed/dO_565Luoaw'
+    },
+    {
+      elementId: 'youtube-lineup-preview3',
+      youtubeUrl: 'https://www.youtube-nocookie.com/embed/J3DDdh0twlM'
+    },
+    {
+      elementId: 'youtube-lineup-preview4',
+      youtubeUrl: 'https://www.youtube-nocookie.com/embed/i9vIzsUUOZ8'
+    },
+    {
+      elementId: 'youtube-lineup-preview5',
+      youtubeUrl: 'https://www.youtube-nocookie.com/embed/vKe8-xLMT5A'
+    }
   ];
 
   const maybeEnableVideo = () => {
