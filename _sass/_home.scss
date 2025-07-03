@@ -10,6 +10,36 @@ img.vorpremiere {
   margin: 25px 20px;
 }
 
+.quick-access {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-wrap:  wrap;
+  justify-content: space-evenly;
+  gap: 20px;
+
+
+  .quick-access-item {
+    // width: 40%;
+
+    img {
+      width: 40%;
+    }
+
+    .label {
+      text-align: center;
+    }
+  }
+}
+
+@media (max-width: $container-width) {
+    .quick-access {
+      .quick-access-item {
+        width: 40%;
+      }
+    }
+}
+
 /*
  * Partner-Festival
  * START

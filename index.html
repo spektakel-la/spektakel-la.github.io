@@ -15,8 +15,8 @@ title: home
 
 <div class="card center-announcement">
   <div class="card-header">
-    <h2>19. Spektakel Landshut</h2>
-    <p>September 2025</p>
+    <h2>{% t pages.home.landingHeader %}</h2>
+    <p>{% t pages.home.landingSubHeader %}</p>
   </div>
   <div class="card-body">
     {% t pages.home.applicationPrefix %} <a href="mailto:{{ 'stadtspektakel@gmail.com' | encode_email }}">{% t pages.home.applicationInfix %}</a>.
@@ -132,6 +132,41 @@ title: home
       </div>
       </li>
    </ul>
+  </div>
+</div>
+
+<div class="card center-announcement">
+  <div class="card-header">
+    <h2>{% t pages.home.landingHeader %}</h2>
+    <p>{% t pages.home.landingSubHeader %}</p>
+  </div>
+  <div class="card-body">
+   <div class="quick-access">
+    <a class="quick-access-item" href="./program">
+      <img class="icon" src="/assets/img/home/program-icon.svg">
+      <div class="label">
+        {% t menu.program %}
+      </div>
+    </a>
+    <a class="quick-access-item" href="./artists">
+      <img class="icon" src="/assets/img/home/artist-icon.svg">
+      <div class="label">
+        {% t menu.artists %}
+      </div>
+    </a>
+    <a class="quick-access-item" href="./locations">
+      <img class="icon" src="/assets/img/home/map-icon.svg">
+      <div class="label">
+        {% t menu.locations %}
+      </div>
+    </a>
+    <a class="quick-access-item" href="./nightlife">
+      <img class="icon" src="/assets/img/home/nightlife-icon.svg">
+      <div class="label">
+         {% t menu.nightlife %}
+      </div>
+    </a>
+   </div>
   </div>
 </div>
 

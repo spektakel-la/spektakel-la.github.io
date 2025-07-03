@@ -9,6 +9,8 @@ menu:
 
 pages:
   home:
+    landingHeader: 19th Spektakel Landshut
+    landingSubHeader: September 18th - 21st 2025
     applicationPrefix: The 19th Spektakel Landshut will take place from September 18th - 21st 2025. Inquiries & applications only via
     applicationInfix: email
     applicationSuffix: Thank you 👍
