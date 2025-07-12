@@ -3,10 +3,16 @@
 .planning {
     text-align: center;
     margin: 100px auto;
+
     .icon {
         display: block;
         width: 200px;
         margin: 20px auto;
+    }
+
+    a {
+        color: $link-extern-color;
+        text-decoration: none;
     }
 }
 

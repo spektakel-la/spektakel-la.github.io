@@ -53,7 +53,11 @@ title: home
     <h2>{% t pages.home.lineupAnnouncement %}</h2>
   </div>
   <div class="card-body">
-   {% t pages.home.lineupAnnouncementText %}
+    <p>
+      {% t pages.home.lineupAnnouncementTextPrefix %}
+      <a href="./artists">{% t pages.home.lineupAnnouncementTextInfix %}</a>
+      {% t pages.home.lineupAnnouncementTextSuffix %}
+    </p>
    <br/>
    <br/>
     <div class="youtube-video">

@@ -30,7 +30,11 @@ permalink: /nightlife
 {% if festivalEventDates.size == 0 %}
     <div class="planning">
         <img class="icon" src="/assets/img/pages/planning.svg">
-        <p>{% t pages.nightlife.planningInProgress %}</p>
+        <p>
+            {% t pages.nightlife.planningInProgressPrefix %}
+            <a href="./artists">{% t pages.nightlife.planningInProgressInfix %}</a>
+            {% t pages.nightlife.planningInProgressSuffix %}
+        </p>
     </div>
 {% else %}
     <p>{% t pages.nightlife.changesPossible %}</p>

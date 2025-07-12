@@ -11,18 +11,23 @@ pages:
   home:
     landingHeader: 19th Spektakel Landshut
     landingSubHeader: September 18th - 21st 2025
-    lineupAnnouncement: Lineup Announcement
-    lineupAnnouncementText: At the 19th Spektakel Landshut, you can expect a fantastic lineup of artists from 17 nations. Here’s a little preview...
+    lineupAnnouncement: Announcement
+    lineupAnnouncementText: >
+      Let yourself be enchanted by the 19th Spektakel Landshut! Look forward to an extraordinary lineup featuring artists from 17 different nations, showcasing their diversity and creativity. From captivating music to breathtaking performances and unique art forms – the Spektakel offers something special for every taste. Discover the impressive list of invited artists on our artists page and get inspired. Immerse yourself in the world of the Spektakel and experience the magic that awaits you. Check out the following YouTube videos for a preview of the unforgettable moments you can expect at Spektakel Landshut!
     reviewHeader: Spektakel Review
     reviewSubHeader: Experience the highlights of past Spektakel Landshut events
   program:
-    planningInProgress: Planning is still underway. The program will be published shortly.
+    planningInProgressPrefix: Planning is still underway, the program will be published shortly. Take a look at the invited
+    planningInProgressInfix: artists
+    planningInProgressSuffix: for Spektakel Landshut 2025.
     time: Time
     changesPossible: Changes possible!
     nightlifePrefix: For night owls, we have our
     nightlifeSuffix: Spektakel Nightlife
   nightlife:
-    planningInProgress: Planning is still underway. The program will be published shortly.
+    planningInProgressPrefix: Planning is still underway, the program will be published shortly. Take a look at the invited
+    planningInProgressInfix: artists
+    planningInProgressSuffix: for Spektakel Landshut 2025.
     time: Time
     changesPossible: Changes possible!
     programPrefix: Here you can find the

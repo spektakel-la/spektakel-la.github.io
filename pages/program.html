@@ -21,7 +21,11 @@ permalink: /program
 {% if festivalEventDates.size == 0 %}
     <div class="planning">
         <img class="icon" src="/assets/img/pages/planning.svg">
-        <p>{% t pages.program.planningInProgress %}</p>
+        <p>
+            {% t pages.program.planningInProgressPrefix %}
+            <a href="./artists">{% t pages.program.planningInProgressInfix %}</a>
+            {% t pages.program.planningInProgressSuffix %}
+        </p>
     </div>
 {% else %}
     <p>{% t pages.program.changesPossible %}</p>

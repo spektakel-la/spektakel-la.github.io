@@ -11,18 +11,26 @@ pages:
   home:
     landingHeader: 19. Spektakel Landshut
     landingSubHeader: 18. - 21. September 2025
-    lineupAnnouncement: Künstler-Ankündigung
-    lineupAnnouncementText: Beim 19. Spektakel Landshut erwartet Sie ein grandioses Lineup von Künstlern aus 17 Nationen. Hier ein kleiner Vorgeschmack...
+    lineupAnnouncement: Ankündigung
+    lineupAnnouncementTextPrefix: >
+       Lassen Sie sich vom 19. Spektakel Landshut verzaubern! Freuen Sie sich auf ein außergewöhnliches Lineup mit Künstlern aus 17 verschiedenen Nationen, die mit ihrer Vielfalt und Kreativität begeistern. Von mitreißender Musik über atemberaubende Performances bis hin zu einzigartigen Kunstformen – das Spektakel bietet für jeden Geschmack etwas Besonderes. Entdecken Sie schon jetzt die beeindruckende Liste der eingeladenen Künstler auf unserer
+    lineupAnnouncementTextInfix: Künstler-Seite
+    lineupAnnouncementTextSuffix: >
+      und lassen Sie sich inspirieren. Tauchen Sie ein in die Welt des Spektakels und erleben Sie die Magie, die Sie erwartet. Schauen Sie sich auch die folgenden YouTube-Videos an, um einen Vorgeschmack auf die unvergesslichen Momente zu bekommen, die Sie beim Spektakel Landshut erwarten!
     reviewHeader: Spektakel Rückblick
     reviewSubHeader: Erleben Sie die Highlights vergangener Spektakel Landshut
   program:
-    planningInProgress: Die Planung läuft noch. Das Programm wird in Kürze veröffentlicht.
+    planningInProgressPrefix: Die Planung läuft noch, das Programm wird jedoch in Kürze veröffentlicht. Werfen Sie doch schon mal einen Blick auf die eingeladenen
+    planningInProgressInfix: Künstler
+    planningInProgressSuffix: für das Spektakel Landshut 2025.
     time: Zeit
     changesPossible: Änderungen vorbehalten!
     nightlifePrefix: Für Nachtschwärmer gibt es unser
     nightlifeSuffix: Spektakel Nachtleben
   nightlife:
-    planningInProgress: Die Planung läuft noch. Das Programm wird in Kürze veröffentlicht.
+    planningInProgressPrefix: Die Planung läuft noch, das Programm wird jedoch in Kürze veröffentlicht. Werfen Sie doch schon mal einen Blick auf die eingeladenen
+    planningInProgressInfix: Künstler
+    planningInProgressSuffix: für das Spektakel Landshut 2025.
     time: Zeit
     changesPossible: Änderungen vorbehalten!
     programPrefix: Hier geht es zum
