@@ -27,122 +27,129 @@ permalink: /nightlife
     {% endunless %}
 {% endfor %}
 
-<p>{% t pages.nightlife.changesPossible %}</p>
+{% if festivalEventDates.size == 0 %}
+    <div class="planning">
+        <img class="icon" src="/assets/img/pages/planning.svg">
+        <p>{% t pages.nightlife.planningInProgress %}</p>
+    </div>
+{% else %}
+    <p>{% t pages.nightlife.changesPossible %}</p>
 
-{% for festivalDate in festivalEventDates %}
-    {% assign dayOfWeekEn = festivalDate | date: "%A" %}
-    {% assign dayOfWeekIndex = -1 %}
-    {% for day in daysOfWeek %}
-        {% if day == dayOfWeekEn %}
-        {% assign dayOfWeekIndex = forloop.index0 %}
-        {% endif %}
-    {% endfor %}
-    {% assign dayOfWeekDe = daysOfWeekDe[dayOfWeekIndex] %}
+    {% for festivalDate in festivalEventDates %}
+        {% assign dayOfWeekEn = festivalDate | date: "%A" %}
+        {% assign dayOfWeekIndex = -1 %}
+        {% for day in daysOfWeek %}
+            {% if day == dayOfWeekEn %}
+            {% assign dayOfWeekIndex = forloop.index0 %}
+            {% endif %}
+        {% endfor %}
+        {% assign dayOfWeekDe = daysOfWeekDe[dayOfWeekIndex] %}
 
-    {% case site.lang %}
-    {% when "de" %}
-        {% assign dayOfWeekToShow = dayOfWeekDe %}
-    {% when "en" %}
-        {% assign dayOfWeekToShow = dayOfWeekEn %}
-    {% else %}
-        {% assign dayOfWeekToShow = dayOfWeekEn %}
-    {% endcase %}
+        {% case site.lang %}
+        {% when "de" %}
+            {% assign dayOfWeekToShow = dayOfWeekDe %}
+        {% when "en" %}
+            {% assign dayOfWeekToShow = dayOfWeekEn %}
+        {% else %}
+            {% assign dayOfWeekToShow = dayOfWeekEn %}
+        {% endcase %}
 
-    <h2>{{ dayOfWeekToShow }} {{ festivalDate }}</h2>
+        <h2>{{ dayOfWeekToShow }} {{ festivalDate }}</h2>
 
-    <div class="program-table-wrapper">
-        <table>
-            <thead>
-                <tr class="sticky">
-                    <th>{% t pages.nightlife.time %}</th>
-                    {% for location in sortedLocations %}
-                        <th>
-                            <a href="{{ site.baseurl }}/locations#{{ location.location_id }}">
-                                <div class="table-header-location-id">
-                                    {{ location.location_id | upcase }}
-                                </div>
-                                <div class="table-header-location-description">
-                                    {{ location.description }}
-                                </div>
-                            </a>
-                        </th>
-                    {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for group in groupedSchedule %}
-                    {% assign scheduleEntryDateTime = group.name %}
-                    {% assign scheduleEntryDateUnix = scheduleEntryDateTime | date: "%s" %}
-                    {% assign scheduleEntryHour = scheduleEntryDateTime | date: "%H" | plus: 0 %}
-
-                    {% if scheduleEntryHour < 12 %}
-                        {% assign adjustedUnixDate = scheduleEntryDateUnix | minus: 86400 %}
-                    {% else %}
-                        {% assign adjustedUnixDate = scheduleEntryDateUnix %}
-                    {% endif %}
-
-                    {% assign adjustedDate = adjustedUnixDate | date: "%d.%m.%Y" %}
-                    {% if adjustedDate != festivalDate %}
-                        {% continue %}
-                    {% endif %}
-
-                    <tr>
-                        <td data-datetime="{{ scheduleEntryDateTime }}">{{ scheduleEntryDateTime | date: "%H:%M" }}</td>
-                        {% assign scheduledActsAtTime = group.items %}
+        <div class="program-table-wrapper">
+            <table>
+                <thead>
+                    <tr class="sticky">
+                        <th>{% t pages.nightlife.time %}</th>
                         {% for location in sortedLocations %}
-                            {% assign entryAtLocation = scheduledActsAtTime | where: 'location_id', location.location_id | first %}
-                            {% if entryAtLocation %}
-                                <td data-artist-id="{{ entryAtLocation.artist_id }}">
-                                    {% assign artist = site.artists | where: 'artist_id', entryAtLocation.artist_id | first %}
-                                    {% assign location = site.locations | where: 'location_id', entryAtLocation.location_id | first %}
-
-                                    <span itemscope itemtype="https://schema.org/Event">
-                                        <span itemprop="name">
-                                            {% if artist.short_name %}
-                                                {{ artist.short_name }}
-                                            {% else %}
-                                                {{ artist.name }}
-                                            {% endif %}
-                                        </span>
-                                        {% if entryAtLocation.notes %}
-                                            <span class="artist-notes">({{ entryAtLocation.notes }})</span>
-                                        {% endif %}
-                                        <span hidden>
-                                            <meta itemprop="startDate" content="{{ scheduleEntryDateTime }}">
-                                            <meta itemprop="eventStatus" content="https://schema.org/EventScheduled">
-                                            <meta itemprop="eventAttendanceMode" content="https://schema.org/OfflineEventAttendanceMode">
-                                            <meta itemprop="image" content="{{ artist.image }}">
-                                            <meta itemprop="description" content="{{ artist.content | escape }}">
-
-                                            <span itemscope itemtype="https://schema.org/Place" itemprop="location">
-                                                <meta itemprop="name" content="{{ location.description }}">
-                                                <span itemscope itemtype="https://schema.org/GeoCoordinates" itemprop="geo">
-                                                    <meta itemprop="latitude" content="{{ location.gps[0] }}">
-                                                    <meta itemprop="longitude" content="{{ location.gps[1] }}">
-                                                </span>
-                                            </span>
-
-                                            <span itemscope itemtype="https://schema.org/Person" itemprop="performer">
-                                                <meta itemprop="name" content="{{ artist.name }}">
-                                                <meta itemprop="jobTitle" content="{{ artist.categories | join: ', ' }}">
-                                            </span>
-                                        </span>
-                                    </span>
-                                </td>
-                            {% else %}
-                                <td></td>
-                            {% endif %}
+                            <th>
+                                <a href="{{ site.baseurl }}/locations#{{ location.location_id }}">
+                                    <div class="table-header-location-id">
+                                        {{ location.location_id | upcase }}
+                                    </div>
+                                    <div class="table-header-location-description">
+                                        {{ location.description }}
+                                    </div>
+                                </a>
+                            </th>
                         {% endfor %}
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-{% endfor %}
+                </thead>
+                <tbody>
+                    {% for group in groupedSchedule %}
+                        {% assign scheduleEntryDateTime = group.name %}
+                        {% assign scheduleEntryDateUnix = scheduleEntryDateTime | date: "%s" %}
+                        {% assign scheduleEntryHour = scheduleEntryDateTime | date: "%H" | plus: 0 %}
 
-<div class="other-schedule-hint">
-    {% t pages.nightlife.programPrefix %} <a href="{{ site.baseurl }}/program">{% t pages.nightlife.programSuffix %}</a>.
-</div>
+                        {% if scheduleEntryHour < 12 %}
+                            {% assign adjustedUnixDate = scheduleEntryDateUnix | minus: 86400 %}
+                        {% else %}
+                            {% assign adjustedUnixDate = scheduleEntryDateUnix %}
+                        {% endif %}
+
+                        {% assign adjustedDate = adjustedUnixDate | date: "%d.%m.%Y" %}
+                        {% if adjustedDate != festivalDate %}
+                            {% continue %}
+                        {% endif %}
+
+                        <tr>
+                            <td data-datetime="{{ scheduleEntryDateTime }}">{{ scheduleEntryDateTime | date: "%H:%M" }}</td>
+                            {% assign scheduledActsAtTime = group.items %}
+                            {% for location in sortedLocations %}
+                                {% assign entryAtLocation = scheduledActsAtTime | where: 'location_id', location.location_id | first %}
+                                {% if entryAtLocation %}
+                                    <td data-artist-id="{{ entryAtLocation.artist_id }}">
+                                        {% assign artist = site.artists | where: 'artist_id', entryAtLocation.artist_id | first %}
+                                        {% assign location = site.locations | where: 'location_id', entryAtLocation.location_id | first %}
+
+                                        <span itemscope itemtype="https://schema.org/Event">
+                                            <span itemprop="name">
+                                                {% if artist.short_name %}
+                                                    {{ artist.short_name }}
+                                                {% else %}
+                                                    {{ artist.name }}
+                                                {% endif %}
+                                            </span>
+                                            {% if entryAtLocation.notes %}
+                                                <span class="artist-notes">({{ entryAtLocation.notes }})</span>
+                                            {% endif %}
+                                            <span hidden>
+                                                <meta itemprop="startDate" content="{{ scheduleEntryDateTime }}">
+                                                <meta itemprop="eventStatus" content="https://schema.org/EventScheduled">
+                                                <meta itemprop="eventAttendanceMode" content="https://schema.org/OfflineEventAttendanceMode">
+                                                <meta itemprop="image" content="{{ artist.image }}">
+                                                <meta itemprop="description" content="{{ artist.content | escape }}">
+
+                                                <span itemscope itemtype="https://schema.org/Place" itemprop="location">
+                                                    <meta itemprop="name" content="{{ location.description }}">
+                                                    <span itemscope itemtype="https://schema.org/GeoCoordinates" itemprop="geo">
+                                                        <meta itemprop="latitude" content="{{ location.gps[0] }}">
+                                                        <meta itemprop="longitude" content="{{ location.gps[1] }}">
+                                                    </span>
+                                                </span>
+
+                                                <span itemscope itemtype="https://schema.org/Person" itemprop="performer">
+                                                    <meta itemprop="name" content="{{ artist.name }}">
+                                                    <meta itemprop="jobTitle" content="{{ artist.categories | join: ', ' }}">
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endfor %}
+
+    <div class="other-schedule-hint">
+        {% t pages.nightlife.programPrefix %} <a href="{{ site.baseurl }}/program">{% t pages.nightlife.programSuffix %}</a>.
+    </div>
+{% endif %}
 
 <script>
     const onShow = () => {

@@ -13,129 +13,7 @@ title: home
   </h1>
 </div>
 
-<div class="card center-announcement">
-  <div class="card-header">
-    <h2>{% t pages.home.landingHeader %}</h2>
-    <p>{% t pages.home.landingSubHeader %}</p>
-  </div>
-  <div class="card-body">
-    {% t pages.home.applicationPrefix %} <a href="mailto:{{ 'stadtspektakel@gmail.com' | encode_email }}">{% t pages.home.applicationInfix %}</a>.
-    <br><br>
-    {% t pages.home.applicationSuffix %}
-  </div>
-</div>
-
-<div class="card center-announcement">
-  <div class="card-header">
-    <h2>{% t pages.home.lineupAnnouncement %}</h2>
-    <p>19. Spektakel Landshut</p>
-  </div>
-  <div class="card-body">
-   {% t pages.home.lineupAnnouncementText %}
-   <br/>
-   <br/>
-
-   <ul class="lineup-preview-videos">
-      <li>
-        <div class="youtube-video-meta-container" style="margin: 0;">
-        <div class="youtube-video-container preview1">
-          <div class="no-user-consent">
-            <a href="#" data-cc="show-preferencesModal">
-              <picture>
-                <source srcset="/assets/img/youtube/youtube-play-button.webp" type="image/webp">
-                <source srcset="/assets/img/youtube/youtube-play-button.png" type="image/png">
-                <img class="youtube-play-button" src="{{ "/assets/img/youtube/youtube-play-button.png" | prepend: site.baseurl_root }}" alt="Youtube play button">
-              </picture>
-            <p>Um das Video sehen zu können müssen Sie allen Cookies zustimmen.</p>
-            </a>
-          </div>
-          <iframe id="youtube-lineup-preview1" width="560" height="315"
-            title="Jens Ohle" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-      </div>
-      </li>
-      <li>
-        <div class="youtube-video-meta-container" style="margin: 0;">
-        <div class="youtube-video-container preview2">
-          <div class="no-user-consent">
-            <a href="#" data-cc="show-preferencesModal">
-              <picture>
-                <source srcset="/assets/img/youtube/youtube-play-button.webp" type="image/webp">
-                <source srcset="/assets/img/youtube/youtube-play-button.png" type="image/png">
-                <img class="youtube-play-button" src="{{ "/assets/img/youtube/youtube-play-button.png" | prepend: site.baseurl_root }}" alt="Youtube play button">
-              </picture>
-            <p>Um das Video sehen zu können müssen Sie allen Cookies zustimmen.</p>
-            </a>
-          </div>
-          <iframe id="youtube-lineup-preview2" width="560" height="315"
-            title="Jyoti Supernaturel" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-      </div>
-      </li>
-      <li>
-        <div class="youtube-video-meta-container" style="margin: 0;">
-        <div class="youtube-video-container preview3">
-          <div class="no-user-consent">
-            <a href="#" data-cc="show-preferencesModal">
-              <picture>
-                <source srcset="/assets/img/youtube/youtube-play-button.webp" type="image/webp">
-                <source srcset="/assets/img/youtube/youtube-play-button.png" type="image/png">
-                <img class="youtube-play-button" src="{{ "/assets/img/youtube/youtube-play-button.png" | prepend: site.baseurl_root }}" alt="Youtube play button">
-              </picture>
-            <p>Um das Video sehen zu können müssen Sie allen Cookies zustimmen.</p>
-            </a>
-          </div>
-          <iframe id="youtube-lineup-preview3" width="560" height="315"
-            title="Mr. Dyvinetz" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-      </div>
-      </li>
-      <li>
-        <div class="youtube-video-meta-container" style="margin: 0;">
-        <div class="youtube-video-container preview4">
-          <div class="no-user-consent">
-            <a href="#" data-cc="show-preferencesModal">
-              <picture>
-                <source srcset="/assets/img/youtube/youtube-play-button.webp" type="image/webp">
-                <source srcset="/assets/img/youtube/youtube-play-button.png" type="image/png">
-                <img class="youtube-play-button" src="{{ "/assets/img/youtube/youtube-play-button.png" | prepend: site.baseurl_root }}" alt="Youtube play button">
-              </picture>
-            <p>Um das Video sehen zu können müssen Sie allen Cookies zustimmen.</p>
-            </a>
-          </div>
-          <iframe id="youtube-lineup-preview4" width="560" height="315"
-            title="Nadav Tabak" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-      </div>
-      </li>
-      <li>
-        <div class="youtube-video-meta-container" style="margin: 0;">
-        <div class="youtube-video-container preview5">
-          <div class="no-user-consent">
-            <a href="#" data-cc="show-preferencesModal">
-              <picture>
-                <source srcset="/assets/img/youtube/youtube-play-button.webp" type="image/webp">
-                <source srcset="/assets/img/youtube/youtube-play-button.png" type="image/png">
-                <img class="youtube-play-button" src="{{ "/assets/img/youtube/youtube-play-button.png" | prepend: site.baseurl_root }}" alt="Youtube play button">
-              </picture>
-            <p>Um das Video sehen zu können müssen Sie allen Cookies zustimmen.</p>
-            </a>
-          </div>
-          <iframe id="youtube-lineup-preview5" width="560" height="315"
-            title="Reuben DotDotDot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-      </div>
-      </li>
-   </ul>
-  </div>
-</div>
-
-<div class="card center-announcement">
+<div class="card card-margin">
   <div class="card-header">
     <h2>{% t pages.home.landingHeader %}</h2>
     <p>{% t pages.home.landingSubHeader %}</p>
@@ -143,25 +21,25 @@ title: home
   <div class="card-body">
    <div class="quick-access">
     <a class="quick-access-item" href="./program">
-      <img class="icon" src="/assets/img/home/program-icon.svg">
+      <img class="icon" src="/assets/img/pages/program-icon.svg">
       <div class="label">
         {% t menu.program %}
       </div>
     </a>
     <a class="quick-access-item" href="./artists">
-      <img class="icon" src="/assets/img/home/artist-icon.svg">
+      <img class="icon" src="/assets/img/pages/artist-icon.svg">
       <div class="label">
         {% t menu.artists %}
       </div>
     </a>
     <a class="quick-access-item" href="./locations">
-      <img class="icon" src="/assets/img/home/map-icon.svg">
+      <img class="icon" src="/assets/img/pages/map-icon.svg">
       <div class="label">
         {% t menu.locations %}
       </div>
     </a>
     <a class="quick-access-item" href="./nightlife">
-      <img class="icon" src="/assets/img/home/nightlife-icon.svg">
+      <img class="icon" src="/assets/img/pages/nightlife-icon.svg">
       <div class="label">
          {% t menu.nightlife %}
       </div>
@@ -170,125 +48,159 @@ title: home
   </div>
 </div>
 
-<div class="cards-list">
-  <div class="card">
-    <div class="card-header">
-      <h2>18. Spektakel Landshut</h2>
-      <p>September 2024</p>
-    </div>
-    <div class="card-body" style="padding: 0;">
-      <div class="youtube-video-meta-container" style="margin: 0;">
-        <div class="youtube-video-container bg2024">
-          <div class="no-user-consent">
-            <a href="#" data-cc="show-preferencesModal">
-              <picture>
-                <source srcset="/assets/img/youtube/youtube-play-button.webp" type="image/webp">
-                <source srcset="/assets/img/youtube/youtube-play-button.png" type="image/png">
-                <img class="youtube-play-button" src="{{ "/assets/img/youtube/youtube-play-button.png" | prepend: site.baseurl_root }}" alt="Youtube play button">
-              </picture>
-            <p>Um das Video sehen zu können müssen Sie allen Cookies zustimmen.</p>
-            </a>
-          </div>
-          <iframe id="youtube-spektakel-2024" width="560" height="315"
-            title="Spektakel Landshut 2023" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
+<div class="card card-margin">
+  <div class="card-header">
+    <h2>{% t pages.home.lineupAnnouncement %}</h2>
   </div>
-
-  <div class="card">
-    <div class="card-header">
-      <h2>17. Spektakel Landshut</h2>
-      <p>September 2023</p>
-    </div>
-    <div class="card-body" style="padding: 0;">
-      <div class="youtube-video-meta-container" style="margin: 0;">
-        <div class="youtube-video-container bg2023">
-          <div class="no-user-consent">
-            <a href="#" data-cc="show-preferencesModal">
-              <picture>
-                <source srcset="/assets/img/youtube/youtube-play-button.webp" type="image/webp">
-                <source srcset="/assets/img/youtube/youtube-play-button.png" type="image/png">
-                <img class="youtube-play-button" src="{{ "/assets/img/youtube/youtube-play-button.png" | prepend: site.baseurl_root }}" alt="Youtube play button">
-              </picture>
-            <p>Um das Video sehen zu können müssen Sie allen Cookies zustimmen.</p>
-            </a>
-          </div>
-          <iframe id="youtube-spektakel-2023" width="560" height="315"
-            title="Spektakel Landshut 2023" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  {%  comment  %}
-    <div class="card">
-      <div class="card-header">
-        <h2>18. Spektakel Landshut</h2>
-        <p>11. - 15. September 2024</p>
-      </div>
-      <div class="card-body">
-        <ul>
-          <li>
-            <strong>Hier geht es direkt zu:</strong>
-            <a href="{{ site.baseurl }}/artists">Künstler</a><br><br>
-            <a href="{{ site.baseurl }}/program">Programm</a><br><br>
-            <a href="{{ site.baseurl }}/locations">Lageplan</a><br><br>
-          </li>
-
-          <li>
-            <strong>Donnerstag. 25. Juli</strong>
-
-            Wir freuen uns, das <a href="{{ site.baseurl }}/artists">Lineup des Spektakel Landshut 2024</a> bekannt zu geben.
-            Es erwarten Sie großartige Künstler der internationalen Straßenkunst-Szene, die Sie begeistern werden!
-          </li>
-          <li>
-            <strong>Mittwoch, 11. September<br>19.00 Uhr</strong>
-            Theater beim Spektakel Landshut.<br><br>
-            Vorpremiere "Der kleine Prinz" im Rathaus Prunksaal Landshut.<br><br>
-            Freier Eintritt, begrenzte Plätze - die Mitwirkenden spielen für den Hut...<br><br>
-            <br>
-            <a href="{{ site.baseurl }}/artists#derkleineprinz">
-              <picture>
-                <source srcset="/assets/img/artists/derkleineprinz.webp" type="image/webp">
-                <source srcset="/assets/img/artists/derkleineprinz.jpg" type="image/jpeg">
-                <img class="vorpremiere" src="{{ "/assets/img/artists/derkleineprinz.jpg" | prepend: site.baseurl_root }}" alt="derkleineprinz-logo">
-              </picture>
-            </a>
-          </li>
-          <li>
-            <strong>Donnerstag, 12. September</strong>
-            BMW Spektakel Gala im Theaterzelt Landshut<br><br>
-            <a href="https://www.landshutlive.de/details/spektakel-landshut.html#details" target="_blank">Ticketverkauf ab Juli 2024 bei Messe Landshut</a>
-          </li>
-          <li>
-            <strong>Freitag, 13. September - Sonntag, 15. September 2024</strong>
-            18. Spektakel Landshut in der Altstadt, Neustadt, Salzstadel, Rathaus Prunksaal und Bernlochner
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <h2>Partner-Festival Spektakel Rosenheim</h2>
-        <p>2. - 4. August 2024</p>
-      </div>
-      <div class="card-body spektakel-rosenheim">
-          Wir bedanken uns für das großartige und gelungene Partner-Festival in Rosenheim.
-          <a href="https://www.ro-city.de/events/spektakel-rosenheim-2024/" target="_blank">
+  <div class="card-body">
+   {% t pages.home.lineupAnnouncementText %}
+   <br/>
+   <br/>
+    <div class="youtube-video">
+      <div class="youtube-video-meta-container">
+      <div class="youtube-video-container preview1">
+        <div class="no-user-consent">
+          <a href="#" data-cc="show-preferencesModal">
             <picture>
-              <source srcset="/assets/img/pages/spektakel-rosenheim.webp" type="image/webp">
-              <source srcset="/assets/img/pages/spektakel-rosenheim.jpg" type="image/jpeg">
-              <img class="logo-image" style="padding-top: 30px;" src="{{ "/assets/img/pages/spektakel-rosenheim.png" | prepend: site.baseurl_root }}" alt="spektakel-logo">
+              <source srcset="/assets/img/youtube/youtube-play-button.webp" type="image/webp">
+              <source srcset="/assets/img/youtube/youtube-play-button.png" type="image/png">
+              <img class="youtube-play-button" src="{{ "/assets/img/youtube/youtube-play-button.png" | prepend: site.baseurl_root }}" alt="Youtube play button">
             </picture>
+          <p>Um das Video sehen zu können müssen Sie allen Cookies zustimmen.</p>
           </a>
+        </div>
+        <iframe id="youtube-lineup-preview1" width="560" height="315"
+          title="Jens Ohle" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
     </div>
-  {% endcomment %}
+    </div>
+    <div class="youtube-video">
+      <div class="youtube-video-meta-container">
+      <div class="youtube-video-container preview2">
+        <div class="no-user-consent">
+          <a href="#" data-cc="show-preferencesModal">
+            <picture>
+              <source srcset="/assets/img/youtube/youtube-play-button.webp" type="image/webp">
+              <source srcset="/assets/img/youtube/youtube-play-button.png" type="image/png">
+              <img class="youtube-play-button" src="{{ "/assets/img/youtube/youtube-play-button.png" | prepend: site.baseurl_root }}" alt="Youtube play button">
+            </picture>
+          <p>Um das Video sehen zu können müssen Sie allen Cookies zustimmen.</p>
+          </a>
+        </div>
+        <iframe id="youtube-lineup-preview2" width="560" height="315"
+          title="Jyoti Supernaturel" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+    </div>
+    </div>
+    <div class="youtube-video">
+      <div class="youtube-video-meta-container">
+      <div class="youtube-video-container preview3">
+        <div class="no-user-consent">
+          <a href="#" data-cc="show-preferencesModal">
+            <picture>
+              <source srcset="/assets/img/youtube/youtube-play-button.webp" type="image/webp">
+              <source srcset="/assets/img/youtube/youtube-play-button.png" type="image/png">
+              <img class="youtube-play-button" src="{{ "/assets/img/youtube/youtube-play-button.png" | prepend: site.baseurl_root }}" alt="Youtube play button">
+            </picture>
+          <p>Um das Video sehen zu können müssen Sie allen Cookies zustimmen.</p>
+          </a>
+        </div>
+        <iframe id="youtube-lineup-preview3" width="560" height="315"
+          title="Mr. Dyvinetz" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+    </div>
+    </div>
+    <div class="youtube-video">
+      <div class="youtube-video-meta-container">
+      <div class="youtube-video-container preview4">
+        <div class="no-user-consent">
+          <a href="#" data-cc="show-preferencesModal">
+            <picture>
+              <source srcset="/assets/img/youtube/youtube-play-button.webp" type="image/webp">
+              <source srcset="/assets/img/youtube/youtube-play-button.png" type="image/png">
+              <img class="youtube-play-button" src="{{ "/assets/img/youtube/youtube-play-button.png" | prepend: site.baseurl_root }}" alt="Youtube play button">
+            </picture>
+          <p>Um das Video sehen zu können müssen Sie allen Cookies zustimmen.</p>
+          </a>
+        </div>
+        <iframe id="youtube-lineup-preview4" width="560" height="315"
+          title="Nadav Tabak" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+    </div>
+    </div>
+    <div class="youtube-video">
+      <div class="youtube-video-meta-container">
+      <div class="youtube-video-container preview5">
+        <div class="no-user-consent">
+          <a href="#" data-cc="show-preferencesModal">
+            <picture>
+              <source srcset="/assets/img/youtube/youtube-play-button.webp" type="image/webp">
+              <source srcset="/assets/img/youtube/youtube-play-button.png" type="image/png">
+              <img class="youtube-play-button" src="{{ "/assets/img/youtube/youtube-play-button.png" | prepend: site.baseurl_root }}" alt="Youtube play button">
+            </picture>
+          <p>Um das Video sehen zu können müssen Sie allen Cookies zustimmen.</p>
+          </a>
+        </div>
+        <iframe id="youtube-lineup-preview5" width="560" height="315"
+          title="Reuben DotDotDot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+    </div>
+    </div>
+  </div>
 </div>
+
+<div class="card card-margin">
+  <div class="card-header">
+    <h2>{% t pages.home.reviewHeader %}</h2>
+    <p>{% t pages.home.reviewSubHeader %}</p>
+  </div>
+  <div class="card-body">
+    <div class="youtube-video">
+      <div class="youtube-video-meta-container">
+      <div class="youtube-video-container bg2024">
+        <div class="no-user-consent">
+          <a href="#" data-cc="show-preferencesModal">
+            <picture>
+              <source srcset="/assets/img/youtube/youtube-play-button.webp" type="image/webp">
+              <source srcset="/assets/img/youtube/youtube-play-button.png" type="image/png">
+              <img class="youtube-play-button" src="{{ "/assets/img/youtube/youtube-play-button.png" | prepend: site.baseurl_root }}" alt="Youtube play button">
+            </picture>
+          <p>Um das Video sehen zu können müssen Sie allen Cookies zustimmen.</p>
+          </a>
+        </div>
+        <iframe id="youtube-spektakel-2024" width="560" height="315"
+          title="Spektakel Landshut 2024" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+    </div>
+    </div>
+    <div class="youtube-video">
+      <div class="youtube-video-meta-container">
+      <div class="youtube-video-container bg2023">
+        <div class="no-user-consent">
+          <a href="#" data-cc="show-preferencesModal">
+            <picture>
+              <source srcset="/assets/img/youtube/youtube-play-button.webp" type="image/webp">
+              <source srcset="/assets/img/youtube/youtube-play-button.png" type="image/png">
+              <img class="youtube-play-button" src="{{ "/assets/img/youtube/youtube-play-button.png" | prepend: site.baseurl_root }}" alt="Youtube play button">
+            </picture>
+          <p>Um das Video sehen zu können müssen Sie allen Cookies zustimmen.</p>
+          </a>
+        </div>
+        <iframe id="youtube-spektakel-2023" width="560" height="315"
+          title="Spektakel Landshut 2023" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
 
 <script>
   const ytVideos = [

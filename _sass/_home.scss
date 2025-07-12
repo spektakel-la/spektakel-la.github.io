@@ -2,12 +2,9 @@ h1.logo-image-h1 {
   margin: 0;
 }
 
-img.vorpremiere {
-  width: 100%;
-}
 
-.center-announcement {
-  margin: 25px 20px;
+.card-margin {
+  margin: 50px 20px;
 }
 
 .quick-access {
@@ -40,32 +37,12 @@ img.vorpremiere {
     }
 }
 
-/*
- * Partner-Festival
- * START
- */
-.spektakel-rosenheim {
-  p {
-    margin-top: 0;
-  }
-
-  img {
-    width: 100%;
-  }
+.youtube-video {
+  margin-bottom: 30px;
 }
 
-/*
- * Partner-Festival
- * START
- */
 
-/*
- * Youtube Spektakel 2023
- * START
- */
 .youtube-video-meta-container {
-  margin: 5px 10px 10px;
-
   @keyframes fadeIn {
     0% { opacity: 0; }
     100% { opacity: 1; }
@@ -140,7 +117,3 @@ img.vorpremiere {
     z-index: 3;
   }
 }
-/*
- * Youtube Spektakel 2023
- * END
- */

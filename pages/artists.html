@@ -108,14 +108,9 @@ permalink: /artists
                 {% endif %}
 
                 <div class="social-media-links">
-                    {% if artist.facebook %}
-                        <a href="{{ artist.facebook }}" target="_blank" rel="noopener noreferrer">
-                            <i class="fa fa-facebook" aria-hidden="true"></i>
-                        </a>
-                    {% endif %}
-                    {% if artist.instagram %}
-                        <a href="{{ artist.instagram }}" target="_blank" rel="noopener noreferrer">
-                            <i class="fa fa-instagram" aria-hidden="true"></i>
+                    {% if artist.homepage %}
+                        <a href="{{ artist.homepage }}" target="_blank" rel="noopener noreferrer">
+                            <i class="fa fa-home" aria-hidden="true"></i>
                         </a>
                     {% endif %}
                     {% if artist.youtube %}
@@ -128,9 +123,14 @@ permalink: /artists
                             <i class="fa fa-vimeo" aria-hidden="true"></i>
                         </a>
                     {% endif %}
-                    {% if artist.homepage %}
-                        <a href="{{ artist.homepage }}" target="_blank" rel="noopener noreferrer">
-                            <i class="fa fa-home" aria-hidden="true"></i>
+                    {% if artist.facebook %}
+                        <a href="{{ artist.facebook }}" target="_blank" rel="noopener noreferrer">
+                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                        </a>
+                    {% endif %}
+                    {% if artist.instagram %}
+                        <a href="{{ artist.instagram }}" target="_blank" rel="noopener noreferrer">
+                            <i class="fa fa-instagram" aria-hidden="true"></i>
                         </a>
                     {% endif %}
                 </div>

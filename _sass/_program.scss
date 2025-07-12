@@ -1,5 +1,15 @@
 @import "mixins";
 
+.planning {
+    text-align: center;
+    margin: 100px auto;
+    .icon {
+        display: block;
+        width: 200px;
+        margin: 20px auto;
+    }
+}
+
 .latest-schedule-update {
     color: lighten($text-color, 40%);
     font-size: smaller;
