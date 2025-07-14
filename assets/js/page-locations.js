@@ -2,7 +2,7 @@
 
     const createIconMarkup = (locationObj) => {
         let label = '';
-        if (locationObj.marker_color === 'yellow') {
+        if (locationObj.location_label === 'i') {
             label =  `<i class="fa fa-info" aria-hidden="true"></i>`;
         } else {
             label = locationObj?.location_label ? locationObj.location_label : locationObj.location_id

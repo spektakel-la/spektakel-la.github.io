@@ -81,6 +81,14 @@
     );
 }
 
+.spektakel-leaflet-location-icon-orange {
+    @include spektakel-leaflet-location-icon;
+    background-image: image-set(
+        url("/assets/img/map/marker-orange.webp") type("image/webp"),
+        url("/assets/img/map/marker-orange.png") type("image/png")
+    );
+}
+
 .spektakel-leaflet-location-icon-red {
     @include spektakel-leaflet-location-icon;
     background-image: image-set(
