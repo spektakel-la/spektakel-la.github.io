@@ -44,7 +44,7 @@ if ('serviceWorker' in navigator) {
   wb.register().then((registration) => {
     registration.addEventListener('updatefound', () => {
       console.log('SW Update found - installation starting...');
-      document.getElementById('sw-loading').style.display = 'block';
+      // document.getElementById('sw-loading').style.display = 'block';
 
       const newWorker = registration.installing;
       newWorker.addEventListener('statechange', () => {
