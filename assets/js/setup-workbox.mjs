@@ -6,12 +6,6 @@ import { Workbox } from '/assets/3rd-party/workbox-v7.3.0/workbox-window.prod.mj
 if ('serviceWorker' in navigator) {
   const wb = new Workbox('/sw.js');
 
-  // Show a loading indicator when update is installing
-  wb.addEventListener('installing', () => {
-    console.log('Service Worker update is installing...');
-    document.getElementById('sw-loading').style.display = 'block';
-  });
-
   const showSkipWaitingPrompt = async (event) => {
     // Assuming the user accepted the update, set up a listener
     // that will reload the page as soon as the previously waiting
@@ -46,7 +40,20 @@ if ('serviceWorker' in navigator) {
     showSkipWaitingPrompt(event);
   });
 
-  wb.register();
+ wb.register().then((registration) => {
+  registration.addEventListener('updatefound', () => {
+    console.log('SW Update found - installation starting...');
+    const newWorker = registration.installing;
+
+    newWorker.addEventListener('statechange', () => {
+      console.log('SW state:', newWorker.state);
+      if (newWorker.state === 'installing') {
+        console.log('Precaching läuft jetzt...');
+        document.getElementById('sw-loading').style.display = 'block';
+      }
+    });
+  });
+});
 
   const swVersion = await wb.messageSW({ type: 'GET_VERSION' });
   console.log('Service Worker version:', swVersion);
