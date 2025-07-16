@@ -30,6 +30,7 @@ if ('serviceWorker' in navigator) {
     const updateAccepted = true; // await promptForUpdate();
 
     if (updateAccepted) {
+      console.log('SW messageSkipWaiting');
       wb.messageSkipWaiting();
     }
   };
