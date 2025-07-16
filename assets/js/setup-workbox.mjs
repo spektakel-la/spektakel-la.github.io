@@ -1,10 +1,16 @@
 /*
  * Copied with pride from: https://developer.chrome.com/docs/workbox/handling-service-worker-updates/
  */
-import { Workbox } from '/assets/3rd-party/workbox-v7.1.0/workbox-window.prod.mjs';
+import { Workbox } from '/assets/3rd-party/workbox-v7.3.0/workbox-window.prod.mjs';
 
 if ('serviceWorker' in navigator) {
   const wb = new Workbox('/sw.js');
+
+  // Show a loading indicator when update is installing
+  wb.addEventListener('installing', () => {
+    console.log('Service Worker update is installing...');
+    document.getElementById('sw-loading-spinner').style.display = 'block';
+  });
 
   const showSkipWaitingPrompt = async (event) => {
     // Assuming the user accepted the update, set up a listener

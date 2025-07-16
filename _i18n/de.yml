@@ -8,6 +8,8 @@ menu:
   sponsors: Sponsoren
 
 pages:
+  default:
+    loading: Bitte haben sie einen Moment Geduld, die Seite wird geladen...
   home:
     landingHeader: 19. Spektakel Landshut
     landingSubHeader: 18. - 21. September 2025

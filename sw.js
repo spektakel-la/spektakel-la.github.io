@@ -1,9 +1,9 @@
-const SW_VERSION = '1.1.4';
+const SW_VERSION = '1.2.0';
 
-importScripts('/assets/3rd-party/workbox-v7.1.0/workbox-sw.js');
+importScripts('/assets/3rd-party/workbox-v7.3.0/workbox-sw.js');
 workbox.setConfig({
     debug: false,
-    modulePathPrefix: '/assets/3rd-party/workbox-v7.1.0/',
+    modulePathPrefix: '/assets/3rd-party/workbox-v7.3.0/',
 });
 
 self.addEventListener('message', (event) => {
