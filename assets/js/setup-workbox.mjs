@@ -40,20 +40,11 @@ if ('serviceWorker' in navigator) {
     showSkipWaitingPrompt(event);
   });
 
- wb.register().then((registration) => {
-  registration.addEventListener('updatefound', () => {
-    console.log('SW Update found - installation starting...');
-    const newWorker = registration.installing;
-
-    newWorker.addEventListener('statechange', () => {
-      console.log('SW state:', newWorker.state);
-      if (newWorker.state === 'installing') {
-        console.log('Precaching läuft jetzt...');
-        document.getElementById('sw-loading').style.display = 'block';
-      }
-    });
+  wb.addEventListener('installing', (event) => {
+    document.getElementById('sw-loading').style.display = 'block';
   });
-});
+
+  wb.register();
 
   const swVersion = await wb.messageSW({ type: 'GET_VERSION' });
   console.log('Service Worker version:', swVersion);
