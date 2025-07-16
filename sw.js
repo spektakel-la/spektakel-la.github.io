@@ -1,4 +1,4 @@
-const SW_VERSION = '1.3.0';
+const SW_VERSION = '1.3.1';
 
 importScripts('/assets/3rd-party/workbox-v7.3.0/workbox-sw.js');
 workbox.setConfig({
