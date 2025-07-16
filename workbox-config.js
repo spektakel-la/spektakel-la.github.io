@@ -15,7 +15,6 @@ module.exports = {
 
 		// some sections/categories won't be precached
 		'assets/img/map/**/*',
-		'assets/img/pages/**/*',
 		'assets/img/screenshots/**/*',
 		'assets/img/impressions/**/*',
 		'assets/img/sponsors/**/*'
