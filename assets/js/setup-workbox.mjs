@@ -9,7 +9,7 @@ if ('serviceWorker' in navigator) {
   // Show a loading indicator when update is installing
   wb.addEventListener('installing', () => {
     console.log('Service Worker update is installing...');
-    document.getElementById('sw-loading-spinner').style.display = 'block';
+    document.getElementById('sw-loading').style.display = 'block';
   });
 
   const showSkipWaitingPrompt = async (event) => {
