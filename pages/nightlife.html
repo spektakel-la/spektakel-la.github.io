@@ -4,6 +4,10 @@ title: nightlife
 permalink: /nightlife
 ---
 
+<img class="nightlife-image" src="{{ "/assets/img/pages/nightlife/nightlife.jpg" | prepend: site.baseurl_root }}" alt="Nightlife on saturday night">
+
+
+{% comment  %}
 {% assign daysOfWeek = 'Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday' | split: ',' %}
 {% assign daysOfWeekDe = 'Sonntag,Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag' | split: ',' %}
 
@@ -216,3 +220,4 @@ permalink: /nightlife
         });
     });
 </script>
+{% endcomment %}
