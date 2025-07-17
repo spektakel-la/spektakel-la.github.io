@@ -12,6 +12,13 @@
   background-color: $background-color;
   box-shadow: 0 5px 6px -6px #bbb;
   z-index: var(--headerZIndex);
+  top: 0;
+  transition: transform 0.3s ease-in-out;
+  transform: translateY(0);
+}
+
+.site-header.header-hidden {
+  transform: translateY(-100%);
 }
 
 .site-logo {
