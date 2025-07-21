@@ -17,7 +17,14 @@ module.exports = {
 		'assets/img/map/**/*',
 		'assets/img/screenshots/**/*',
 		'assets/img/impressions/**/*',
-		'assets/img/sponsors/**/*'
+		'assets/img/sponsors/**/*',
+
+		// Obsolete fonts
+		'assets/3rd-party/font-awesome/**/*.svg',
+
+		// Duplications due to i18n
+		'en/assets/js/**/*',
+		'en/assets/css/**/*',
 	],
 	swSrc: 'sw.js',
 	swDest: '_site/sw.js'
