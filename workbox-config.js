@@ -7,11 +7,17 @@ module.exports = {
 	globIgnores: [
 		'workbox-config.js',
 
-		// Javascript
-		'assets/3rd-party/workbox-v7.3.0/*.dev.*',
+		// we only cache webp and ignore the jpg/png-siblings
+		'assets/img/map/*.jpg',
+		'assets/img/artists/*.jpg',
+		'assets/img/youtube/*.jpg',
+		'assets/img/youtube/*.png',
 
-		// Images will now be handled lazy (see sw.js)
-		'assets/img/**/*',
+		// some sections/categories won't be precached
+		'assets/img/map/**/*',
+		'assets/img/screenshots/**/*',
+		'assets/img/impressions/**/*',
+		'assets/img/sponsors/**/*',
 
 		// Obsolete fonts
 		'assets/3rd-party/font-awesome/**/*.svg',
