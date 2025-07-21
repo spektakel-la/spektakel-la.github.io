@@ -1,4 +1,4 @@
-const SW_VERSION = '1.6.0';
+const SW_VERSION = '1.7.0';
 const CACHE_MAP_TILES = 'map-tiles-cache';
 const CACHE_IMAGES = 'images-cache';
 
@@ -73,7 +73,7 @@ self.addEventListener('message', (event) => {
  * Delete old caches on activation of a new serviceWorker
  */
 self.addEventListener('activate', (event) => {
-  const currentCaches = [CACHE_MAP_TILES, CACHE_IMAGES];
+  const currentCaches = [CACHE_IMAGES, CACHE_MAP_TILES];
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return cacheNames.filter((cacheName) => currentCaches.includes(cacheName));
