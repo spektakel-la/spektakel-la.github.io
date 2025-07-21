@@ -22,14 +22,18 @@
 .card {
     position: relative;
     background: $background-color;
-    border: 1px solid $border-color;
+    // border: 1px solid $border-color;
     overflow: hidden;
     // margin: 5px 10px 10px;
     border-radius: $border-radius;
   }
 
   .card-header {
-    background: $blue;
+    // https://svgbox.net/iconset/pen-brushes
+    background: url(/assets/img/brushes/brush10.svg);
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
     color: $text-color-inverted;
     padding: 1em;
     text-align: center;
