@@ -12,7 +12,14 @@ permalink: /program
 
 {% assign festivalEventDates = '' | split: ',' %}
 {% for event in site.data.schedule %}
-    {% assign eventDate = event.time | date: "%d.%m.%Y" %}
+    {% assign eventHour = event.time | date: "%H" | plus: 0 %}
+    {% if eventHour >= 0 and eventHour < 4 %}
+        {% comment %} Events zwischen 0:00 und 3:59 Uhr werden dem Vortag zugeordnet {% endcomment %}
+        {% assign eventDatePreviousDay = event.time | date: "%s" | minus: 86400 | date: "%d.%m.%Y" %}
+        {% assign eventDate = eventDatePreviousDay %}
+    {% else %}
+        {% assign eventDate = event.time | date: "%d.%m.%Y" %}
+    {% endif %}
     {% unless festivalEventDates contains eventDate %}
         {% assign festivalEventDates = festivalEventDates | push: eventDate %} <!-- Tag zur Liste hinzufügen, wenn nicht vorhanden -->
     {% endunless %}
@@ -50,7 +57,25 @@ permalink: /program
         {% endcase %}
 
 
-        <h2>{{ dayOfWeekToShow }} {{ festivalDate }}</h2>
+        <h2 class="day-of-week">{{ dayOfWeekToShow }} {{ festivalDate }}</h2>
+
+        {% comment %} Prüfen ob dieser Tag Events nach Mitternacht hat {% endcomment %}
+        {% assign hasNightEvents = false %}
+        {% assign groupedSchedule = site.data.schedule | group_by: 'time' | sort: 'name' %}
+        {% for group in groupedSchedule %}
+            {% assign checkDateTime = group.name %}
+            {% assign checkHour = checkDateTime | date: "%H" | plus: 0 %}
+            {% if checkHour >= 0 and checkHour < 4 %}
+                {% assign checkDatePreviousDay = checkDateTime | date: "%s" | minus: 86400 | date: "%d.%m.%Y" %}
+                {% assign checkDate = checkDatePreviousDay %}
+            {% else %}
+                {% assign checkDate = checkDateTime | date: "%d.%m.%Y" %}
+            {% endif %}
+            {% if checkDate == festivalDate and checkHour >= 0 and checkHour < 4 %}
+                {% assign hasNightEvents = true %}
+                {% break %}
+            {% endif %}
+        {% endfor %}
 
         <div class="program-table-wrapper">
             <table>
@@ -75,7 +100,14 @@ permalink: /program
                     {% assign groupedSchedule = site.data.schedule | group_by: 'time' | sort: 'name' %}
                     {% for group in groupedSchedule %}
                         {% assign scheduleEntryDateTime = group.name %}
-                        {% assign scheduleEntryDate = scheduleEntryDateTime | date: "%d.%m.%Y" %}
+                        {% assign scheduleEntryHour = scheduleEntryDateTime | date: "%H" | plus: 0 %}
+                        {% if scheduleEntryHour >= 0 and scheduleEntryHour < 4 %}
+                            {% comment %} Events zwischen 0:00 und 3:59 Uhr werden dem Vortag zugeordnet {% endcomment %}
+                            {% assign scheduleEntryDatePreviousDay = scheduleEntryDateTime | date: "%s" | minus: 86400 | date: "%d.%m.%Y" %}
+                            {% assign scheduleEntryDate = scheduleEntryDatePreviousDay %}
+                        {% else %}
+                            {% assign scheduleEntryDate = scheduleEntryDateTime | date: "%d.%m.%Y" %}
+                        {% endif %}
                         {% assign scheduleEntryTime = scheduleEntryDateTime | date: "%H:%M" %}
 
                         {% if scheduleEntryDate != festivalDate %}
@@ -142,11 +174,11 @@ permalink: /program
             </table>
         </div>
 
-        {% unless forloop.last %}
-            <div class="other-schedule-hint">
-                {% t pages.program.nightlifePrefix %} <a href="{{ site.baseurl }}/nightlife">{% t pages.program.nightlifeSuffix %}</a>.
-            </div>
-        {% endunless %}
+        {% if hasNightEvents %}
+          <div class="other-schedule-hint">
+            {% t pages.program.nightlifePrefix %} <a href="{{ site.baseurl }}/nightlife">{% t pages.program.nightlifeSuffix %}</a>.
+          </div>
+        {% endif %}
     {% endfor %}
 {% endif %}
 

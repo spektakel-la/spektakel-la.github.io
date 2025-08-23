@@ -21,6 +21,14 @@
     font-size: smaller;
 }
 
+.day-of-week {
+    margin-top: 50px;
+
+    &:first-of-type {
+        margin-top: 0;
+    }
+}
+
 .program-table-wrapper {
     font-size: 16px;
     line-height: 1.2;
@@ -147,7 +155,7 @@
 .other-schedule-hint {
 
     margin-top: 20px;
-    margin-bottom: 50px;
+    // margin-bottom: 20px;
 
     a {
         color: $link-extern-color;
