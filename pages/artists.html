@@ -16,7 +16,7 @@ permalink: /artists
             <div class="card-header">
                 <i class="favorite-toggle fa fa-star-o"
                     data-artist-id="{{ artist.artist_id }}"
-                    onclick="spektakel.favorites.toggleArtistFavorite('{{ artist.artist_id }}');"></i>
+                    onclick="spektakel.favorites.toggleArtistFavorite('{{ artist.artist_id }}', '{{ site.lang }}');"></i>
                 <h2 class="artist-name" itemprop="name">{{ artist.name }}</h2>
                 {% if artist.name_sub %}
                     <strong>{{ artist.name_sub }}</strong>
