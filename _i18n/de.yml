@@ -14,11 +14,8 @@ pages:
     landingHeader: 19. Spektakel Landshut
     landingSubHeader: 18. - 21. September 2025
     lineupAnnouncement: Ankündigung
-    lineupAnnouncementTextPrefix: >
-       Lassen Sie sich vom 19. Spektakel Landshut verzaubern! Freuen Sie sich auf ein außergewöhnliches Lineup mit Künstlern aus 21 verschiedenen Nationen, die mit ihrer Vielfalt und Kreativität begeistern. Von mitreißender Musik über atemberaubende Performances bis hin zu einzigartigen Kunstformen – das Spektakel bietet für jeden Geschmack etwas Besonderes. Entdecken Sie schon jetzt die beeindruckende Liste der eingeladenen Künstler auf unserer
-    lineupAnnouncementTextInfix: Künstler-Seite
-    lineupAnnouncementTextSuffix: >
-      und lassen Sie sich inspirieren. Tauchen Sie ein in die Welt des Spektakels und erleben Sie die Magie, die Sie erwartet. Schauen Sie sich auch die folgenden YouTube-Videos an, um einen Vorgeschmack auf die unvergesslichen Momente zu bekommen, die Sie beim Spektakel Landshut erwarten!
+    lineupAnnouncementText: |
+      Internationale Künstler verwandeln Landshut in eine große Bühne voller Kreativität. Freuen Sie sich auf ein vielseitiges Programm mit Musik, Akrobatik, Zauberei und kulinarischen Highlights an den Foodtrucks. Das Spektakel lädt zum Staunen, Genießen und Mitfeiern ein – als Vorgeschmack finden Sie unten einige YouTube-Videos unserer Künstler als Teaser.
     reviewHeader: Spektakel Rückblick
     reviewSubHeader: Erleben Sie die Highlights vergangener Spektakel Landshut
   program:
