@@ -3,6 +3,13 @@ layout: default
 title: home
 ---
 
+<picture id="hero">
+  <source srcset="{{ "/assets/img/plakat2025.webp" | prepend: site.baseurl_root }}" type="image/webp">
+  <source srcset="{{ "/assets/img/plakat2025.jpg" | prepend: site.baseurl_root }}" type="image/jpg">
+  <img class="logo-image" src="{{ "/assets/img/plakat2025.jpg" | prepend: site.baseurl_root }}" alt="Spektakel Landshut - Das internationale Straßenkunstfestival">
+</picture>
+
+{% comment %}
 <div class="featured-image">
   <h1 class="logo-image-h1">
     <picture>
@@ -12,7 +19,9 @@ title: home
     </picture>
   </h1>
 </div>
+{% endcomment %}
 
+{% comment %}
 <div class="card card-margin">
   <div class="card-header">
     <h2>{% t pages.home.landingHeader %}</h2>
@@ -47,7 +56,9 @@ title: home
    </div>
   </div>
 </div>
+{% endcomment %}
 
+{% comment %}
 <div class="card card-margin">
   <div class="card-header">
     <h2>{% t pages.home.lineupAnnouncement %}</h2>
@@ -202,6 +213,7 @@ title: home
     </div>
   </div>
 </div>
+{% endcomment %}
 
 
 <script>

@@ -8,10 +8,13 @@ $blue: #4871B5;
 $red: #F44336;
 
 
-$text-color: $black;
+// $text-color: $black;
+$text-color: #222;
 $text-color-soft: #9a9a9a;
 $text-color-inverted: white;
-$background-color: white;
+// $background-color: white;
+// $background-color: #BFD6F0;
+$background-color: #F4F4F4;
 $background-color-soft: lighten($blue, 47%);
 $link-color: $black;
 $link-extern-color: $purple;
