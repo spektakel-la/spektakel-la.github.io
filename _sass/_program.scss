@@ -54,7 +54,7 @@
         th,
         td {
             padding: 5px;
-            border: 1px solid $table-border-color;
+            border: 1px solid rgba($table-border-color, 0.5);
             text-align: left;
             width: auto; /* Automatische Breite */
             text-align: center;
