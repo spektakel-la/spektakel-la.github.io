@@ -9,17 +9,17 @@ homepage: https://www.graffiticlassics.com/
 de:
   country: England
   description: >
-    Das äußerst erfolgreich Streichquartett Graffiti Classics besteht aus vier Musikern, die sich auf dem Covent Garden London kennenlernten. 16 Saiten, 8 tanzende Füsse, ein Ziel. Klassische Musik für alle zugänglich machen. Graffiti Classics sprengen mit ihrer witzigen Musik-Comedy-Show singend und tanzend die elitären Grenzen des traditionellen Streichquartetts. Hinreissend komisch spielen sie von Beethoven bis Bluegrass, von Strauss bis Saturday Night Fever.
+    Das äußerst erfolgreiche Streichquartett Graffiti Classics besteht aus vier Musikern, die sich am Covent Garden in London kennenlernten. 16 Saiten, 8 tanzende Füße, ein Ziel: klassische Musik für alle zugänglich machen. Graffiti Classics sprengen mit ihrer witzigen Musik-Comedy-Show, singend und tanzend, die elitären Grenzen des traditionellen Streichquartetts. Hinreißend komisch spielen sie von Beethoven bis Bluegrass, von Strauss bis Saturday Night Fever.
   highlight: Spektakel-Premiere - Top Tipp - genial und unterhaltsam.
   categories:
-  - Musik
-  - Comedy
+    - Musik
+    - Comedy
 en:
   country: England
   description: >
-    The highly successful string quartet Graffiti Classics consists of four musicians who met at Covent Garden in London. 16 strings, 8 dancing feet, one goal: making classical music accessible to everyone. Graffiti Classics breaks the elitist boundaries of the traditional string quartet with their witty music-comedy show, singing and dancing. Hilariously entertaining, they perform everything from Beethoven to Bluegrass, from Strauss to Saturday Night Fever.
+    The highly successful string quartet Graffiti Classics consists of four musicians who met at Covent Garden in London. 16 strings, 8 dancing feet, one goal: making classical music accessible to everyone. Graffiti Classics break the elitist boundaries of the traditional string quartet with their witty music-comedy show, singing and dancing. Hilariously entertaining, they perform everything from Beethoven to Bluegrass, from Strauss to Saturday Night Fever.
   highlight: Spektakel premiere - Top tip - brilliant and entertaining.
   categories:
-  - Music
-  - Comedy
+    - Music
+    - Comedy
 ---

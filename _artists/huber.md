@@ -10,7 +10,7 @@ homepage: https://jongleur-florian-huber.com/
 de:
   country: Deutschland
   description: >
-    Für den jungen Jongleur Florian ist Jonglage eine Herzensangelegenheit, die Leidenschaft an der Jonglage weiter zu geben. Er bietet regelmäßig Kurse an der Volkshochschule Landshut an. Erleben sie die Welt der Jonglage am Samstag, 20.9. ab 15:00 Uhr im Salzstadel mit Florian. Florian H. präsentiert Freitag % Samstag abend eine eine Lightshow der Extraklasse.
+    Für den jungen Jongleur Florian ist Jonglage eine Herzensangelegenheit: die Leidenschaft an der Jonglage weiterzugeben. Er bietet regelmäßig Kurse an der Volkshochschule Landshut an. Erleben Sie die Welt der Jonglage am Samstag, 20.9., ab 15:00 Uhr im Salzstadel mit Florian. Florian H. präsentiert Freitag und Samstagabend eine Lightshow der Extraklasse.
   highlight: Lokal und top ... nicht versäumen!
   categories:
     - Jonglage

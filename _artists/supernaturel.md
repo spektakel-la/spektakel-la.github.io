@@ -9,7 +9,7 @@ homepage:
 de:
   country: Frankreich, Indien
   description: >
-    Jyoti ist Illusionist und Jongleur. Die Show ist kaum zu beschreiben und man sollte sie auf alle Fälle nicht verpassen. Magie, Zauber, Außerkraftsetzung der Schwerkraft und Kontrolle über Körper und Materie ergeben eine Darbietung, die man nicht so schnell vergessen wird. Jyoti Ram ist einmalig und wir freuen uns erneut auf seine atemberaubende Darbietungen. Magic!
+    Jyoti ist Illusionist und Jongleur. Die Show ist kaum zu beschreiben und man sollte sie auf alle Fälle nicht verpassen. Magie, Zauber, Außerkraftsetzung der Schwerkraft und Kontrolle über Körper und Materie ergeben eine Darbietung, die man nicht so schnell vergessen wird. Jyoti Ram ist einmalig und wir freuen uns erneut auf seine atemberaubenden Darbietungen. Magic!
   highlight: Spektakel-Highlight - skurril, außergewöhnlich - ein absolutes Muss!
   categories:
     - Akrobatik

@@ -9,17 +9,17 @@ homepage: https://grantgoldie.com/
 de:
   country: Irland
   description: >
-    Grant`s Show ist nicht nur eine Jongliershow, sondern vielmehr ein Angriff auf die Schwerkraft. Ein Mann und sein Fall in einer Welt des Zufalls und der Möglichkeiten schaffen ein wortloses Happening aus interaktiver Beteiligung, hypnotisierender Mani-  pulation, charmanter Virtuosität und hoher Kunstfertigkeit. Grant ist präzise, charmant und virtuos.
+    Grants Show ist nicht nur eine Jongliershow, sondern vielmehr ein Angriff auf die Schwerkraft. Ein Mann und sein Fall in einer Welt des Zufalls und der Möglichkeiten schaffen ein wortloses Happening aus interaktiver Beteiligung, hypnotisierender Manipulation, charmanter Virtuosität und hoher Kunstfertigkeit. Grant ist präzise, charmant und virtuos.
   highlight: Grant Goldie - eine „Gentleman Show“ für die ganze Familie - Top Tipp!
   categories:
-  - Jonglage
-  - Theater
+    - Jonglage
+    - Theater
 en:
   country: Ireland
   description: >
     Grant's show is not just a juggling act but rather a defiance of gravity. A man and his fall in a world of chance and possibilities create a wordless happening of interactive participation, mesmerizing manipulation, charming virtuosity, and high artistry. Grant is precise, charming, and virtuosic.
   highlight: Grant Goldie - a "Gentleman Show" for the whole family - Top Tip!
   categories:
-  - Juggling
-  - Theater
+    - Juggling
+    - Theater
 ---
