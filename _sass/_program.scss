@@ -88,6 +88,8 @@
             left: 0;
             z-index: 300;
             background: $table-sticky-background-color;
+            font-variant-numeric: tabular-nums;
+            line-height: 1.4;
         }
 
         /* Ensure the first th has higher z-index */
@@ -96,11 +98,11 @@
             left: 0;
         }
 
-        th:first-child,
-        td:first-child {
-            width: 1%;
-            white-space: nowrap;
-        }
+        // th:first-child,
+        // td:first-child {
+        //     width: 1%;
+        //     white-space: nowrap;
+        // }
 
         thead a {
             text-decoration: none;
