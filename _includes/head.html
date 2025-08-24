@@ -52,7 +52,9 @@
   <link rel="stylesheet" href="{{ "/assets/3rd-party/font-awesome/css/font-awesome.min.css" | prepend: site.baseurl_root }}"  crossorigin="anonymous"/>
 
   <!-- Use Jekyll SEO plugin -->
-  {% seo %}
+   {% assign translations = site.translations[site.lang] %}
+  <title>{{ translations.menu[page.title] }} | {{ site.title }}</title>
+  {% seo title=false %}
 
   <!-- Enforce a site-wide image for search-engines -->
   <meta property="og:image" content="{{ site.url }}{{ site.image_opaque }}">
