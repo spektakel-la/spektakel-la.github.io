@@ -39,6 +39,15 @@
                 "jobTitle": {{ artist.categories | jsonify }}
             }{% if forloop.last == false%}, {% endif %}
         {% endfor %}
+      ],
+      "offers": [
+        {
+          "@type": "Offer",
+          "description": "Kostenfreier Eintritt",
+          "price": "0",
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock"
+        }
       ]
     }
 </script>
