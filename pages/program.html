@@ -167,6 +167,9 @@ permalink: /program
                                                     <meta itemprop="price" content="0">
                                                     <meta itemprop="priceCurrency" content="EUR">
                                                     <meta itemprop="availability" content="https://schema.org/InStock">
+                                                    <meta itemprop="url" content="{{ site.url }}">
+                                                    <meta itemprop="validFrom" content="{{ scheduleEntryDateTime }}">
+                                                    <meta itemprop="validThrough" content="{{ scheduleEntryDateTime | date: '%s' | plus: 3600 | date: '%Y-%m-%dT%H:%M:%S%:z' }}">
                                                 </span>
                                             </span>
                                         </span>
