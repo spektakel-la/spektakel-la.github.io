@@ -3,28 +3,37 @@ layout: default
 title: home
 ---
 
-{% assign translations = site.translations[site.lang] %}
-<h1 style="display:none">{{ translations.menu[page.title] }} | {{ site.title }}</h1>
+<h1 class="visually-hidden">{{ site.title }} - {{ site.description_short }}</h1>
 
 <picture id="hero">
   <source srcset="{{ "/assets/img/plakat2025.webp" | prepend: site.baseurl_root }}" type="image/webp">
-  <source srcset="{{ "/assets/img/plakat2025.jpg" | prepend: site.baseurl_root }}" type="image/jpg">
-  <img class="logo-image" src="{{ "/assets/img/plakat2025.jpg" | prepend: site.baseurl_root }}" alt="Spektakel Landshut - Das internationale Straßenkunstfestival">
+  <source srcset="{{ "/assets/img/plakat2025.jpg" | prepend: site.baseurl_root }}" type="image/jpeg">
+  <img class="logo-image" src="{{ "/assets/img/plakat2025.jpg" | prepend: site.baseurl_root }}" 
+    alt="Spektakel Landshut - offizielles Plakat 2025"
+    fetchpriority="high" decoding="async">
 </picture>
 
 <div class="brushed-links">
-  <a class="brushed-item" href="./program">
-    <div class="label">{% t menu.program %}</div>
-  </a>
-  <a class="brushed-item" href="./artists">
-    <div class="label">{% t menu.artists %}</div>
-  </a>
-  <a class="brushed-item" href="./locations">
-    <div class="label">{% t menu.locations %}</div>
-  </a>
-  <a class="brushed-item" href="./nightlife">
-    <div class="label">{% t menu.nightlife %}</div>
-  </a>
+  <h2>
+    <a class="brushed-item" href="./program">
+      {% t menu.program %}
+    </a>
+  </h2>
+  <h2>
+    <a class="brushed-item" href="./artists">
+      {% t menu.artists %}
+    </a>
+  </h2>
+  <h2>
+    <a class="brushed-item" href="./locations">
+      {% t menu.locations %}
+    </a>
+  </h2>
+  <h2>
+    <a class="brushed-item" href="./nightlife">
+      {% t menu.nightlife %}
+    </a>
+  </h2>
 </div>
 
 {% comment %}
