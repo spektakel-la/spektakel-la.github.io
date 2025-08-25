@@ -11,6 +11,9 @@ html, body {
   width: $container-width;
   margin-left: auto;
   margin-right: auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 .container a {
   text-decoration: underline;
@@ -20,6 +23,7 @@ html, body {
   margin: auto;
   display: block;
   width: $container-width - 20px;
+  flex: 1;
 }
 .content-wrapper h1 {
   margin: 20px 0px 5px;
@@ -29,11 +33,15 @@ html, body {
     width: 95vw;
     margin-left: auto;
     margin-right: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
   .content-wrapper {
     padding-top: $header-thickness+10px;
     margin: auto;
     display: block;
     width: 95vw;
+    flex: 1;
   }
 }
