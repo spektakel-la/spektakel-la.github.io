@@ -1,7 +1,7 @@
 ---
 ---
 <!doctype html>
-<html>
+<html lang="{{ site.lang }}">
   {% include head.html %}
   <body>
     <!-- Google Tag Manager (noscript) -->
@@ -14,12 +14,14 @@
     <!-- Installation prompt for app -->
     <!-- <pwa-install></pwa-install> -->
 
+    {% comment %}
     <div id="sw-loading">
       <div class="sw-loading-content">
         <img src="/assets/img/pages/sw-loading.svg" alt="New content loading..." />
         <div>{% t pages.default.loading %}</div>
       </div>
     </div>
+    {% endcomment %}
 
     <div class="container">
       {% include header.html %}

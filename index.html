@@ -3,6 +3,9 @@ layout: default
 title: home
 ---
 
+{% assign translations = site.translations[site.lang] %}
+<h1 style="display:none">{{ translations.menu[page.title] }} | {{ site.title }}</h1>
+
 <picture id="hero">
   <source srcset="{{ "/assets/img/plakat2025.webp" | prepend: site.baseurl_root }}" type="image/webp">
   <source srcset="{{ "/assets/img/plakat2025.jpg" | prepend: site.baseurl_root }}" type="image/jpg">
