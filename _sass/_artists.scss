@@ -22,32 +22,59 @@
 
         .polaroid-frame {
           // Das komplette Polaroid wird rotiert
-          background: #fff;
-          padding: 12px 12px 60px 12px; // Mehr Platz unten für Text
+          padding: 12px; // Gleichmäßiges Padding
+          display: flex;
+          flex-direction: column;
 
-          // Mehrschichtige 3D-Schatten für plastischen Effekt
+          // Vintage vergilbter Polaroid-Look mit subtilen Flecken
+          background:
+            // Leichte Flecken/Verfärbungen für gebrauchten Look - mehr gelblich/bräunlich
+            radial-gradient(circle at 20% 30%, rgba(200, 175, 120, 0.12) 0%, transparent 25%),
+            radial-gradient(circle at 80% 70%, rgba(215, 190, 140, 0.1) 0%, transparent 30%),
+            radial-gradient(circle at 40% 85%, rgba(190, 170, 130, 0.08) 0%, transparent 20%),
+            radial-gradient(circle at 75% 15%, rgba(205, 185, 145, 0.09) 0%, transparent 25%),
+            // Basis vergilbte Farbe statt reines Weiß - weniger rosa, mehr gelblich
+            linear-gradient(145deg, #faf9f2 0%, #f6f3ea 50%, #f2ede2 100%);
+
+          // Mehrschichtige 3D-Schatten für plastischen Effekt mit warmeren Tönen
           box-shadow:
-            // Innerer Schatten für Tiefe im Rahmen
-            inset 0 1px 3px rgba(0, 0, 0, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.05),
-            // Äußere Schatten für floating effect
-            0 2px 4px rgba(0, 0, 0, 0.15),
-            0 4px 8px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.15), 0 16px 32px rgba(0, 0, 0, 0.1);
+            // Innerer Schatten für Tiefe im Rahmen - mehr gelblich-braun, weniger rosa
+            inset 0 1px 3px rgba(120, 105, 80, 0.15), inset 0 -1px 2px rgba(140, 125, 95, 0.08),
+            // Äußere Schatten für floating effect - gelblich-braun statt rosa-braun
+            0 2px 4px rgba(85, 70, 40, 0.12),
+            0 4px 8px rgba(85, 70, 40, 0.18), 0 8px 16px rgba(85, 70, 40, 0.12), 0 16px 32px rgba(85, 70, 40, 0.08);
 
           transform-origin: center;
           transition: transform 0.3s ease, box-shadow 0.3s ease;
           position: relative;
           max-width: 300px;
 
-          // Leichte Gradiente für mehr Realismus
-          background: linear-gradient(145deg, #ffffff 0%, #fafafa 100%);
-          border: 1px solid rgba(0, 0, 0, 0.05);
+          // Subtile Vintage-Ränder mit leichten Verfärbungen - mehr gelblich
+          border: 1px solid rgba(140, 125, 95, 0.2);
+
+          // Zusätzliche subtile Textur durch einen sehr leichten Rauscheffekt
+          &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+              // Sehr subtiles Rauschen für Papier-Textur - gelblicher
+              radial-gradient(circle at 25% 25%, rgba(120, 105, 80, 0.03) 1px, transparent 1px),
+              radial-gradient(circle at 75% 75%, rgba(140, 125, 95, 0.02) 1px, transparent 1px);
+            background-size: 8px 8px, 12px 12px;
+            pointer-events: none;
+            border-radius: inherit;
+          }
 
           &:hover {
             transform: rotate(0deg) scale(1.05);
-            // Verstärkte Schatten beim Hover
-            box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.12), inset 0 -1px 3px rgba(0, 0, 0, 0.08),
-              0 4px 8px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.25), 0 16px 32px rgba(0, 0, 0, 0.2),
-              0 32px 64px rgba(0, 0, 0, 0.15);
+            // Verstärkte Schatten beim Hover mit gelblich-braunen Tönen
+            box-shadow: inset 0 1px 4px rgba(120, 105, 80, 0.18), inset 0 -1px 3px rgba(140, 125, 95, 0.12),
+              0 4px 8px rgba(85, 70, 40, 0.15), 0 8px 16px rgba(85, 70, 40, 0.22), 0 16px 32px rgba(85, 70, 40, 0.18),
+              0 32px 64px rgba(85, 70, 40, 0.12);
             z-index: 10;
           }
 
@@ -55,8 +82,8 @@
             display: block;
             width: 100%;
 
-            // Schatten um das Bild für mehr Tiefe
-            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2);
+            // Schatten um das Bild für mehr Tiefe - gelblich-braun statt rosa
+            box-shadow: inset 0 0 0 1px rgba(120, 105, 80, 0.15), 0 1px 3px rgba(85, 70, 40, 0.25);
 
             img {
               width: 250px;
@@ -64,8 +91,8 @@
               object-fit: cover;
               display: block;
 
-              // Innerer Schatten am Bild für eingedrückten Effekt
-              box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
+              // Innerer Schatten am Bild für eingedrückten Effekt - gelblich-braun
+              box-shadow: inset 0 0 8px rgba(85, 70, 40, 0.15);
             }
 
             img.custom-position-top {
@@ -82,11 +109,10 @@
           }
 
           .polaroid-caption {
-            position: absolute;
-            bottom: 8px;
-            left: 12px;
-            right: 12px;
+            // Flexibles Layout statt absolute Positionierung
+            margin-top: 8px; // Abstand zum Bild
             text-align: center;
+            flex-shrink: 0; // Verhindert, dass der Text gequetscht wird
 
             // Leichter Schatten unter dem Text für mehr Tiefe
             // filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
@@ -135,8 +161,8 @@
 
     .favorite-toggle {
       position: absolute;
-      bottom: 5px;
-      right: 5px;
+      bottom: 12px; // Angepasst an das neue flexible Layout
+      right: 12px;
       font-size: 30px;
       color: $yellow;
       cursor: pointer;
@@ -292,42 +318,42 @@
     // Minimale aber trotzdem unterschiedliche Rotationen für mobile Geräte
     &:nth-child(6n + 1) .polaroid-frame {
       transform: rotate(-0.7deg);
-      padding: 8px 8px 50px 8px; // Kleinere Rahmen für mobile
+      padding: 8px; // Gleichmäßiges Padding für mobile
     }
 
     &:nth-child(6n + 2) .polaroid-frame {
       transform: rotate(0.5deg);
-      padding: 8px 8px 50px 8px;
+      padding: 8px;
     }
 
     &:nth-child(6n + 3) .polaroid-frame {
       transform: rotate(-0.3deg);
-      padding: 8px 8px 50px 8px;
+      padding: 8px;
     }
 
     &:nth-child(6n + 4) .polaroid-frame {
       transform: rotate(0.8deg);
-      padding: 8px 8px 50px 8px;
+      padding: 8px;
     }
 
     &:nth-child(6n + 5) .polaroid-frame {
       transform: rotate(-0.6deg);
-      padding: 8px 8px 50px 8px;
+      padding: 8px;
     }
 
     &:nth-child(6n) .polaroid-frame {
       transform: rotate(0.2deg);
-      padding: 8px 8px 50px 8px;
+      padding: 8px;
     }
 
     &:nth-child(7n + 1) .polaroid-frame {
       transform: rotate(-0.4deg);
-      padding: 8px 8px 50px 8px;
+      padding: 8px;
     }
 
     &:nth-child(8n + 1) .polaroid-frame {
       transform: rotate(0.6deg);
-      padding: 8px 8px 50px 8px;
+      padding: 8px;
     }
 
     .polaroid-frame:hover {
@@ -335,9 +361,7 @@
     }
 
     .polaroid-caption {
-      bottom: 6px; // Weniger Platz auf mobile
-      left: 8px;
-      right: 8px;
+      margin-top: 6px; // Weniger Abstand auf mobile
 
       .artist-name {
         font-size: 0.9rem;
