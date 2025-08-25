@@ -2,7 +2,8 @@
   Site container
 */
 
-html, body {
+html,
+body {
   background-color: $site-background-color;
 }
 
@@ -14,20 +15,25 @@ html, body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 0 50px 50px rgba($light-green, 1);
 }
+
 .container a {
   text-decoration: underline;
 }
+
 .content-wrapper {
-  padding-top: $header-thickness+10px;
+  padding-top: $header-thickness + 10px;
   margin: auto;
   display: block;
   width: $container-width - 20px;
   flex: 1;
 }
+
 .content-wrapper h1 {
   margin: 20px 0px 5px;
 }
+
 @media (max-width: $container-width) {
   .container {
     width: 95vw;
@@ -38,7 +44,7 @@ html, body {
     flex-direction: column;
   }
   .content-wrapper {
-    padding-top: $header-thickness+10px;
+    padding-top: $header-thickness + 10px;
     margin: auto;
     display: block;
     width: 95vw;
