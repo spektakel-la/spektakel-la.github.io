@@ -9,7 +9,7 @@
     .card-header {
       // Entferne den ursprünglichen Brush-Hintergrund
       background: none;
-      padding: 20px;
+      padding: 0;
       text-align: center;
       position: relative;
 
@@ -28,13 +28,10 @@
           // Mehrschichtige 3D-Schatten für plastischen Effekt
           box-shadow:
             // Innerer Schatten für Tiefe im Rahmen
-            inset 0 1px 3px rgba(0, 0, 0, 0.1),
-            inset 0 -1px 2px rgba(0, 0, 0, 0.05),
+            inset 0 1px 3px rgba(0, 0, 0, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.05),
             // Äußere Schatten für floating effect
             0 2px 4px rgba(0, 0, 0, 0.15),
-            0 4px 8px rgba(0, 0, 0, 0.2),
-            0 8px 16px rgba(0, 0, 0, 0.15),
-            0 16px 32px rgba(0, 0, 0, 0.1);
+            0 4px 8px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.15), 0 16px 32px rgba(0, 0, 0, 0.1);
 
           transform-origin: center;
           transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -48,12 +45,8 @@
           &:hover {
             transform: rotate(0deg) scale(1.05);
             // Verstärkte Schatten beim Hover
-            box-shadow:
-              inset 0 1px 4px rgba(0, 0, 0, 0.12),
-              inset 0 -1px 3px rgba(0, 0, 0, 0.08),
-              0 4px 8px rgba(0, 0, 0, 0.2),
-              0 8px 16px rgba(0, 0, 0, 0.25),
-              0 16px 32px rgba(0, 0, 0, 0.2),
+            box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.12), inset 0 -1px 3px rgba(0, 0, 0, 0.08),
+              0 4px 8px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.25), 0 16px 32px rgba(0, 0, 0, 0.2),
               0 32px 64px rgba(0, 0, 0, 0.15);
             z-index: 10;
           }
@@ -63,12 +56,10 @@
             width: 100%;
 
             // Schatten um das Bild für mehr Tiefe
-            box-shadow:
-              inset 0 0 0 1px rgba(0, 0, 0, 0.1),
-              0 1px 3px rgba(0, 0, 0, 0.2);
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2);
 
             img {
-              width: 100%;
+              width: 250px;
               height: 250px;
               object-fit: cover;
               display: block;
@@ -98,7 +89,7 @@
             text-align: center;
 
             // Leichter Schatten unter dem Text für mehr Tiefe
-            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+            // filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
 
             .artist-name {
               font-family: $brushed-font-family;
@@ -140,11 +131,12 @@
           }
         }
       }
+    }
 
     .favorite-toggle {
       position: absolute;
-      top: 15px;
-      right: 15px;
+      bottom: 5px;
+      right: 5px;
       font-size: 30px;
       color: $yellow;
       cursor: pointer;
@@ -365,3 +357,7 @@
     }
   }
 }
+
+// .additional-info {
+//   display: none;
+// }
