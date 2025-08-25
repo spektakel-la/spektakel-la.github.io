@@ -1,11 +1,9 @@
-/* roboto-regular - latin */
 @font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-display: swap;
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
-    src: url('/assets/fonts/roboto/roboto-regular.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-         url('/assets/fonts/roboto/roboto-regular.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    src: url('/assets/fonts/roboto/roboto-regular.woff2') format('woff2');
 }
 
 @font-face {
@@ -13,9 +11,17 @@
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 700; /* Für fett */
-    src: url('/assets/fonts/roboto/roboto-bold.woff2') format('woff2'), /* Pfad zur WOFF2-Datei für fett */
-         url('/assets/fonts/roboto/roboto-bold.ttf') format('truetype'); /* Pfad zur TTF-Datei für fett */
+    src: url('/assets/fonts/roboto/roboto-bold.woff2') format('woff2'); /* Pfad zur TTF-Datei für fett */
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Edo';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/assets/fonts/edo/edo.ttf') format('truetype');
 }
 
 $base-font-family: 'Roboto', sans-serif;
 $body-font-family: 'Roboto', sans-serif;
+$brushed-font-family: 'Edo', sans-serif;

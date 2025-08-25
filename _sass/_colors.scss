@@ -5,15 +5,20 @@ $pink: hsl(340, 82%, 52%);
 $black: #000000;
 $purple: #9C27B0;
 $green: #4CAF50;
+$light-green: #B1CA05;
+$light-light-green: lighten($light-green, 1%);
 $blue: #4871B5;
 $red: #F44336;
+$light-grey: #F4F4F4;
 
 
 // $text-color: $black;
 $text-color: #222;
 $text-color-soft: #9a9a9a;
 $text-color-inverted: white;
-$background-color: white;
+// $background-color: white;
+$background-color: $light-green;
+$site-background-color: $light-light-green;
 // $background-color: #BFD6F0;
 // $background-color: #F4F4F4;
 $background-color-soft: lighten($blue, 47%);

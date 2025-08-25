@@ -2,6 +2,8 @@
   Reset some basic elements
 */
 
+@import 'font';
+
 body, h1, h2, h3, h4, h5, h6,
 p, blockquote, pre, hr,
 dl, dd, ol, ul, figure {
@@ -19,6 +21,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
   line-height: 1.25;
   text-rendering: optimizeLegibility;
+  font-family: $brushed-font-family;
 }
 
 h1 {
