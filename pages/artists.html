@@ -16,25 +16,32 @@ permalink: /artists
     <div class="card-header">
       <i class="favorite-toggle fa fa-star-o" data-artist-id="{{ artist.artist_id }}"
         onclick="spektakel.favorites.toggleArtistFavorite('{{ artist.artist_id }}', '{{ site.lang }}');"></i>
-      <h2 class="artist-name" itemprop="name">{{ artist.name }}</h2>
-      {% if artist.name_sub %}
-      <strong>{{ artist.name_sub }}</strong>
-      {% endif %}
-      <p>{{ artistTranslations.country }}</p>
-      <p class="artist-category">
-        {% for category in artistTranslations.categories %}
-        <span itemprop="jobTitle">{{ category }}</span>{% if forloop.last == false %}, {% endif %}
-        {% endfor %}
-      </p>
+
+      <div class="polaroid-container">
+        <div class="polaroid-frame">
+          <picture class="polaroid-picture">
+            <source srcset="{{ artist.image }}" type="image/webp">
+            <source srcset="{{ artist.image | replace:'.webp','.jpg' }}" type="image/jpeg">
+            <img src="{{ artist.image | replace:'.webp','.jpg' }}" alt="{{ artist.name }}" itemprop="image"
+              class="custom-position-{% if artist.image_position %}{{ artist.image_position }}{% else %}center{% endif %}">
+          </picture>
+
+          <div class="polaroid-caption">
+            <h2 class="artist-name" itemprop="name">{{ artist.name }}</h2>
+            {% if artist.name_sub %}
+            <strong class="artist-subtitle">{{ artist.name_sub }}</strong>
+            {% endif %}
+            <p class="artist-country">{{ artistTranslations.country }}</p>
+            <p class="artist-category">
+              {% for category in artistTranslations.categories %}
+              <span itemprop="jobTitle">{{ category }}</span>{% if forloop.last == false %}, {% endif %}
+              {% endfor %}
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="card-body">
-      <picture>
-        <source srcset="{{ artist.image }}" type="image/webp">
-        <source srcset="{{ artist.image | replace:'.webp','.jpg' }}" type="image/jpeg">
-        <img src="{{ artist.image | replace:'.webp','.jpg' }}" alt="{{ artist.name }}" itemprop="image"
-          class="custom-position-{% if artist.image_position %}{{ artist.image_position }}{% else %}center{% endif %}">
-      </picture>
-
       <div class="additional-info">
 
         <div class="description">
