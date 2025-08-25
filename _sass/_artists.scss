@@ -1,94 +1,283 @@
 .artists-list {
-    .artist {
-        width: calc(33.333% - 40px);
-        padding-bottom: 2rem;
+  .artist {
+    width: calc(33.333% - 40px);
+    padding-bottom: 2rem;
 
-        .card-header p {
-            margin: 0;
-        }
+    // Überschreibe overflow für Polaroid-Effekt
+    overflow: visible !important;
 
-        .artist-name {
-            margin: 0 25px 0 0;
-            text-shadow: 2px 2px $black;
-        }
-
-        .favorite-toggle {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 30px;
-            color: $yellow;
-            cursor: pointer;
-            @include enlarge-click-area(false, -5px, -5px, -5px, -5px);
-        }
-
-        img {
-            width: 100%;
-            height: 250px; // Erhöhte Höhe
-            object-fit: cover; // Bild skalieren und zuschneiden
-            margin-bottom: 10px; // Abstand zwischen Bild und Text
-        }
-
-        img.custom-position-top {
-            object-position: top;
-        }
-
-        img.custom-position-center {
-            object-position: center;
-        }
-
-        img.custom-position-bottom {
-            object-position: bottom;
-        }
-
-        .highlight {
-            font-weight: bold;
-        }
-
-        .schedule {
-            margin-top: 30px;
-            margin-bottom: 10px;
-
-            li {
-                margin: 0;
-                padding: 0;
-                border-bottom: 0;
-            }
-
-            .schedule-event-notes {
-                color: lighten($text-color, 40%);
-                font-size: smaller;
-            }
-        }
-
-        .social-media-links {
-            position: absolute;
-            right: 0;
-            bottom: 1rem; // Abstand vom unteren Rand der Card
-            left: 0;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-        }
-
-        .social-media-links a {
-            color: $link-color;
-            font-size: 1.5em;
-        }
+    .card-header p {
+      margin: 0;
     }
+
+    .artist-name {
+      margin: 0 25px 0 0;
+      text-shadow: 2px 2px $black;
+    }
+
+    .favorite-toggle {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 30px;
+      color: $yellow;
+      cursor: pointer;
+      @include enlarge-click-area(false, -5px, -5px, -5px, -5px);
+    }
+
+    picture {
+      display: block;
+      margin: 0 auto;
+      perspective: 1000px;
+      // Extra Padding für rotierte Bilder
+      padding: 0 15px;
+    }
+
+    img {
+      width: 100%;
+      height: 250px; // Erhöhte Höhe
+      object-fit: cover; // Bild skalieren und zuschneiden
+      margin-bottom: 30px; // Mehr Abstand für Polaroid-Effekt
+
+      // Polaroid-Effekt
+      background: #fff;
+      border: 12px solid #fff;
+      border-bottom: 40px solid #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 8px 16px rgba(0, 0, 0, 0.15);
+      transform-origin: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      // Randomisierte Rotationen basierend auf der Artist-Card Position
+      transform-origin: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    // Verschiedene Rotationen für jede Artist-Card
+    &:nth-child(6n + 1) img {
+      transform: rotate(-4.2deg);
+    }
+
+    &:nth-child(6n + 2) img {
+      transform: rotate(2.8deg);
+    }
+
+    &:nth-child(6n + 3) img {
+      transform: rotate(-1.3deg);
+    }
+
+    &:nth-child(6n + 4) img {
+      transform: rotate(3.7deg);
+    }
+
+    &:nth-child(6n + 5) img {
+      transform: rotate(-2.9deg);
+    }
+
+    &:nth-child(6n) img {
+      transform: rotate(1.1deg);
+    }
+
+    // Zusätzliche Variationen für noch mehr Randomisierung
+    &:nth-child(7n + 1) img {
+      transform: rotate(-3.5deg);
+    }
+
+    &:nth-child(7n + 2) img {
+      transform: rotate(4.1deg);
+    }
+
+    &:nth-child(7n + 3) img {
+      transform: rotate(-0.7deg);
+    }
+
+    &:nth-child(8n + 1) img {
+      transform: rotate(2.3deg);
+    }
+
+    &:nth-child(8n + 3) img {
+      transform: rotate(-3.1deg);
+    }
+
+    &:nth-child(9n + 2) img {
+      transform: rotate(1.8deg);
+    }
+
+    &:nth-child(11n + 1) img {
+      transform: rotate(-2.4deg);
+    }
+
+    &:nth-child(13n + 2) img {
+      transform: rotate(3.2deg);
+    }
+
+    img {
+      // Hover-Effekt
+      &:hover {
+        transform: rotate(0deg) scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4), 0 16px 32px rgba(0, 0, 0, 0.2);
+        z-index: 10;
+        position: relative;
+      }
+    }
+
+    img.custom-position-top {
+      object-position: top;
+    }
+
+    img.custom-position-center {
+      object-position: center;
+    }
+
+    img.custom-position-bottom {
+      object-position: bottom;
+    }
+
+    .highlight {
+      font-weight: bold;
+    }
+
+    .schedule {
+      margin-top: 30px;
+      margin-bottom: 10px;
+
+      li {
+        margin: 0;
+        padding: 0;
+        border-bottom: 0;
+      }
+
+      .schedule-event-notes {
+        color: lighten($text-color, 40%);
+        font-size: smaller;
+      }
+    }
+
+    .social-media-links {
+      position: absolute;
+      right: 0;
+      bottom: 1rem; // Abstand vom unteren Rand der Card
+      left: 0;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .social-media-links a {
+      color: $link-color;
+      font-size: 1.5em;
+    }
+  }
 }
 
 @media (max-width: $container-width) {
-    .artists-list .artist {
-        width: calc(50% - 40px);
+  .artists-list .artist {
+    width: calc(50% - 40px);
+
+    // Reduzierte aber trotzdem randomisierte Rotationen für bessere mobile Erfahrung
+    &:nth-child(6n + 1) img {
+      transform: rotate(-2.1deg);
     }
+
+    &:nth-child(6n + 2) img {
+      transform: rotate(1.4deg);
+    }
+
+    &:nth-child(6n + 3) img {
+      transform: rotate(-0.8deg);
+    }
+
+    &:nth-child(6n + 4) img {
+      transform: rotate(1.9deg);
+    }
+
+    &:nth-child(6n + 5) img {
+      transform: rotate(-1.5deg);
+    }
+
+    &:nth-child(6n) img {
+      transform: rotate(0.6deg);
+    }
+
+    &:nth-child(7n + 1) img {
+      transform: rotate(-1.7deg);
+    }
+
+    &:nth-child(8n + 1) img {
+      transform: rotate(1.2deg);
+    }
+
+    &:nth-child(9n + 2) img {
+      transform: rotate(-0.9deg);
+    }
+  }
 }
 
 // @media (max-width: $phone-width) {
 @media (max-width: $tablet-width) {
-    .artists-list .artist {
-        width: calc(100% - 40px);
+  .artists-list .artist {
+    width: calc(100% - 40px);
+
+    // Minimale aber trotzdem unterschiedliche Rotationen für mobile Geräte
+    &:nth-child(6n + 1) img {
+      transform: rotate(-0.7deg);
+      border: 8px solid #fff;
+      border-bottom: 30px solid #fff;
+      margin-bottom: 20px;
     }
+
+    &:nth-child(6n + 2) img {
+      transform: rotate(0.5deg);
+      border: 8px solid #fff;
+      border-bottom: 30px solid #fff;
+      margin-bottom: 20px;
+    }
+
+    &:nth-child(6n + 3) img {
+      transform: rotate(-0.3deg);
+      border: 8px solid #fff;
+      border-bottom: 30px solid #fff;
+      margin-bottom: 20px;
+    }
+
+    &:nth-child(6n + 4) img {
+      transform: rotate(0.8deg);
+      border: 8px solid #fff;
+      border-bottom: 30px solid #fff;
+      margin-bottom: 20px;
+    }
+
+    &:nth-child(6n + 5) img {
+      transform: rotate(-0.6deg);
+      border: 8px solid #fff;
+      border-bottom: 30px solid #fff;
+      margin-bottom: 20px;
+    }
+
+    &:nth-child(6n) img {
+      transform: rotate(0.2deg);
+      border: 8px solid #fff;
+      border-bottom: 30px solid #fff;
+      margin-bottom: 20px;
+    }
+
+    &:nth-child(7n + 1) img {
+      transform: rotate(-0.4deg);
+      border: 8px solid #fff;
+      border-bottom: 30px solid #fff;
+      margin-bottom: 20px;
+    }
+
+    &:nth-child(8n + 1) img {
+      transform: rotate(0.6deg);
+      border: 8px solid #fff;
+      border-bottom: 30px solid #fff;
+      margin-bottom: 20px;
+    }
+
+    img:hover {
+      transform: rotate(0deg) scale(1.02);
+    }
+  }
 }
