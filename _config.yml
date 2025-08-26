@@ -36,11 +36,13 @@ exclude_from_localizations:
 title:		          "Spektakel Landshut"
 url:                "https://spektakel.la"
 description:	      "Website des internationalen Straßenkunstfestivals Spektakel Landshut. Hier finden Sie alle Informationen zu Künstlern, Programm, Lageplan, etc."
-description_short:	"Internationales Straßenkunstfestivals"
+description_short:	"Internationales Straßenkunstfestival"
+description_event:  "Das internationale Straßenkunstfestival in Landshut bietet ein vielfältiges Programm mit Künstlern aus aller Welt. Lassen Sie sich von atemberaubenden Darbietungen, faszinierenden Performances und mitreißender Straßenkunst verzaubern."
 organizer:
   name:             "Spektakel Production"
 logo:               "/assets/img/spektakel-logo.png"
 image:              "/assets/img/spektakel-logo.png"
+poster2025:         "/assets/img/plakat2025.jpg"
 image_opaque:       "/assets/img/spektakel-logo.jpg"
 social:
   name:             "Spektakel Landshut"

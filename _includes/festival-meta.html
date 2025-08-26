@@ -2,7 +2,7 @@
     {
       "@context": "https://schema.org",
       "@type": "Event",
-      "name": "{{ site.title }} - {{ site.description_short }}",
+      "name": "{{ site.title }}",
       "startDate": "{{ site.festival_start }}",
       "endDate": "{{ site.festival_end }}",
       "organizer": {
@@ -27,8 +27,8 @@
           "longitude": "12.151756891702782"
         }
       },
-      "image": "{{ site.image }}",
-      "description": "{{ site.description | escape }}",
+      "image": "{{ site.url }}{{ site.poster2025 }}",
+      "description": "{{ site.description_event | escape }}",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "performer": [
