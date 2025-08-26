@@ -125,7 +125,7 @@ permalink: /program
                                         {% assign location = site.locations | where: 'location_id', entryAtLocation.location_id | first %}
                                         {% assign artistTranslations = artist[site.lang] %}
 
-                                        <span itemscope itemtype="https://schema.org/Event">  
+                                        <span itemscope itemtype="https://schema.org/Event">
                                             <span itemprop="name">
                                                 {% if artist.short_name %}
                                                     {{ artist.short_name }}
