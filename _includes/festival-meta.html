@@ -36,7 +36,7 @@
             {
                 "@type": "Person",
                 "name": "{{ artist.name }}",
-                "jobTitle": {{ artist.categories | jsonify }}
+                "jobTitle": {{ artist.de.categories | jsonify }}
             }{% if forloop.last == false%}, {% endif %}
         {% endfor %}
       ],
