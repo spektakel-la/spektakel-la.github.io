@@ -34,6 +34,31 @@
   line-height: 1.2;
   overflow-x: auto; /* Horizontales Scrollen ermöglichen */
 
+  // Runde Ecken am Wrapper
+  border-radius: 8px;
+
+  // Scrollbar Styling
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent; /* Firefox: thumb track */
+
+  /* Webkit Scrollbars (Chrome, Safari, Edge) */
+  &::-webkit-scrollbar {
+    height: 8px; /* Höhe der horizontalen Scrollbar */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent; /* Transparenter Hintergrund */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3); /* Semi-transparenter Scrollbalken */
+    border-radius: 4px;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.5); /* Dunkler beim Hover */
+    }
+  }
+
   a {
     color: $link-extern-color;
     text-decoration: none;
@@ -47,14 +72,15 @@
     margin-bottom: 0;
     table-layout: auto;
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: collapse; // Zurück zu collapse für bessere Optik
     border-spacing: 0;
-    border: 1px solid $table-border-color;
+    border: none; // Kein Border am table, da der wrapper den border hat
+    background-color: $table-border-color;
 
     th,
     td {
       padding: 5px;
-      border: 1px solid rgba($table-border-color, 1);
+      border: 1px solid rgba($table-border-color, 0.5);
       text-align: left;
       width: auto; /* Automatische Breite */
       text-align: center;
