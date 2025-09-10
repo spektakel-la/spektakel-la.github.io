@@ -4,7 +4,7 @@ timezone:           Europe/Berlin
 markdown:           kramdown
 highlighter:        rouge
 permalink:          /:title
-plugins:            [jekyll-sitemap, jekyll-seo-tag, jekyll-email-protect, jekyll-multiple-languages-plugin, jekyll-minifier]
+plugins:            [jekyll-sitemap, jekyll-seo-tag, jekyll-email-protect, jekyll-multiple-languages-plugin]
 
 # Configure the collections
 collections:
@@ -31,6 +31,9 @@ languages: ["de", "en"]
 exclude_from_localizations:
   - assets
   - manifest.json
+
+compress_html:
+  blanklines: true
 
 
 # Metadata for the site

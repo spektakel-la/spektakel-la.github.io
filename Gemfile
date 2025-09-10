@@ -10,7 +10,6 @@ group :jekyll_plugins do
   gem "jekyll-email-protect"
   gem "kramdown-parser-gfm"
   gem "jekyll-multiple-languages-plugin"
-  gem "jekyll-minifier"
 end
 
 # Gems für lokale Entwicklung
