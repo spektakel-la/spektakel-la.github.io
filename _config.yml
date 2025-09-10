@@ -4,7 +4,7 @@ timezone:           Europe/Berlin
 markdown:           kramdown
 highlighter:        rouge
 permalink:          /:title
-plugins:            [jekyll-sitemap, jekyll-seo-tag, jekyll-email-protect, jekyll-multiple-languages-plugin]
+plugins:            [jekyll-sitemap, jekyll-seo-tag, jekyll-email-protect, jekyll-multiple-languages-plugin, jekyll-minifier]
 
 # Configure the collections
 collections:
@@ -24,6 +24,7 @@ exclude:
   - .gitignore
   - .ruby-version
   - vendor # required for CI environment
+  - tools
 
 # Translation settings
 languages: ["de", "en"]
