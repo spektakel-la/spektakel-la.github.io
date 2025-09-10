@@ -32,8 +32,8 @@ exclude_from_localizations:
   - assets
   - manifest.json
 
-compress_html:
-  blanklines: true
+# compress_html:
+#   blanklines: true
 
 
 # Metadata for the site
