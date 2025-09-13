@@ -19,7 +19,8 @@ pages:
     reviewHeader: Spektakel Rückblick
     reviewSubHeader: Erleben Sie die Highlights vergangener Spektakel Landshut
   artists:
-    moreDetails: Klicken um mehr zu erfahren
+    moreDetails: Mehr erfahren
+    hideDetails: Details ausblenden
   program:
     planningInProgressPrefix: Die Planung läuft noch, das Programm wird jedoch in Kürze veröffentlicht. Werfen Sie doch schon mal einen Blick auf die eingeladenen
     planningInProgressInfix: Künstler

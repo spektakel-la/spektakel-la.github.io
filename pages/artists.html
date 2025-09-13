@@ -62,7 +62,7 @@ permalink: /artists
               id="toggle-description-{{ artist.artist_id }}"
               class="description-toggle" />
             <label for="toggle-description-{{ artist.artist_id }}" class="description-label">
-              {% t pages.artists.moreDetails %}
+              <span class="label-text" data-show="{% t pages.artists.moreDetails %}" data-hide="{% t pages.artists.hideDetails %}"></span>
               <i class="fa fa-caret-down" aria-hidden="true"></i>
             </label>
             <div class="description">

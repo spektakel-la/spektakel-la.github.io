@@ -435,7 +435,11 @@ $polaroid-image-dimension: 250px;
       cursor: pointer;
       font-family: $brushed-font-family;
       color: $link-extern-color;
-      margin-bottom: 0.5rem;
+      margin: 0.5rem 0;
+
+      .label-text::before {
+        content: attr(data-show); // Standardmäßig "Mehr erfahren" anzeigen
+      }
 
       i {
         margin-left: 8px;
@@ -463,9 +467,15 @@ $polaroid-image-dimension: 250px;
       padding-top: 12px !important;
     }
 
-    // Caret-Icon drehen wenn geöffnet (nur auf kleinen Displays)
-    .description-toggle:checked ~ .description-label i {
-      transform: rotate(180deg);
+    // Caret-Icon drehen und Text ändern wenn geöffnet (nur auf kleinen Displays)
+    .description-toggle:checked ~ .description-label {
+      i {
+        transform: rotate(180deg);
+      }
+
+      .label-text::before {
+        content: attr(data-hide); // Text zu "Details ausblenden" ändern
+      }
     }
   }
 }

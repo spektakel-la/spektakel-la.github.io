@@ -19,7 +19,8 @@ pages:
     reviewHeader: Spektakel Review
     reviewSubHeader: Experience the highlights of past Spektakel Landshut events
   artists:
-    moreDetails: Click to learn more
+    moreDetails: Learn more
+    hideDetails: Hide details
   program:
     planningInProgressPrefix: Planning is still underway, the program will be published shortly. Take a look at the invited
     planningInProgressInfix: artists
