@@ -390,6 +390,56 @@ $polaroid-image-dimension: 250px;
   }
 }
 
+// CSS für den Checkbox-Trick zum Ein-/Ausklappen der Beschreibung
+.artists-list .artist .card-body .additional-info .description-container {
+  margin-bottom: 1rem;
+
+  .description-toggle {
+    display: none !important; // Checkbox komplett verstecken
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    left: -9999px;
+  }
+
+  .description-label {
+    display: block;
+    cursor: pointer;
+    font-family: $brushed-font-family;
+    color: $link-extern-color;
+
+    i {
+      margin-left: 8px;
+      transition: transform 0.3s ease;
+    }
+  }
+
+  .description {
+    max-height: 0 !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease;
+    padding: 0 !important;
+    margin: 0;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  // Wenn Checkbox aktiviert ist
+  .description-toggle:checked ~ .description {
+    max-height: 1000px !important; // Ausreichend groß für alle Beschreibungen
+    opacity: 1 !important;
+    padding-top: 12px !important;
+  }
+
+  // Caret-Icon drehen wenn geöffnet
+  .description-toggle:checked ~ .description-label i {
+    transform: rotate(180deg);
+  }
+}
+
 // .additional-info {
 //   display: none;
 // }

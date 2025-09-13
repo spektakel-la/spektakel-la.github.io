@@ -18,6 +18,8 @@ pages:
       Internationale Künstler verwandeln Landshut in eine große Bühne voller Kreativität. Freuen Sie sich auf ein vielseitiges Programm mit Musik, Akrobatik, Zauberei und kulinarischen Highlights an den Foodtrucks. Das Spektakel lädt zum Staunen, Genießen und Mitfeiern ein – als Vorgeschmack finden Sie unten einige YouTube-Videos unserer Künstler als Teaser.
     reviewHeader: Spektakel Rückblick
     reviewSubHeader: Erleben Sie die Highlights vergangener Spektakel Landshut
+  artists:
+    moreDetails: Klicken um mehr zu erfahren
   program:
     planningInProgressPrefix: Die Planung läuft noch, das Programm wird jedoch in Kürze veröffentlicht. Werfen Sie doch schon mal einen Blick auf die eingeladenen
     planningInProgressInfix: Künstler

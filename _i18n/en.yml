@@ -18,6 +18,8 @@ pages:
       International artists transform Landshut into a grand stage full of creativity. Look forward to a diverse program featuring music, acrobatics, magic, and culinary highlights at the food trucks. Spektakel invites you to marvel, enjoy, and celebrate – as a preview, you'll find some YouTube videos of our artists as teasers below.
     reviewHeader: Spektakel Review
     reviewSubHeader: Experience the highlights of past Spektakel Landshut events
+  artists:
+    moreDetails: More details
   program:
     planningInProgressPrefix: Planning is still underway, the program will be published shortly. Take a look at the invited
     planningInProgressInfix: artists
