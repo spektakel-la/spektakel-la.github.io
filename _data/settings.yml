@@ -5,10 +5,10 @@ google-tagmanager-id: 'GTM-TK5422TV'
 
 menu:
 - {tkey: 'home',        url: ''}
-- {tkey: 'program',     url: 'program'}
 - {tkey: 'artists',     url: 'artists'}
-- {tkey: 'nightlife',   url: 'nightlife'}
+- {tkey: 'program',     url: 'program'}
 - {tkey: 'locations',   url: 'locations'}
+- {tkey: 'nightlife',   url: 'nightlife'}
 - {tkey: 'impressions', url: 'impressions'}
 - {tkey: 'sponsors',    url: 'sponsors'}
 

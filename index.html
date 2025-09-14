@@ -6,22 +6,21 @@ title: home
 <h1 class="visually-hidden">{{ site.title }} - {{ site.description_short }}</h1>
 
 <picture id="hero">
-  <source srcset="{{ "/assets/img/plakat2025.webp" | prepend: site.baseurl_root }}" type="image/webp">
-  <source srcset="{{ "/assets/img/plakat2025.jpg" | prepend: site.baseurl_root }}" type="image/jpeg">
-  <img class="logo-image" src="{{ "/assets/img/plakat2025.jpg" | prepend: site.baseurl_root }}"
-    alt="Spektakel Landshut - offizielles Plakat 2025"
-    fetchpriority="high" decoding="async">
+  <source srcset="{{ " /assets/img/plakat2025.webp" | prepend: site.baseurl_root }}" type="image/webp">
+  <source srcset="{{ " /assets/img/plakat2025.jpg" | prepend: site.baseurl_root }}" type="image/jpeg">
+  <img class="logo-image" src="{{ " /assets/img/plakat2025.jpg" | prepend: site.baseurl_root }}"
+    alt="Spektakel Landshut - offizielles Plakat 2025" fetchpriority="high" decoding="async">
 </picture>
 
 <div class="brushed-links">
   <h2>
-    <a class="brushed-item" href="./program">
-      {% t menu.program %}
+    <a class="brushed-item" href="./artists">
+      {% t menu.artists %}
     </a>
   </h2>
   <h2>
-    <a class="brushed-item" href="./artists">
-      {% t menu.artists %}
+    <a class="brushed-item" href="./program">
+      {% t menu.program %}
     </a>
   </h2>
   <h2>
