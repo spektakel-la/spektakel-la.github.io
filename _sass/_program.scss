@@ -21,6 +21,19 @@
   font-size: smaller;
 }
 
+.tap-for-more {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 10px;
+  img {
+    display: inline-block;
+    width: 30px;
+    height: auto;
+    margin: 0;
+  }
+}
+
 .day-of-week {
   margin-top: 50px;
 
@@ -210,4 +223,8 @@
 .nightlife-image {
   max-width: 100%;
   height: auto;
+}
+
+.changes-possible {
+  margin-top: 100px;
 }

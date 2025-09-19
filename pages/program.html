@@ -15,7 +15,7 @@ permalink: /program
   {% assign eventHour = event.time | date: "%H" | plus: 0 %}
   {% if eventHour >= 0 and eventHour < 4 %}
     {% comment %} Events zwischen 0:00 und 3:59 Uhr werden dem Vortag zugeordnet
-                      {% endcomment %}
+                                                                  {% endcomment %}
     {% assign eventDatePreviousDay = event.time | date: "%s" | minus: 86400 | date: "%d.%m.%Y" %} {% assign eventDate = eventDatePreviousDay %}
   {% else %}
     {% assign eventDate = event.time | date: "%d.%m.%Y" %}
@@ -36,7 +36,9 @@ permalink: /program
     </p>
   </div>
 {% else %}
-  <p>{% t pages.program.changesPossible %}</p>
+  <p class="tap-for-more">
+    <img src="{{ " /assets/img/pages/click.svg" | prepend: site.baseurl_root }}" alt="Click icon"> {% t pages.program.tapForMore %}
+  </p>
 
   {% for festivalDate in festivalEventDates %}
     {% assign dayOfWeekEn = festivalDate | date: "%A" %}
@@ -101,7 +103,7 @@ permalink: /program
             {% assign scheduleEntryHour = scheduleEntryDateTime | date: "%H" | plus: 0 %}
             {% if scheduleEntryHour >= 0 and scheduleEntryHour < 4 %}
               {% comment %} Events zwischen 0:00 und 3:59 Uhr
-                                                                                  werden dem Vortag zugeordnet {% endcomment %}
+                                                                                                                                                                                                                                            werden dem Vortag zugeordnet {% endcomment %}
               {% assign scheduleEntryDatePreviousDay = scheduleEntryDateTime | date: "%s" | minus: 86400 | date: "%d.%m.%Y" %} {% assign scheduleEntryDate = scheduleEntryDatePreviousDay %}
             {% else %}
               {% assign scheduleEntryDate = scheduleEntryDateTime | date: "%d.%m.%Y" %}
@@ -216,6 +218,10 @@ permalink: /program
       </div>
     {% endif %}
   {% endfor %}
+
+  <div class="changes-possible">
+    <p>{% t pages.program.changesPossible %}</p>
+  </div>
 {% endif %}
 
 <script>
