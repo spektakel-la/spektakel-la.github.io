@@ -122,9 +122,10 @@
       .map((sched, idx) => {
         const now = new Date();
         const scheduleDate = dateFns.parseISO(sched.time);
-        if (now > scheduleDate) {
-          // ignore old dates
-          return "";
+        
+        // ignore entries older than 1 hour
+        if (dateFns.isBefore(scheduleDate, dateFns.subHours(now, 1))) {
+          return '';
         }
 
         const currentDateString = scheduleDate.toLocaleDateString();
