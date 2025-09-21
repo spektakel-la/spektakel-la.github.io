@@ -37,8 +37,9 @@
 // Einmalige Puls-Animation für Icon
 // Puls-Animation läuft einmal automatisch beim Laden
 .tap-for-more img {
-  animation: tapPulse 1.2s ease-in-out 3;
+  animation: tapPulse 1.25s cubic-bezier(0.65, 0.01, 0.35, 1) 3;
   transform-origin: 50% 65%;
+  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -52,15 +53,21 @@
   100% {
     transform: scale(1);
   }
-  /* Etwas stärkere Kontraste für bessere Sichtbarkeit bei Sonnenlicht */
-  35% {
-    transform: scale(0.85) translateY(1px);
+  /* Deutlicheres Zusammendrücken */
+  28% {
+    transform: scale(0.8) translateY(1px);
   }
-  55% {
-    transform: scale(1.12);
+  /* Stärkeres Herausfedern */
+  52% {
+    transform: scale(1.18);
   }
-  75% {
-    transform: scale(0.95);
+  /* Kurzer Rebound unter Normalgröße */
+  70% {
+    transform: scale(0.9);
+  }
+  /* Sanfte Stabilisierung leicht über Normalgröße bevor Ende */
+  85% {
+    transform: scale(1.05);
   }
 }
 
