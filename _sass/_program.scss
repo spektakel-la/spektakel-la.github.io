@@ -34,6 +34,36 @@
   }
 }
 
+// Einmalige Puls-Animation für Icon
+// Puls-Animation läuft einmal automatisch beim Laden
+.tap-for-more img {
+  animation: tapPulse 1.2s ease-in-out 3;
+  transform-origin: 50% 65%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tap-for-more img {
+    animation: none;
+  }
+}
+
+@keyframes tapPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  /* Etwas stärkere Kontraste für bessere Sichtbarkeit bei Sonnenlicht */
+  35% {
+    transform: scale(0.85) translateY(1px);
+  }
+  55% {
+    transform: scale(1.12);
+  }
+  75% {
+    transform: scale(0.95);
+  }
+}
+
 .day-of-week {
   margin-top: 50px;
 
@@ -165,6 +195,15 @@
     td[data-artist-id] {
       cursor: pointer;
       position: relative;
+      transition: background-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    // Subtile Hover-/Active-Indikation für klickbare Zellen (ohne Favoriten & Zeit-Highlight zu übersteuern)
+    td[data-artist-id]:not(.highlight-time-info):not(.favorite):hover {
+      background-color: rgba(0, 0, 0, 0.06);
+    }
+    td[data-artist-id]:not(.highlight-time-info):not(.favorite):active {
+      background-color: rgba(0, 0, 0, 0.12);
     }
 
     td.favorite {

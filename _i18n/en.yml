@@ -22,7 +22,7 @@ pages:
     moreDetails: Learn more
     hideDetails: Hide details
   program:
-    tapForMore: Select for details
+    tapForMore: Tap artists for details
     planningInProgressPrefix: Planning is still underway, the program will be published shortly. Take a look at the invited
     planningInProgressInfix: artists
     planningInProgressSuffix: for Spektakel Landshut 2025.

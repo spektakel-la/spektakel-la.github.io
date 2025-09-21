@@ -37,7 +37,8 @@ permalink: /program
   </div>
 {% else %}
   <p class="tap-for-more">
-    <img src="{{ " /assets/img/pages/click.svg" | prepend: site.baseurl_root }}" alt="Click icon"> {% t pages.program.tapForMore %}
+    <img src="{{ " /assets/img/pages/click.svg" | prepend: site.baseurl_root }}" alt="Tap icon">
+    <span class="tap-text">{% t pages.program.tapForMore %}</span>
   </p>
 
   {% for festivalDate in festivalEventDates %}
