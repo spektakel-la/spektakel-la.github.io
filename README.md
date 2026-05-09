@@ -1,69 +1,43 @@
-# Spektakel LA
+# Astro Starter Kit: Minimal
 
-This is the Jekyll-based website for the buskers festival "Spektakel Landshut" in the south of Germany.
+```sh
+npm create astro@latest -- --template minimal
+```
 
-This website is build on top of the fantastic [Millenial](https://github.com/lenpaul/Millennial) Jekyll theme. So please head over there for build-instructions, etc.
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
-## Setting Up Local Development Environment
+## 🚀 Project Structure
 
-To develop the website locally, you need a Ruby environment with the correct version compatible with GitHub Pages. Follow these steps:
+Inside of your Astro project, you'll see the following folders and files:
 
-### Installing Ruby Environment with rbenv
+```text
+/
+├── public/
+├── src/
+│   └── pages/
+│       └── index.astro
+└── package.json
+```
 
-1. **Install rbenv and ruby-build**:
+Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
 
-   ```bash
-   # Installation with Homebrew (macOS)
-   brew install rbenv ruby-build
+There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
 
-   # Add rbenv to your shell startup
-   echo 'eval "$(rbenv init - zsh)"' >> ~/.zshrc
-   source ~/.zshrc
-   ```
+Any static assets, like images, can be placed in the `public/` directory.
 
-2. **Install Ruby** (The project uses a specific Ruby version defined in `.ruby-version`):
+## 🧞 Commands
 
-   ```bash
-   # Navigate to the project directory
-   cd /path/to/spektakel-la.github.io
+All commands are run from the root of the project, from a terminal:
 
-   # Check which Ruby version is required (defined in .ruby-version)
-   cat .ruby-version
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:4321`      |
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-   # Install the required Ruby version (rbenv reads the .ruby-version file)
-   rbenv install
+## 👀 Want to learn more?
 
-   # Verify the correct Ruby version is being used
-   ruby -v
-   ```
-
-### Installing Jekyll and Dependencies
-
-3. **Install Bundler**:
-
-   ```bash
-   gem install bundler
-   ```
-
-4. **Install Dependencies**:
-
-   ```bash
-   bundle install
-   ```
-
-### Starting the Local Server
-
-5. **Start Jekyll Server**:
-
-   ```bash
-   bundle exec jekyll serve
-   ```
-
-   The website will be available at http://127.0.0.1:4000.
-
-### Notes on SCSS Files
-
-When using modern CSS syntax in SCSS files (like `rgb(0 0 0 / 80%)`), you should use the older syntax `rgba(0, 0, 0, 0.8)` instead, as the GitHub Pages version of Jekyll doesn't yet support all newer CSS features.
-
-## Credits
-Kudos to the original authors and contributors of Millenial.
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
