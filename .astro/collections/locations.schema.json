@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "location_id": {
+      "type": "string"
+    },
+    "sort_order": {
+      "type": "number"
+    },
+    "description": {
+      "type": "string"
+    },
+    "gps": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ]
+    },
+    "marker_color": {
+      "type": "string"
+    },
+    "nightlife": {
+      "type": "boolean"
+    },
+    "organizational": {
+      "type": "boolean"
+    },
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "location_id",
+    "sort_order",
+    "description",
+    "gps",
+    "marker_color"
+  ]
+}

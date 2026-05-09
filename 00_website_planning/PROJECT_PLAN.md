@@ -358,7 +358,7 @@ spektakel-la.github.io/
 ```typescript
 // src/content/config.ts
 const artists = defineCollection({
-  type: "content",
+  type: 'content',
   schema: z.object({
     artist_id: z.string(),
     name: z.string(),
@@ -400,7 +400,7 @@ const artists = defineCollection({
 
 ```typescript
 const locations = defineCollection({
-  type: "content",
+  type: 'content',
   schema: z.object({
     location_id: z.string(),
     sort_order: z.number(),
@@ -417,7 +417,7 @@ const locations = defineCollection({
 
 ```typescript
 const sponsors = defineCollection({
-  type: "content",
+  type: 'content',
   schema: z.object({
     name: z.string(),
     logo: z.string(),
@@ -433,19 +433,13 @@ const sponsors = defineCollection({
 
 ```typescript
 const gallery = defineCollection({
-  type: "content",
+  type: 'content',
   schema: z.object({
     file: z.string(), // Pfad relativ zu public/assets/img/impressions/
-    category: z.enum([
-      "akrobatik",
-      "musik",
-      "comedy",
-      "street_art",
-      "nightlife",
-    ]),
+    category: z.enum(['akrobatik', 'musik', 'comedy', 'street_art', 'nightlife']),
     year: z.number(),
     caption: z.string().optional(),
-    type: z.enum(["image", "youtube"]).default("image"),
+    type: z.enum(['image', 'youtube']).default('image'),
     youtubeId: z.string().optional(), // nur wenn type === "youtube"
   }),
 });
@@ -767,8 +761,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
-          cache: "npm"
+          node-version: '22'
+          cache: 'npm'
       - run: npm ci
       - run: npm run test:unit # Vitest Unit + Integration
       - run: npx playwright install --with-deps
@@ -783,9 +777,9 @@ jobs:
 
 ```javascript
 export default defineConfig({
-  site: "https://spektakel-la.github.io",
-  base: "/",
-  output: "static",
+  site: 'https://spektakel-la.github.io',
+  base: '/',
+  output: 'static',
   // ...
 });
 ```
@@ -794,31 +788,31 @@ export default defineConfig({
 
 ## 14. Implementierungs-Reihenfolge (Phasen)
 
-### Phase 0 – Projekt-Setup (1–2 h)
+### Phase 0 – Projekt-Setup (1–2 h) ✅
 
-- [ ] `npm install` (Astro, Tailwind, vite-plugin-pwa, Leaflet, Sitemap)
-- [ ] `npm install -D vitest @vitest/coverage-v8 @playwright/test` (Test-Dependencies)
-- [ ] `astro.config.mjs` vollständig konfigurieren (i18n, sitemap, pwa, output)
-- [ ] `vitest.config.ts` anlegen (include: `tests/unit/**`, `tests/integration/**`)
-- [ ] `playwright.config.ts` anlegen (baseURL, Projektprofile: Desktop Chrome, Mobile Chrome)
-- [ ] `package.json` – npm-Scripts: `test`, `test:unit`, `test:e2e`, `test:coverage`
-- [ ] `tailwind.config.mjs` mit Design-Tokens
-- [ ] `tsconfig.json` – strict mode
-- [ ] `src/styles/tokens.css` – CSS Custom Properties
-- [ ] ⚠️ **Asset-Request**: PWA-Icons aus altem Projekt prüfen (Größe, Maskability) – ggf. Neuerstellung anfordern (siehe Abschnitt 17)
+- [x] `npm install` (Astro, Tailwind, vite-plugin-pwa, Leaflet, Sitemap)
+- [x] `npm install -D vitest @vitest/coverage-v8 @playwright/test` (Test-Dependencies)
+- [x] `astro.config.mjs` vollständig konfigurieren (i18n, sitemap, pwa, output)
+- [x] `vitest.config.ts` anlegen (include: `tests/unit/**`, `tests/integration/**`)
+- [x] `playwright.config.ts` anlegen (baseURL, Projektprofile: Desktop Chrome, Mobile Chrome)
+- [x] `package.json` – npm-Scripts: `test`, `test:unit`, `test:e2e`, `test:coverage`
+- [x] `tailwind.config.mjs` mit Design-Tokens
+- [x] `tsconfig.json` – strict mode
+- [x] `src/styles/tokens.css` – CSS Custom Properties
+- [x] ⚠️ **Asset-Request**: PWA-Icons aus altem Projekt prüfen (Größe, Maskability) – ggf. Neuerstellung anfordern (siehe Abschnitt 17)
 
-### Phase 1 – Content-Foundation (2–3 h)
+### Phase 1 – Content-Foundation (2–3 h) ✅
 
-- [ ] `src/content/config.ts` – alle Collections + Schemas
-- [ ] Assets-Migration: `public/assets/img/artists/`, `impressions/`
-- [ ] Markdown-Migration: `_artists/` → `src/content/artists/`
-- [ ] Markdown-Migration: `_locations/` → `src/content/locations/`
-- [ ] Markdown-Migration: `_sponsors/` → `src/content/sponsors/`
-- [ ] `data/schedule.csv` + `nightlife.csv` kopieren
-- [ ] `src/utils/schedule.ts` – CSV-Parser
-- [ ] **Unit-Tests**: `tests/unit/schedule.test.ts` (CSV-Parser, Tagesgruppierung, Nacht-Logik 0–3 Uhr)
-- [ ] **Unit-Tests**: `tests/unit/i18n.test.ts` (Sprach-Fallback, alle Schlüssel vorhanden)
-- [ ] **Integrationstests**: `tests/integration/collections.test.ts` (Zod-Schema gegen echte Markdown-Dateien)
+- [x] `src/content/config.ts` – alle Collections + Schemas
+- [x] Assets-Migration: `public/assets/img/artists/`, `impressions/`
+- [x] Markdown-Migration: `_artists/` → `src/content/artists/`
+- [x] Markdown-Migration: `_locations/` → `src/content/locations/`
+- [x] Markdown-Migration: `_sponsors/` → `src/content/sponsors/`
+- [x] `data/schedule.csv` + `nightlife.csv` kopieren
+- [x] `src/utils/schedule.ts` – CSV-Parser
+- [x] **Unit-Tests**: `tests/unit/schedule.test.ts` (CSV-Parser, Tagesgruppierung, Nacht-Logik 0–3 Uhr)
+- [x] **Unit-Tests**: `tests/unit/i18n.test.ts` (Sprach-Fallback, alle Schlüssel vorhanden)
+- [x] **Integrationstests**: `tests/integration/collections.test.ts` (Zod-Schema gegen echte Markdown-Dateien)
 
 ### Phase 2 – Layout & i18n (2–3 h)
 
@@ -971,31 +965,31 @@ Nicht alle benötigten Grafiken sind im alten Projekt vorhanden. Bevor eine Phas
 
 ### 17.2 Bekannte fehlende / neue Assets (Stand Planung)
 
-| #   | Asset                                                                                | Zweck                                              | Vorhandenes Pendant?                                                  | Wann benötigt           |
-| --- | ------------------------------------------------------------------------------------ | -------------------------------------------------- | --------------------------------------------------------------------- | ----------------------- |
-| 1   | **Paint-Splatter-SVGs** (4–6 Varianten, Farben: Magenta, Lime, Cyan, Orange)         | Dekorative Elemente hinter Headlines, Hero-Sektion | Nein                                                                  | Phase 3                 |
-| 2   | **Kategorie-Icons** (Akrobatik, Musik, Comedy, Magie, Street Art, Nightlife) als SVG | Landingpage Icon-Leiste, Filter-Chips              | Teilweise als PNG in `assets/img/icons/`                              | Phase 3                 |
-| 3   | **Logo** „Spektakel!“ im neuen Stil (SVG + WebP)                                     | Header, PWA-Manifest, OG-Bild                      | `assets/img/spektakel-logo.webp` vorhanden – ggf. anpassen            | Phase 2                 |
-| 4   | **Hero-Bild / Festival-Hauptmotiv** (mind. 1920×1080 px, WebP)                       | Landingpage-Hero, OG-Image                         | `assets/img/plakat2025.webp` vorhanden – 2026 benötigt                | Phase 4                 |
-| 5   | **„Hut“-Illustration oder Icon** für die Hut-Panel-Sektion                           | Hut-Box auf Landingpage                            | Nein                                                                  | Phase 4                 |
-| 6   | **PWA-Icons** (192×192 px, 512×512 px, maskable)                                     | Web App Manifest                                   | `assets/img/icons/icon_192.png`, `icon_512.png` – prüfen ob aktuell   | Phase 0                 |
-| 7   | **OG-Social-Image** (1200×630 px, WebP)                                              | OpenGraph / Twitter Card                           | Nein                                                                  | Phase 2                 |
-| 8   | **PWA-Screenshots** (Desktop 2880×1800, Mobile 750×1334)                             | `manifest.webmanifest`                             | Alte Screenshots vorhanden – müssen nach Redesign neu erstellt werden | Phase 13                |
-| 9   | **Karten-Marker-Icons** (SVG, farbkodiert je Spielort)                               | Leaflet-Map, Legende                               | `assets/img/map/` vorhanden – Format prüfen                           | Phase 7                 |
-| 10  | **Sponsor-Logos** (WebP, einheitliche Höhe ~80 px)                                   | Sponsoren-Seite                                    | `assets/img/sponsors/` vorhanden – Vollständigkeit prüfen             | Phase 9                 |
-| 11  | **Artist-Fotos 2026** (WebP, mind. 800×800 px, quadratisch oder 4:3)                 | Künstler-Grid, Detailseiten                        | Nur 2025-Assets vorhanden                                             | Nach Termin-Bekanntgabe |
-| 12  | **Impressions-Fotos 2026**                                                           | Galerie                                            | Nur bis 2025 vorhanden                                                | Nach Festival 2026      |
+| #   | Asset                                                                                | Zweck                                              | Vorhandenes Pendant?                                                                               | Wann benötigt           |
+| --- | ------------------------------------------------------------------------------------ | -------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ----------------------- |
+| 1   | **Paint-Splatter-SVGs** (4–6 Varianten, Farben: Magenta, Lime, Cyan, Orange)         | Dekorative Elemente hinter Headlines, Hero-Sektion | Nein                                                                                               | Phase 3                 |
+| 2   | **Kategorie-Icons** (Akrobatik, Musik, Comedy, Magie, Street Art, Nightlife) als SVG | Landingpage Icon-Leiste, Filter-Chips              | Teilweise als PNG in `assets/img/icons/`                                                           | Phase 3                 |
+| 3   | **Logo** „Spektakel!“ im neuen Stil (SVG + WebP)                                     | Header, PWA-Manifest, OG-Bild                      | `assets/img/spektakel-logo.webp` vorhanden – ggf. anpassen                                         | Phase 2                 |
+| 4   | **Hero-Bild / Festival-Hauptmotiv** (mind. 1920×1080 px, WebP)                       | Landingpage-Hero, OG-Image                         | `assets/img/plakat2025.webp` vorhanden – 2026 benötigt                                             | Phase 4                 |
+| 5   | **„Hut“-Illustration oder Icon** für die Hut-Panel-Sektion                           | Hut-Box auf Landingpage                            | Nein                                                                                               | Phase 4                 |
+| 6   | **PWA-Icons** (192×192 px, 512×512 px, maskable)                                     | Web App Manifest                                   | `assets/img/icons/icon_192.png`, `icon_512.png` – prüfen ob aktuell                                | Phase 0                 |
+| 7   | **OG-Social-Image** (1200×630 px, WebP)                                              | OpenGraph / Twitter Card                           | Platzhalter: `jonglage.png` (1536×1024, falsches Seitenverhältnis) → Screenshot der fertigen Seite | Phase 13                |
+| 8   | **PWA-Screenshots** (Desktop 2880×1800, Mobile 750×1334)                             | `manifest.webmanifest`                             | Alte Screenshots vorhanden – müssen nach Redesign neu erstellt werden                              | Phase 13                |
+| 9   | **Karten-Marker-Icons** (SVG, farbkodiert je Spielort)                               | Leaflet-Map, Legende                               | `assets/img/map/` vorhanden – Format prüfen                                                        | Phase 7                 |
+| 10  | **Sponsor-Logos** (WebP, einheitliche Höhe ~80 px)                                   | Sponsoren-Seite                                    | `assets/img/sponsors/` vorhanden – Vollständigkeit prüfen                                          | Phase 9                 |
+| 11  | **Artist-Fotos 2026** (WebP, mind. 800×800 px, quadratisch oder 4:3)                 | Künstler-Grid, Detailseiten                        | Nur 2025-Assets vorhanden                                                                          | Nach Termin-Bekanntgabe |
+| 12  | **Impressions-Fotos 2026**                                                           | Galerie                                            | Nur bis 2025 vorhanden                                                                             | Nach Festival 2026      |
 
 ### 17.3 Asset-Anforderungs-Checkpoints im Ablauf
 
 Die folgenden Phasen enthalten explizite **„⚠️ Asset-Request“**-Einträge (in den Phasen-Checklisten markiert). Ich werde dort **vor Beginn der eigentlichen Implementierung** eine detaillierte Liste mit exakten Spezifikationen liefern:
 
-| Phase    | Asset-Request-Zeitpunkt | Betrifft                              |
-| -------- | ----------------------- | ------------------------------------- |
-| Phase 0  | Vor Projektstart        | PWA-Icons prüfen (Größe, Maskability) |
-| Phase 2  | Vor Header-Bau          | Logo-SVG, OG-Social-Image             |
-| Phase 3  | Vor Komponenten-Bau     | Paint-Splatter-SVGs, Kategorie-Icons  |
-| Phase 4  | Vor Landingpage-Bau     | Hero-Bild, Hut-Illustration           |
-| Phase 7  | Vor Karten-Bau          | Marker-Icons (SVG, Farben)            |
-| Phase 9  | Vor Sponsoren-Seite     | Sponsor-Logos Vollständigkeitsprüfung |
-| Phase 13 | Nach Deployment         | PWA-Screenshots neu erstellen         |
+| Phase    | Asset-Request-Zeitpunkt | Betrifft                                                                                    |
+| -------- | ----------------------- | ------------------------------------------------------------------------------------------- |
+| Phase 0  | Vor Projektstart        | PWA-Icons prüfen (Größe, Maskability)                                                       |
+| Phase 2  | Vor Header-Bau          | Logo-SVG                                                                                    |
+| Phase 3  | Vor Komponenten-Bau     | Paint-Splatter-SVGs, Kategorie-Icons                                                        |
+| Phase 4  | Vor Landingpage-Bau     | Hero-Bild, Hut-Illustration                                                                 |
+| Phase 7  | Vor Karten-Bau          | Marker-Icons (SVG, Farben)                                                                  |
+| Phase 9  | Vor Sponsoren-Seite     | Sponsor-Logos Vollständigkeitsprüfung                                                       |
+| Phase 13 | Nach Deployment         | PWA-Screenshots neu erstellen; OG-Social-Image (Screenshot der fertigen Seite, 1200×630 px) |

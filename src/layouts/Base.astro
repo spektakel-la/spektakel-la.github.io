@@ -1,0 +1,97 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  locale?: string;
+  canonicalUrl?: string;
+}
+
+const {
+  title = 'SPEKTAKEL! Landshut – Strassenkunst Festival',
+  description = 'Das Strassenkunst-Festival in Landshut: Akrobatik, Jonglage, Musik, Comedy und Street Art mitten in der Altstadt.',
+  ogImage = '/assets/img/og/jonglage.png',
+  locale = 'de',
+  canonicalUrl = Astro.url.href,
+} = Astro.props;
+
+const isEn = locale === 'en';
+const siteName = 'SPEKTAKEL! Landshut';
+const fullTitle = title.includes('SPEKTAKEL') ? title : `${title} – ${siteName}`;
+---
+
+<!doctype html>
+<html lang={locale} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ff2d7a" />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Hreflang -->
+    {isEn
+      ? <link rel="alternate" hreflang="de" href={canonicalUrl.replace('/en/', '/')} />
+      : <link rel="alternate" hreflang="en" href={canonicalUrl.replace(Astro.url.origin, Astro.url.origin + '/en')} />
+    }
+    <link rel="alternate" hreflang="x-default" href={canonicalUrl.replace('/en/', '/')} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(ogImage, Astro.url).href} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content={isEn ? 'en_US' : 'de_DE'} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(ogImage, Astro.url).href} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/assets/img/logo/logo.png" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!-- GTM (nur nach Cookie-Consent via CustomEvent) -->
+    <script is:inline>
+      window.__gtmLoaded = false;
+      document.addEventListener('spektakel:consent-accepted', function () {
+        if (window.__gtmLoaded) return;
+        window.__gtmLoaded = true;
+        (function (w, d, s, l, i) {
+          w[l] = w[l] || [];
+          w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+          var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l !== 'dataLayer' ? '&l=' + l : '';
+          j.async = true;
+          j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+          f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-TK5422TV');
+      });
+    </script>
+  </head>
+  <body class="bg-[var(--color-bg)] text-[var(--color-dark)] font-sans antialiased">
+    <!-- GTM noscript (kein Tracking ohne JS) -->
+    <noscript>
+      <!-- GTM noscript only rendered after consent via JS, intentionally empty here -->
+    </noscript>
+
+    <slot />
+
+    <!-- Service Worker Registration -->
+    <script>
+      import { registerSW } from 'virtual:pwa-register';
+      registerSW({ immediate: true });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,94 @@
+/**
+ * SPEKTAKEL! Design-Token-Definitionen
+ * Einzige Stelle für Farb-, Typo- und Spacing-Änderungen.
+ * Alle Komponenten und Tailwind-Klassen referenzieren ausschließlich diese Tokens.
+ */
+
+:root {
+  /* === Farben === */
+  --color-bg: #f6f7fb;
+  --color-bg-light: #e7f3f5;
+  --color-primary: #ff2d7a;
+  --color-lime: #b7ff00;
+  --color-cyan: #00b4db;
+  --color-dark: #1a1a1a;
+  --color-white: #ffffff;
+
+  /* Kategorie-Farben */
+  --color-cat-akrobatik: #00b4db;
+  --color-cat-musik: #ff2d7a;
+  --color-cat-comedy: #b7ff00;
+  --color-cat-street-art: #ff6b1a;
+  --color-cat-magie: #9b59b6;
+  --color-cat-nightlife: #1a1a1a;
+
+  /* Semantische Farben */
+  --color-text: var(--color-dark);
+  --color-text-muted: #6b7280;
+  --color-border: #e5e7eb;
+  --color-shadow: rgba(26, 26, 26, 0.08);
+
+  /* === Typografie === */
+  --font-display: 'Bebas Neue', 'Impact', sans-serif;
+  --font-body: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.875rem; /* 14px */
+  --text-base: 1rem; /* 16px */
+  --text-lg: 1.125rem; /* 18px */
+  --text-xl: 1.25rem; /* 20px */
+  --text-2xl: 1.5rem; /* 24px */
+  --text-3xl: 1.875rem; /* 30px */
+  --text-4xl: 2.25rem; /* 36px */
+  --text-5xl: 3rem; /* 48px */
+  --text-6xl: 3.75rem; /* 60px */
+  --text-7xl: 4.5rem; /* 72px */
+
+  --leading-tight: 1.2;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.75;
+
+  /* === Abstände === */
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem; /* 8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem; /* 16px */
+  --space-5: 1.25rem; /* 20px */
+  --space-6: 1.5rem; /* 24px */
+  --space-8: 2rem; /* 32px */
+  --space-10: 2.5rem; /* 40px */
+  --space-12: 3rem; /* 48px */
+  --space-16: 4rem; /* 64px */
+  --space-20: 5rem; /* 80px */
+  --space-24: 6rem; /* 96px */
+
+  /* === Layout === */
+  --container-max: 1280px;
+  --container-padding: var(--space-4);
+
+  /* === Border-Radius === */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* === Schatten === */
+  --shadow-sm: 0 1px 3px var(--color-shadow);
+  --shadow-md: 0 4px 12px var(--color-shadow);
+  --shadow-lg: 0 8px 24px var(--color-shadow);
+
+  /* === Übergänge === */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 400ms ease;
+
+  /* === Z-Index === */
+  --z-base: 0;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+}

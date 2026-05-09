@@ -1,0 +1,57 @@
+/* SPEKTAKEL! – Globales CSS */
+
+@import './tokens.css';
+@import '@fontsource/bebas-neue/400.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+
+@import 'tailwindcss';
+
+/* === Base-Styles === */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* Reduzierte Bewegung respektieren */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* === Utility-Klassen via Tailwind-Theme === */
+@theme {
+  --color-primary: #ff2d7a;
+  --color-lime: #b7ff00;
+  --color-cyan: #00b4db;
+  --color-dark: #1a1a1a;
+  --color-bg: #f6f7fb;
+  --color-bg-light: #e7f3f5;
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}

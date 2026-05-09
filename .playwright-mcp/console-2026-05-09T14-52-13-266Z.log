@@ -1,0 +1,288 @@
+[      90ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/manifest.webmanifest:0
+[      90ms] [ERROR] Manifest fetch from http://localhost:4321/manifest.webmanifest failed, code 404 @ http://localhost:4321/:0
+[     135ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/manifest.webmanifest:0
+[     135ms] [ERROR] Manifest fetch from http://localhost:4321/manifest.webmanifest failed, code 404 @ http://localhost:4321/:0
+[     163ms] [ERROR] A bad HTTP response code (404) was received when fetching the script. @ :0
+[     182ms] Failed to register a ServiceWorker for scope ('http://localhost:4321/') with script ('http://localhost:4321/sw.js'): A bad HTTP response code (404) was received when fetching the script.
+[ 8387057ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/programm/:0
+[ 8425591ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/manifest.webmanifest:0
+[ 8425591ms] [ERROR] Manifest fetch from http://localhost:4321/manifest.webmanifest failed, code 404 @ http://localhost:4321/:0
+[ 8425713ms] [ERROR] A bad HTTP response code (404) was received when fetching the script. @ :0
+[ 8425722ms] Failed to register a ServiceWorker for scope ('http://localhost:4321/') with script ('http://localhost:4321/sw.js'): A bad HTTP response code (404) was received when fetching the script.
+[ 8425719ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/manifest.webmanifest:0
+[ 8425720ms] [ERROR] Manifest fetch from http://localhost:4321/manifest.webmanifest failed, code 404 @ http://localhost:4321/:0
+[ 8438551ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/manifest.webmanifest:0
+[ 8452226ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/manifest.webmanifest:0
+[ 8452226ms] [ERROR] Manifest fetch from http://localhost:4321/manifest.webmanifest failed, code 404 @ http://localhost:4321/:0
+[ 8452325ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/manifest.webmanifest:0
+[ 8452326ms] [ERROR] Manifest fetch from http://localhost:4321/manifest.webmanifest failed, code 404 @ http://localhost:4321/:0
+[ 8452344ms] [ERROR] A bad HTTP response code (404) was received when fetching the script. @ :0
+[ 8452349ms] Failed to register a ServiceWorker for scope ('http://localhost:4321/') with script ('http://localhost:4321/sw.js'): A bad HTTP response code (404) was received when fetching the script.
+[ 8515299ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/en/:0
+[ 8518006ms] [ERROR] A bad HTTP response code (404) was received when fetching the script. @ :0
+[ 8518030ms] Failed to register a ServiceWorker for scope ('http://localhost:4321/') with script ('http://localhost:4321/sw.js'): A bad HTTP response code (404) was received when fetching the script.
+[ 8518135ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/manifest.webmanifest:0
+[ 8518136ms] [ERROR] Manifest fetch from http://localhost:4321/manifest.webmanifest failed, code 404 @ http://localhost:4321/:0
+[ 8524072ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 8524074ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 8546732ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 8546734ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 8555621ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 8555622ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 8605903ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 8605905ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 8622564ms] [ERROR] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep) @ http://localhost:4321/node_modules/.vite/deps/audit-UWCKQAAX.js?v=c13adcc0:0
+[ 8622582ms] Failed to fetch dynamically imported module: http://localhost:4321/node_modules/.vite/deps/audit-UWCKQAAX.js?v=c13adcc0
+[ 8622676ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 8622677ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 8640935ms] [ERROR] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep) @ http://localhost:4321/node_modules/.vite/deps/audit-UWCKQAAX.js?v=c13adcc0:0
+[ 8640949ms] Failed to fetch dynamically imported module: http://localhost:4321/node_modules/.vite/deps/audit-UWCKQAAX.js?v=c13adcc0
+[ 8640975ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 8640977ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 8656078ms] [ERROR] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep) @ http://localhost:4321/node_modules/.vite/deps/audit-UWCKQAAX.js?v=c13adcc0:0
+[ 8656096ms] Failed to fetch dynamically imported module: http://localhost:4321/node_modules/.vite/deps/audit-UWCKQAAX.js?v=c13adcc0
+[ 8656097ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 8656226ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 8676461ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 8676462ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 8676476ms] [ERROR] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep) @ http://localhost:4321/node_modules/.vite/deps/audit-UWCKQAAX.js?v=c13adcc0:0
+[ 8676487ms] Failed to fetch dynamically imported module: http://localhost:4321/node_modules/.vite/deps/audit-UWCKQAAX.js?v=c13adcc0
+[ 8757599ms] [ERROR] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep) @ http://localhost:4321/node_modules/.vite/deps/audit-UWCKQAAX.js?v=c13adcc0:0
+[ 8757605ms] Failed to fetch dynamically imported module: http://localhost:4321/node_modules/.vite/deps/audit-UWCKQAAX.js?v=c13adcc0
+[ 8757626ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 8757627ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 8765463ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 8765466ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 8790419ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 8790420ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 8891980ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/en/:0
+[ 8894526ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 8894534ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 8938841ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 8938843ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 8951894ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 8951895ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 8955231ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 8955231ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9117610ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9117613ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9118784ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9118784ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9121016ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9121017ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9129761ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9129762ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9140979ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9140980ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9182180ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9182181ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9210713ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9210713ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9223262ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9223263ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9246819ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9246820ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9290880ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/en/:0
+[ 9293082ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9293083ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9321703ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9321704ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9361269ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9361273ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9372779ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9372780ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9381064ms] [ERROR] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep) @ http://localhost:4321/@id/astro/runtime/client/dev-toolbar/entrypoint.js:0
+[ 9381416ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9381416ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9384373ms] [ERROR] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep) @ http://localhost:4321/@id/astro/runtime/client/dev-toolbar/entrypoint.js:0
+[ 9384570ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9384573ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9387269ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9387270ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9419750ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9419752ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9433345ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2:0
+[ 9433345ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2:0
+[ 9433347ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/assets/img/logo/logo.png:0
+[ 9433377ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2:0
+[ 9433377ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-400-normal.woff:0
+[ 9433377ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-600-normal.woff:0
+[ 9433388ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-700-normal.woff:0
+[ 9433389ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/@vite/client:0
+[ 9433389ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/@id/astro/runtime/client/dev-toolbar/entrypoint.js:0
+[ 9433389ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/src/components/layout/Header.astro?astro&type=script&index=0&lang.ts:0
+[ 9433396ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/src/styles/global.css:0
+[ 9433403ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/src/layouts/Base.astro?astro&type=script&index=0&lang.ts:0
+[ 9433461ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/assets/img/logo/logo.png:0
+[ 9433463ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/manifest.webmanifest:0
+[ 9459406ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9459407ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9472463ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9472464ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9474628ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9474629ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9650943ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9650948ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9654372ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9654373ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9654784ms] [ERROR] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep) @ http://localhost:4321/node_modules/.vite/deps/chunk-ZUETELRC.js?v=e3d4b989:0
+[ 9654785ms] [ERROR] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep) @ http://localhost:4321/node_modules/.vite/deps/chunk-WDCEFGHP.js?v=e3d4b989:0
+[ 9654798ms] Failed to fetch dynamically imported module: http://localhost:4321/node_modules/.vite/deps/toolbar-2H5PSQQU.js?v=e3d4b989
+[ 9654785ms] [ERROR] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep) @ http://localhost:4321/node_modules/.vite/deps/chunk-WTIA47ZU.js?v=e3d4b989:0
+[ 9654896ms] [ERROR] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep) @ http://localhost:4321/@id/astro/runtime/client/dev-toolbar/entrypoint.js:0
+[ 9655113ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9655114ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9655620ms] [ERROR] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep) @ http://localhost:4321/@id/astro/runtime/client/dev-toolbar/entrypoint.js:0
+[ 9655736ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9655736ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9679963ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/@vite/client:0
+[ 9679973ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/@id/astro/runtime/client/dev-toolbar/entrypoint.js:0
+[ 9679973ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/src/components/layout/Header.astro?astro&type=script&index=0&lang.ts:0
+[ 9679993ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2:0
+[ 9679994ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2:0
+[ 9679994ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2:0
+[ 9679994ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/src/layouts/Base.astro?astro&type=script&index=0&lang.ts:0
+[ 9679998ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/assets/img/logo/logo.png:0
+[ 9680000ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-600-normal.woff:0
+[ 9680000ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-400-normal.woff:0
+[ 9680000ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-700-normal.woff:0
+[ 9680001ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/manifest.webmanifest:0
+[ 9680009ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/src/styles/global.css:0
+[ 9680047ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/assets/img/logo/logo.png:0
+[ 9680047ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/manifest.webmanifest:0
+[ 9692005ms] [ERROR] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep) @ http://localhost:4321/@id/astro/runtime/client/dev-toolbar/entrypoint.js:0
+[ 9692105ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9692106ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9773003ms] [ERROR] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep) @ http://localhost:4321/@id/astro/runtime/client/dev-toolbar/entrypoint.js:0
+[ 9773177ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9773179ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9777322ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9777323ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9939227ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9939228ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9940786ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9940787ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9941380ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9941381ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[ 9941660ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[ 9941662ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10001838ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10001839ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10004545ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10004546ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10008578ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10008579ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10017227ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/assets/img/logo/logo.png:0
+[10017228ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/@id/astro/runtime/client/dev-toolbar/entrypoint.js:0
+[10017228ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/src/components/layout/Header.astro?astro&type=script&index=0&lang.ts:0
+[10017228ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/src/layouts/Base.astro?astro&type=script&index=0&lang.ts:0
+[10017239ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/@vite/client:0
+[10017240ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/src/styles/global.css:0
+[10017256ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2:0
+[10017257ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/manifest.webmanifest:0
+[10017262ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-400-normal.woff:0
+[10017265ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2:0
+[10017270ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-600-normal.woff:0
+[10017276ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2:0
+[10017279ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-700-normal.woff:0
+[10017293ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/assets/img/logo/logo.png:0
+[10023574ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/manifest.webmanifest:0
+[10023589ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/assets/img/logo/logo.png:0
+[10023590ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/@vite/client:0
+[10023590ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/@id/astro/runtime/client/dev-toolbar/entrypoint.js:0
+[10023590ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/src/styles/global.css:0
+[10023590ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/src/components/layout/Header.astro?astro&type=script&index=0&lang.ts:0
+[10023590ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/src/layouts/Base.astro?astro&type=script&index=0&lang.ts:0
+[10023599ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2:0
+[10023599ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2:0
+[10023599ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2:0
+[10023606ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-400-normal.woff:0
+[10023606ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-600-normal.woff:0
+[10023606ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-700-normal.woff:0
+[10023631ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/manifest.webmanifest:0
+[10023634ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/assets/img/logo/logo.png:0
+[10023652ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/assets/img/logo/logo.png:0
+[10026993ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10026993ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10076680ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10076682ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10082812ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10082813ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10085382ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10085383ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10086076ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10086076ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10086447ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10086447ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10089995ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10089995ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10091603ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10091605ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10092162ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10092163ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10092271ms] [ERROR] %cAstro background: linear-gradient(66.77deg, #D83333 0%, #F041FF 100%); color: white; padding-inline: 4px; border-radius: 2px; font-family: monospace; Error while running audit's match function: TypeError: Failed to fetch @ http://localhost:4321/node_modules/.vite/deps/chunk-LEX3GG7N.js?v=109d83c4:22
+[10092448ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10092449ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10100925ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10100927ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10103764ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10103765ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10108076ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/assets/img/logo/logo.png:0
+[10108076ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/src/styles/global.css:0
+[10108076ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/src/components/layout/Header.astro?astro&type=script&index=0&lang.ts:0
+[10108076ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/src/layouts/Base.astro?astro&type=script&index=0&lang.ts:0
+[10108077ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2:0
+[10108078ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2:0
+[10108085ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2:0
+[10108091ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-700-normal.woff:0
+[10108091ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-400-normal.woff:0
+[10108092ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-600-normal.woff:0
+[10108102ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/manifest.webmanifest:0
+[10108129ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/@vite/client:0
+[10108147ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/@id/astro/runtime/client/dev-toolbar/entrypoint.js:0
+[10108236ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/assets/img/logo/logo.png:0
+[10108261ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/manifest.webmanifest:0
+[10109378ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/manifest.webmanifest:0
+[10109391ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/assets/img/logo/logo.png:0
+[10109392ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/@vite/client:0
+[10109392ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/@id/astro/runtime/client/dev-toolbar/entrypoint.js:0
+[10109392ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/src/styles/global.css:0
+[10109392ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/src/components/layout/Header.astro?astro&type=script&index=0&lang.ts:0
+[10109392ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/src/layouts/Base.astro?astro&type=script&index=0&lang.ts:0
+[10109400ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2:0
+[10109402ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2:0
+[10109404ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2:0
+[10109407ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-400-normal.woff:0
+[10109407ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-600-normal.woff:0
+[10109407ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/node_modules/@fontsource/inter/files/inter-latin-700-normal.woff:0
+[10109426ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/manifest.webmanifest:0
+[10109437ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/assets/img/logo/logo.png:0
+[10109442ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ http://localhost:4321/assets/img/logo/logo.png:0
+[10116534ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10116535ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10167302ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10167308ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10186112ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10186125ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10314732ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10314733ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10318095ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10318095ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10691027ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10691028ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10714148ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10714148ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10722424ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10722424ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10726447ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10726447ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10732858ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10732858ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10742581ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10742581ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10837916ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10837916ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10858991ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10858991ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0
+[10870977ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/assets/img/icons/icon-192.png:0
+[10870977ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:4321/assets/img/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:4321/:0

@@ -1,0 +1,66 @@
+export const en = {
+  nav: {
+    program: 'Program',
+    artists: 'Artists',
+    locations: 'Venues',
+    gallery: 'Gallery',
+    info: 'Info',
+    nightlife: 'Nightlife',
+  },
+  common: {
+    all: 'All',
+    loadMore: 'Load more',
+    back: '← Back',
+    backArtists: '← Back to artist overview',
+    search: 'Search artists…',
+    allCategories: 'All categories',
+    allLocations: 'All venues',
+    sortAZ: 'A–Z',
+    favorite: 'Save',
+    favorited: 'Saved',
+    filter: 'Filter',
+    reset: 'Reset',
+    apply: 'Apply',
+    moreImages: 'See more images →',
+    toProgram: 'View in program →',
+    viewProgram: 'To the program',
+    disclaimer: 'Subject to change.',
+    hutAct: 'Artists perform for tips!',
+  },
+  program: {
+    title: 'Program',
+    friday: 'Friday',
+    saturday: 'Saturday',
+    sunday: 'Sunday',
+    tableView: 'Table view',
+    listView: 'List view',
+  },
+  artists: {
+    title: 'All artists at a glance',
+    tagline: 'Discover the acrobatics, the music, the magic and the crazy talents that make Landshut marvel.',
+  },
+  locations: {
+    title: 'Venues',
+  },
+  gallery: {
+    title: 'Gallery',
+  },
+  nightlife: {
+    title: 'Nightlife',
+  },
+  info: {
+    title: 'Festival Info',
+  },
+  footer: {
+    about: 'About',
+    sponsors: 'Sponsors',
+    imprint: 'Imprint',
+    privacy: 'Privacy',
+  },
+  cookie: {
+    message: 'We use cookies and Google Tag Manager to improve this website.',
+    accept: 'Accept',
+    decline: 'Decline',
+    details: 'Details',
+  },
+} as const;

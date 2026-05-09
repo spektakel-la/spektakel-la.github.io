@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "file": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "akrobatik",
+        "musik",
+        "comedy",
+        "street_art",
+        "nightlife"
+      ]
+    },
+    "year": {
+      "type": "number"
+    },
+    "caption": {
+      "type": "string"
+    },
+    "type": {
+      "default": "image",
+      "type": "string",
+      "enum": [
+        "image",
+        "youtube"
+      ]
+    },
+    "youtubeId": {
+      "type": "string"
+    },
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "file",
+    "category",
+    "year"
+  ]
+}

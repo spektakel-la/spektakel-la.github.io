@@ -1,0 +1,50 @@
+---
+import type { Locale } from '../../i18n/utils';
+import { localePath, useTranslations } from '../../i18n/utils';
+
+interface Props {
+  locale?: string;
+}
+
+const { locale = 'de' } = Astro.props;
+const t = useTranslations(locale);
+const lang = locale as Locale;
+
+const currentPath = Astro.url.pathname;
+
+function isActive(path: string): boolean {
+  return currentPath === localePath(path, lang) ||
+    currentPath.startsWith(localePath(path + '/', lang));
+}
+
+const navItems = [
+  { key: 'program', href: '/programm/' },
+  { key: 'artists', href: '/kuenstler/' },
+  { key: 'locations', href: '/spielorte/' },
+  { key: 'gallery', href: '/galerie/' },
+  { key: 'nightlife', href: '/nightlife/' },
+  { key: 'info', href: '/info/' },
+] as const;
+---
+
+<nav aria-label={locale === 'en' ? 'Main navigation' : 'Hauptnavigation'}>
+  <ul class="flex items-center gap-1 list-none m-0 p-0">
+    {navItems.map(({ key, href }) => (
+      <li>
+        <a
+          href={localePath(href, lang)}
+          class:list={[
+            'nav-link px-3 py-2 rounded text-sm font-semibold uppercase tracking-wide transition-colors duration-200',
+            'hover:text-[var(--color-primary)] hover:bg-white/10',
+            isActive(href)
+              ? 'text-[var(--color-primary)]'
+              : 'text-[var(--color-dark)]',
+          ]}
+          aria-current={isActive(href) ? 'page' : undefined}
+        >
+          {t.nav[key]}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>

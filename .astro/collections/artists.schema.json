@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "artist_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "images": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "duration": {
+      "type": "string"
+    },
+    "hut_act": {
+      "type": "boolean"
+    },
+    "facebook": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "instagram": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "youtube": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "homepage": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "organizational": {
+      "type": "boolean"
+    },
+    "de": {
+      "type": "object",
+      "properties": {
+        "country": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "highlight": {
+          "type": "string"
+        },
+        "categories": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "age_recommendation": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "special": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "description"
+      ]
+    },
+    "en": {
+      "type": "object",
+      "properties": {
+        "country": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "highlight": {
+          "type": "string"
+        },
+        "categories": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "age_recommendation": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "special": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "description"
+      ]
+    },
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "artist_id",
+    "name",
+    "de",
+    "en"
+  ]
+}

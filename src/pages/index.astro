@@ -1,17 +1,24 @@
 ---
-
+import Page from '../layouts/Page.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Page
+  title="SPEKTAKEL! Landshut – Strassenkunst Festival"
+  description="Das Strassenkunst-Festival in Landshut: Akrobatik, Jonglage, Musik, Comedy und Street Art mitten in der Altstadt."
+  locale="de"
+>
+  <section class="min-h-[60vh] flex items-center justify-center text-center px-4 py-20">
+    <div>
+      <img
+        src="/assets/img/logo/logo.png"
+        alt="SPEKTAKEL! Landshut"
+        width="400"
+        height="170"
+        class="mx-auto mb-8 max-w-xs sm:max-w-sm"
+      />
+      <p class="text-xl text-gray-600 font-sans">
+        19.–21. September 2025 · Landshut
+      </p>
+    </div>
+  </section>
+</Page>

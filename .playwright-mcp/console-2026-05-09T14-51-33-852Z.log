@@ -1,0 +1,6 @@
+[   37546ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/manifest.webmanifest:0
+[   37546ms] [ERROR] Manifest fetch from http://localhost:4321/manifest.webmanifest failed, code 404 @ http://localhost:4321/:0
+[   38102ms] [ERROR] A bad HTTP response code (404) was received when fetching the script. @ :0
+[   38114ms] Failed to register a ServiceWorker for scope ('http://localhost:4321/') with script ('http://localhost:4321/sw.js'): A bad HTTP response code (404) was received when fetching the script.
+[   38185ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/manifest.webmanifest:0
+[   38185ms] [ERROR] Manifest fetch from http://localhost:4321/manifest.webmanifest failed, code 404 @ http://localhost:4321/:0

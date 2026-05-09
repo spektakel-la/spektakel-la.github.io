@@ -1,11 +1,5 @@
-_site
-change-author.sh
-.sass-cache
-.jekyll-metadata
 .DS_Store
-.jekyll-cache
-*.gem
-.venv
 /package.json
 /package-lock.json
 /node_modules
+/dist

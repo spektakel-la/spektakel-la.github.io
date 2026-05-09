@@ -1,0 +1,23 @@
+---
+import Footer from '../components/layout/Footer.astro';
+import Header from '../components/layout/Header.astro';
+import Base from './Base.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  locale?: string;
+  canonicalUrl?: string;
+}
+
+const { locale = 'de', ...rest } = Astro.props;
+---
+
+<Base locale={locale} {...rest}>
+  <Header locale={locale} />
+  <main id="main-content">
+    <slot />
+  </main>
+  <Footer locale={locale} />
+</Base>
