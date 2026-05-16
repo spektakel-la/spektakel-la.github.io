@@ -6,13 +6,13 @@ title: home
 <h1 class="visually-hidden">{{ site.title }} - {{ site.description_short }}</h1>
 
 <picture id="hero">
-  <source srcset="{{ " /assets/img/plakat2025.webp" | prepend: site.baseurl_root }}" type="image/webp">
-  <source srcset="{{ " /assets/img/plakat2025.jpg" | prepend: site.baseurl_root }}" type="image/jpeg">
-  <img class="logo-image" src="{{ " /assets/img/plakat2025.jpg" | prepend: site.baseurl_root }}"
-    alt="Spektakel Landshut - offizielles Plakat 2025" fetchpriority="high" decoding="async">
+  <source srcset="{{ " /assets/img/plakat2026t.webp" | prepend: site.baseurl_root }}" type="image/webp">
+  <source srcset="{{ " /assets/img/plakat2026t.png" | prepend: site.baseurl_root }}" type="image/jpeg">
+  <img class="logo-image" src="{{ " /assets/img/plakat2026t.png" | prepend: site.baseurl_root }}"
+    alt="Spektakel Landshut - Plakat" fetchpriority="high" decoding="async">
 </picture>
 
-<div class="brushed-links">
+<!-- <div class="brushed-links">
   <h2>
     <a class="brushed-item" href="./artists">
       {% t menu.artists %}
@@ -33,4 +33,14 @@ title: home
       {% t menu.nightlife %}
     </a>
   </h2>
+</div> -->
+
+<div class="announcement">
+  <p class="announcement-title">… das <strong>20. Spektakel Landshut</strong> findet<br>vom 16. Sept. – 20. Sept. 2026 statt</p>
+  <ul class="announcement-events">
+    <li><strong>Mittwoch, 16. Sept.</strong> – 19:30 im Rathaus Prunksaal<br>Vorpremiere „Das Bildnis des Dorian Gray"</li>
+    <li><strong>Donnerstag, 17. Sept.</strong> – 20:00 Theaterzelt Landshut<br><em class="announcement-event-name">BMW Spektakel Gala 2026</em> – Eröffnung 20. Spektakel La.</li>
+    <li><strong>Freitag 18. Sept. – Sonntag 20. Sept.</strong><br>Spektakel Landshut im Rathaus Prunksaal – Salzstadel,<br>Ländtor und Altstadt – über 200 Shows in drei Tagen …</li>
+  </ul>
+  <p class="announcement-contact">Anfragen bitte via <a href="mailto:{{ 'stadtspektakel@gmail.com' | encode_email }}">Email</a></p>
 </div>

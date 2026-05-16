@@ -2,25 +2,23 @@
 # google-tag: 'G-V8PX2QY82M'
 google-tagmanager-id: 'GTM-TK5422TV'
 
-
 menu:
-- {tkey: 'home',        url: ''}
-- {tkey: 'artists',     url: 'artists'}
-- {tkey: 'program',     url: 'program'}
-- {tkey: 'locations',   url: 'locations'}
-- {tkey: 'nightlife',   url: 'nightlife'}
-- {tkey: 'impressions', url: 'impressions'}
-- {tkey: 'sponsors',    url: 'sponsors'}
+  - { tkey: 'home', url: '' }
+  # - { tkey: 'artists', url: 'artists' }
+  # - { tkey: 'program', url: 'program' }
+  # - { tkey: 'locations', url: 'locations' }
+  # - {tkey: 'nightlife',   url: 'nightlife'}
+  - { tkey: 'impressions', url: 'impressions' }
+  - { tkey: 'sponsors', url: 'sponsors' }
 
 # Available social icons are powered by Font Awesome, so you can use any icon that they offer
 social:
-#- {icon: 'twitter', link:    'https://twitter.com/paululele'}
-- {icon: 'facebook', link:   'https://www.facebook.com/groups/102139009844851'}
-- {icon: 'instagram', link:  'https://www.instagram.com/spektakel.landshut'}
+  #- {icon: 'twitter', link:    'https://twitter.com/paululele'}
+  - { icon: 'facebook', link: 'https://www.facebook.com/groups/102139009844851' }
+  - { icon: 'instagram', link: 'https://www.instagram.com/spektakel.landshut' }
 # - {icon: 'envelope', link:   'mailto:hello@paulle.ca'}
 
-
 offline_map:
-  bounding_rect: [[48.5261029,12.1322959], [48.549313,12.169414]]
+  bounding_rect: [[48.5261029, 12.1322959], [48.549313, 12.169414]]
   icon_anchor: [15, 46]
   icon_size: [35, 46]

@@ -1,6 +1,13 @@
 .visually-hidden {
-  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
-  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 #hero {
@@ -26,8 +33,10 @@ h1.logo-image-h1 {
   margin: 30px 0;
 
   h2 {
-    all: revert; /* auf UA-/User-Defaults zurücksetzen */
-    font: inherit; /* und Schrift vom Elternteil übernehmen */
+    all: revert;
+    /* auf UA-/User-Defaults zurücksetzen */
+    font: inherit;
+    /* und Schrift vom Elternteil übernehmen */
     display: inline;
     margin: 0;
   }
@@ -95,6 +104,64 @@ h1.logo-image-h1 {
   }
 }
 
+.announcement {
+  max-width: 680px;
+  margin: 30px auto;
+  padding: 28px 32px;
+  background-color: $background-color;
+  border-radius: $border-radius;
+  text-align: center;
+  font-family: $body-font-family;
+
+  .announcement-title {
+    font-size: 1.35em;
+    font-weight: 400;
+    line-height: 1.4;
+    margin: 0 0 20px;
+
+    strong {
+      font-family: $brushed-font-family;
+      font-size: 1.1em;
+      color: $new-yellow;
+      text-shadow: 2px 2px 0px $black, 3px 3px 6px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  .announcement-events {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 18px;
+
+    li {
+      margin-bottom: 12px;
+      line-height: 1.5;
+
+      strong {
+        font-family: $brushed-font-family;
+        font-size: 1.1em;
+        color: $new-yellow;
+        text-shadow: 2px 2px 0px $black, 3px 3px 6px rgba(0, 0, 0, 0.5);
+      }
+
+      .announcement-event-name {
+        font-style: italic;
+        font-weight: 700;
+        color: $text-color;
+      }
+    }
+  }
+
+  .announcement-contact {
+    margin: 40px 0 0;
+    font-size: 0.95em;
+
+    a {
+      color: $purple;
+      text-decoration: underline;
+    }
+  }
+}
+
 .youtube-video {
   margin-bottom: 30px;
 }
@@ -104,6 +171,7 @@ h1.logo-image-h1 {
     0% {
       opacity: 0;
     }
+
     100% {
       opacity: 1;
     }
@@ -127,9 +195,12 @@ h1.logo-image-h1 {
 }
 
 .youtube-video-container {
-  display: flex; /* Add this */
-  align-items: center; /* Add this */
-  justify-content: center; /* Add this */
+  display: flex;
+  /* Add this */
+  align-items: center;
+  /* Add this */
+  justify-content: center;
+  /* Add this */
   position: relative;
   width: 100%;
   overflow: hidden;
@@ -146,15 +217,19 @@ h1.logo-image-h1 {
   &.preview1 {
     background: url('/assets/img/youtube/preview1.jpg');
   }
+
   &.preview2 {
     background: url('/assets/img/youtube/preview2.jpg');
   }
+
   &.preview3 {
     background: url('/assets/img/youtube/preview3.jpg');
   }
+
   &.preview4 {
     background: url('/assets/img/youtube/preview4.jpg');
   }
+
   &.preview5 {
     background: url('/assets/img/youtube/preview5.jpg');
   }
