@@ -1,9 +1,9 @@
-const SW_VERSION = '1.8.0';
+const SW_VERSION = '1.8.1';
 
 importScripts('/assets/3rd-party/workbox-v7.3.0/workbox-sw.js');
 workbox.setConfig({
-    debug: false,
-    modulePathPrefix: '/assets/3rd-party/workbox-v7.3.0/',
+  debug: false,
+  modulePathPrefix: '/assets/3rd-party/workbox-v7.3.0/',
 });
 
 self.addEventListener('message', (event) => {
@@ -26,7 +26,7 @@ precacheAndRoute(self.__WB_MANIFEST || []);
 
 // Cache tiles for the map
 registerRoute(
-  ({url}) => url.pathname.startsWith('/assets/img/map/tiles/'),
+  ({ url }) => url.pathname.startsWith('/assets/img/map/tiles/'),
   new CacheFirst({
     cacheName: 'map-tiles-cache',
     plugins: [
@@ -38,19 +38,25 @@ registerRoute(
         maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Tage
       }),
     ],
-  })
+  }),
 );
 
 // Delete old caches on activation of a new serviceWorker
 self.addEventListener('activate', (event) => {
   const currentCaches = ['map-tiles-cache'];
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return cacheNames.filter((cacheName) => currentCaches.includes(cacheName));
-    }).then((cachesToDelete) => {
-      return Promise.all(cachesToDelete.map((cacheToDelete) => {
-        return caches.delete(cacheToDelete);
-      }));
-    }).then(() => self.clients.claim())
+    caches
+      .keys()
+      .then((cacheNames) => {
+        return cacheNames.filter((cacheName) => currentCaches.includes(cacheName));
+      })
+      .then((cachesToDelete) => {
+        return Promise.all(
+          cachesToDelete.map((cacheToDelete) => {
+            return caches.delete(cacheToDelete);
+          }),
+        );
+      })
+      .then(() => self.clients.claim()),
   );
 });
