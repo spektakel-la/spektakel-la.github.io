@@ -1,0 +1,49 @@
+---
+/**
+ * PaintSplatter – Dekoratives Farbkleks-Element.
+ *
+ * Rendert eines der 5 generierten Splatter-PNGs (src/assets/splatter/).
+ * Ist rein dekorativ (aria-hidden), absolut positioniert via `class`-Prop.
+ *
+ * Beispiel:
+ *   <PaintSplatter variant={1} class="absolute -top-8 right-0 w-48 opacity-80 pointer-events-none" />
+ */
+
+import { Image } from 'astro:assets';
+import s1 from '../../assets/splatter/splatter1.png';
+import s2 from '../../assets/splatter/splatter2.png';
+import s3 from '../../assets/splatter/splatter3.png';
+import s4 from '../../assets/splatter/splatter4.png';
+import s5 from '../../assets/splatter/splatter5.png';
+
+interface Props {
+  /** Welches Splatter-Bild (1–5) */
+  variant?: 1 | 2 | 3 | 4 | 5;
+  /** Breite in px für Astro Image-Optimierung (default 400) */
+  width?: number;
+  class?: string;
+}
+
+const { variant = 1, width = 400, class: className } = Astro.props;
+
+const images = { 1: s1, 2: s2, 3: s3, 4: s4, 5: s5 };
+const src = images[variant] ?? s1;
+---
+
+<Image
+  src={src}
+  alt=""
+  width={width}
+  class:list={['splatter-img', className]}
+  aria-hidden="true"
+  role="presentation"
+  loading="lazy"
+/>
+
+<style>
+  .splatter-img {
+    /* Pointer-Events deaktiviert damit Splatter nicht klickbar sind */
+    pointer-events: none;
+    user-select: none;
+  }
+</style>

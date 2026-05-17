@@ -50,19 +50,18 @@ export default defineConfig({
       },
       workbox: {
         clientsClaim: true, // neuer SW übernimmt sofort alle Tabs nach Aktivierung
+        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024, // 4 MiB (splatter3.png ist 3 MB)
 
         // Precache: App-Shell (HTML, CSS, JS, Fonts) + Logo & Icons (klein, auf jeder Seite)
         // Keine Bulk-Bilder im Precache – das würde den SW-Install blockieren
-        globPatterns: ['**/*.{html,js,css,woff2,png,webp,svg}'],
+        globPatterns: ['**/*.{html,js,css,woff2}', 'assets/img/icons/**', 'assets/img/logo/**'],
         globIgnores: [
-          // Artist-Bilder: viele & groß → Runtime-Caching on demand
-          '**/img/artists/**',
-          // Impressions: nie cachen
-          '**/img/impressions/**',
-          // Sponsor-Logos: Runtime StaleWhileRevalidate
-          '**/img/sponsors/**',
-          // Hero-Bilder: groß, kein Offline-Pflichtasset
-          '**/img/hero/**',
+          // Alle Bild-Assets außer Icons/Logo: Runtime-Caching on demand
+          '_astro/**',
+          'assets/img/artists/**',
+          'assets/img/impressions/**',
+          'assets/img/sponsors/**',
+          'assets/img/hero/**',
           // i18n-Duplikate (en/ spiegelt de/ für Assets)
           'en/assets/js/**',
           'en/assets/css/**',

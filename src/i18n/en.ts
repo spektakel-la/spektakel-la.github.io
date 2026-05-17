@@ -63,4 +63,17 @@ export const en = {
     decline: 'Decline',
     details: 'Details',
   },
+  home: {
+    hero_subtext: "Three days of acrobatics, music, comedy and unforgettable moments in Landshut's historic old town.",
+    hero_dates: '19 – 21 September 2025',
+    cta_program: 'See the programme',
+    cta_artists: 'All artists',
+    categories_heading: 'What to expect?',
+    hut_heading: 'Artists perform for tips!',
+    hut_text:
+      'SPEKTAKEL! is a hat festival – admission is free! The artists rely on your appreciation. Show your applause and toss a coin (or more!) into the hat.',
+    featured_heading: 'From the line-up',
+    schedule_heading: 'Programme preview',
+    schedule_link: 'Full programme →',
+  },
 } as const;

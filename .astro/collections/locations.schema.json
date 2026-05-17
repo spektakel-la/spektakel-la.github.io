@@ -1,45 +1,53 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "type": "object",
-  "properties": {
-    "location_id": {
-      "type": "string"
-    },
-    "sort_order": {
-      "type": "number"
-    },
-    "description": {
-      "type": "string"
-    },
-    "gps": {
-      "type": "array",
-      "prefixItems": [
-        {
+  "$ref": "#/definitions/locations",
+  "definitions": {
+    "locations": {
+      "type": "object",
+      "properties": {
+        "location_id": {
+          "type": "string"
+        },
+        "sort_order": {
           "type": "number"
         },
-        {
-          "type": "number"
+        "description": {
+          "type": "string"
+        },
+        "gps": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ]
+        },
+        "marker_color": {
+          "type": "string"
+        },
+        "nightlife": {
+          "type": "boolean"
+        },
+        "organizational": {
+          "type": "boolean"
+        },
+        "$schema": {
+          "type": "string"
         }
-      ]
-    },
-    "marker_color": {
-      "type": "string"
-    },
-    "nightlife": {
-      "type": "boolean"
-    },
-    "organizational": {
-      "type": "boolean"
-    },
-    "$schema": {
-      "type": "string"
+      },
+      "required": [
+        "location_id",
+        "sort_order",
+        "description",
+        "gps",
+        "marker_color"
+      ],
+      "additionalProperties": false
     }
   },
-  "required": [
-    "location_id",
-    "sort_order",
-    "description",
-    "gps",
-    "marker_color"
-  ]
+  "$schema": "http://json-schema.org/draft-07/schema#"
 }

@@ -1,23 +1,29 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "type": "object",
-  "properties": {
-    "name": {
-      "type": "string"
-    },
-    "logo": {
-      "type": "string"
-    },
-    "url": {
-      "type": "string",
-      "format": "uri"
-    },
-    "$schema": {
-      "type": "string"
+  "$ref": "#/definitions/sponsors",
+  "definitions": {
+    "sponsors": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "logo": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "logo"
+      ],
+      "additionalProperties": false
     }
   },
-  "required": [
-    "name",
-    "logo"
-  ]
+  "$schema": "http://json-schema.org/draft-07/schema#"
 }

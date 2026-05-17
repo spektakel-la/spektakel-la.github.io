@@ -64,6 +64,20 @@ export const de = {
     decline: 'Ablehnen',
     details: 'Details',
   },
+  home: {
+    hero_subtext:
+      'Drei Tage voller Artistik, Musik, Comedy und unvergesslicher Momente in der historischen Altstadt von Landshut.',
+    hero_dates: '19. – 21. September 2025',
+    cta_program: 'Zum Programm',
+    cta_artists: 'Alle Künstler',
+    categories_heading: 'Was erwartet dich?',
+    hut_heading: 'Künstler spielen für den Hut!',
+    hut_text:
+      'Das SPEKTAKEL! ist ein Hut-Festival – der Eintritt ist frei! Die Künstlerinnen und Künstler leben von deiner Wertschätzung. Zeig deinen Applaus und wirf eine Münze (oder mehr!) in den Hut.',
+    featured_heading: 'Aus dem Line-Up',
+    schedule_heading: 'Spielplan-Vorschau',
+    schedule_link: 'Ganzer Spielplan →',
+  },
 } as const;
 
 export type TranslationKey = typeof de;

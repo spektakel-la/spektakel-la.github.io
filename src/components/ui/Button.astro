@@ -1,0 +1,127 @@
+---
+/**
+ * Button – Primär (gefüllt) und Ghost-Variante.
+ *
+ * Rendert als <a> wenn `href` gesetzt ist, sonst als <button>.
+ */
+
+interface Props {
+  variant?: 'primary' | 'ghost' | 'dark';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+  class?: string;
+  target?: string;
+  rel?: string;
+  'aria-label'?: string;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  type = 'button',
+  disabled,
+  class: className,
+  target,
+  rel,
+  'aria-label': ariaLabel,
+} = Astro.props;
+
+const sizeMap = {
+  sm: 'btn--sm',
+  md: 'btn--md',
+  lg: 'btn--lg',
+};
+---
+
+{href ? (
+  <a
+    href={href}
+    target={target}
+    rel={rel ?? (target === '_blank' ? 'noopener noreferrer' : undefined)}
+    aria-label={ariaLabel}
+    class:list={['btn', `btn--${variant}`, sizeMap[size], className]}
+  >
+    <slot />
+  </a>
+) : (
+  <button
+    type={type}
+    disabled={disabled}
+    aria-label={ariaLabel}
+    class:list={['btn', `btn--${variant}`, sizeMap[size], className]}
+  >
+    <slot />
+  </button>
+)}
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    border-radius: 4px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+    white-space: nowrap;
+    border: 2px solid transparent;
+    line-height: 1;
+  }
+
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* Sizes */
+  .btn--sm {
+    font-size: var(--text-xs);
+    padding: 0.45em 1em;
+  }
+  .btn--md {
+    font-size: var(--text-sm);
+    padding: 0.6em 1.4em;
+  }
+  .btn--lg {
+    font-size: var(--text-base);
+    padding: 0.75em 1.8em;
+  }
+
+  /* Variants */
+  .btn--primary {
+    background-color: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+  }
+  .btn--primary:hover:not(:disabled) {
+    background-color: #e0205f;
+    border-color: #e0205f;
+  }
+
+  .btn--ghost {
+    background-color: transparent;
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+  .btn--ghost:hover:not(:disabled) {
+    background-color: var(--color-primary);
+    color: #fff;
+  }
+
+  .btn--dark {
+    background-color: var(--color-dark);
+    color: #fff;
+    border-color: var(--color-dark);
+  }
+  .btn--dark:hover:not(:disabled) {
+    background-color: #333;
+    border-color: #333;
+  }
+</style>

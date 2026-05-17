@@ -1,0 +1,83 @@
+---
+/**
+ * Badge – Pill-förmige Kennzeichnungen.
+ *
+ * variant:
+ *  'location'  – Lime-Hintergrund, dunkler Text (z. B. „LANDSHUT")
+ *  'hut'       – Dunkler Hintergrund, weißer Text (Hut-Akt-Hinweis)
+ *  'category'  – Farbkodiert nach Kategorie (via `category`-Prop)
+ */
+
+interface Props {
+  variant?: 'location' | 'hut' | 'category';
+  category?: string;
+  class?: string;
+}
+
+const { variant = 'location', category, class: className } = Astro.props;
+
+// Kategorie → CSS-Token-Mapping
+const catColorMap: Record<string, string> = {
+  akrobatik: 'var(--color-cat-akrobatik)',
+  artistik: 'var(--color-cat-akrobatik)',
+  musik: 'var(--color-cat-musik)',
+  comedy: 'var(--color-cat-comedy)',
+  'street-art': 'var(--color-cat-street-art)',
+  street_art: 'var(--color-cat-street-art)',
+  magie: 'var(--color-cat-magie)',
+  nightlife: 'var(--color-cat-nightlife)',
+};
+
+const catColor = category ? (catColorMap[category.toLowerCase()] ?? 'var(--color-primary)') : 'var(--color-primary)';
+// Comedy/Lime braucht dunklen Text, alle anderen weißen
+const catTextColor = category?.toLowerCase() === 'comedy' ? 'var(--color-dark)' : '#fff';
+---
+
+{variant === 'location' && (
+  <span
+    class:list={['badge badge--location', className]}
+  >
+    <slot />
+  </span>
+)}
+
+{variant === 'hut' && (
+  <span class:list={['badge badge--hut', className]}>
+    <slot />
+  </span>
+)}
+
+{variant === 'category' && (
+  <span
+    class:list={['badge badge--category', className]}
+    style={`background-color: ${catColor}; color: ${catTextColor};`}
+  >
+    <slot />
+  </span>
+)}
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2em 0.75em;
+    border-radius: 999px;
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    line-height: 1.6;
+  }
+
+  .badge--location {
+    background-color: var(--color-lime);
+    color: var(--color-dark);
+  }
+
+  .badge--hut {
+    background-color: var(--color-dark);
+    color: #fff;
+  }
+</style>

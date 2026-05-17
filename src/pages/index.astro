@@ -1,24 +1,293 @@
 ---
+import { Image } from 'astro:assets';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Badge from '../components/ui/Badge.astro';
+import Button from '../components/ui/Button.astro';
+import PaintSplatter from '../components/ui/PaintSplatter.astro';
+import { useTranslations } from '../i18n/utils';
 import Page from '../layouts/Page.astro';
+import { formatTime, getFestivalDays, groupByDay, loadSchedule } from '../utils/schedule';
+
+// ─── Assets ────────────────────────────────────────────────────────────────
+import catAcrobatic from '../assets/categories/acrobatic.png';
+import catComedy from '../assets/categories/comedy.png';
+import catMagic from '../assets/categories/macic.png'; // TD2: Tippfehler im Dateinamen
+import catMusic from '../assets/categories/music.png';
+import catNightlife from '../assets/categories/nightlife.png';
+import catStreetart from '../assets/categories/streetart.png';
+import heroImg from '../assets/hero/hero1.png';
+
+const locale = 'de' as const;
+const t = useTranslations(locale);
+
+// ─── Featured Artists ──────────────────────────────────────────────────────
+const allArtists: CollectionEntry<'artists'>[] = await getCollection('artists');
+const featuredArtists = allArtists
+  .filter(a => !a.data.organizational && Array.isArray(a.data.images) && a.data.images.length > 0)
+  .slice(0, 4);
+
+// ─── Spielplan-Vorschau ────────────────────────────────────────────────────
+const schedule = loadSchedule();
+const days = getFestivalDays(schedule);
+const byDay = groupByDay(schedule);
+const previewDay = days[0] ?? '';
+const previewEntries = (byDay[previewDay] ?? [])
+  .filter(e => !e.artist_id.startsWith('organization_'))
+  .slice(0, 5);
+const artistMap = Object.fromEntries(allArtists.map(a => [a.data.artist_id, a]));
+
+const dayLabels: Record<string, string> = {
+  '2025-09-19': 'Freitag, 19. September',
+  '2025-09-20': 'Samstag, 20. September',
+  '2025-09-21': 'Sonntag, 21. September',
+};
+
+// ─── Kategorie-Daten ───────────────────────────────────────────────────────
+const categories = [
+  { key: 'akrobatik', label: 'Akrobatik', img: catAcrobatic },
+  { key: 'musik',     label: 'Musik',     img: catMusic     },
+  { key: 'comedy',    label: 'Comedy',    img: catComedy    },
+  { key: 'magie',     label: 'Magie',     img: catMagic     },
+  { key: 'street-art',label: 'Street Art',img: catStreetart },
+  { key: 'nightlife', label: 'Nightlife', img: catNightlife },
+] as const;
 ---
 
 <Page
-  title="SPEKTAKEL! Landshut – Strassenkunst Festival"
-  description="Das Strassenkunst-Festival in Landshut: Akrobatik, Jonglage, Musik, Comedy und Street Art mitten in der Altstadt."
-  locale="de"
+  title="SPEKTAKEL! Landshut – Straßenkunstfestival"
+  description="Das Straßenkunst-Festival in Landshut: Akrobatik, Jonglage, Musik, Comedy und Street Art mitten in der Altstadt."
+  locale={locale}
 >
-  <section class="min-h-[60vh] flex items-center justify-center text-center px-4 py-20">
-    <div>
-      <img
-        src="/assets/img/logo/logo.png"
-        alt="SPEKTAKEL! Landshut"
-        width="400"
-        height="170"
-        class="mx-auto mb-8 max-w-xs sm:max-w-sm"
+
+  <!-- ═══ HERO ══════════════════════════════════════════════════════════════ -->
+  <section class="relative min-h-screen bg-white overflow-hidden flex items-center">
+
+    <!-- Haupt-Splatter hinter Künstler-Figur (Mitte-rechts) -->
+    <div
+      class="absolute top-1/2 right-[10%] -translate-y-1/2 pointer-events-none opacity-80"
+      aria-hidden="true"
+    >
+      <PaintSplatter variant={1} width={560} />
+    </div>
+    <!-- Kleiner Akzent-Splatter unten links -->
+    <div
+      class="absolute -bottom-10 left-16 pointer-events-none opacity-40"
+      aria-hidden="true"
+    >
+      <PaintSplatter variant={4} width={260} />
+    </div>
+
+    <!-- Künstler-Figur (rechts, ab md) -->
+    <div
+      class="absolute right-0 bottom-0 hidden md:block h-full pointer-events-none select-none"
+      aria-hidden="true"
+    >
+      <Image
+        src={heroImg}
+        alt=""
+        width={540}
+        class="h-[90%] w-auto object-contain object-bottom"
+        loading="eager"
       />
-      <p class="text-xl text-gray-600 font-sans">
-        19.–21. September 2025 · Landshut
+    </div>
+
+    <!-- Hut-Kreis-Badge (Desktop, über Künstler-Figur) -->
+    <div
+      class="absolute right-[24%] top-[52%] -translate-y-1/2 hidden md:flex items-center justify-center
+             w-36 h-36 lg:w-44 lg:h-44 rounded-full bg-dark z-20 pointer-events-none"
+      aria-hidden="true"
+    >
+      <p class="font-display text-white text-center leading-tight px-3 text-lg lg:text-xl">
+        KÜNSTLER<br />SPIELEN FÜR<br />DEN HUT!
       </p>
     </div>
+
+    <!-- Seiten-Inhalt -->
+    <div class="relative z-10 w-full max-w-7xl mx-auto px-6 py-20 lg:py-28">
+      <div class="max-w-lg">
+
+        <!-- Barrierefreie h1 -->
+        <h1 class="sr-only">SPEKTAKEL! Landshut – Internationales Straßenkunstfestival</h1>
+
+        <!-- Glas-Wrapper: passt sich nur der Text-Breite an, kein Card-Effekt -->
+        <div class="w-fit backdrop-blur-sm bg-white/75 rounded-xl px-4 pt-4 pb-5
+                    md:bg-transparent md:backdrop-blur-none md:px-0 md:pt-0 md:pb-0 md:rounded-none">
+
+          <!-- Visueller Headline-Block -->
+          <p
+            class="font-display leading-none text-dark"
+            style="font-size: clamp(2.5rem, 7vw, 5.5rem)"
+            aria-hidden="true"
+          >INTERNATIONALES</p>
+          <p
+            class="font-display leading-none text-primary"
+            style="font-size: clamp(2.5rem, 7vw, 5.5rem)"
+            aria-hidden="true"
+          >STRASSENKUNST</p>
+          <p
+            class="font-display leading-none text-dark mb-5"
+            style="font-size: clamp(2.5rem, 7vw, 5.5rem)"
+            aria-hidden="true"
+          >FESTIVAL</p>
+
+          <!-- Datum -->
+          <p class="font-display text-2xl text-dark mb-3">{t.home.hero_dates}</p>
+
+          <!-- LANDSHUT-Badge -->
+          <span class="inline-block bg-lime text-dark font-display text-xl px-4 py-1 mb-4 rounded-sm">
+            LANDSHUT
+          </span>
+
+          <!-- Subtext -->
+          <p class="text-dark/80 text-base sm:text-lg leading-relaxed max-w-[340px]">
+            {t.home.hero_subtext}
+          </p>
+
+        </div>
+
+        <!-- CTAs (außerhalb des Glas-Wrappers) -->
+        <div class="flex flex-wrap gap-4 mt-8">
+          <Button href="/programm/" variant="primary" size="lg">{t.home.cta_program}</Button>
+          <Button href="/kuenstler/" variant="ghost" size="lg">{t.home.cta_artists}</Button>
+        </div>
+
+      </div>
+    </div>
   </section>
+
+  <!-- ═══ KATEGORIEN ════════════════════════════════════════════════════════ -->
+  <section class="py-16 sm:py-24 bg-bg">
+    <div class="max-w-5xl mx-auto px-6">
+      <h2 class="font-display text-5xl text-center mb-14">{t.home.categories_heading}</h2>
+      <ul class="grid grid-cols-3 sm:grid-cols-6 gap-6 sm:gap-10 list-none p-0 m-0">
+        {categories.map(cat => (
+          <li class="flex flex-col items-center gap-3 group">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 transition-transform duration-200 group-hover:scale-110">
+              <Image
+                src={cat.img}
+                alt={cat.label}
+                width={80}
+                height={80}
+                class="w-full h-full object-contain"
+              />
+            </div>
+            <span class="font-body font-semibold text-xs sm:text-sm text-center text-dark">
+              {cat.label}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══ HUT-BOX ══════════════════════════════════════════════════════════ -->
+  <section class="py-20 sm:py-32 bg-dark">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+
+      <!-- SVG-Hut-Platzhalter (TD2: durch Illustration ersetzen) -->
+      <div class="w-24 h-20 mx-auto mb-8 text-lime" aria-hidden="true">
+        <svg viewBox="0 0 120 96" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+          <ellipse cx="60" cy="86" rx="56" ry="9" fill="currentColor" opacity="0.85"/>
+          <rect x="26" y="24" width="68" height="64" rx="3" fill="currentColor"/>
+          <ellipse cx="60" cy="24" rx="34" ry="8" fill="currentColor"/>
+          <rect x="26" y="62" width="68" height="9" fill="#ff2d7a"/>
+          <circle cx="92" cy="14" r="7" fill="#b7ff00"/>
+          <circle cx="103" cy="4"  r="5" fill="#b7ff00" opacity="0.7"/>
+          <circle cx="79"  cy="9"  r="4" fill="#b7ff00" opacity="0.6"/>
+          <line x1="87" y1="22" x2="92" y2="14" stroke="#b7ff00" stroke-width="2" stroke-linecap="round"/>
+          <line x1="97" y1="18" x2="103" y2="11" stroke="#b7ff00" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <h2 class="font-display text-5xl sm:text-6xl text-white mb-6 leading-tight">
+        {t.home.hut_heading}
+      </h2>
+      <p class="text-white/65 text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto">
+        {t.home.hut_text}
+      </p>
+
+    </div>
+  </section>
+
+  <!-- ═══ FEATURED ARTISTS ═════════════════════════════════════════════════ -->
+  {featuredArtists.length > 0 && (
+    <section class="py-20 sm:py-28 bg-bg">
+      <div class="max-w-7xl mx-auto px-6">
+
+        <div class="flex items-baseline justify-between mb-12">
+          <h2 class="font-display text-5xl">{t.home.featured_heading}</h2>
+          <a href="/kuenstler/" class="text-primary font-semibold hover:underline text-sm sm:text-base shrink-0 ml-4">
+            {t.nav.artists} →
+          </a>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+          {featuredArtists.map(artist => {
+            const firstCat = artist.data.de?.categories?.[0];
+            return (
+              <a
+                href={`/kuenstler/${artist.data.artist_id}/`}
+                class="group block rounded-xl overflow-hidden bg-white shadow-md hover:shadow-xl transition-shadow duration-300"
+              >
+                <div class="aspect-[3/4] overflow-hidden bg-gray-100">
+                  <img
+                    src={artist.data.images![0]}
+                    alt={artist.data.name}
+                    class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="p-4">
+                  <p class="font-display text-xl leading-tight mb-2">{artist.data.name}</p>
+                  {firstCat && (
+                    <Badge variant="category" category={firstCat.toLowerCase()}>
+                      {firstCat}
+                    </Badge>
+                  )}
+                </div>
+              </a>
+            );
+          })}
+        </div>
+
+      </div>
+    </section>
+  )}
+
+  <!-- ═══ SPIELPLAN-VORSCHAU ════════════════════════════════════════════════ -->
+  {previewEntries.length > 0 && (
+    <section class="py-20 sm:py-28 bg-dark">
+      <div class="max-w-3xl mx-auto px-6">
+
+        <div class="flex items-baseline justify-between mb-3">
+          <h2 class="font-display text-5xl text-white">{t.home.schedule_heading}</h2>
+          <a href="/programm/" class="text-lime font-semibold hover:underline text-sm sm:text-base shrink-0 ml-4">
+            {t.home.schedule_link}
+          </a>
+        </div>
+        <p class="text-white/40 text-sm mb-10">{dayLabels[previewDay] ?? previewDay}</p>
+
+        <ul class="list-none p-0 m-0">
+          {previewEntries.map(entry => {
+            const artist = artistMap[entry.artist_id];
+            return (
+              <li class="flex items-center gap-5 py-4 border-b border-white/10 last:border-0">
+                <span class="font-display text-2xl text-lime w-16 shrink-0 tabular-nums">
+                  {formatTime(entry.time)}
+                </span>
+                <div class="min-w-0">
+                  <p class="text-white font-semibold truncate">
+                    {artist?.data.name ?? entry.artist_id}
+                  </p>
+                  <p class="text-white/40 text-xs mt-0.5">{entry.location_id}</p>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+
+      </div>
+    </section>
+  )}
+
 </Page>

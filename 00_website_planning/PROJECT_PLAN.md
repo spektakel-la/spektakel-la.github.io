@@ -46,6 +46,13 @@ Erst nach explizitem `✅ weiter` oder Korrekturfeedback wird die nächste Phase
 
 Du kannst jederzeit Implementierungsdetails anpassen, Abschnitte zurücksetzen oder die Reihenfolge ändern. Copilot setzt solche Anpassungen minimal-invasiv um und protokolliert die Änderung kurz im Chat.
 
+### Entwicklungsserver (`astro dev`)
+
+- Standard-Workflow: `npm run dev` (Port 4321, HMR)
+- **Bekanntes Problem**: `astro dev` kann nach längerer Laufzeit oder vielen Dateiänderungen „hängen" – Änderungen sind dann nicht mehr im Browser sichtbar, obwohl die Datei gespeichert wurde
+- **Lösung**: Terminal-Prozess killen (`Ctrl+C`) und `npm run dev` neu starten
+- Falls ein Prozess auf einem Port hängt: `lsof -ti:<PORT> | xargs kill -9` → dann neu starten (Port variiert: 4321, 4322, 4323, …)
+
 ---
 
 ## 2. Design-System
@@ -814,30 +821,32 @@ export default defineConfig({
 - [x] **Unit-Tests**: `tests/unit/i18n.test.ts` (Sprach-Fallback, alle Schlüssel vorhanden)
 - [x] **Integrationstests**: `tests/integration/collections.test.ts` (Zod-Schema gegen echte Markdown-Dateien)
 
-### Phase 2 – Layout & i18n (2–3 h)
+### Phase 2 – Layout & i18n (2–3 h) ✅
 
-- [ ] ⚠️ **Asset-Request**: Logo-SVG + OG-Social-Image (1200×630 px) – genaue Spezifikation folgt zu Beginn dieser Phase
-- [ ] `src/layouts/Base.astro` (HTML-Shell, Meta, GTM-Placeholder, SW-Registration)
-- [ ] `src/layouts/Page.astro` (Header/Footer-Wrapper)
-- [ ] `src/components/layout/Header.astro` (Logo, Navigation, Sprachwechsler)
-- [ ] `src/components/layout/Navigation.astro` (Desktop + Mobile Hamburger)
-- [ ] `src/components/layout/Footer.astro` (Social, Links)
-- [ ] `src/i18n/de.ts` + `en.ts` – alle UI-Strings
+- [x] ⚠️ **Asset-Request**: Logo-PNG vorhanden (`/assets/img/logo/logo.png`); OG-Social-Image fehlt noch → siehe §18 Technical Debt
+- [x] `src/layouts/Base.astro` (HTML-Shell, Meta, GTM-Placeholder, SW-Registration)
+- [x] `src/layouts/Page.astro` (Header/Footer-Wrapper)
+- [x] `src/components/layout/Header.astro` (Logo, Navigation, Sprachwechsler)
+- [x] `src/components/layout/Navigation.astro` (Desktop + Mobile Hamburger)
+- [x] `src/components/layout/Footer.astro` (Social, Links)
+- [x] `src/i18n/de.ts` + `en.ts` – alle UI-Strings
 
-### Phase 3 – Design-System-Komponenten (2–3 h)
+### Phase 3 – Design-System-Komponenten (2–3 h) ✅
 
-- [ ] ⚠️ **Asset-Request**: Paint-Splatter-SVGs (4–6 Varianten) + Kategorie-Icons (6 Stück als SVG) – genaue Spezifikation folgt zu Beginn dieser Phase
-- [ ] `Badge.astro`, `Button.astro`, `CategoryChip.astro`
-- [ ] `PaintSplatter.astro` – SVG-Dekoelemente
-- [ ] Globales CSS (Typografie, Farben, Reset)
+- [x] ⚠️ **Asset-Request**: Paint-Splatter-PNGs (5 Varianten) + Kategorie-Icons (6 Stück als PNG) unter `src/assets/splatter/` und `src/assets/categories/` abgelegt
+- [x] `Badge.astro`, `Button.astro`, `CategoryChip.astro`
+- [x] `PaintSplatter.astro` – dekoratives PNG-Element via Astro `<Image>`
+- [x] Globales CSS (Typografie, Farben, Reset)
 
-### Phase 4 – Landingpage (2 h)
+### Phase 4 – Landingpage (2 h) ✅
 
-- [ ] ⚠️ **Asset-Request**: Hero-Bild (mind. 1920×1080 px, WebP) + Hut-Illustration/Icon – genaue Spezifikation folgt zu Beginn dieser Phase
-- [ ] Hero-Sektion
-- [ ] Kategorie-Icon-Leiste
-- [ ] Hut-Panel
-- [ ] Featured-Artists-Slider
+- [x] ⚠️ **Asset-Request**: Hero-Bild (`hero1.png` ✅) + Hut-Illustration (→ TD2: SVG-Platzhalter)
+- [x] Hero-Sektion (Logo, Datum-Badge, Subtext, CTAs, Juggler-Figur, Paint-Splatter)
+- [x] Kategorie-Icon-Leiste (6 Icons mit Hover-Animation)
+- [x] Hut-Panel (SVG-Platzhalter, TD2)
+- [x] Featured-Artists-Slider (4 Artists mit Bild + Kategorie-Badge)
+- [x] Spielplan-Vorschau (Freitag, 5 Einträge)
+- [x] i18n-Strings `home.*` in de.ts + en.ts ergänzt
 - [ ] **Design-Abgleich Desktop + Mobile** (`design_concept.png`)
 
 ### Phase 5 – Programmseite (3–4 h)
@@ -940,6 +949,17 @@ export default defineConfig({
 | 8   | Nightlife: Metadaten-Format im Spielplan          | 🔲 In Phase 1 mit echten 2026-Daten finalisieren             |
 | 9   | Display-Font: Bebas Neue                          | ✅ `@fontsource/bebas-neue` (s. §2.2)                        |
 | 10  | Body-Font: Inter                                  | ✅ `@fontsource/inter` (s. §2.2)                             |
+
+---
+
+## 18. Technical Debt
+
+Hier landen bekannte Lücken, die bewusst zurückgestellt wurden und **vor dem Go-Live geschlossen** werden müssen.
+
+| #   | Asset / Aufgabe                        | Beschreibung                                                                                                          | Benötigt von                           | Priorität |
+| --- | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | -------------------------------------- | --------- |
+| TD1 | **OG-Social-Image** (1200×630 px WebP) | Fehlt vollständig. Aktuell Fallback auf `jonglage.png` (falsches Seitenverhältnis). Muss vor Go-Live erstellt werden. | `Base.astro` `og:image` / Twitter Card | 🔴 Hoch   |
+| TD2 | **Hut-Illustration / Icon**            | Aktuell Platzhalter (einfaches SVG + Text). Soll durch echte Illustration ersetzt werden (Hutmotiv, festivalig).      | Landingpage Hut-Box-Sektion            | 🟡 Mittel |
 
 ---
 
