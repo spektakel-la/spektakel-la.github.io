@@ -6,6 +6,7 @@ import Button from '../components/ui/Button.astro';
 import PaintSplatter from '../components/ui/PaintSplatter.astro';
 import { useTranslations } from '../i18n/utils';
 import Page from '../layouts/Page.astro';
+import { Category } from '../utils/categories';
 import { artistPath, ROUTES } from '../utils/routes';
 import { formatTime, getFestivalDays, groupByDay, loadSchedule } from '../utils/schedule';
 
@@ -44,14 +45,14 @@ const dayLabels: Record<string, string> = {
 };
 
 // ─── Kategorie-Daten ───────────────────────────────────────────────────────
-const categories = [
-  { key: 'akrobatik', label: 'Akrobatik', img: catAcrobatic },
-  { key: 'musik',     label: 'Musik',     img: catMusic     },
-  { key: 'comedy',    label: 'Comedy',    img: catComedy    },
-  { key: 'magie',     label: 'Magie',     img: catMagic     },
-  { key: 'street-art',label: 'Street Art',img: catStreetart },
-  { key: 'nightlife', label: 'Nightlife', img: catNightlife },
-] as const;
+const categories: Array<{ key: Category; label: string; img: ImageMetadata }> = [
+  { key: Category.Akrobatik, label: 'Akrobatik', img: catAcrobatic },
+  { key: Category.Musik,     label: 'Musik',     img: catMusic     },
+  { key: Category.Comedy,    label: 'Comedy',    img: catComedy    },
+  { key: Category.Magie,     label: 'Magie',     img: catMagic     },
+  { key: Category.StreetArt, label: 'Street Art',img: catStreetart },
+  { key: Category.Nightlife, label: 'Nightlife', img: catNightlife },
+];
 ---
 
 <Page

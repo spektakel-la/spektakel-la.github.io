@@ -18,6 +18,7 @@ import CategoryFilter from './CategoryFilter.astro';
 import VenueFilter from './VenueFilter.astro';
 import ProgramList from './ProgramList.astro';
 import ProgramGrid from './ProgramGrid.astro';
+import { Category, CATEGORY_KEYWORDS } from '../../../utils/categories';
 
 interface Props {
   locale: 'de' | 'en';
@@ -41,7 +42,7 @@ const locationMap = Object.fromEntries(allLocations.map((l) => [l.data.location_
 
 // ─── Kategorie-Mapping ───────────────────────────────────────────────────────
 
-function getMacroCategory(artistId: string): string {
+function getMacroCategory(artistId: string): Category | '' {
   const artist = artistMap[artistId];
   if (!artist || artist.data.organizational) return '';
   const cats =
@@ -50,28 +51,24 @@ function getMacroCategory(artistId: string): string {
       : (artist.data.de?.categories ?? []);
   for (const cat of cats) {
     const c = cat.toLowerCase();
-    if (['akrobatik', 'acrobatics', 'jonglage', 'juggling', 'tanz', 'dance'].some((k) => c.includes(k)))
-      return 'akrobatik';
-    if (['musik', 'music'].some((k) => c.includes(k))) return 'musik';
-    if (['comedy', 'theater'].some((k) => c.includes(k))) return 'comedy';
-    if (['magie', 'magic', 'zauber'].some((k) => c.includes(k))) return 'magie';
-    if (['street art', 'fotographie', 'photography', 'lightshow', 'speedpainting', 'graffiti'].some((k) => c.includes(k)))
-      return 'street-art';
+    for (const { cat: macro, keywords } of CATEGORY_KEYWORDS) {
+      if (keywords.some((k) => c.includes(k))) return macro;
+    }
   }
   return '';
 }
 
-const categoryMap: Record<string, string> = Object.fromEntries(
+const categoryMap: Record<string, Category | ''> = Object.fromEntries(
   allArtists.map((a) => [a.data.artist_id, getMacroCategory(a.data.artist_id)])
 );
 
-const catLabels: Record<string, string> = {
-  akrobatik: t.program.catAkrobatik,
-  musik: t.program.catMusik,
-  comedy: t.program.catComedy,
-  magie: t.program.catMagie,
-  'street-art': t.program.catStreetArt,
-  nightlife: t.program.catNightlife,
+const catLabels: Record<Category, string> = {
+  [Category.Akrobatik]: t.program.catAkrobatik,
+  [Category.Musik]:     t.program.catMusik,
+  [Category.Comedy]:    t.program.catComedy,
+  [Category.Magie]:     t.program.catMagie,
+  [Category.StreetArt]: t.program.catStreetArt,
+  [Category.Nightlife]: t.program.catNightlife,
 };
 
 function getDayLabel(dayStr: string): string {
@@ -394,21 +391,26 @@ const jsonLd = {
   });
 
   // ─── Ansicht-Toggle ──────────────────────────────────────────────────────────
-  viewBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      activeView = (btn.dataset.viewToggle as 'list' | 'table') ?? 'list';
-      viewBtns.forEach((b) => {
-        const active = b.dataset.viewToggle === activeView;
-        b.setAttribute('aria-pressed', String(active));
-        b.classList.toggle('text-primary', active);
-        b.classList.toggle('text-dark/40', !active);
-        b.classList.toggle('hover:text-dark', !active);
-      });
-      document.querySelectorAll<HTMLElement>('[data-view-panel]').forEach((panel) => {
-        panel.classList.toggle('hidden', panel.dataset.viewPanel !== activeView);
-      });
+  function setView(view: 'list' | 'table') {
+    activeView = view;
+    viewBtns.forEach((b) => {
+      const active = b.dataset.viewToggle === activeView;
+      b.setAttribute('aria-pressed', String(active));
+      b.classList.toggle('text-primary', active);
+      b.classList.toggle('text-dark/40', !active);
+      b.classList.toggle('hover:text-dark', !active);
     });
+    document.querySelectorAll<HTMLElement>('[data-view-panel]').forEach((panel) => {
+      panel.classList.toggle('hidden', panel.dataset.viewPanel !== activeView);
+    });
+  }
+
+  viewBtns.forEach((btn) => {
+    btn.addEventListener('click', () => setView((btn.dataset.viewToggle as 'list' | 'table') ?? 'list'));
   });
+
+  // ─── Initial-Ansicht je Bildschirmbreite ─────────────────────────────────────
+  setView(window.matchMedia('(min-width: 640px)').matches ? 'table' : 'list');
 
   // ─── Filterlogik ─────────────────────────────────────────────────────────────
   function applyFilters() {
@@ -428,18 +430,66 @@ const jsonLd = {
     activePanel.querySelector<HTMLElement>('.no-results')?.classList.toggle('hidden', visible > 0);
 
     // Tabellen-Ansicht
-    activePanel.querySelectorAll<HTMLElement>('.table-row').forEach((row) => {
-      const cells = row.querySelectorAll<HTMLElement>('td[data-category]');
-      let rowOk = false;
-      cells.forEach((cell) => {
-        if (
-          (!activeCategory || cell.dataset.category === activeCategory) &&
-          (!activeVenue || cell.dataset.location === activeVenue)
-        )
-          rowOk = true;
+    const tablePanel = activePanel.querySelector<HTMLElement>('[data-view-panel="table"]');
+    if (tablePanel) {
+      const noFilter = !activeCategory && !activeVenue;
+
+      // Welche Spalten (location IDs) haben mindestens einen sichtbaren Eintrag?
+      const visibleColIds = new Set<string>();
+      if (noFilter) {
+        tablePanel.querySelectorAll<HTMLElement>('col[data-col-id]').forEach((col) => {
+          visibleColIds.add(col.dataset.colId!);
+        });
+      } else {
+        tablePanel.querySelectorAll<HTMLElement>('td[data-category][data-col-id]').forEach((td) => {
+          const cat = td.dataset.category ?? '';
+          const loc = td.dataset.location ?? '';
+          if (
+            (!activeCategory || cat === activeCategory) &&
+            (!activeVenue || loc === activeVenue)
+          ) {
+            visibleColIds.add(td.dataset.colId!);
+          }
+        });
+      }
+
+      // Spalten über <col visibility:collapse> ein-/ausblenden
+      tablePanel.querySelectorAll<HTMLElement>('col[data-col-id]').forEach((col) => {
+        col.style.visibility = visibleColIds.has(col.dataset.colId!) ? '' : 'collapse';
       });
-      row.classList.toggle('hidden', !rowOk);
-    });
+
+      // Nicht-passende Entry-Zellen visuell ausblenden (Layout bleibt intakt)
+      tablePanel.querySelectorAll<HTMLElement>('td[data-category][data-col-id]').forEach((td) => {
+        const cat = td.dataset.category ?? '';
+        const loc = td.dataset.location ?? '';
+        const matches =
+          (!activeCategory || cat === activeCategory) &&
+          (!activeVenue || loc === activeVenue);
+        const inner = td.querySelector<HTMLElement>('div');
+        if (inner) inner.style.visibility = noFilter || matches ? '' : 'hidden';
+      });
+
+      // Zeilen ausblenden wenn kein sichtbarer Entry-Cell in sichtbarer Spalte vorhanden
+      tablePanel.querySelectorAll<HTMLElement>('.table-row').forEach((row) => {
+        if (noFilter) {
+          row.classList.remove('hidden');
+          return;
+        }
+        let rowOk = false;
+        row.querySelectorAll<HTMLElement>('td[data-category][data-col-id]').forEach((td) => {
+          const cat = td.dataset.category ?? '';
+          const loc = td.dataset.location ?? '';
+          if (
+            visibleColIds.has(td.dataset.colId!) &&
+            (!activeCategory || cat === activeCategory) &&
+            (!activeVenue || loc === activeVenue)
+          ) {
+            rowOk = true;
+          }
+        });
+        row.classList.toggle('hidden', !rowOk);
+      });
+    }
   }
 
   // ─── Live-Indikator ──────────────────────────────────────────────────────────

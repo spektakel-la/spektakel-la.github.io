@@ -1,4 +1,5 @@
 ---
+import { type Category } from '../../utils/categories';
 /**
  * CategoryChip – Filter-Chip für Kategorie-Auswahl.
  *
@@ -10,14 +11,14 @@
 
 interface Props {
   /** Kategorie-Key – steuert den Farbpunkt. Leer = „Alle"-Chip */
-  category?: string;
+  category?: Category;
   /** Angezeigter Text */
   label: string;
   /** Chip ist gerade aktiv/ausgewählt */
   active?: boolean;
   href?: string;
   /** Wird nur für <button>-Chips benötigt */
-  'data-category'?: string;
+  'data-category'?: Category | '';
   class?: string;
 }
 
@@ -30,18 +31,16 @@ const {
   'data-category': dataCategory,
 } = Astro.props;
 
-const catColorMap: Record<string, string> = {
-  akrobatik: 'var(--color-cat-akrobatik)',
-  artistik: 'var(--color-cat-akrobatik)',
-  musik: 'var(--color-cat-musik)',
-  comedy: 'var(--color-cat-comedy)',
+const catColorMap: Record<Category, string> = {
+  akrobatik:    'var(--color-cat-akrobatik)',
+  musik:        'var(--color-cat-musik)',
+  comedy:       'var(--color-cat-comedy)',
   'street-art': 'var(--color-cat-street-art)',
-  street_art: 'var(--color-cat-street-art)',
-  magie: 'var(--color-cat-magie)',
-  nightlife: 'var(--color-cat-nightlife)',
+  magie:        'var(--color-cat-magie)',
+  nightlife:    'var(--color-cat-nightlife)',
 };
 
-const dotColor = category ? (catColorMap[category.toLowerCase()] ?? null) : null;
+const dotColor = category ? (catColorMap[category] ?? null) : null;
 ---
 
 {href ? (

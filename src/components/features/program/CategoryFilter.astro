@@ -1,8 +1,9 @@
 ---
+import { type Category } from '../../../utils/categories';
 import CategoryChip from '../../ui/CategoryChip.astro';
 
 interface Props {
-  catLabels: Record<string, string>;
+  catLabels: Record<Category, string>;
   allLabel: string;
   locale: 'de' | 'en';
 }
@@ -17,6 +18,6 @@ const { catLabels, allLabel, locale } = Astro.props;
 >
   <CategoryChip label={allLabel} active={true} data-category="" />
   {Object.entries(catLabels).map(([key, label]) => (
-    <CategoryChip category={key} label={label} active={false} data-category={key} />
+    <CategoryChip category={key as Category} label={label} active={false} data-category={key as Category} />
   ))}
 </div>
