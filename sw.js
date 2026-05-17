@@ -38,7 +38,7 @@ self.addEventListener('activate', (event) => {
           type: 'window',
         });
 
-        await Promise.all(windowClients.map((client) => client.navigate(client.url)));
+        await Promise.allSettled(windowClients.map((client) => client.navigate(client.url)));
 
         // Diesen Cleanup-Service-Worker deregistrieren
         await self.registration.unregister();
