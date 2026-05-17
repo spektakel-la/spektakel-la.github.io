@@ -27,15 +27,15 @@ const ROW_H = 48;
 ---
 
 <div data-view-panel="table" class="hidden overflow-x-auto -mx-4 sm:mx-0">
-  <table class="w-full border-collapse text-sm min-w-[600px]">
+  <table class="w-full table-fixed border-collapse text-sm min-w-[600px]">
     <thead>
       <tr class="border-b-2 border-dark/20">
-        <th class="text-left py-2 px-3 font-display text-dark/60 w-16">
+        <th class="text-left py-2 px-1.5 font-display text-dark/60 w-14">
           {locale === 'de' ? 'Zeit' : 'Time'}
         </th>
         {grid.locations.map((loc) => (
-          <th class="text-left py-2 px-3 font-display text-dark text-sm">
-            {loc.data.description}
+          <th class="text-left py-2 px-1.5 font-display text-dark text-sm overflow-hidden" title={loc.data.description}>
+            <span set:html={loc.data.description.replace(/\//g, '/<wbr>')} />
           </th>
         ))}
       </tr>
@@ -46,7 +46,7 @@ const ROW_H = 48;
           class="table-row border-b border-gray-100 hover:bg-bg/60 transition-colors h-12"
           data-time-start={row.isoTime}
         >
-          <td class="py-2 px-3 font-mono text-xs text-dark/50 align-top whitespace-nowrap">
+          <td class="py-2 px-1.5 font-mono text-xs text-dark/50 align-top whitespace-nowrap">
             <span class="flex items-center gap-1">
               {row.timeStr}
               <span
@@ -58,7 +58,7 @@ const ROW_H = 48;
           {grid.locations.map((loc) => {
             const cell = row.cells[loc.data.location_id];
             if (!cell || cell.kind === 'spanned') return null;
-            if (cell.kind === 'empty') return <td class="py-2 px-3 align-top" />;
+            if (cell.kind === 'empty') return <td class="py-2 px-1.5 align-top" />;
             const { entry, rowspan } = cell;
             const artist = artistMap[entry.artist_id];
             const cat = categoryMap[entry.artist_id] ?? '';
@@ -69,12 +69,12 @@ const ROW_H = 48;
             return (
               <td
                 rowspan={rowspan > 1 ? rowspan : undefined}
-                class="py-1.5 px-3 align-top"
+                class="py-1.5 px-1.5 align-top"
                 data-location={entry.location_id}
                 data-category={cat}
               >
                 <div
-                  class="rounded px-2 py-1 text-xs overflow-hidden"
+                  class="rounded px-1 py-1 text-xs overflow-hidden"
                   style={`height: ${divHeight}px; border-left: 3px solid ${catColorVar}; background: color-mix(in srgb, ${catColorVar} 12%, white);`}
                 >
                   {isOrg ? (
