@@ -76,6 +76,12 @@ const fullTitle = title.includes('SPEKTAKEL') ? title : `${title} – ${siteName
         })(window, document, 'script', 'dataLayer', 'GTM-TK5422TV');
       });
     </script>
+    <!-- Service Worker registrieren (Cleanup-SW: entfernt alten Workbox-Cache) -->
+    <script is:inline>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
+    </script>
     <slot name="head" />
   </head>
   <body class="bg-[var(--color-bg)] text-[var(--color-dark)] font-sans antialiased">
