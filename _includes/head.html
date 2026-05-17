@@ -48,8 +48,12 @@
   <script src="{{ "/assets/3rd-party/vanilla-cookieconsent/cookieconsent.umd.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
   <script type="module" src="{{ "/assets/js/setup-cookieconsent.js" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
 
-  <!-- service-worker -->
-  <script type="module" src="{{ "/assets/js/setup-workbox.mjs" | prepend: site.baseurl_root }}" charset="utf-8" crossorigin="anonymous"></script>
+  <!-- service-worker: cleanup-only, deregistriert alte SWs und leert Caches -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('{{ "/sw.js" | prepend: site.baseurl_root }}');
+    }
+  </script>
 
   <!-- font-awesome -->
   <link rel="stylesheet" href="{{ "/assets/3rd-party/font-awesome/css/font-awesome.min.css" | prepend: site.baseurl_root }}"  crossorigin="anonymous"/>
