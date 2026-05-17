@@ -1,8 +1,9 @@
 ---
 artist_id: nicolas
 name: Sebastian Nicolas
+image_position: top
 images:
-  - "/assets/img/artists/nicolas.webp"
+  - '/assets/img/artists/nicolas.webp'
 facebook: https://www.facebook.com/profile.php?id=61563897608846
 instagram: https://www.instagram.com/sebastiannicolasmagic/
 youtube: https://www.youtube.com/watch?v=HaYiNabxB3Y&t=1s

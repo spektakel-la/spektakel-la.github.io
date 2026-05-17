@@ -1,8 +1,9 @@
 ---
 artist_id: lotti
 name: Lisa Lotti
+image_position: top
 images:
-  - "/assets/img/artists/lotti.webp"
+  - '/assets/img/artists/lotti.webp'
 facebook: https://www.facebook.com/lisa.lottie
 instagram: https://www.instagram.com/lisa_lottie/
 youtube: https://www.youtube.com/watch?v=MZQmJZ_31O0

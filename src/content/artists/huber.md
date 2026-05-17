@@ -1,6 +1,7 @@
 ---
 artist_id: huber
 name: Jongleur Florian Huber
+image_position: top
 images:
   - '/assets/img/artists/huber.webp'
 facebook: https://www.facebook.com/jongleurflorianhuber

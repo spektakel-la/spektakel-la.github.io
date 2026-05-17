@@ -14,7 +14,8 @@ interface Props {
 }
 
 const { artist, category, basePath, locale, entries = [], primaryLocation } = Astro.props;
-const { name, images, hut_act } = artist.data;
+const { name, images, hut_act, image_position } = artist.data;
+const imgPos = image_position ?? 'center';
 const locData = locale === 'en' ? (artist.data.en ?? artist.data.de) : artist.data.de;
 const img = images?.[0] ?? null;
 const href = `${basePath}/artists/${artist.id}/`;
@@ -45,7 +46,7 @@ const timeLine = entries
         alt={name}
         loading="lazy"
         decoding="async"
-        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        class={`w-full h-full object-cover object-${imgPos} group-hover:scale-105 transition-transform duration-300`}
       />
     ) : (
       <div class="w-full h-full flex items-center justify-center text-dark/20">

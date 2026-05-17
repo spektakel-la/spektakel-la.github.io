@@ -1,6 +1,7 @@
 ---
 artist_id: ohle
 name: Jens Ohle
+image_position: top
 images:
   - '/assets/img/artists/ohle.webp'
 facebook: https://www.facebook.com/jens.ohle

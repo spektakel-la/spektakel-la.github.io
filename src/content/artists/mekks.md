@@ -1,8 +1,9 @@
 ---
 artist_id: mekks
 name: Mekks
+image_position: top
 images:
-  - "/assets/img/artists/mekks.webp"
+  - '/assets/img/artists/mekks.webp'
 facebook: https://www.facebook.com/rudolfdeeg
 
 youtube: https://www.youtube.com/shorts/mrIS57Q-wuE

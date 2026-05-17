@@ -16,7 +16,8 @@ const { artist, locale } = Astro.props;
 const t = useTranslations(locale);
 const basePath = locale === 'en' ? '/en' : '';
 
-const { name, images, facebook, instagram, youtube, homepage, hut_act, artist_id, duration } = artist.data;
+const { name, images, facebook, instagram, youtube, homepage, hut_act, artist_id, duration, image_position } = artist.data;
+const imgPos = image_position ?? 'center';
 const locData = locale === 'en' ? (artist.data.en ?? artist.data.de) : artist.data.de;
 
 // Kategorie bestimmen
@@ -79,30 +80,63 @@ const catChipLabel = macroCategory ? (locData.categories[0] ?? macroCategory) : 
   </div>
 
   <!-- ─── Hero ────────────────────────────────────────────────────────────── -->
-  <section class="relative bg-white overflow-hidden" style="min-height: 420px;">
+  <section class="relative bg-white overflow-hidden sm:[min-height:420px]">
 
-    <!-- Künstlerbild rechts -->
+    <!-- DESKTOP: Hashblur-Ambient (unter allem) -->
     {mainImage && (
-      <div class="absolute right-0 top-0 bottom-0 w-full sm:w-1/2 z-10 pointer-events-none" aria-hidden="true">
+      <div class="hidden sm:block absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         <img
           src={mainImage}
           alt=""
-          class="w-full h-full object-cover object-center"
+          class="w-full h-full object-cover"
+          style={`filter: blur(60px); transform: scale(1.2); object-position: ${imgPos};`}
           loading="eager"
         />
       </div>
     )}
 
-    <!-- Splatter-Dekoration -->
-    <div class="absolute top-0 right-0 opacity-30 pointer-events-none" aria-hidden="true" style="width:420px; transform: translate(15%, -10%) rotate(20deg);">
-      <PaintSplatter variant={2} width={420} />
-    </div>
-    <div class="absolute bottom-0 left-0 opacity-15 pointer-events-none" aria-hidden="true" style="width:220px; transform: translate(-20%, 30%);">
+    <!-- DESKTOP: Künstlerbild rechts mit mask-image Einblendung (z-10) -->
+    {mainImage && (
+      <div
+        class="hidden sm:block absolute right-0 top-0 bottom-0 w-1/2 z-10 pointer-events-none"
+        style="-webkit-mask-image: linear-gradient(to right, transparent 0%, black 50%); mask-image: linear-gradient(to right, transparent 0%, black 50%);"
+        aria-hidden="true"
+      >
+        <img
+          src={mainImage}
+          alt=""
+          class={`w-full h-full object-cover object-${imgPos}`}
+          loading="eager"
+        />
+      </div>
+    )}
+
+    <!-- DESKTOP: Weißer Overlay-Gradient -->
+    <div
+      class="hidden sm:block absolute inset-0 z-20 pointer-events-none"
+      aria-hidden="true"
+      style="background: linear-gradient(to right, white 0%, white 22%, rgba(255,255,255,0.88) 32%, rgba(255,255,255,0.65) 42%, rgba(255,255,255,0.3) 54%, rgba(255,255,255,0.08) 64%, transparent 74%)"
+    ></div>
+
+    <!-- Splatter links: nur Desktop -->
+    <div class="hidden sm:block absolute bottom-0 left-0 z-30 opacity-15 pointer-events-none" aria-hidden="true" style="width:220px; transform: translate(-20%, 30%);">
       <PaintSplatter variant={4} width={220} />
     </div>
 
+    <!-- MOBILE: Künstlerbild als normaler Block vor dem Text -->
+    {mainImage && (
+      <div class="block sm:hidden w-full" style="height: 260px;" aria-hidden="true">
+        <img
+          src={mainImage}
+          alt=""
+          class={`w-full h-full object-cover object-${imgPos}`}
+          loading="eager"
+        />
+      </div>
+    )}
+
     <!-- Text-Content links -->
-    <div class="relative z-10 px-6 sm:px-10 py-12 sm:py-16 sm:w-3/5">
+    <div class="relative z-30 px-6 sm:px-10 py-8 sm:py-16 sm:w-3/5">
       {macroCategory && catChipLabel && (
         <div class="mb-4" style="filter: drop-shadow(0 0 6px rgba(255,255,255,0.95)); text-shadow: 1px 1px 6px rgba(255,255,255,0.95), -1px -1px 4px rgba(255,255,255,0.9);">
           <CategoryChip category={macroCategory} label={catChipLabel} class="pointer-events-none" />
@@ -140,6 +174,7 @@ const catChipLabel = macroCategory ? (locData.categories[0] ?? macroCategory) : 
         )}
       </div>
     </div>
+
   </section>
 
   <!-- ─── Body: 3 Spalten ────────────────────────────────────────────────────── -->

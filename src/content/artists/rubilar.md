@@ -1,8 +1,9 @@
 ---
 artist_id: rubilar
 name: Victor Rubilar
+image_position: top
 images:
-  - "/assets/img/artists/rubilar.webp"
+  - '/assets/img/artists/rubilar.webp'
 facebook: https://www.facebook.com/victor.rubilar
 instagram: https://www.instagram.com/victorrubilar/
 youtube: https://www.youtube.com/watch?v=LJZN8mMAE7g
