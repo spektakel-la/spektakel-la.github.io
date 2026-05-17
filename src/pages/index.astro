@@ -6,6 +6,7 @@ import Button from '../components/ui/Button.astro';
 import PaintSplatter from '../components/ui/PaintSplatter.astro';
 import { useTranslations } from '../i18n/utils';
 import Page from '../layouts/Page.astro';
+import { artistPath, ROUTES } from '../utils/routes';
 import { formatTime, getFestivalDays, groupByDay, loadSchedule } from '../utils/schedule';
 
 // ─── Assets ────────────────────────────────────────────────────────────────
@@ -147,8 +148,8 @@ const categories = [
 
         <!-- CTAs (außerhalb des Glas-Wrappers) -->
         <div class="flex flex-wrap gap-4 mt-8">
-          <Button href="/programm/" variant="primary" size="lg">{t.home.cta_program}</Button>
-          <Button href="/kuenstler/" variant="ghost" size="lg">{t.home.cta_artists}</Button>
+          <Button href={ROUTES.program} variant="primary" size="lg">{t.home.cta_program}</Button>
+          <Button href={ROUTES.artists} variant="ghost" size="lg">{t.home.cta_artists}</Button>
         </div>
 
       </div>
@@ -216,7 +217,7 @@ const categories = [
 
         <div class="flex items-baseline justify-between mb-12">
           <h2 class="font-display text-5xl">{t.home.featured_heading}</h2>
-          <a href="/kuenstler/" class="text-primary font-semibold hover:underline text-sm sm:text-base shrink-0 ml-4">
+          <a href={ROUTES.artists} class="text-primary font-semibold hover:underline text-sm sm:text-base shrink-0 ml-4">
             {t.nav.artists} →
           </a>
         </div>
@@ -226,7 +227,7 @@ const categories = [
             const firstCat = artist.data.de?.categories?.[0];
             return (
               <a
-                href={`/kuenstler/${artist.data.artist_id}/`}
+                href={artistPath(artist.data.artist_id)}
                 class="group block rounded-xl overflow-hidden bg-white shadow-md hover:shadow-xl transition-shadow duration-300"
               >
                 <div class="aspect-[3/4] overflow-hidden bg-gray-100">
@@ -261,7 +262,7 @@ const categories = [
 
         <div class="flex items-baseline justify-between mb-3">
           <h2 class="font-display text-5xl text-white">{t.home.schedule_heading}</h2>
-          <a href="/programm/" class="text-lime font-semibold hover:underline text-sm sm:text-base shrink-0 ml-4">
+          <a href={ROUTES.program} class="text-lime font-semibold hover:underline text-sm sm:text-base shrink-0 ml-4">
             {t.home.schedule_link}
           </a>
         </div>

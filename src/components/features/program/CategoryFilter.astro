@@ -1,0 +1,22 @@
+---
+import CategoryChip from '../../ui/CategoryChip.astro';
+
+interface Props {
+  catLabels: Record<string, string>;
+  allLabel: string;
+  locale: 'de' | 'en';
+}
+
+const { catLabels, allLabel, locale } = Astro.props;
+---
+
+<div
+  class="flex flex-wrap gap-1.5"
+  role="group"
+  aria-label={locale === 'de' ? 'Kategorie-Filter' : 'Category filter'}
+>
+  <CategoryChip label={allLabel} active={true} data-category="" />
+  {Object.entries(catLabels).map(([key, label]) => (
+    <CategoryChip category={key} label={label} active={false} data-category={key} />
+  ))}
+</div>

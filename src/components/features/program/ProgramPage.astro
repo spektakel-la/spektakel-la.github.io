@@ -1,0 +1,323 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { useTranslations } from '../../../i18n/utils';
+import {
+  formatTime,
+  getFestivalDays,
+  groupByDay,
+  loadSchedule,
+  type ScheduleEntry,
+} from '../../../utils/schedule';
+import Page from '../../../layouts/Page.astro';
+import PaintSplatter from '../../ui/PaintSplatter.astro';
+import DayTabs from './DayTabs.astro';
+import CategoryFilter from './CategoryFilter.astro';
+import VenueFilter from './VenueFilter.astro';
+import ProgramList from './ProgramList.astro';
+import ProgramGrid from './ProgramGrid.astro';
+
+interface Props {
+  locale: 'de' | 'en';
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const basePath = locale === 'en' ? '/en' : '';
+
+// ─── Daten laden ─────────────────────────────────────────────────────────────
+
+const allArtists: CollectionEntry<'artists'>[] = await getCollection('artists');
+const allLocations: CollectionEntry<'locations'>[] = await getCollection('locations');
+
+const schedule = loadSchedule();
+const byDay = groupByDay(schedule);
+const days = getFestivalDays(schedule);
+
+const artistMap = Object.fromEntries(allArtists.map((a) => [a.data.artist_id, a]));
+const locationMap = Object.fromEntries(allLocations.map((l) => [l.data.location_id, l]));
+
+// ─── Kategorie-Mapping ───────────────────────────────────────────────────────
+
+function getMacroCategory(artistId: string): string {
+  const artist = artistMap[artistId];
+  if (!artist || artist.data.organizational) return '';
+  const cats =
+    locale === 'en'
+      ? (artist.data.en?.categories ?? artist.data.de?.categories ?? [])
+      : (artist.data.de?.categories ?? []);
+  for (const cat of cats) {
+    const c = cat.toLowerCase();
+    if (['akrobatik', 'acrobatics', 'jonglage', 'juggling', 'tanz', 'dance'].some((k) => c.includes(k)))
+      return 'akrobatik';
+    if (['musik', 'music'].some((k) => c.includes(k))) return 'musik';
+    if (['comedy', 'theater'].some((k) => c.includes(k))) return 'comedy';
+    if (['magie', 'magic', 'zauber'].some((k) => c.includes(k))) return 'magie';
+    if (['street art', 'fotographie', 'photography', 'lightshow', 'speedpainting', 'graffiti'].some((k) => c.includes(k)))
+      return 'street-art';
+  }
+  return '';
+}
+
+const categoryMap: Record<string, string> = Object.fromEntries(
+  allArtists.map((a) => [a.data.artist_id, getMacroCategory(a.data.artist_id)])
+);
+
+const catLabels: Record<string, string> = {
+  akrobatik: t.program.catAkrobatik,
+  musik: t.program.catMusik,
+  comedy: t.program.catComedy,
+  magie: t.program.catMagie,
+  'street-art': t.program.catStreetArt,
+  nightlife: t.program.catNightlife,
+};
+
+function getDayLabel(dayStr: string): string {
+  const d = new Date(dayStr + 'T12:00:00');
+  const wd = d.getDay();
+  if (wd === 5) return t.program.friday;
+  if (wd === 6) return t.program.saturday;
+  if (wd === 0) return t.program.sunday;
+  return dayStr;
+}
+
+function getShortDate(dayStr: string): string {
+  return new Date(dayStr + 'T12:00:00').toLocaleDateString('de-DE', {
+    day: '2-digit',
+    month: '2-digit',
+  });
+}
+
+const dayItems = days.map((d) => ({ iso: d, label: getDayLabel(d), shortDate: getShortDate(d) }));
+
+const venueOptions = allLocations
+  .filter((l) => !l.data.nightlife && !l.data.organizational)
+  .sort((a, b) => (a.data.sort_order ?? 99) - (b.data.sort_order ?? 99))
+  .map((l) => ({ id: l.data.location_id, label: l.data.description }));
+
+// ─── Tabellen-Grid (für ProgramGrid) ────────────────────────────────────────
+
+type TableGrid = {
+  locations: CollectionEntry<'locations'>[];
+  rows: { timeStr: string; isoTime: string; cells: Record<string, ScheduleEntry | undefined> }[];
+};
+
+function getLocationsForDay(dayStr: string): CollectionEntry<'locations'>[] {
+  const ids = [...new Set((byDay[dayStr] ?? []).map((e) => e.location_id))];
+  return allLocations
+    .filter((l) => ids.includes(l.data.location_id) && !l.data.nightlife)
+    .sort((a, b) => (a.data.sort_order ?? 99) - (b.data.sort_order ?? 99));
+}
+
+function getTimeSlotsForDay(dayStr: string): string[] {
+  const slots = [...new Set((byDay[dayStr] ?? []).map((e) => formatTime(e.time)))];
+  return slots.sort();
+}
+
+function buildTableGrid(dayStr: string): TableGrid {
+  const entries = byDay[dayStr] ?? [];
+  const locations = getLocationsForDay(dayStr);
+  const timeSlots = getTimeSlotsForDay(dayStr);
+  const rows = timeSlots.map((timeStr) => {
+    const slotEntries = entries.filter((e) => formatTime(e.time) === timeStr);
+    const cells: Record<string, ScheduleEntry | undefined> = {};
+    for (const e of slotEntries) cells[e.location_id] = e;
+    return { timeStr, isoTime: slotEntries[0]?.time.toISOString() ?? '', cells };
+  });
+  return { locations, rows };
+}
+
+const tableGrids = Object.fromEntries(days.map((d) => [d, buildTableGrid(d)]));
+---
+
+<Page
+  locale={locale}
+  title={t.program.title}
+  description={locale === 'de'
+    ? 'Alle Auftritte beim SPEKTAKEL! Landshut – täglich von Freitag bis Sonntag.'
+    : 'All performances at SPEKTAKEL! Landshut – Friday to Sunday.'}
+>
+
+  <!-- ─── Hero ─────────────────────────────────────────────────────────────── -->
+  <section class="relative bg-dark text-white overflow-hidden py-16 md:py-20">
+    <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+      <div class="absolute -top-16 -right-20 opacity-20">
+        <PaintSplatter variant={2} width={480} />
+      </div>
+      <div class="absolute -bottom-12 -left-10 opacity-15">
+        <PaintSplatter variant={5} width={300} />
+      </div>
+    </div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+      <p class="text-primary font-display text-xl tracking-widest mb-1">SPEKTAKEL! LANDSHUT 2025</p>
+      <h1 class="font-display leading-none text-white" style="font-size: clamp(3rem, 10vw, 7rem)">
+        {t.program.title.toUpperCase()}
+      </h1>
+      <p class="mt-4 text-white/50 text-sm">{t.common.disclaimer}</p>
+    </div>
+  </section>
+
+  <!-- ─── Sticky Filter-Bar ────────────────────────────────────────────────── -->
+  <div id="program-filters" class="sticky top-0 z-30 bg-white border-b border-gray-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <DayTabs
+        days={dayItems}
+        locale={locale}
+        listViewLabel={t.program.listView}
+        tableViewLabel={t.program.tableView}
+      />
+      <!-- Zeile 2: Kategorie-Chips + Spielort-Filter -->
+      <div class="flex flex-wrap items-center gap-2 py-2 border-t border-gray-100">
+        <CategoryFilter catLabels={catLabels} allLabel={t.common.all} locale={locale} />
+        <div class="ml-auto">
+          <VenueFilter locations={venueOptions} allLabel={t.common.allLocations} />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Programm-Inhalt ───────────────────────────────────────────────────── -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    {days.map((day, dayIdx) => (
+      <div
+        id={`panel-${day}`}
+        role="tabpanel"
+        aria-labelledby={`tab-${day}`}
+        data-day-panel={day}
+        class:list={[dayIdx !== 0 && 'hidden']}
+      >
+        <ProgramList
+          entries={byDay[day] ?? []}
+          artistMap={artistMap}
+          locationMap={locationMap}
+          categoryMap={categoryMap}
+          catLabels={catLabels}
+          basePath={basePath}
+          locale={locale}
+          noResultsLabel={t.program.noResults}
+          liveNowLabel={t.program.liveNow}
+          hutActLabel={t.common.hutAct}
+        />
+        <ProgramGrid
+          grid={tableGrids[day]}
+          artistMap={artistMap}
+          categoryMap={categoryMap}
+          basePath={basePath}
+          locale={locale}
+        />
+      </div>
+    ))}
+  </div>
+
+</Page>
+
+<script>
+  // ─── Zustand ────────────────────────────────────────────────────────────────
+  let activeDay = (document.querySelector<HTMLButtonElement>('[data-tab]'))?.dataset.day ?? '';
+  let activeCategory = '';
+  let activeVenue = '';
+  let activeView: 'list' | 'table' = 'list';
+
+  const tabs = document.querySelectorAll<HTMLButtonElement>('[data-tab]');
+  const dayPanels = document.querySelectorAll<HTMLElement>('[data-day-panel]');
+  const categoryBtns = document.querySelectorAll<HTMLButtonElement>('#program-filters .chip');
+  const venueSelect = document.querySelector<HTMLSelectElement>('#venue-filter');
+  const viewBtns = document.querySelectorAll<HTMLButtonElement>('[data-view-toggle]');
+
+  // ─── Day-Tabs ────────────────────────────────────────────────────────────────
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      activeDay = tab.dataset.day ?? '';
+      tabs.forEach((t) => {
+        const active = t.dataset.day === activeDay;
+        t.setAttribute('aria-selected', String(active));
+        t.classList.toggle('border-primary', active);
+        t.classList.toggle('text-primary', active);
+        t.classList.toggle('border-transparent', !active);
+        t.classList.toggle('text-dark/50', !active);
+      });
+      dayPanels.forEach((p) => p.classList.toggle('hidden', p.dataset.dayPanel !== activeDay));
+      applyFilters();
+    });
+  });
+
+  // ─── Kategorie-Chips ─────────────────────────────────────────────────────────
+  categoryBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      activeCategory = btn.dataset.category ?? '';
+      categoryBtns.forEach((b) => {
+        const isActive = (b.dataset.category ?? '') === activeCategory;
+        b.classList.toggle('chip--active', isActive);
+      });
+      applyFilters();
+    });
+  });
+
+  // ─── Spielort-Filter ─────────────────────────────────────────────────────────
+  venueSelect?.addEventListener('change', () => {
+    activeVenue = venueSelect.value;
+    applyFilters();
+  });
+
+  // ─── Ansicht-Toggle ──────────────────────────────────────────────────────────
+  viewBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      activeView = (btn.dataset.viewToggle as 'list' | 'table') ?? 'list';
+      viewBtns.forEach((b) => {
+        const active = b.dataset.viewToggle === activeView;
+        b.setAttribute('aria-pressed', String(active));
+        b.classList.toggle('text-primary', active);
+        b.classList.toggle('text-dark/40', !active);
+        b.classList.toggle('hover:text-dark', !active);
+      });
+      document.querySelectorAll<HTMLElement>('[data-view-panel]').forEach((panel) => {
+        panel.classList.toggle('hidden', panel.dataset.viewPanel !== activeView);
+      });
+    });
+  });
+
+  // ─── Filterlogik ─────────────────────────────────────────────────────────────
+  function applyFilters() {
+    const activePanel = document.querySelector<HTMLElement>(`[data-day-panel="${activeDay}"]`);
+    if (!activePanel) return;
+
+    // Listen-Ansicht
+    const entries = activePanel.querySelectorAll<HTMLElement>('.program-entry');
+    let visible = 0;
+    entries.forEach((entry) => {
+      const ok =
+        (!activeCategory || entry.dataset.category === activeCategory) &&
+        (!activeVenue || entry.dataset.location === activeVenue);
+      entry.classList.toggle('hidden', !ok);
+      if (ok) visible++;
+    });
+    activePanel.querySelector<HTMLElement>('.no-results')?.classList.toggle('hidden', visible > 0);
+
+    // Tabellen-Ansicht
+    activePanel.querySelectorAll<HTMLElement>('.table-row').forEach((row) => {
+      const cells = row.querySelectorAll<HTMLElement>('td[data-category]');
+      let rowOk = false;
+      cells.forEach((cell) => {
+        if (
+          (!activeCategory || cell.dataset.category === activeCategory) &&
+          (!activeVenue || cell.dataset.location === activeVenue)
+        )
+          rowOk = true;
+      });
+      row.classList.toggle('hidden', !rowOk);
+    });
+  }
+
+  // ─── Live-Indikator ──────────────────────────────────────────────────────────
+  function updateLive() {
+    const now = Date.now();
+    const SLOT = 30 * 60 * 1000;
+    document.querySelectorAll<HTMLElement>('[data-time-start]').forEach((el) => {
+      const start = new Date(el.dataset.timeStart ?? '').getTime();
+      if (isNaN(start)) return;
+      const live = now >= start && now < start + SLOT;
+      el.querySelectorAll<HTMLElement>('.live-dot').forEach((d) => d.classList.toggle('hidden', !live));
+    });
+  }
+  updateLive();
+  setInterval(updateLive, 60_000);
+</script>

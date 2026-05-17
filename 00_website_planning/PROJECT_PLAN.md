@@ -187,17 +187,17 @@ Die Astro-URLs sind **bewusst identisch** mit den alten Jekyll-URLs gewählt –
 
 ### 4.2 Astro-Integrationen & Pakete
 
-| Paket                                          | Zweck                                                  |
-| ---------------------------------------------- | ------------------------------------------------------ |
-| `@astrojs/sitemap`                             | Sitemap-Generierung                                    |
-| `@astrojs/image`                               | Bild-Optimierung (WebP, AVIF, responsive sizes)        |
-| `@fontsource/bebas-neue` + `@fontsource/inter` | Self-hosted Fonts (DSGVO-konform, kein Google-Request) |
-| `@vite-pwa/astro`                              | Service Worker / PWA-Manifest                          |
-| `vite-plugin-pwa`                              | Workbox-Konfiguration                                  |
-| Astro i18n (built-in)                          | Mehrsprachigkeit de/en                                 |
-| `leaflet` + `@types/leaflet`                   | Interaktive Karte (CSR)                                |
-| `workbox-precaching`                           | Offline-Caching                                        |
-| `astro-seo` oder manuell                       | Meta-Tags, OpenGraph, LD+JSON                          |
+| Paket                                          | Zweck                                                     |
+| ---------------------------------------------- | --------------------------------------------------------- |
+| `@astrojs/sitemap`                             | Sitemap-Generierung                                       |
+| `@astrojs/image`                               | Bild-Optimierung (WebP, AVIF, responsive sizes)           |
+| `@fontsource/bebas-neue` + `@fontsource/inter` | Self-hosted Fonts (DSGVO-konform, kein Google-Request)    |
+| ~~`@vite-pwa/astro`~~                          | ~~Service Worker / PWA-Manifest~~ → **ausgebaut, s. §11** |
+| ~~`vite-plugin-pwa`~~                          | ~~Workbox-Konfiguration~~ → **ausgebaut, s. §11**         |
+| Astro i18n (built-in)                          | Mehrsprachigkeit de/en                                    |
+| `leaflet` + `@types/leaflet`                   | Interaktive Karte (CSR)                                   |
+| `workbox-precaching`                           | Offline-Caching                                           |
+| `astro-seo` oder manuell                       | Meta-Tags, OpenGraph, LD+JSON                             |
 
 ### 4.3 Testing
 
@@ -664,7 +664,10 @@ Der GTM-Container `GTM-TK5422TV` enthält ausschließlich Analytics-Tags (kein M
 
 ## 11. PWA & Service Worker
 
-### 11.1 Konfiguration (`vite-plugin-pwa` via `@vite-pwa/astro`)
+> ⚠️ **Status: Ausgebaut (Mai 2026)** – Der Service Worker wurde aus dem Build entfernt, um Komplexität zu reduzieren (Caching-Bugs, SW-Interferenz beim lokalen Testing). Am Ende des Projekts wird neu bewertet, ob ein SW-Ansatz noch sinnvoll ist – ggf. entfällt er bei ausreichend optimierter, schlanker Site komplett.
+> **TODO (Ende Projekt)**: SW-Bedarf bewerten: Ladezeiten ohne SW messen, Offline-Anforderungen klären, ggf. `@vite-pwa/astro` wieder einbinden oder dauerhaft weglassen.
+
+### 11.1 Konfiguration (`vite-plugin-pwa` via `@vite-pwa/astro`) – REFERENZ (inaktiv)
 
 **Cache-Strategie Option C:**
 

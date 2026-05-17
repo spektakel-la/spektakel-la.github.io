@@ -58,9 +58,6 @@ const fullTitle = title.includes('SPEKTAKEL') ? title : `${title} – ${siteName
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/assets/img/logo/logo.png" />
 
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="/manifest.webmanifest" />
-
     <!-- GTM (nur nach Cookie-Consent via CustomEvent) -->
     <script is:inline>
       window.__gtmLoaded = false;
@@ -88,10 +85,5 @@ const fullTitle = title.includes('SPEKTAKEL') ? title : `${title} – ${siteName
 
     <slot />
 
-    <!-- Service Worker Registration -->
-    <script>
-      import { registerSW } from 'virtual:pwa-register';
-      registerSW({ immediate: true });
-    </script>
   </body>
 </html>

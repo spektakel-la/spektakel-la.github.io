@@ -1,0 +1,98 @@
+---
+import { type CollectionEntry } from 'astro:content';
+import { formatTime, type ScheduleEntry } from '../../../utils/schedule';
+import CategoryChip from '../../ui/CategoryChip.astro';
+
+interface Props {
+  entries: ScheduleEntry[];
+  artistMap: Record<string, CollectionEntry<'artists'>>;
+  locationMap: Record<string, CollectionEntry<'locations'>>;
+  categoryMap: Record<string, string>;
+  catLabels: Record<string, string>;
+  basePath: string;
+  locale: 'de' | 'en';
+  noResultsLabel: string;
+  liveNowLabel: string;
+  hutActLabel: string;
+}
+
+const {
+  entries,
+  artistMap,
+  locationMap,
+  categoryMap,
+  catLabels,
+  basePath,
+  noResultsLabel,
+  liveNowLabel,
+  hutActLabel,
+} = Astro.props;
+---
+
+<div data-view-panel="list">
+  <div class="divide-y divide-gray-100">
+    {entries.map((entry) => {
+      const artist = artistMap[entry.artist_id];
+      const location = locationMap[entry.location_id];
+      const cat = categoryMap[entry.artist_id] ?? '';
+      const isOrg = artist?.data.organizational ?? false;
+      const artistName = artist?.data.name ?? entry.artist_id;
+      const artistSlug = artist?.id ?? '';
+
+      return (
+        <div
+          class="program-entry flex flex-wrap sm:flex-nowrap items-center gap-3 py-3 px-2 rounded-lg hover:bg-bg transition-colors"
+          data-location={entry.location_id}
+          data-category={cat}
+          data-time-start={entry.time.toISOString()}
+        >
+          <span class="font-mono text-sm font-semibold text-dark/60 w-12 shrink-0">
+            {formatTime(entry.time)}
+          </span>
+          <span
+            class="live-dot hidden shrink-0 w-2 h-2 rounded-full bg-primary animate-pulse"
+            aria-label={liveNowLabel}
+          />
+
+          <div class="flex-1 min-w-0">
+            {isOrg ? (
+              <span class="font-display text-base text-dark/40 italic">{artistName}</span>
+            ) : (
+              <a
+                href={`${basePath}/artists/${artistSlug}/`}
+                class="font-display text-base text-dark hover:text-primary transition-colors"
+              >
+                {artistName}
+              </a>
+            )}
+            {artist?.data.hut_act && (
+              <span class="ml-2 inline-block text-xs bg-lime text-dark px-2 py-0.5 rounded font-display">
+                🎩 {hutActLabel}
+              </span>
+            )}
+            {entry.notes && (
+              <span class="ml-2 text-xs text-dark/40">{entry.notes}</span>
+            )}
+          </div>
+
+          <span class="text-sm text-dark/50 shrink-0 hidden sm:inline">
+            {location?.data.description ?? entry.location_id}
+          </span>
+
+          {cat && (
+            <CategoryChip
+              category={cat}
+              label={catLabels[cat] ?? cat}
+              active={false}
+              class="shrink-0 text-xs pointer-events-none"
+            />
+          )}
+        </div>
+      );
+    })}
+  </div>
+
+  <p class="no-results hidden text-center text-dark/40 py-12">
+    {noResultsLabel}
+  </p>
+</div>

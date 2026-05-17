@@ -1,0 +1,83 @@
+---
+import { type CollectionEntry } from 'astro:content';
+import { type ScheduleEntry } from '../../../utils/schedule';
+
+type TableGrid = {
+  locations: CollectionEntry<'locations'>[];
+  rows: { timeStr: string; isoTime: string; cells: Record<string, ScheduleEntry | undefined> }[];
+};
+
+interface Props {
+  grid: TableGrid;
+  artistMap: Record<string, CollectionEntry<'artists'>>;
+  categoryMap: Record<string, string>;
+  basePath: string;
+  locale: 'de' | 'en';
+}
+
+const { grid, artistMap, categoryMap, basePath, locale } = Astro.props;
+---
+
+<div data-view-panel="table" class="hidden overflow-x-auto -mx-4 sm:mx-0">
+  <table class="w-full border-collapse text-sm min-w-[600px]">
+    <thead>
+      <tr class="border-b-2 border-dark/20">
+        <th class="text-left py-2 px-3 font-display text-dark/60 w-16">
+          {locale === 'de' ? 'Zeit' : 'Time'}
+        </th>
+        {grid.locations.map((loc) => (
+          <th class="text-left py-2 px-3 font-display text-dark text-sm">
+            {loc.data.description}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {grid.rows.map((row) => (
+        <tr
+          class="table-row border-b border-gray-100 hover:bg-bg/60 transition-colors"
+          data-time-start={row.isoTime}
+        >
+          <td class="py-2 px-3 font-mono text-xs text-dark/50 align-top whitespace-nowrap">
+            <span class="flex items-center gap-1">
+              {row.timeStr}
+              <span
+                class="live-dot hidden w-2 h-2 rounded-full bg-primary animate-pulse"
+                aria-hidden="true"
+              />
+            </span>
+          </td>
+          {grid.locations.map((loc) => {
+            const cell = row.cells[loc.data.location_id];
+            if (!cell) return <td class="py-2 px-3 align-top" />;
+            const artist = artistMap[cell.artist_id];
+            const cat = categoryMap[cell.artist_id] ?? '';
+            const isOrg = artist?.data.organizational ?? false;
+            const catColorVar = cat ? `var(--color-cat-${cat})` : 'var(--color-bg-light)';
+            return (
+              <td class="py-1.5 px-3 align-top" data-location={cell.location_id} data-category={cat}>
+                <div
+                  class="rounded px-2 py-1 text-xs"
+                  style={`border-left: 3px solid ${catColorVar}; background: color-mix(in srgb, ${catColorVar} 12%, white);`}
+                >
+                  {isOrg ? (
+                    <span class="text-dark/40 italic">
+                      {artist?.data.name ?? cell.artist_id}
+                    </span>
+                  ) : (
+                    <a
+                      href={`${basePath}/artists/${artist?.id ?? cell.artist_id}/`}
+                      class="font-semibold text-dark hover:text-primary transition-colors"
+                    >
+                      {artist?.data.name ?? cell.artist_id}
+                    </a>
+                  )}
+                </div>
+              </td>
+            );
+          })}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

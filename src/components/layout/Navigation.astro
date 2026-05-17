@@ -1,6 +1,7 @@
 ---
 import type { Locale } from '../../i18n/utils';
 import { localePath, useTranslations } from '../../i18n/utils';
+import { ROUTES } from '../../utils/routes';
 
 interface Props {
   locale?: string;
@@ -18,12 +19,12 @@ function isActive(path: string): boolean {
 }
 
 const navItems = [
-  { key: 'program', href: '/programm/' },
-  { key: 'artists', href: '/kuenstler/' },
-  { key: 'locations', href: '/spielorte/' },
-  { key: 'gallery', href: '/galerie/' },
-  { key: 'nightlife', href: '/nightlife/' },
-  { key: 'info', href: '/info/' },
+  { key: 'program',    href: ROUTES.program },
+  { key: 'artists',   href: ROUTES.artists },
+  { key: 'locations', href: ROUTES.locations },
+  { key: 'gallery',   href: ROUTES.impressions },
+  { key: 'nightlife', href: ROUTES.nightlife },
+  { key: 'info',      href: ROUTES.info },
 ] as const;
 ---
 

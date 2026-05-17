@@ -1,0 +1,76 @@
+---
+interface DayItem {
+  iso: string;
+  label: string;
+  shortDate: string;
+}
+
+interface Props {
+  days: DayItem[];
+  locale: 'de' | 'en';
+  listViewLabel: string;
+  tableViewLabel: string;
+}
+
+const { days, locale, listViewLabel, tableViewLabel } = Astro.props;
+---
+
+<!-- Zeile 1: Day-Tabs + View-Toggle -->
+<div class="flex items-stretch justify-between">
+  <div
+    role="tablist"
+    aria-label={locale === 'de' ? 'Festivaltage' : 'Festival days'}
+    class="flex"
+  >
+    {days.map((day, i) => (
+      <button
+        role="tab"
+        type="button"
+        id={`tab-${day.iso}`}
+        aria-controls={`panel-${day.iso}`}
+        aria-selected={i === 0 ? 'true' : 'false'}
+        data-day={day.iso}
+        data-tab
+        class:list={[
+          'day-tab flex flex-col items-center justify-center px-4 sm:px-6 py-3 border-b-2 transition-colors',
+          i === 0
+            ? 'border-primary text-primary'
+            : 'border-transparent text-dark/50 hover:text-dark hover:border-dark/30',
+        ]}
+      >
+        <span class="font-display text-base sm:text-lg leading-tight">{day.label}</span>
+        <span class="text-xs mt-0.5 font-sans opacity-70">{day.shortDate}</span>
+      </button>
+    ))}
+  </div>
+
+  <div
+    class="flex items-center gap-1 ml-auto pr-1"
+    aria-label={locale === 'de' ? 'Ansicht wählen' : 'Choose view'}
+  >
+    <button
+      type="button"
+      id="view-list-btn"
+      data-view-toggle="list"
+      aria-pressed="true"
+      title={listViewLabel}
+      class="view-btn p-2 rounded transition-colors text-primary"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+        <path fill-rule="evenodd" d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0 4a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0 4a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
+      </svg>
+    </button>
+    <button
+      type="button"
+      id="view-table-btn"
+      data-view-toggle="table"
+      aria-pressed="false"
+      title={tableViewLabel}
+      class="view-btn p-2 rounded transition-colors text-dark/40 hover:text-dark"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+        <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
+      </svg>
+    </button>
+  </div>
+</div>
