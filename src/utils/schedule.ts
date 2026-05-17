@@ -33,10 +33,16 @@ export type ScheduleByDay = Record<string, ScheduleEntry[]>;
 // ─── Konstanten ─────────────────────────────────────────────────────────────
 
 /**
+ * Festival-Zeitzone (Deutschland). Hardcodiert damit GitHub-Actions
+ * (UTC) keine abweichenden Ergebnisse liefert.
+ */
+export const FESTIVAL_TZ = 'Europe/Berlin';
+
+/**
  * Events bis 3 Uhr morgens zählen noch zum Vortag
  * (Nachtprogramm-Logik aus altem Projekt).
  */
-const NIGHT_CUTOFF_HOUR = 3;
+export const NIGHT_CUTOFF_HOUR = 3;
 
 // ─── Parser ─────────────────────────────────────────────────────────────────
 
@@ -58,15 +64,61 @@ function parseRow(line: string): RawScheduleRow | null {
 }
 
 /**
+ * Gibt die lokale Stunde (0–23) einer UTC-Zeit in der Festival-Zeitzone zurück.
+ * Timezone-sicher: funktioniert unabhängig vom System-TZ des Build-Servers.
+ */
+function getBerlinHour(date: Date): number {
+  return Number(
+    new Intl.DateTimeFormat('en-US', {
+      hour: 'numeric',
+      hour12: false,
+      timeZone: FESTIVAL_TZ,
+    }).format(date),
+  );
+}
+
+/**
+ * Gibt das Kalenderdatum (yyyy-mm-dd) einer UTC-Zeit in der Festival-Zeitzone zurück.
+ * en-CA liefert zuverlässig ISO-Datumsformat.
+ */
+function getBerlinDateString(date: Date): string {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: FESTIVAL_TZ,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(date);
+}
+
+/**
  * Berechnet den Festivaltag-Key für einen Zeitpunkt.
- * Events von 00:00–02:59 Uhr werden dem Vortag zugerechnet.
+ * Events von 00:00–02:59 Uhr Berlin-Zeit werden dem Vortag zugerechnet.
+ * Timezone-sicher: nutzt Intl statt getHours() (System-TZ-unabhängig).
  */
 function getFestivalDay(date: Date): string {
-  const d = new Date(date);
-  if (d.getHours() < NIGHT_CUTOFF_HOUR) {
-    d.setDate(d.getDate() - 1);
+  const berlinHour = getBerlinHour(date);
+  if (berlinHour < NIGHT_CUTOFF_HOUR) {
+    // Einen Kalendertag zurück (in Berlin-Zeit)
+    const prevDay = new Date(date.getTime() - 24 * 60 * 60 * 1000);
+    return getBerlinDateString(prevDay);
   }
-  return d.toISOString().slice(0, 10);
+  return getBerlinDateString(date);
+}
+
+/**
+ * Sortiert Uhrzeitstrings (HH:MM) in chronologischer Reihenfolge.
+ * Stunden < NIGHT_CUTOFF_HOUR (0–2 Uhr Berlin) werden als "nach Mitternacht"
+ * behandelt und erscheinen nach 23:xx – korrekte Reihenfolge für Festivaltage.
+ */
+export function sortFestivalTimeSlots(slots: string[]): string[] {
+  return [...slots].sort((a, b) => {
+    const toMin = (t: string) => {
+      const [h, m] = t.split(':').map(Number);
+      // 0–2 Uhr → 24–26 Uhr (erscheint nach Mitternacht)
+      return (h < NIGHT_CUTOFF_HOUR ? h + 24 : h) * 60 + m;
+    };
+    return toMin(a) - toMin(b);
+  });
 }
 
 /**
@@ -167,4 +219,70 @@ export function formatDate(dateStr: string, locale: 'de' | 'en' = 'de'): string 
     day: '2-digit',
     month: '2-digit',
   });
+}
+
+// ─── Slot-Merging ────────────────────────────────────────────────────────────
+
+/** Dauer eines Planungs-Slots in Millisekunden (30 Minuten). */
+const SLOT_MS = 30 * 60 * 1000;
+
+/**
+ * Ein gemergter Auftritt: ein oder mehrere aufeinanderfolgende 30-min-Slots
+ * desselben Künstlers an derselben Location.
+ */
+export interface MergedEntry {
+  artist_id: string;
+  location_id: string;
+  /** Beginn des ersten Slots */
+  startTime: Date;
+  /** Ende des letzten Slots (= startTime des letzten + 30 min) */
+  endTime: Date;
+  /** Anzahl gemergter Slots – dient als rowspan im Tabellen-Grid */
+  slotCount: number;
+  notes: string;
+  festivalDay: string;
+}
+
+/**
+ * Fasst aufeinanderfolgende 30-min-Slots desselben Künstlers an derselben
+ * Location zu einem MergedEntry zusammen.
+ *
+ * Zwei Auftritte desselben Künstlers mit einer Lücke (≥ 1 Slot) dazwischen
+ * bleiben getrennte Einträge.
+ */
+export function mergeConsecutiveSlots(entries: ScheduleEntry[]): MergedEntry[] {
+  // Aufsteigend sortieren (loadSchedule liefert bereits sorted, aber sicher ist sicher)
+  const sorted = [...entries].sort((a, b) => a.time.getTime() - b.time.getTime());
+
+  // Aktive Runs: key = `${location_id}__${artist_id}`
+  const runs = new Map<string, MergedEntry>();
+  const result: MergedEntry[] = [];
+
+  for (const entry of sorted) {
+    const key = `${entry.location_id}__${entry.artist_id}`;
+    const existing = runs.get(key);
+
+    if (existing && entry.time.getTime() === existing.endTime.getTime()) {
+      // Nahtlose Fortsetzung → Run verlängern
+      existing.endTime = new Date(entry.time.getTime() + SLOT_MS);
+      existing.slotCount++;
+    } else {
+      // Lücke oder neuer Eintrag → alten Run committen, neuen starten
+      if (existing) result.push(existing);
+      runs.set(key, {
+        artist_id: entry.artist_id,
+        location_id: entry.location_id,
+        startTime: entry.time,
+        endTime: new Date(entry.time.getTime() + SLOT_MS),
+        slotCount: 1,
+        notes: entry.notes,
+        festivalDay: entry.festivalDay,
+      });
+    }
+  }
+
+  // Verbleibende offene Runs committen
+  for (const run of runs.values()) result.push(run);
+
+  return result.sort((a, b) => a.startTime.getTime() - b.startTime.getTime());
 }

@@ -6,6 +6,9 @@ import {
   getFestivalDays,
   groupByDay,
   loadSchedule,
+  mergeConsecutiveSlots,
+  sortFestivalTimeSlots,
+  type MergedEntry,
   type ScheduleEntry,
 } from '../../../utils/schedule';
 import Page from '../../../layouts/Page.astro';
@@ -96,10 +99,20 @@ const venueOptions = allLocations
 
 // ─── Tabellen-Grid (für ProgramGrid) ────────────────────────────────────────
 
+type GridCell =
+  | { kind: 'entry'; entry: ScheduleEntry; rowspan: number }
+  | { kind: 'empty' }
+  | { kind: 'spanned' }; // durch rowspan einer darüberliegenden Zelle abgedeckt
+
 type TableGrid = {
   locations: CollectionEntry<'locations'>[];
-  rows: { timeStr: string; isoTime: string; cells: Record<string, ScheduleEntry | undefined> }[];
+  rows: { timeStr: string; isoTime: string; cells: Record<string, GridCell> }[];
 };
+
+// Nightlife-Location-IDs (werden aus Grid-Spalten und Zeitslots gefiltert)
+const nightlifeLocIds = new Set(
+  allLocations.filter((l) => l.data.nightlife).map((l) => l.data.location_id),
+);
 
 function getLocationsForDay(dayStr: string): CollectionEntry<'locations'>[] {
   const ids = [...new Set((byDay[dayStr] ?? []).map((e) => e.location_id))];
@@ -109,24 +122,145 @@ function getLocationsForDay(dayStr: string): CollectionEntry<'locations'>[] {
 }
 
 function getTimeSlotsForDay(dayStr: string): string[] {
-  const slots = [...new Set((byDay[dayStr] ?? []).map((e) => formatTime(e.time)))];
-  return slots.sort();
+  // Nur Nicht-Nightlife-Einträge → keine "00:30"-Zeilen im Hauptgrid
+  const slots = [
+    ...new Set(
+      (byDay[dayStr] ?? [])
+        .filter((e) => !nightlifeLocIds.has(e.location_id))
+        .map((e) => formatTime(e.time)),
+    ),
+  ];
+  // Chronologisch sortieren: 0–2 Uhr erscheint nach 23 Uhr (Festival geht über Mitternacht)
+  return sortFestivalTimeSlots(slots);
 }
 
 function buildTableGrid(dayStr: string): TableGrid {
   const entries = byDay[dayStr] ?? [];
   const locations = getLocationsForDay(dayStr);
   const timeSlots = getTimeSlotsForDay(dayStr);
+
+  // Aufbau: grid[timeStr][locId] = GridCell
+  const grid: Record<string, Record<string, GridCell>> = {};
+  for (const slot of timeSlots) {
+    grid[slot] = {};
+    for (const loc of locations) {
+      grid[slot][loc.data.location_id] = { kind: 'empty' };
+    }
+  }
+  for (const e of entries) {
+    const slot = formatTime(e.time);
+    if (grid[slot]) grid[slot][e.location_id] = { kind: 'entry', entry: e, rowspan: 1 };
+  }
+
+  // Aufeinanderfolgende gleiche Künstler pro Spalte mergen (rowspan)
+  for (const loc of locations) {
+    const locId = loc.data.location_id;
+    for (let i = 0; i < timeSlots.length; i++) {
+      const cell = grid[timeSlots[i]][locId];
+      if (cell.kind !== 'entry') continue;
+      let j = i + 1;
+      while (j < timeSlots.length) {
+        const next = grid[timeSlots[j]][locId];
+        if (next.kind === 'entry' && next.entry.artist_id === cell.entry.artist_id) {
+          cell.rowspan++;
+          grid[timeSlots[j]][locId] = { kind: 'spanned' };
+          j++;
+        } else {
+          break;
+        }
+      }
+    }
+  }
+
   const rows = timeSlots.map((timeStr) => {
-    const slotEntries = entries.filter((e) => formatTime(e.time) === timeStr);
-    const cells: Record<string, ScheduleEntry | undefined> = {};
-    for (const e of slotEntries) cells[e.location_id] = e;
-    return { timeStr, isoTime: slotEntries[0]?.time.toISOString() ?? '', cells };
+    const firstEntry = entries.find((e) => formatTime(e.time) === timeStr);
+    const cells: Record<string, GridCell> = {};
+    for (const loc of locations) cells[loc.data.location_id] = grid[timeStr][loc.data.location_id];
+    return { timeStr, isoTime: firstEntry?.time.toISOString() ?? '', cells };
   });
+
   return { locations, rows };
 }
 
 const tableGrids = Object.fromEntries(days.map((d) => [d, buildTableGrid(d)]));
+
+// ─── Merged Entries für Listenansicht ────────────────────────────────────────
+
+const mergedByDay: Record<string, MergedEntry[]> = Object.fromEntries(
+  days.map((d) => [d, mergeConsecutiveSlots(byDay[d] ?? [])])
+);
+
+// ─── JSON-LD Events ──────────────────────────────────────────────────────────
+
+const siteUrl = 'https://spektakel-la.github.io';
+const programUrl = locale === 'en' ? `${siteUrl}/en/program/` : `${siteUrl}/program/`;
+
+const jsonLdSubEvents = schedule
+  .filter((e) => {
+    const artist = artistMap[e.artist_id];
+    return artist && !artist.data.organizational;
+  })
+  .map((e) => {
+    const artist = artistMap[e.artist_id];
+    const location = locationMap[e.location_id];
+    const startIso = e.time.toISOString().replace('Z', '+02:00').replace(/\.\d{3}/, '');
+    const endDate = new Date(e.time.getTime() + 45 * 60 * 1000);
+    const endIso = endDate.toISOString().replace('Z', '+02:00').replace(/\.\d{3}/, '');
+    const name = locale === 'en'
+      ? (artist.data.en?.description ? artist.data.name : artist.data.name)
+      : artist.data.name;
+    const eventObj: Record<string, unknown> = {
+      '@type': 'Event',
+      name,
+      startDate: startIso,
+      endDate: endIso,
+      url: programUrl,
+      organizer: { '@type': 'Organization', name: 'SPEKTAKEL! Landshut' },
+      eventStatus: 'https://schema.org/EventScheduled',
+      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    };
+    if (location) {
+      eventObj.location = {
+        '@type': 'Place',
+        name: location.data.description,
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: location.data.gps[0],
+          longitude: location.data.gps[1],
+        },
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: 'Landshut',
+          addressCountry: 'DE',
+        },
+      };
+    }
+    return eventObj;
+  });
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'EventSeries',
+  name: 'SPEKTAKEL! Landshut 2025',
+  startDate: '2025-09-19',
+  endDate: '2025-09-21',
+  url: programUrl,
+  location: {
+    '@type': 'Place',
+    name: 'Altstadt Landshut',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Landshut',
+      addressCountry: 'DE',
+    },
+  },
+  organizer: {
+    '@type': 'Organization',
+    name: 'SPEKTAKEL! Landshut',
+    url: siteUrl,
+  },
+  subEvent: jsonLdSubEvents,
+};
 ---
 
 <Page
@@ -136,6 +270,7 @@ const tableGrids = Object.fromEntries(days.map((d) => [d, buildTableGrid(d)]));
     ? 'Alle Auftritte beim SPEKTAKEL! Landshut – täglich von Freitag bis Sonntag.'
     : 'All performances at SPEKTAKEL! Landshut – Friday to Sunday.'}
 >
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
 
   <!-- ─── Hero ─────────────────────────────────────────────────────────────── -->
   <section class="relative bg-dark text-white overflow-hidden py-16 md:py-20">
@@ -186,7 +321,7 @@ const tableGrids = Object.fromEntries(days.map((d) => [d, buildTableGrid(d)]));
         class:list={[dayIdx !== 0 && 'hidden']}
       >
         <ProgramList
-          entries={byDay[day] ?? []}
+          entries={mergedByDay[day] ?? []}
           artistMap={artistMap}
           locationMap={locationMap}
           categoryMap={categoryMap}

@@ -15,6 +15,7 @@ const { locale = 'de', ...rest } = Astro.props;
 ---
 
 <Base locale={locale} {...rest}>
+  <slot name="head" slot="head" />
   <Header locale={locale} />
   <main id="main-content">
     <slot />

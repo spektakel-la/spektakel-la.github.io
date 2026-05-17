@@ -1,10 +1,10 @@
 ---
 import { type CollectionEntry } from 'astro:content';
-import { formatTime, type ScheduleEntry } from '../../../utils/schedule';
+import { formatTime, type MergedEntry } from '../../../utils/schedule';
 import CategoryChip from '../../ui/CategoryChip.astro';
 
 interface Props {
-  entries: ScheduleEntry[];
+  entries: MergedEntry[];
   artistMap: Record<string, CollectionEntry<'artists'>>;
   locationMap: Record<string, CollectionEntry<'locations'>>;
   categoryMap: Record<string, string>;
@@ -38,16 +38,20 @@ const {
       const isOrg = artist?.data.organizational ?? false;
       const artistName = artist?.data.name ?? entry.artist_id;
       const artistSlug = artist?.id ?? '';
+      const timeLabel = entry.slotCount > 1
+        ? `${formatTime(entry.startTime)} – ${formatTime(entry.endTime)}`
+        : formatTime(entry.startTime);
 
       return (
         <div
           class="program-entry flex flex-wrap sm:flex-nowrap items-center gap-3 py-3 px-2 rounded-lg hover:bg-bg transition-colors"
           data-location={entry.location_id}
           data-category={cat}
-          data-time-start={entry.time.toISOString()}
+          data-time-start={entry.startTime.toISOString()}
+          data-time-end={entry.endTime.toISOString()}
         >
-          <span class="font-mono text-sm font-semibold text-dark/60 w-12 shrink-0">
-            {formatTime(entry.time)}
+          <span class="font-mono text-sm font-semibold text-dark/60 shrink-0 whitespace-nowrap">
+            {timeLabel}
           </span>
           <span
             class="live-dot hidden shrink-0 w-2 h-2 rounded-full bg-primary animate-pulse"

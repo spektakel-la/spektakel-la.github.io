@@ -2,9 +2,14 @@
 import { type CollectionEntry } from 'astro:content';
 import { type ScheduleEntry } from '../../../utils/schedule';
 
+type GridCell =
+  | { kind: 'entry'; entry: ScheduleEntry; rowspan: number }
+  | { kind: 'empty' }
+  | { kind: 'spanned' };
+
 type TableGrid = {
   locations: CollectionEntry<'locations'>[];
-  rows: { timeStr: string; isoTime: string; cells: Record<string, ScheduleEntry | undefined> }[];
+  rows: { timeStr: string; isoTime: string; cells: Record<string, GridCell> }[];
 };
 
 interface Props {
@@ -16,6 +21,9 @@ interface Props {
 }
 
 const { grid, artistMap, categoryMap, basePath, locale } = Astro.props;
+
+/** Fixe Zeilenhöhe in px. 1 Slot (30 min) = 1 Reihe = ROW_H px. */
+const ROW_H = 48;
 ---
 
 <div data-view-panel="table" class="hidden overflow-x-auto -mx-4 sm:mx-0">
@@ -35,7 +43,7 @@ const { grid, artistMap, categoryMap, basePath, locale } = Astro.props;
     <tbody>
       {grid.rows.map((row) => (
         <tr
-          class="table-row border-b border-gray-100 hover:bg-bg/60 transition-colors"
+          class="table-row border-b border-gray-100 hover:bg-bg/60 transition-colors h-12"
           data-time-start={row.isoTime}
         >
           <td class="py-2 px-3 font-mono text-xs text-dark/50 align-top whitespace-nowrap">
@@ -49,27 +57,36 @@ const { grid, artistMap, categoryMap, basePath, locale } = Astro.props;
           </td>
           {grid.locations.map((loc) => {
             const cell = row.cells[loc.data.location_id];
-            if (!cell) return <td class="py-2 px-3 align-top" />;
-            const artist = artistMap[cell.artist_id];
-            const cat = categoryMap[cell.artist_id] ?? '';
+            if (!cell || cell.kind === 'spanned') return null;
+            if (cell.kind === 'empty') return <td class="py-2 px-3 align-top" />;
+            const { entry, rowspan } = cell;
+            const artist = artistMap[entry.artist_id];
+            const cat = categoryMap[entry.artist_id] ?? '';
             const isOrg = artist?.data.organizational ?? false;
             const catColorVar = cat ? `var(--color-cat-${cat})` : 'var(--color-bg-light)';
+            // Innere Div-Höhe = rowspan × ROW_H − vertikale td-Padding (py-1.5 = 6px × 2 = 12px)
+            const divHeight = rowspan * ROW_H - 12;
             return (
-              <td class="py-1.5 px-3 align-top" data-location={cell.location_id} data-category={cat}>
+              <td
+                rowspan={rowspan > 1 ? rowspan : undefined}
+                class="py-1.5 px-3 align-top"
+                data-location={entry.location_id}
+                data-category={cat}
+              >
                 <div
-                  class="rounded px-2 py-1 text-xs"
-                  style={`border-left: 3px solid ${catColorVar}; background: color-mix(in srgb, ${catColorVar} 12%, white);`}
+                  class="rounded px-2 py-1 text-xs overflow-hidden"
+                  style={`height: ${divHeight}px; border-left: 3px solid ${catColorVar}; background: color-mix(in srgb, ${catColorVar} 12%, white);`}
                 >
                   {isOrg ? (
                     <span class="text-dark/40 italic">
-                      {artist?.data.name ?? cell.artist_id}
+                      {artist?.data.name ?? entry.artist_id}
                     </span>
                   ) : (
                     <a
-                      href={`${basePath}/artists/${artist?.id ?? cell.artist_id}/`}
+                      href={`${basePath}/artists/${artist?.id ?? entry.artist_id}/`}
                       class="font-semibold text-dark hover:text-primary transition-colors"
                     >
-                      {artist?.data.name ?? cell.artist_id}
+                      {artist?.data.name ?? entry.artist_id}
                     </a>
                   )}
                 </div>

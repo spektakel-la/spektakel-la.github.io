@@ -475,6 +475,23 @@ time,location_id,artist_id,notes
 - Wird in `program.astro`, `nightlife.astro` und `locations/[id].astro` genutzt
 - **Nightlife-Filter**: Keine separate CSV – Nightlife-Events sind Einträge, deren Location `nightlife: true` gesetzt hat
 - **Organizational-Filter**: Artists mit `organizational: true` erscheinen im Spielplan ohne klickbaren Detaillink
+- **Slot-Merging** (`mergeConsecutiveSlots`): aufeinanderfolgende 30-min-Slots desselben Künstlers an derselben Location werden zur Build-Zeit zu einem `MergedEntry` zusammengefasst
+
+```typescript
+export interface MergedEntry {
+  artist_id: string;
+  location_id: string;
+  startTime: Date; // erster Slot
+  endTime: Date; // letzter Slot + 30 min
+  slotCount: number; // Anzahl gemergter Slots (= rowspan im Grid)
+  notes: string;
+  festivalDay: string;
+}
+```
+
+- **Listen-Ansicht**: zeigt `startTime – endTime` wenn `slotCount > 1`, sonst nur `startTime`
+- **Tabellen-Ansicht**: gemergete Zelle erhält `rowspan={slotCount}`; überdeckte Folgezeilen werden nicht als `<td>` gerendert
+- Zwei Auftritte desselben Künstlers mit Pause dazwischen bleiben getrennte Einträge
 
 ---
 
@@ -854,13 +871,24 @@ export default defineConfig({
 
 ### Phase 5 – Programmseite (3–4 h)
 
-- [ ] `DayTabs.astro`
-- [ ] `VenueFilter.astro`
-- [ ] `ProgramGrid.astro` (Tabellenansicht)
-- [ ] `ProgramList.astro` (Listenansicht)
-- [ ] View-Toggle
-- [ ] Structured Data (JSON-LD Events)
+- [x] `DayTabs.astro`
+- [x] `VenueFilter.astro`
+- [x] `ProgramGrid.astro` (Tabellenansicht)
+- [x] `ProgramList.astro` (Listenansicht)
+- [x] `CategoryFilter.astro` (Kategorie-Filter-Chips)
+- [x] `ProgramPage.astro` (Orchestrator: Hero, Filter-Bar, Day-Panels, Client-Script)
+- [x] `src/pages/program.astro` + `src/pages/en/program.astro`
+- [x] i18n-Keys `program.*` in `de.ts` + `en.ts`
+- [x] View-Toggle (Icon-Buttons, List/Grid)
+- [x] Structured Data (JSON-LD EventSeries + 362 subEvents, via `slot="head"`)
+- [x] Routen zentral in `src/utils/routes.ts` (kein hardcoded `/programm/` mehr)
+- [x] Slot-Merging: aufeinanderfolgende 30-min-Slots → ein Block (s. §7)
 - [ ] **Design-Abgleich Desktop + Mobile** (`design_concept.png`)
+
+> **Offene Abweichungen vom Mockup (vor Phasen-Abschluss zu beheben):**
+>
+> 1. **Standard-Ansicht**: Mockup → Tabellenansicht auf Desktop, Listenansicht auf Mobile. Aktuell: immer Liste.
+> 2. **Tab-Labels Mobile**: Mockup → kurze Labels „FR 19.09." auf schmalen Screens. Aktuell: immer voller Wochentag.
 
 ### Phase 6 – Künstler (2–3 h)
 
