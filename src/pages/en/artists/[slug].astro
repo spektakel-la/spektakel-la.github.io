@@ -1,0 +1,17 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import ArtistDetail from '../../../components/features/artists/ArtistDetail.astro';
+
+export async function getStaticPaths() {
+  const artists = await getCollection('artists');
+  return artists
+    .filter((a: CollectionEntry<'artists'>) => !a.data.organizational)
+    .map((artist: CollectionEntry<'artists'>) => ({
+      params: { slug: artist.data.artist_id },
+      props: { artist },
+    }));
+}
+
+const { artist } = Astro.props;
+---
+<ArtistDetail artist={artist} locale="en" />

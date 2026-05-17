@@ -1,5 +1,6 @@
 ---
 import { type CollectionEntry } from 'astro:content';
+import { type Category } from '../../../utils/categories';
 import { formatTime, type MergedEntry } from '../../../utils/schedule';
 import CategoryChip from '../../ui/CategoryChip.astro';
 
@@ -7,7 +8,7 @@ interface Props {
   entries: MergedEntry[];
   artistMap: Record<string, CollectionEntry<'artists'>>;
   locationMap: Record<string, CollectionEntry<'locations'>>;
-  categoryMap: Record<string, string>;
+  categoryMap: Record<string, Category | ''>;
   catLabels: Record<string, string>;
   basePath: string;
   locale: 'de' | 'en';
@@ -85,7 +86,7 @@ const {
 
           {cat && (
             <CategoryChip
-              category={cat}
+              category={cat || undefined}
               label={catLabels[cat] ?? cat}
               active={false}
               class="shrink-0 text-xs pointer-events-none"

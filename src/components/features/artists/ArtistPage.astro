@@ -1,0 +1,203 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { useTranslations } from '../../../i18n/utils';
+import { Category, CATEGORY_KEYWORDS } from '../../../utils/categories';
+import { loadSchedule, mergeConsecutiveSlots, type MergedEntry } from '../../../utils/schedule';
+import Page from '../../../layouts/Page.astro';
+import PaintSplatter from '../../ui/PaintSplatter.astro';
+import CategoryFilter from '../program/CategoryFilter.astro';
+import ArtistCard from './ArtistCard.astro';
+
+interface Props {
+  locale: 'de' | 'en';
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const basePath = locale === 'en' ? '/en' : '';
+
+const allArtists: CollectionEntry<'artists'>[] = await getCollection('artists');
+
+// Organizational-Acts herausfiltern, alphabetisch sortieren
+const artists = allArtists
+  .filter((a) => !a.data.organizational)
+  .sort((a, b) => a.data.name.localeCompare(b.data.name, locale));
+
+function getMacroCategory(artist: CollectionEntry<'artists'>): Category | '' {
+  const cats =
+    locale === 'en'
+      ? (artist.data.en?.categories ?? artist.data.de?.categories ?? [])
+      : (artist.data.de?.categories ?? []);
+  for (const cat of cats) {
+    const c = cat.toLowerCase();
+    for (const { cat: macro, keywords } of CATEGORY_KEYWORDS) {
+      if (keywords.some((k) => c.includes(k))) return macro;
+    }
+  }
+  return '';
+}
+
+const categoryMap = Object.fromEntries(
+  artists.map((a) => [a.id, getMacroCategory(a)])
+);
+
+// Schedule für Cards (Spielzeiten + Spielort)
+const allLocations = await getCollection('locations');
+const locationMap = Object.fromEntries(
+  allLocations.map((l: CollectionEntry<'locations'>) => [l.data.location_id, l])
+);
+const schedule = loadSchedule();
+const scheduleMap: Record<string, MergedEntry[]> = {};
+const primaryLocationMap: Record<string, string> = {};
+for (const artist of artists) {
+  const entries = schedule.filter((e) => e.artist_id === artist.data.artist_id);
+  const merged = mergeConsecutiveSlots(entries);
+  scheduleMap[artist.id] = merged;
+  const firstLoc = merged[0] ? locationMap[merged[0].location_id]?.data.description : undefined;
+  if (firstLoc) primaryLocationMap[artist.id] = firstLoc;
+}
+
+const catLabels: Record<Category, string> = {
+  [Category.Akrobatik]: t.program.catAkrobatik,
+  [Category.Musik]:     t.program.catMusik,
+  [Category.Comedy]:    t.program.catComedy,
+  [Category.Magie]:     t.program.catMagie,
+  [Category.StreetArt]: t.program.catStreetArt,
+  [Category.Nightlife]: t.program.catNightlife,
+};
+---
+
+<Page
+  locale={locale}
+  title={t.artists.title}
+  description={t.artists.tagline}
+>
+  <!-- ─── Hero ──────────────────────────────────────────────────────────────── -->
+  <section class="relative bg-white overflow-hidden py-14 md:py-20">
+    <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+      <div class="absolute -top-16 -right-20 opacity-30">
+        <PaintSplatter variant={3} width={520} />
+      </div>
+      <div class="absolute top-4 right-40 opacity-20">
+        <PaintSplatter variant={5} width={300} />
+      </div>
+      <div class="absolute -bottom-12 -left-10 opacity-15">
+        <PaintSplatter variant={1} width={300} />
+      </div>
+    </div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+      <p class="text-primary font-display text-xl tracking-widest mb-2">SPEKTAKEL! LANDSHUT 2025</p>
+      <!-- Zweizeiliger Titel: erste Zeile dunkel, zweite Zeile magenta -->
+      <h1 class="font-display leading-none" style="font-size: clamp(2.8rem, 9vw, 7rem)">
+        <span class="block text-dark">{locale === 'de' ? 'ALLE KÜNSTLER' : 'ALL ARTISTS'}</span>
+        <span class="block text-primary">{locale === 'de' ? 'AUF EINEN BLICK' : 'AT A GLANCE'}</span>
+      </h1>
+      <p class="mt-4 text-dark/50 max-w-2xl">{t.artists.tagline}</p>
+    </div>
+  </section>
+
+  <!-- ─── Filter-Bar ─────────────────────────────────────────────────────────── -->
+  <div id="artists-filters" class="sticky top-0 z-30 bg-white border-b border-gray-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex flex-wrap items-center gap-3">
+      <!-- Suche -->
+      <div class="relative flex-1 min-w-[180px] max-w-xs">
+        <svg class="absolute left-2.5 top-1/2 -translate-y-1/2 text-dark/30 pointer-events-none" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.242 1.4a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z"/>
+        </svg>
+        <input
+          id="artist-search"
+          type="search"
+          placeholder={t.common.search}
+          class="w-full pl-8 pr-3 py-1.5 text-sm border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-primary/30"
+          autocomplete="off"
+          spellcheck="false"
+        />
+      </div>
+      <!-- Kategorie-Chips -->
+      <CategoryFilter catLabels={catLabels} allLabel={t.common.all} locale={locale} />
+    </div>
+  </div>
+
+  <!-- ─── Künstler-Grid ──────────────────────────────────────────────────────── -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    <div
+      id="artists-grid"
+      class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
+    >
+      {artists.map((artist) => (
+        <ArtistCard
+          artist={artist}
+          category={categoryMap[artist.id] ?? ''}
+          basePath={basePath}
+          locale={locale}
+          entries={scheduleMap[artist.id] ?? []}
+          primaryLocation={primaryLocationMap[artist.id]}
+        />
+      ))}
+    </div>
+
+    <p id="no-results" class="hidden text-center text-dark/50 py-16">{t.program.noResults}</p>
+  </div>
+</Page>
+
+<script>
+  const searchInput = document.querySelector<HTMLInputElement>('#artist-search');
+  const categoryBtns = document.querySelectorAll<HTMLButtonElement>('#artists-filters .chip');
+  const cards = document.querySelectorAll<HTMLElement>('.artist-card');
+  const noResults = document.querySelector<HTMLElement>('#no-results');
+
+  let activeCategory = '';
+  let searchTerm = '';
+
+  function applyFilters() {
+    let visible = 0;
+    cards.forEach((card) => {
+      const matchesCat = !activeCategory || card.dataset.category === activeCategory;
+      const matchesSearch = !searchTerm || (card.dataset.name ?? '').includes(searchTerm);
+      const show = matchesCat && matchesSearch;
+      card.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+    noResults?.classList.toggle('hidden', visible > 0);
+  }
+
+  categoryBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      activeCategory = btn.dataset.category ?? '';
+      categoryBtns.forEach((b) => {
+        b.classList.toggle('chip--active', (b.dataset.category ?? '') === activeCategory);
+      });
+      applyFilters();
+    });
+  });
+
+  searchInput?.addEventListener('input', () => {
+    searchTerm = (searchInput.value ?? '').toLowerCase().trim();
+    applyFilters();
+  });
+
+  // ─── Favoriten-Sterne in Cards ────────────────────────────────────────────
+  const STORAGE_KEY = 'spektakel-favorites';
+  const getFavs = (): Set<string> => {
+    try { return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]')); }
+    catch { return new Set(); }
+  };
+  const saveFavs = (s: Set<string>) => localStorage.setItem(STORAGE_KEY, JSON.stringify([...s]));
+
+  document.querySelectorAll<HTMLButtonElement>('.fav-card-btn').forEach((btn) => {
+    const id = btn.dataset.artistId ?? '';
+    const icon = btn.querySelector<SVGElement>('.fav-card-icon');
+    const update = (isFav: boolean) => {
+      btn.classList.toggle('text-primary', isFav);
+      btn.classList.toggle('text-dark/40', !isFav);
+      if (icon) icon.setAttribute('fill', isFav ? 'currentColor' : 'none');
+    };
+    update(getFavs().has(id));
+    btn.addEventListener('click', () => {
+      const favs = getFavs();
+      if (favs.has(id)) { favs.delete(id); update(false); }
+      else { favs.add(id); update(true); }
+      saveFavs(favs);
+    });
+  });
+</script>

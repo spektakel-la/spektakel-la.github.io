@@ -270,21 +270,21 @@ const jsonLd = {
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
 
   <!-- ─── Hero ─────────────────────────────────────────────────────────────── -->
-  <section class="relative bg-dark text-white overflow-hidden py-16 md:py-20">
+  <section class="relative bg-white overflow-hidden py-16 md:py-20">
     <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-      <div class="absolute -top-16 -right-20 opacity-20">
+      <div class="absolute -top-16 -right-20 opacity-25">
         <PaintSplatter variant={2} width={480} />
       </div>
-      <div class="absolute -bottom-12 -left-10 opacity-15">
+      <div class="absolute -bottom-12 -left-10 opacity-20">
         <PaintSplatter variant={5} width={300} />
       </div>
     </div>
     <div class="relative z-10 max-w-7xl mx-auto px-6">
       <p class="text-primary font-display text-xl tracking-widest mb-1">SPEKTAKEL! LANDSHUT 2025</p>
-      <h1 class="font-display leading-none text-white" style="font-size: clamp(3rem, 10vw, 7rem)">
+      <h1 class="font-display leading-none text-dark" style="font-size: clamp(3rem, 10vw, 7rem)">
         {t.program.title.toUpperCase()}
       </h1>
-      <p class="mt-4 text-white/50 text-sm">{t.common.disclaimer}</p>
+      <p class="mt-4 text-dark/40 text-sm">{t.common.disclaimer}</p>
     </div>
   </section>
 
