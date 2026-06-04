@@ -81,7 +81,7 @@ const ROW_H = 48;
                 data-col-id={loc.data.location_id}
               >
                 <div
-                  class="rounded px-1 py-1 text-xs overflow-hidden"
+                  class="relative rounded px-1 py-1 text-xs overflow-hidden"
                   style={`height: ${divHeight}px; border-left: 3px solid ${catColorVar}; background: color-mix(in srgb, ${catColorVar} 12%, white);`}
                 >
                   {isOrg ? (
@@ -91,7 +91,7 @@ const ROW_H = 48;
                   ) : (
                     <a
                       href={`${basePath}/artists/${artist?.id ?? entry.artist_id}/`}
-                      class="font-semibold text-dark hover:text-primary transition-colors"
+                      class="font-semibold text-dark hover:text-primary transition-colors after:absolute after:inset-0"
                     >
                       {artist?.data.name ?? entry.artist_id}
                     </a>

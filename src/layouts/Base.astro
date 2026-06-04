@@ -76,9 +76,13 @@ const fullTitle = title.includes('SPEKTAKEL') ? title : `${title} – ${siteName
         })(window, document, 'script', 'dataLayer', 'GTM-TK5422TV');
       });
     </script>
-    <!-- Service Worker registrieren (Cleanup-SW: entfernt alten Workbox-Cache) -->
+    <!-- Service Worker: Zuerst alle alten SWs deregistrieren (inkl. alter Workbox/Vite-PWA dev-sw),
+         dann Cleanup-SW registrieren, der verbleibende Caches löscht -->
     <script is:inline>
       if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          registrations.forEach(function(r) { r.unregister(); });
+        });
         navigator.serviceWorker.register('/sw.js');
       }
     </script>
