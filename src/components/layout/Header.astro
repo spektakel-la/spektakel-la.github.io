@@ -28,7 +28,7 @@ const homeHref = localePath('/', lang);
 ---
 
 <header
-  class="sticky top-0 z-[var(--z-header)] bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm"
+  class="sticky top-0 z-[var(--z-header)] bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm relative"
   role="banner"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -93,17 +93,19 @@ const homeHref = localePath('/', lang);
     </div>
   </div>
 
-  <!-- Mobile Menu -->
-  <div
-    id="mobile-menu"
-    class="hidden lg:hidden border-t border-gray-100 bg-white"
-    aria-hidden="true"
-  >
-    <div class="max-w-7xl mx-auto px-4 py-4">
-      <Navigation locale={locale} />
-    </div>
-  </div>
 </header>
+
+<!-- Mobile Menu (fixed, außerhalb des Headers, damit kein Stacking-Context-Clip) -->
+<div
+  id="mobile-menu"
+  class="hidden lg:hidden fixed right-4 top-16 min-w-[180px] rounded-lg border border-gray-100 bg-white shadow-lg"
+  style="z-index: calc(var(--z-header, 50) + 10);"
+  aria-hidden="true"
+>
+  <div class="py-2 px-2">
+    <Navigation locale={locale} mobile={true} />
+  </div>
+</div>
 
 <script>
   const toggle = document.getElementById('menu-toggle');

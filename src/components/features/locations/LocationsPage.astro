@@ -1,0 +1,342 @@
+---
+/**
+ * LocationsPage – Spielorte-Übersicht mit interaktiver Karte + Venue-Panel.
+ *
+ * Layout nach Mockup:
+ *   Desktop: Linke Spalte (Venue-Liste / Panel, 340px) + rechts Karte
+ *   Mobile:  Vollbild-Karte mit "Liste anzeigen"-Toggle; Panel als Overlay
+ */
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { useTranslations } from '../../../i18n/utils';
+import { loadSchedule, mergeConsecutiveSlots } from '../../../utils/schedule';
+import { ROUTES } from '../../../utils/routes';
+import Page from '../../../layouts/Page.astro';
+import PaintSplatter from '../../ui/PaintSplatter.astro';
+import LocationMap, { type MapLocation, type MapEntry } from './LocationMap.astro';
+
+interface Props {
+  locale: 'de' | 'en';
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const basePath = locale === 'en' ? '/en' : '';
+
+const allLocations: CollectionEntry<'locations'>[] = await getCollection('locations');
+const allArtists: CollectionEntry<'artists'>[] = await getCollection('artists');
+const schedule = loadSchedule();
+const artistMap = Object.fromEntries(allArtists.map((a) => [a.data.artist_id, a]));
+
+const sortedLocations = [...allLocations].sort(
+  (a, b) => (a.data.sort_order ?? 99) - (b.data.sort_order ?? 99)
+);
+
+const mapLocations: MapLocation[] = sortedLocations.map((loc) => {
+  const locId = loc.data.location_id;
+  const merged = mergeConsecutiveSlots(schedule.filter((e) => e.location_id === locId));
+
+  const entries: MapEntry[] = merged.map((e) => {
+    const artist = artistMap[e.artist_id];
+    return {
+      time: e.startTime.toISOString(),
+      endTime: e.endTime.toISOString(),
+      artistId: e.artist_id,
+      artistName: (artist?.data as any)?.short_name ?? artist?.data.name ?? e.artist_id,
+      artistSlug: e.artist_id,
+      isOrganizational: artist?.data.organizational ?? false,
+      festivalDay: e.festivalDay,
+    } satisfies MapEntry;
+  });
+
+  return {
+    id: locId,
+    description: loc.data.description,
+    gps: loc.data.gps,
+    color: loc.data.marker_color,
+    label: loc.data.location_label ?? locId,
+    nightlife: loc.data.nightlife ?? false,
+    entries,
+  } satisfies MapLocation;
+});
+
+const venueList = sortedLocations.filter((l) => !l.data.organizational);
+---
+
+<Page locale={locale} title={t.locations.title} description={t.locations.tagline}>
+
+  <!-- Hero -->
+  <section class="relative bg-[var(--color-dark)] text-white py-12 md:py-16 overflow-hidden">
+    <PaintSplatter variant={3} class="absolute top-0 right-0 w-48 opacity-15 pointer-events-none" />
+    <div class="container mx-auto px-4 relative z-10">
+      <h1 class="font-display text-5xl md:text-7xl uppercase tracking-wide mb-3">
+        {t.locations.title}
+      </h1>
+      <p class="text-base md:text-lg text-white/75 max-w-xl">
+        {t.locations.tagline}
+      </p>
+    </div>
+  </section>
+
+  <!-- Haupt-Layout: Panel + Karte -->
+  <div id="locations-layout" class="relative flex flex-col md:flex-row" style="height: clamp(500px, 75vh, 800px);">
+
+    <!-- Linke Spalte (Desktop) -->
+    <aside
+      id="locations-sidebar"
+      class="relative z-10 flex-col md:w-[340px] md:flex-shrink-0 md:h-full md:overflow-y-auto bg-white border-r border-gray-200 shadow-sm hidden md:flex"
+    >
+      <!-- Venue-Liste -->
+      <div id="venue-list-view" class="flex flex-col h-full">
+        <div class="px-4 pt-5 pb-3 border-b border-gray-100">
+          <p class="text-xs uppercase tracking-widest text-gray-400 font-semibold">{t.locations.allVenues}</p>
+        </div>
+        <ul class="flex-1 overflow-y-auto">
+          {venueList.map((loc) => (
+            <li>
+              <button
+                data-venue-id={loc.data.location_id}
+                class="venue-list-btn w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 text-left border-b border-gray-50 transition-colors group"
+              >
+                <img
+                  src={`/assets/img/map/marker-${loc.data.marker_color}.webp`}
+                  alt="" aria-hidden="true" width="24" height="32" class="flex-shrink-0"
+                />
+                <span class="font-semibold text-sm text-[var(--color-dark)] group-hover:text-[var(--color-primary)] transition-colors">
+                  {loc.data.location_id} – {loc.data.description}
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Venue-Panel -->
+      <div id="venue-panel-view" class="hidden flex-col h-full">
+        <div class="flex items-center justify-between px-4 py-3 border-b-2 border-[var(--color-primary)] bg-white sticky top-0 z-10">
+          <button id="panel-back-btn" class="text-sm text-[var(--color-primary)] hover:underline flex items-center gap-1 font-medium">
+            ← {t.locations.backToList}
+          </button>
+          <button id="panel-close-btn" aria-label="Schließen" class="text-2xl leading-none text-gray-400 hover:text-gray-700 ml-2">×</button>
+        </div>
+        <div id="venue-panel-content" class="flex-1 overflow-y-auto px-4 py-4"></div>
+      </div>
+    </aside>
+
+    <!-- Karte -->
+    <div class="flex-1 relative">
+      <LocationMap locations={mapLocations} lang={locale} />
+    </div>
+
+    <!-- Mobile: "Liste anzeigen"-Button -->
+    <div class="md:hidden absolute bottom-4 left-1/2 -translate-x-1/2 z-[1000]">
+      <button
+        id="mobile-list-btn"
+        class="px-5 py-2.5 bg-white shadow-lg rounded-full font-semibold text-sm text-[var(--color-dark)] border border-gray-200 flex items-center gap-2"
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <rect x="2" y="3" width="12" height="1.5" rx=".75" fill="currentColor"/>
+          <rect x="2" y="7" width="12" height="1.5" rx=".75" fill="currentColor"/>
+          <rect x="2" y="11" width="12" height="1.5" rx=".75" fill="currentColor"/>
+        </svg>
+        {t.locations.showList}
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Overlay: Venue-Liste -->
+  <div id="mobile-overlay" class="md:hidden fixed inset-0 z-[2000] bg-white flex-col hidden" style="top:0">
+    <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200">
+      <span class="font-bold text-lg uppercase tracking-wide">{t.locations.title}</span>
+      <button id="mobile-close-btn" class="text-2xl text-gray-400">×</button>
+    </div>
+    <ul class="flex-1 overflow-y-auto">
+      {venueList.map((loc) => (
+        <li>
+          <button
+            data-venue-id={loc.data.location_id}
+            class="venue-list-btn w-full flex items-center gap-3 px-4 py-4 hover:bg-gray-50 text-left border-b border-gray-100"
+          >
+            <img src={`/assets/img/map/marker-${loc.data.marker_color}.webp`} alt="" aria-hidden="true" width="24" height="32" class="flex-shrink-0" />
+            <span class="font-semibold text-sm text-[var(--color-dark)]">
+              {loc.data.location_id} – {loc.data.description}
+            </span>
+          </button>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <!-- Mobile Overlay: Venue-Panel -->
+  <div id="mobile-panel-overlay" class="md:hidden fixed inset-0 z-[2100] bg-white flex-col hidden" style="top:0">
+    <div class="flex items-center justify-between px-4 py-3 border-b-2 border-[var(--color-primary)] sticky top-0 bg-white z-10">
+      <button id="mobile-panel-back" class="text-sm text-[var(--color-primary)] font-medium flex items-center gap-1">
+        ← {t.locations.backToList}
+      </button>
+      <button id="mobile-panel-close" class="text-2xl text-gray-400">×</button>
+    </div>
+    <div id="mobile-panel-content" class="flex-1 overflow-y-auto px-4 py-4"></div>
+  </div>
+
+  <!-- Legende -->
+  <section class="bg-white border-t border-gray-100 py-4">
+    <div class="container mx-auto px-4 flex flex-wrap gap-3 items-center">
+      {venueList.map((loc) => (
+        <button
+          data-venue-id={loc.data.location_id}
+          class="venue-list-btn inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gray-50 border border-gray-200 text-xs font-medium hover:border-[var(--color-primary)] transition-colors"
+        >
+          <img src={`/assets/img/map/marker-${loc.data.marker_color}.webp`} alt="" aria-hidden="true" width="14" height="18" />
+          {loc.data.description}
+        </button>
+      ))}
+    </div>
+  </section>
+</Page>
+
+<script>
+  const FESTIVAL_START = new Date('2025-09-19T14:00:00+02:00').getTime();
+  const FESTIVAL_END   = new Date('2025-09-22T03:00:00+02:00').getTime();
+  const THREE_HOURS    = 3 * 60 * 60 * 1000;
+
+  function fmt(iso: string): string {
+    return new Date(iso).toLocaleTimeString('de-DE', {
+      hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Berlin',
+    });
+  }
+
+  function getDayLabel(dayStr: string, lang: string): string {
+    return new Date(dayStr + 'T12:00:00').toLocaleDateString(
+      lang === 'en' ? 'en-GB' : 'de-DE',
+      { weekday: 'long', day: '2-digit', month: '2-digit' }
+    );
+  }
+
+  function entryHtml(e: any, basePath: string): string {
+    const time = `${fmt(e.time)} – ${fmt(e.endTime)}`;
+    const nameHtml = e.isOrganizational
+      ? `<span class="italic text-gray-400 text-sm">${e.artistName}</span>`
+      : `<a href="${basePath}/artists/${e.artistSlug}/" class="font-semibold text-[var(--color-dark)] hover:text-[var(--color-primary)] transition-colors text-sm">${e.artistName}</a>`;
+    return `<div class="py-2 border-b border-gray-100 last:border-0">
+      <span class="text-xs text-gray-400 tabular-nums block">${time}</span>
+      ${nameHtml}
+    </div>`;
+  }
+
+  function buildPanelContent(loc: any, lang: string): string {
+    const now = Date.now();
+    const duringFestival = now >= FESTIVAL_START && now <= FESTIVAL_END;
+    const basePath = lang === 'en' ? '/en' : '';
+    const allEntries: any[] = loc.entries ?? [];
+
+    let html = `<h2 class="font-display text-2xl uppercase tracking-wide text-[var(--color-dark)] mb-4 leading-tight">${loc.description}</h2>`;
+
+    if (duringFestival) {
+      const current  = allEntries.filter((e: any) => new Date(e.time).getTime() <= now && new Date(e.endTime).getTime() > now);
+      const upcoming = allEntries.filter((e: any) => new Date(e.time).getTime() > now && new Date(e.time).getTime() <= now + THREE_HOURS);
+
+      if (current.length > 0) {
+        html += `<div class="mb-5">
+          <p class="text-xs uppercase tracking-widest font-semibold text-[var(--color-primary)] mb-2">${lang === 'en' ? 'Now' : 'Jetzt'}</p>
+          ${current.map((e: any) => entryHtml(e, basePath)).join('')}
+        </div>`;
+      }
+      if (upcoming.length > 0) {
+        html += `<div class="mb-5">
+          <p class="text-xs uppercase tracking-widest font-semibold text-gray-400 mb-2">${lang === 'en' ? 'Next 3 hours' : 'Nächste 3 Stunden'}</p>
+          ${upcoming.map((e: any) => entryHtml(e, basePath)).join('')}
+        </div>`;
+      }
+      if (current.length === 0 && upcoming.length === 0) {
+        html += `<p class="text-gray-400 italic text-sm mb-4">${lang === 'en' ? 'No programme right now.' : 'Gerade kein Programm.'}</p>`;
+      }
+    } else {
+      // Außerhalb Festival: alle Einträge nach Tag
+      if (allEntries.length === 0) {
+        html += `<p class="text-gray-400 italic text-sm mb-4">${lang === 'en' ? 'No programme scheduled.' : 'Kein Programm geplant.'}</p>`;
+      } else {
+        const byDay: Record<string, any[]> = {};
+        allEntries.forEach((e: any) => { (byDay[e.festivalDay] ??= []).push(e); });
+        html += Object.keys(byDay).sort().map((day) =>
+          `<div class="mb-5">
+            <p class="text-xs uppercase tracking-widest font-semibold text-gray-400 mb-2">${getDayLabel(day, lang)}</p>
+            ${byDay[day].map((e: any) => entryHtml(e, basePath)).join('')}
+          </div>`
+        ).join('');
+      }
+    }
+
+    return html;
+  }
+
+  function openPanel(loc: any, lang: string) {
+    const content = buildPanelContent(loc, lang);
+    if (window.innerWidth < 768) {
+      const overlay = document.getElementById('mobile-panel-overlay');
+      const contentEl = document.getElementById('mobile-panel-content');
+      if (!overlay || !contentEl) return;
+      contentEl.innerHTML = content;
+      overlay.classList.remove('hidden'); overlay.classList.add('flex');
+      document.getElementById('mobile-overlay')?.classList.add('hidden');
+      document.getElementById('mobile-overlay')?.classList.remove('flex');
+    } else {
+      const listView   = document.getElementById('venue-list-view');
+      const panelView  = document.getElementById('venue-panel-view');
+      const contentEl  = document.getElementById('venue-panel-content');
+      const sidebar    = document.getElementById('locations-sidebar');
+      if (!listView || !panelView || !contentEl || !sidebar) return;
+      contentEl.innerHTML = content;
+      listView.classList.add('hidden'); listView.classList.remove('flex');
+      panelView.classList.remove('hidden'); panelView.classList.add('flex');
+      sidebar.classList.remove('hidden'); sidebar.classList.add('flex');
+    }
+  }
+
+  function closePanel() {
+    document.dispatchEvent(new CustomEvent('venue-closed'));
+    history.replaceState(null, '', ' ');
+    const listView  = document.getElementById('venue-list-view');
+    const panelView = document.getElementById('venue-panel-view');
+    if (listView && panelView) {
+      panelView.classList.add('hidden'); panelView.classList.remove('flex');
+      listView.classList.remove('hidden'); listView.classList.add('flex');
+    }
+    const mobilePanel = document.getElementById('mobile-panel-overlay');
+    mobilePanel?.classList.add('hidden'); mobilePanel?.classList.remove('flex');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const lang = document.documentElement.lang || 'de';
+
+    // Karte → Panel
+    document.addEventListener('venue-selected', (e: Event) => {
+      openPanel((e as CustomEvent).detail, lang);
+    });
+
+    // Desktop Panel-Buttons
+    document.getElementById('panel-back-btn')?.addEventListener('click', closePanel);
+    document.getElementById('panel-close-btn')?.addEventListener('click', closePanel);
+
+    // Mobile Overlay-Buttons
+    document.getElementById('mobile-list-btn')?.addEventListener('click', () => {
+      const overlay = document.getElementById('mobile-overlay');
+      overlay?.classList.remove('hidden'); overlay?.classList.add('flex');
+    });
+    document.getElementById('mobile-close-btn')?.addEventListener('click', () => {
+      const overlay = document.getElementById('mobile-overlay');
+      overlay?.classList.add('hidden'); overlay?.classList.remove('flex');
+    });
+    document.getElementById('mobile-panel-back')?.addEventListener('click', closePanel);
+    document.getElementById('mobile-panel-close')?.addEventListener('click', closePanel);
+
+    // Venue-Listen-Buttons (Sidebar + Mobile-Liste + Legende)
+    document.querySelectorAll<HTMLButtonElement>('.venue-list-btn[data-venue-id]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const venueId = btn.dataset.venueId;
+        const mapDataEl = document.getElementById('spektakel-map-data');
+        if (!mapDataEl || !venueId) return;
+        const loc = JSON.parse(mapDataEl.textContent || '[]').find((l: any) => l.id === venueId);
+        if (loc) { openPanel(loc, lang); history.replaceState(null, '', `#${venueId}`); }
+      });
+    });
+  });
+</script>

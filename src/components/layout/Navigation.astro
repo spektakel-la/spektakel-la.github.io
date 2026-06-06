@@ -5,9 +5,10 @@ import { ROUTES } from '../../utils/routes';
 
 interface Props {
   locale?: string;
+  mobile?: boolean;
 }
 
-const { locale = 'de' } = Astro.props;
+const { locale = 'de', mobile = false } = Astro.props;
 const t = useTranslations(locale);
 const lang = locale as Locale;
 
@@ -29,14 +30,15 @@ const navItems = [
 ---
 
 <nav aria-label={locale === 'en' ? 'Main navigation' : 'Hauptnavigation'}>
-  <ul class="flex items-center gap-1 list-none m-0 p-0">
+  <ul class:list={['list-none m-0 p-0', mobile ? 'flex flex-col gap-1' : 'flex items-center gap-1']}>
     {navItems.map(({ key, href }) => (
       <li>
         <a
           href={localePath(href, lang)}
           class:list={[
-            'nav-link px-3 py-2 rounded text-sm font-semibold uppercase tracking-wide transition-colors duration-200',
-            'hover:text-[var(--color-primary)] hover:bg-white/10',
+            'nav-link block rounded text-sm font-semibold uppercase tracking-wide transition-colors duration-200',
+            mobile ? 'px-3 py-2.5 text-right' : 'px-3 py-2',
+            'hover:text-[var(--color-primary)] hover:bg-gray-50',
             isActive(href)
               ? 'text-[var(--color-primary)]'
               : 'text-[var(--color-dark)]',

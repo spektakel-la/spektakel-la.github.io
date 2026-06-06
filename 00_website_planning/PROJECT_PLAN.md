@@ -915,16 +915,26 @@ export default defineConfig({
 > - Galerie-Vorschau auf Detailseite fehlt (kein Asset-Problem, sondern fehlende Zusatzbilder in `images[]`)
 > - Navigation Desktop zeigt Hamburger (globales Layout-Thema, Phase 2 – separates Issue)
 
-### Phase 7 – Spielorte & Karte (3–4 h)
+### Phase 7 – Spielorte & Karte (3–4 h) ✅
 
-- [ ] ⚠️ **Asset-Request**: Karten-Marker-Icons (SVG, je Spielort-Farbe) – genaue Spezifikation folgt zu Beginn dieser Phase
-- [ ] `LocationMap.astro` (Leaflet, client:only)
-- [ ] Marker-Rendering mit Kategoriefarben
-- [ ] `VenuePanel.astro` (Sidebar: Aktuell + nächste 3h)
-- [ ] `/locations/index.astro`
-- [ ] `/locations/[id].astro`
-- [ ] Offline-Tile-Caching (Workbox)
+- [x] Map-Assets migriert: `public/assets/img/map/tiles/` (Zoom 16–19, lokale OSM-Vorrendierung), `marker-*.{png,webp}`, `schedule-pink.{png,webp}`
+- [x] `content.config.ts` – `location_label`-Feld in Location-Schema ergänzt
+- [x] `LocationMap.astro` – Leaflet-Karte mit lokalen Kacheln (`/assets/img/map/tiles/{z}/{x}/{y}.webp`, Fallback .jpg)
+  - `L.divIcon` mit CSS-Klasse `spk-marker-{color}` (analog altem Projekt)
+  - Marker-Label: `location_id` als Zahl, oder "i"-Icon für Info-Standorte
+  - Popup: Spielplan des Spielorts (zukünftige Einträge, dedupliziert, nach Festivaltag gruppiert)
+  - URL-Hash: beim Popup-Öffnen wird `#location_id` gesetzt
+  - Bounding Box: `[[48.5261029,12.1322959],[48.549313,12.169414]]`
+  - Icon-Größe: `[35, 46]`, Anker: `[15, 46]`
+- [x] `LocationsPage.astro` – Hero, Karte, Spielortliste (Cards mit Marker-Icon)
+- [x] `LocationDetail.astro` – Mini-Karte (Leaflet), Hero mit GPS-Link, vollständiges Programm mit Zeitspannen + Kategorie-Chips, Back-Link
+- [x] `src/utils/routes.ts` – `locationPath()`-Funktion ergänzt
+- [x] i18n-Strings `locations.*` in `de.ts` + `en.ts` erweitert
+- [x] `/locations/index.astro` + `/en/locations/index.astro`
+- [x] `/locations/[id].astro` + `/en/locations/[id].astro`
 - [ ] **Design-Abgleich Desktop + Mobile** (`design_concept.png`)
+
+> **Tile-Strategie**: Keine Online-OSM-Kacheln – alle Tiles sind lokal vorgerendert und liegen in `public/assets/img/map/tiles/`. OSM-Attribution gemäß Lizenz im Leaflet-Layer vorhanden.
 
 ### Phase 8 – Galerie (2–3 h)
 

@@ -62,6 +62,13 @@
   --space-20: 5rem; /* 80px */
   --space-24: 6rem; /* 96px */
 
+  /* === Z-Index-Ebenen === */
+  --z-base: 0;
+  --z-dropdown: 40;
+  --z-header: 50;
+  --z-modal: 100;
+  --z-toast: 200;
+
   /* === Layout === */
   --container-max: 1280px;
   --container-padding: var(--space-4);

@@ -46,6 +46,8 @@ const locations = defineCollection({
     description: z.string(),
     gps: z.tuple([z.number(), z.number()]),
     marker_color: z.string(),
+    /** "i" für Info-Standorte; sonst wird location_id als Label verwendet */
+    location_label: z.string().optional(),
     nightlife: z.boolean().optional(),
     organizational: z.boolean().optional(),
   }),

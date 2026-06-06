@@ -49,6 +49,17 @@ export const en = {
   },
   locations: {
     title: 'Venues',
+    tagline: 'All performance venues at a glance – click a marker to see the current schedule.',
+    allVenues: 'All venues',
+    showOnMap: 'Show on map',
+    showList: 'Show list',
+    backToMap: '← Back to map',
+    backToList: 'Back to list',
+    venueProgram: 'Programme at this venue',
+    myLocation: 'Show me where I am',
+    noSchedule: 'No programme scheduled.',
+    toFullProgram: 'Full programme',
+    infoPoint: 'Info point',
   },
   gallery: {
     title: 'Gallery',

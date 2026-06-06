@@ -50,6 +50,17 @@ export const de = {
   },
   locations: {
     title: 'Spielorte',
+    tagline: 'Alle Auftrittsorte auf einen Blick – klicke auf einen Marker für das aktuelle Programm.',
+    allVenues: 'Alle Spielorte',
+    showOnMap: 'Auf Karte zeigen',
+    showList: 'Liste anzeigen',
+    backToMap: '← Zurück zur Karte',
+    backToList: 'Zurück zur Liste',
+    venueProgram: 'Programm an diesem Spielort',
+    myLocation: 'Zeig mir, wo ich bin',
+    noSchedule: 'Kein Programm geplant.',
+    toFullProgram: 'Ganzes Programm',
+    infoPoint: 'Info-Punkt',
   },
   gallery: {
     title: 'Impressionen',

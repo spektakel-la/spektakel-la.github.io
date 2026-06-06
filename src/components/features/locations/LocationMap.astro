@@ -1,0 +1,151 @@
+---
+/**
+ * LocationMap – interaktive Leaflet-Karte mit lokalen OSM-Kacheln.
+ *
+ * Funktioniert vollständig client-seitig. Alle Daten werden zur Build-Zeit
+ * serialisiert und als JSON in das HTML eingebettet.
+ */
+
+export interface MapEntry {
+  time: string;        // ISO-Datumstring (Start)
+  endTime: string;     // ISO-Datumstring (Ende des gemergten Slots)
+  artistId: string;
+  artistName: string;
+  artistSlug: string;  // leer für organizational artists
+  isOrganizational: boolean;
+  festivalDay: string; // "yyyy-mm-dd"
+}
+
+export interface MapLocation {
+  id: string;
+  description: string;
+  gps: [number, number];
+  color: string;
+  label: string;       // Angezeigtes Label im Marker (Zahl oder "i")
+  nightlife: boolean;
+  entries: MapEntry[];
+}
+
+interface Props {
+  locations: MapLocation[];
+  lang: 'de' | 'en';
+}
+
+const { locations, lang } = Astro.props;
+const mapJson = JSON.stringify(locations);
+---
+
+<div id="spektakel-map" data-lang={lang} class="w-full h-full"></div>
+<script type="application/json" id="spektakel-map-data" set:html={mapJson}></script>
+
+<script>
+  import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+
+  const BOUNDS: [[number, number], [number, number]] = [
+    [48.5261029, 12.1322959],
+    [48.549313, 12.169414],
+  ];
+
+  function initMap() {
+    const dataEl = document.getElementById('spektakel-map-data');
+    const mapEl = document.getElementById('spektakel-map') as HTMLElement | null;
+    if (!dataEl || !mapEl) return;
+
+    const locations = JSON.parse(dataEl.textContent || '[]');
+    const lang = mapEl.dataset.lang || 'de';
+
+    const map = L.map(mapEl, { minZoom: 16, maxZoom: 19, maxBounds: BOUNDS });
+    map.attributionControl.setPrefix(false);
+
+    L.tileLayer('/assets/img/map/tiles/{z}/{x}/{y}.webp', {
+      minZoom: 16,
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
+      errorTileUrl: '/assets/img/map/tiles/{z}/{x}/{y}.jpg',
+    }).addTo(map);
+
+    const markers = locations.map((loc: any) => {
+      const labelHtml =
+        loc.label === 'i'
+          ? `<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><text x="7" y="11" text-anchor="middle" fill="white" font-family="sans-serif" font-size="12" font-weight="bold">i</text></svg>`
+          : `<span>${loc.label}</span>`;
+
+      const icon = L.divIcon({
+        className: `spk-marker spk-marker-${loc.color}`,
+        html: `<div class="spk-marker-inner">${labelHtml}</div>`,
+        iconSize: [35, 46],
+        iconAnchor: [15, 46],
+      });
+
+      const marker = L.marker(loc.gps, { icon });
+      marker.on('click', () => {
+        mapEl.dispatchEvent(
+          new CustomEvent('venue-selected', { detail: loc, bubbles: true })
+        );
+        history.replaceState(null, '', `#${loc.id}`);
+      });
+      marker.addTo(map);
+      return { marker, id: loc.id };
+    });
+
+    map.fitBounds(L.latLngBounds(locations.map((l: any) => l.gps)), { padding: [20, 20] });
+
+    // Hash-basiertes Öffnen beim Laden
+    const hashId = window.location.hash.slice(1);
+    if (hashId) {
+      const loc = locations.find((l: any) => l.id === hashId);
+      if (loc) {
+        setTimeout(() => {
+          mapEl.dispatchEvent(
+            new CustomEvent('venue-selected', { detail: loc, bubbles: true })
+          );
+        }, 300);
+      }
+    }
+
+    // Wenn Panel geschlossen wird: Hash zurücksetzen
+    document.addEventListener('venue-closed', () => {
+      history.replaceState(null, '', ' ');
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMap);
+  } else {
+    initMap();
+  }
+</script>
+
+<style>
+  :global(.leaflet-container) {
+    background: #f0f0f0 !important;
+    font-family: 'Inter', sans-serif;
+  }
+
+  :global(.spk-marker) {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center bottom;
+  }
+
+  :global(.spk-marker-inner) {
+    position: absolute;
+    width: 100%;
+    top: 6px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 13px;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    line-height: 1;
+  }
+
+  :global(.spk-marker-pink)   { background-image: url('/assets/img/map/marker-pink.webp'); }
+  :global(.spk-marker-blue)   { background-image: url('/assets/img/map/marker-blue.webp'); }
+  :global(.spk-marker-green)  { background-image: url('/assets/img/map/marker-green.webp'); }
+  :global(.spk-marker-orange) { background-image: url('/assets/img/map/marker-orange.webp'); }
+  :global(.spk-marker-red)    { background-image: url('/assets/img/map/marker-red.webp'); }
+  :global(.spk-marker-yellow) { background-image: url('/assets/img/map/marker-yellow.webp'); }
+  :global(.spk-marker-purple) { background-image: url('/assets/img/map/marker-purple.webp'); }
+</style>
