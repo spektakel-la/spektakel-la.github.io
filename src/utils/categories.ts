@@ -33,3 +33,19 @@ export const CATEGORY_KEYWORDS: ReadonlyArray<{ cat: Category; keywords: readonl
     keywords: ['street art', 'fotographie', 'photography', 'lightshow', 'speedpainting', 'graffiti'],
   },
 ];
+
+/**
+ * Kategorie-Farben als JS-Konstanten.
+ * Spiegeln exakt die `--color-cat-*`-Tokens in `tokens.css`.
+ * → Verwende diese Konstanten überall wo Farben programmatisch benötigt werden
+ *   (z. B. Leaflet-Marker-Icons, SVG-Fills).
+ * ACHTUNG: Änderungen hier immer synchron auch in tokens.css vornehmen.
+ */
+export const CATEGORY_COLORS: Readonly<Record<Category, string>> = {
+  [Category.Akrobatik]: '#00b4db',
+  [Category.Musik]: '#ff2d7a',
+  [Category.Comedy]: '#b7ff00',
+  [Category.StreetArt]: '#ff6b1a',
+  [Category.Magie]: '#9b59b6',
+  [Category.Nightlife]: '#1a1a1a',
+} as const;

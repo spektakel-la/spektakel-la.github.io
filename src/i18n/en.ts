@@ -79,7 +79,7 @@ export const en = {
     categories_heading: 'What to expect?',
     hut_heading: 'Artists perform for tips!',
     hut_text:
-      'SPEKTAKEL! is a hat festival – admission is free! The artists rely on your appreciation. Show your applause and toss a coin (or more!) into the hat.',
+      'Spektakel Landshut is a hat festival – admission is free! The artists rely on your appreciation. Show your applause and toss a coin (or more!) into the hat.',
     featured_heading: 'From the line-up',
     schedule_heading: 'Programme preview',
     schedule_link: 'Full programme →',

@@ -1,5 +1,5 @@
 ---
-import { type Category } from '../../utils/categories';
+import { type Category, CATEGORY_COLORS } from '../../utils/categories';
 /**
  * CategoryChip – Filter-Chip für Kategorie-Auswahl.
  *
@@ -7,6 +7,9 @@ import { type Category } from '../../utils/categories';
  * Inaktiver Chip: Grauer Rahmen, optionaler Farbpunkt.
  *
  * Kann als <button> (onClick) oder als <a> (href) gerendert werden.
+ * Für rein dekorative Nutzung: `class="pointer-events-none"` übergeben.
+ *
+ * Farben kommen aus `CATEGORY_COLORS` in `src/utils/categories.ts`.
  */
 
 interface Props {
@@ -31,16 +34,7 @@ const {
   'data-category': dataCategory,
 } = Astro.props;
 
-const catColorMap: Record<Category, string> = {
-  akrobatik:    'var(--color-cat-akrobatik)',
-  musik:        'var(--color-cat-musik)',
-  comedy:       'var(--color-cat-comedy)',
-  'street-art': 'var(--color-cat-street-art)',
-  magie:        'var(--color-cat-magie)',
-  nightlife:    'var(--color-cat-nightlife)',
-};
-
-const dotColor = category ? (catColorMap[category] ?? null) : null;
+const dotColor = category ? (CATEGORY_COLORS[category] ?? null) : null;
 ---
 
 {href ? (

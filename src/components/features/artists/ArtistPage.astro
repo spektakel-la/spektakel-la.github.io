@@ -1,5 +1,6 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 import { useTranslations } from '../../../i18n/utils';
 import { Category, CATEGORY_KEYWORDS } from '../../../utils/categories';
 import { loadSchedule, mergeConsecutiveSlots, type MergedEntry } from '../../../utils/schedule';
@@ -7,6 +8,7 @@ import Page from '../../../layouts/Page.astro';
 import PaintSplatter from '../../ui/PaintSplatter.astro';
 import CategoryFilter from '../program/CategoryFilter.astro';
 import ArtistCard from './ArtistCard.astro';
+import hero4 from '../../../assets/hero/hero4.png';
 
 interface Props {
   locale: 'de' | 'en';
@@ -41,20 +43,17 @@ const categoryMap = Object.fromEntries(
   artists.map((a) => [a.id, getMacroCategory(a)])
 );
 
-// Schedule für Cards (Spielzeiten + Spielort)
+// Schedule für Cards (Spielzeiten)
 const allLocations = await getCollection('locations');
 const locationMap = Object.fromEntries(
   allLocations.map((l: CollectionEntry<'locations'>) => [l.data.location_id, l])
 );
 const schedule = loadSchedule();
 const scheduleMap: Record<string, MergedEntry[]> = {};
-const primaryLocationMap: Record<string, string> = {};
 for (const artist of artists) {
   const entries = schedule.filter((e) => e.artist_id === artist.data.artist_id);
   const merged = mergeConsecutiveSlots(entries);
   scheduleMap[artist.id] = merged;
-  const firstLoc = merged[0] ? locationMap[merged[0].location_id]?.data.description : undefined;
-  if (firstLoc) primaryLocationMap[artist.id] = firstLoc;
 }
 
 const catLabels: Record<Category, string> = {
@@ -85,22 +84,41 @@ const catLabels: Record<Category, string> = {
         <PaintSplatter variant={1} width={300} />
       </div>
     </div>
-    <div class="relative z-10 max-w-7xl mx-auto px-6">
-      <p class="text-primary font-display text-xl tracking-widest mb-2">SPEKTAKEL! LANDSHUT 2025</p>
-      <!-- Zweizeiliger Titel: erste Zeile dunkel, zweite Zeile magenta -->
-      <h1 class="font-display leading-none" style="font-size: clamp(2.8rem, 9vw, 7rem)">
-        <span class="block text-dark">{locale === 'de' ? 'ALLE KÜNSTLER' : 'ALL ARTISTS'}</span>
-        <span class="block text-primary">{locale === 'de' ? 'AUF EINEN BLICK' : 'AT A GLANCE'}</span>
-      </h1>
-      <p class="mt-4 text-dark/50 max-w-2xl">{t.artists.tagline}</p>
+    <div class="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 items-end gap-4">
+      <!-- Links: Text-Content -->
+      <div class="pb-4 md:pb-8">
+        <p class="text-primary font-display text-xl tracking-widest mb-2">SPEKTAKEL LANDSHUT 2025</p>
+        <!-- Zweizeiliger Titel: erste Zeile dunkel, zweite Zeile magenta -->
+        <h1 class="font-display leading-none" style="font-size: clamp(2.8rem, 9vw, 7rem)">
+          <span class="block text-dark">{locale === 'de' ? 'ALLE KÜNSTLER' : 'ALL ARTISTS'}</span>
+          <span class="block text-primary">{locale === 'de' ? 'AUF EINEN BLICK' : 'AT A GLANCE'}</span>
+        </h1>
+        <p class="mt-4 text-dark/50 max-w-xl">{t.artists.tagline}</p>
+        <!-- Für-den-Hut Badge -->
+        <div class="mt-6 inline-flex items-center gap-2 bg-dark text-white rounded-full px-4 py-2 text-sm font-display tracking-wider">
+          <span aria-hidden="true">🎩</span>
+          {t.common.hutAct.toUpperCase()}
+        </div>
+      </div>
+      <!-- Rechts: Hero-Figur (nur Desktop) -->
+      <div class="hidden md:flex items-end justify-end overflow-hidden" style="max-height: 400px;">
+        <Image
+          src={hero4}
+          alt=""
+          aria-hidden="true"
+          width={380}
+          loading="eager"
+          class="object-contain object-bottom max-h-[400px] w-auto"
+        />
+      </div>
     </div>
   </section>
 
   <!-- ─── Filter-Bar ─────────────────────────────────────────────────────────── -->
   <div id="artists-filters" class="sticky top-0 z-30 bg-white border-b border-gray-200 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex flex-wrap items-center gap-3">
-      <!-- Suche -->
-      <div class="relative flex-1 min-w-[180px] max-w-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex items-center gap-3">
+      <!-- Suche (fixe Breite, kein Schrumpfen) -->
+      <div class="relative shrink-0 w-40 sm:w-56">
         <svg class="absolute left-2.5 top-1/2 -translate-y-1/2 text-dark/30 pointer-events-none" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
           <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.242 1.4a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z"/>
         </svg>
@@ -113,8 +131,10 @@ const catLabels: Record<Category, string> = {
           spellcheck="false"
         />
       </div>
-      <!-- Kategorie-Chips -->
-      <CategoryFilter catLabels={catLabels} allLabel={t.common.all} locale={locale} />
+      <!-- Kategorie-Chips wrappend -->
+      <div class="flex-1 min-w-0">
+        <CategoryFilter catLabels={catLabels} allLabel={t.common.all} locale={locale} />
+      </div>
     </div>
   </div>
 
@@ -131,7 +151,6 @@ const catLabels: Record<Category, string> = {
           basePath={basePath}
           locale={locale}
           entries={scheduleMap[artist.id] ?? []}
-          primaryLocation={primaryLocationMap[artist.id]}
         />
       ))}
     </div>

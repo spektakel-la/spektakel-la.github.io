@@ -5,6 +5,7 @@ import Page from '../../../layouts/Page.astro';
 import { Category, CATEGORY_KEYWORDS } from '../../../utils/categories';
 import { formatTime, loadSchedule, mergeConsecutiveSlots } from '../../../utils/schedule';
 import CategoryChip from '../../ui/CategoryChip.astro';
+import MapPin from '../../ui/MapPin.astro';
 import PaintSplatter from '../../ui/PaintSplatter.astro';
 
 interface Props {
@@ -53,13 +54,117 @@ const mainImage = images?.[0] ?? null;
 const extraImages = images?.slice(1) ?? [];
 
 const catChipLabel = macroCategory ? (locData.categories[0] ?? macroCategory) : '';
+
+/** Mappt einen Roh-Kategorie-String (z. B. "Jonglage") auf eine Makro-Kategorie. */
+function mapToCategory(raw: string): Category | undefined {
+  const c = raw.toLowerCase();
+  for (const { cat, keywords } of CATEGORY_KEYWORDS) {
+    if (keywords.some((k) => c.includes(k))) return cat;
+  }
+  return undefined;
+}
+
+// ─── Dauer → ISO 8601 für JSON-LD ────────────────────────────────────────────
+function durationToISO(dur?: string): string | undefined {
+  if (!dur) return undefined;
+  const clean = dur.replace(/^ca\.\s*/i, '').trim();
+  const hMatch = clean.match(/(\d+)\s*(?:stunde|stunden|hour|hours|h\b)/i);
+  const mMatch = clean.match(/(\d+)\s*(?:minuten|minute|min\b|m\b)/i);
+  const h = hMatch ? parseInt(hMatch[1]) : 0;
+  const m = mMatch ? parseInt(mMatch[1]) : 0;
+  if (h === 0 && m === 0) return undefined;
+  return `PT${h > 0 ? `${h}H` : ''}${m > 0 ? `${m}M` : ''}`;
+}
+const durationISO = durationToISO(duration);
+
+// ─── JSON-LD Person ──────────────────────────────────────────────────────────
+const siteUrl = 'https://spektakel-la.github.io';
+const artistUrl = `${siteUrl}${basePath}/artists/${artist_id}/`;
+
+const sameAs: string[] = [
+  instagram,
+  facebook,
+  youtube,
+  homepage,
+].filter((u): u is string => typeof u === 'string' && u.length > 0);
+
+const GENRE_LABELS: Record<string, string> = {
+  akrobatik: locale === 'en' ? 'Acrobatics' : 'Akrobatik',
+  musik: locale === 'en' ? 'Music' : 'Musik',
+  comedy: 'Comedy',
+  street_art: locale === 'en' ? 'Street Art' : 'Street Art',
+  magie: locale === 'en' ? 'Magic' : 'Magie',
+  nightlife: 'Nightlife',
+};
+const genre = macroCategory ? (GENRE_LABELS[macroCategory] ?? macroCategory) : undefined;
+const keywords = locData.tags && locData.tags.length > 0 ? locData.tags.join(', ') : undefined;
+
+const performerRef: Record<string, unknown> = { '@type': 'PerformingGroup', name, url: artistUrl };
+if (mainImage) performerRef.image = mainImage;
+
+const performerIn = merged.map((entry) => {
+  const loc = locationMap[entry.location_id];
+  const programUrl = locale === 'en' ? `${siteUrl}/en/program/` : `${siteUrl}/program/`;
+  const eventObj: Record<string, unknown> = {
+    '@type': 'Event',
+    name: `${name} – Spektakel Landshut`,
+    startDate: entry.startTime.toISOString(),
+    endDate: entry.endTime.toISOString(),
+    url: programUrl,
+    organizer: { '@type': 'Organization', name: 'Spektakel Landshut', url: siteUrl },
+    performer: performerRef,
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    offers: {
+      '@type': 'Offer',
+      price: 0,
+      priceCurrency: 'EUR',
+      url: programUrl,
+      availability: 'https://schema.org/InStock',
+    },
+  };
+  if (mainImage) eventObj.image = mainImage;
+    if (durationISO) eventObj.duration = durationISO;
+    if (loc) {
+    eventObj.location = {
+      '@type': 'Place',
+      name: loc.data.description,
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: loc.data.gps[0],
+        longitude: loc.data.gps[1],
+      },
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Landshut',
+        addressCountry: 'DE',
+      },
+    };
+  }
+  return eventObj;
+});
+
+const jsonLd: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name,
+  url: artistUrl,
+  description: locData.description?.slice(0, 300),
+};
+if (mainImage) jsonLd.image = mainImage;
+if (locData.country) jsonLd.nationality = locData.country;
+if (genre) jsonLd.genre = genre;
+if (keywords) jsonLd.keywords = keywords;
+if (sameAs.length > 0) jsonLd.sameAs = sameAs;
+if (performerIn.length > 0) jsonLd.performerIn = performerIn;
 ---
 
 <Page
   locale={locale}
-  title={`${name} – SPEKTAKEL! Landshut`}
+  title={`${name} – Spektakel Landshut`}
   description={locData.description?.slice(0, 160)}
 >
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
   <!-- ─── Top Bar: Back + Favorit ──────────────────────────────────────────── -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-5 pb-2 flex items-center justify-between">
     <a href={`${basePath}/artists/`} class="text-sm text-dark/50 hover:text-primary transition-colors">
@@ -195,28 +300,15 @@ const catChipLabel = macroCategory ? (locData.categories[0] ?? macroCategory) : 
               const loc = locationMap[entry.location_id];
               const timeStr = `${formatTime(entry.startTime)} – ${formatTime(entry.endTime)}`;
               const locName = loc?.data.description ?? entry.location_id;
-              const mapUrl = loc?.data.map_url ?? null;
               return (
                 <div class="rounded-xl border border-gray-200 p-4">
                   <p class="font-display text-xs tracking-widest text-dark/50 uppercase mb-1">
                     {dayFull[entry.festivalDay] ?? entry.festivalDay}
                   </p>
                   <p class="font-display text-xl text-dark leading-tight mb-2">{timeStr}</p>
-                  <div class="flex items-center justify-between gap-2">
+                  <div class="flex items-center gap-1.5">
+                    <MapPin color={loc?.data.marker_color ?? 'var(--color-primary)'} size={14} class="shrink-0" />
                     <span class="text-sm text-dark/70 font-medium uppercase">{locName}</span>
-                    {mapUrl && (
-                      <a
-                        href={mapUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="text-primary hover:text-primary/70 shrink-0"
-                        aria-label={locale === 'de' ? `${locName} auf der Karte` : `${locName} on map`}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                          <path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-2.079 3.953-5.158 3.953-8.833 0-4.667-3.805-8.25-8.25-8.25S3.75 7.783 3.75 12.25c0 3.675 2.009 6.754 3.953 8.833a19.58 19.58 0 002.683 2.282 16.975 16.975 0 001.144.742l.07.04zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z" clip-rule="evenodd" />
-                        </svg>
-                      </a>
-                    )}
                   </div>
                 </div>
               );
@@ -238,7 +330,7 @@ const catChipLabel = macroCategory ? (locData.categories[0] ?? macroCategory) : 
         </h2>
 
         {locData.highlight && (
-          <p class="text-primary font-semibold mb-4 italic text-lg leading-snug">
+          <p class="highlight mb-4">
             „{locData.highlight}"
           </p>
         )}
@@ -247,10 +339,12 @@ const catChipLabel = macroCategory ? (locData.categories[0] ?? macroCategory) : 
 
         {(locData.categories?.length ?? 0) > 0 && (
           <div class="flex flex-wrap gap-2">
-            {locData.categories.map((tag) => (
-              <span class="text-xs font-display tracking-wide border border-dark/20 text-dark/60 rounded-full px-3 py-1 uppercase">
-                {tag}
-              </span>
+            {locData.categories.map((tag: string) => (
+              <CategoryChip
+                category={mapToCategory(tag)}
+                label={tag}
+                class="pointer-events-none"
+              />
             ))}
           </div>
         )}

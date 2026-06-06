@@ -212,7 +212,7 @@ const jsonLdSubEvents = schedule
       startDate: startIso,
       endDate: endIso,
       url: programUrl,
-      organizer: { '@type': 'Organization', name: 'SPEKTAKEL! Landshut' },
+      organizer: { '@type': 'Organization', name: 'Spektakel Landshut' },
       eventStatus: 'https://schema.org/EventScheduled',
       eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     };
@@ -238,7 +238,7 @@ const jsonLdSubEvents = schedule
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'EventSeries',
-  name: 'SPEKTAKEL! Landshut 2025',
+  name: 'Spektakel Landshut 2025',
   startDate: '2025-09-19',
   endDate: '2025-09-21',
   url: programUrl,
@@ -253,7 +253,7 @@ const jsonLd = {
   },
   organizer: {
     '@type': 'Organization',
-    name: 'SPEKTAKEL! Landshut',
+    name: 'Spektakel Landshut',
     url: siteUrl,
   },
   subEvent: jsonLdSubEvents,
@@ -264,8 +264,8 @@ const jsonLd = {
   locale={locale}
   title={t.program.title}
   description={locale === 'de'
-    ? 'Alle Auftritte beim SPEKTAKEL! Landshut – täglich von Freitag bis Sonntag.'
-    : 'All performances at SPEKTAKEL! Landshut – Friday to Sunday.'}
+    ? 'Alle Auftritte beim Spektakel Landshut – täglich von Freitag bis Sonntag.'
+    : 'All performances at Spektakel Landshut – Friday to Sunday.'}
 >
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
 
@@ -280,7 +280,7 @@ const jsonLd = {
       </div>
     </div>
     <div class="relative z-10 max-w-7xl mx-auto px-6">
-      <p class="text-primary font-display text-xl tracking-widest mb-1">SPEKTAKEL! LANDSHUT 2025</p>
+      <p class="text-primary font-display text-xl tracking-widest mb-1">SPEKTAKEL LANDSHUT 2025</p>
       <h1 class="font-display leading-none text-dark" style="font-size: clamp(3rem, 10vw, 7rem)">
         {t.program.title.toUpperCase()}
       </h1>

@@ -6,13 +6,15 @@ interface Props {
   catLabels: Record<Category, string>;
   allLabel: string;
   locale: 'de' | 'en';
+  /** Kein Zeilenumbruch – für horizontales Scrollen in der Filter-Bar */
+  nowrap?: boolean;
 }
 
-const { catLabels, allLabel, locale } = Astro.props;
+const { catLabels, allLabel, locale, nowrap = false } = Astro.props;
 ---
 
 <div
-  class="flex flex-wrap gap-1.5"
+  class={`flex gap-1.5 ${nowrap ? 'flex-nowrap' : 'flex-wrap'}`}
   role="group"
   aria-label={locale === 'de' ? 'Kategorie-Filter' : 'Category filter'}
 >

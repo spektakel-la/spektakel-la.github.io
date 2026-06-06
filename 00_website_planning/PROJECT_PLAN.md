@@ -892,12 +892,30 @@ export default defineConfig({
 
 ### Phase 6 – Künstler (2–3 h)
 
-- [ ] `ArtistCard.astro`
-- [ ] `ArtistCategoryFilter.astro`
-- [ ] `/artists/index.astro`
-- [ ] `/artists/[slug].astro` (Detailseite)
-- [ ] Structured Data (Person)
-- [ ] **Design-Abgleich Desktop + Mobile** (`design_concept.png` + `design_concept_artists.png`)
+- [x] `ArtistCard.astro` (Foto, Favorit-Stern, Name, Spielzeiten, Kategorie-Chip; kein Spielort – variiert je Uhrzeit)
+- [x] `ArtistPage.astro` (Hero 2-Spalten mit `hero4.png` Hula-Hoop-Performerin, Für-den-Hut-Badge, Filter-Bar horizontal-scrollbar)
+- [x] `CATEGORY_COLORS` in `categories.ts` – JS-Konstante als Single Source of Truth; `CategoryChip` importiert daraus
+- [x] Kategorien auf Detailseite: `CategoryChip` statt grauer Spans, Mapping raw → Makro-Kategorie via `mapToCategory()`
+- [x] `/artists/index.astro` + `/en/artists/index.astro`
+- [x] `/artists/[slug].astro` (Detailseite) + `/en/artists/[slug].astro`
+- [x] Structured Data (Person + performerIn Events inkl. `duration` als ISO 8601 wenn gesetzt)
+- [x] `src/components/ui/MapPin.astro` – wiederverwendbarer SVG-Pin (Farbe via `color`-Prop)
+- [x] Spielzeiten-Karten: MapPin mit `marker_color` aus Location-Frontmatter
+- [x] Highlight-Text: `class="highlight"` (CSS in `global.css`), Beschreibung normal getrennt
+- [x] Zeitangaben in Cards: kein `truncate`, Text bricht natürlich um
+- [x] Kategorie-Chips: Filter-Bar wrappend (alle Chips immer sichtbar, kein hidden overflow) – Fix 06.06.2026
+- [x] Spielort aus Artist-Cards entfernt (variiert je nach Uhrzeit, kein sinnvoller Einzel-Ort darstellbar)
+- [x] ~~⚠️ **Asset-Request: Hero-Bild für Künstlerliste**~~ → erledigt mit `hero4.png` (Hula-Hoop-Performerin, freigestellt)
+- [ ] Galerie-Vorschau auf Detailseite (3 Thumbnails + Lightbox) – **offen: Bilder fehlen noch** (mehrere `images[]`-Einträge in Artist-Frontmattern nötig)
+- [x] **Design-Abgleich Desktop** (`design_concept_artists.png`) ✅ – Stand 04.06.2026
+- [x] **Mobile-Abgleich** ✅ – Stand 06.06.2026 (390 px, Playwright CLI)
+
+> **Offene Abweichungen / bekannte Einschränkungen:**
+>
+> - Galerie-Vorschau auf Detailseite fehlt (kein Asset-Problem, sondern fehlende Zusatzbilder in `images[]`)
+> - Navigation Desktop zeigt Hamburger (globales Layout-Thema, Phase 2 – separates Issue)
+
+### Phase 7 – Spielorte & Karte (3–4 h)
 
 - [ ] ⚠️ **Asset-Request**: Karten-Marker-Icons (SVG, je Spielort-Farbe) – genaue Spezifikation folgt zu Beginn dieser Phase
 - [ ] `LocationMap.astro` (Leaflet, client:only)

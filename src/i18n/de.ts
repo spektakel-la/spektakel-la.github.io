@@ -81,7 +81,7 @@ export const de = {
     categories_heading: 'Was erwartet dich?',
     hut_heading: 'Künstler spielen für den Hut!',
     hut_text:
-      'Das SPEKTAKEL! ist ein Hut-Festival – der Eintritt ist frei! Die Künstlerinnen und Künstler leben von deiner Wertschätzung. Zeig deinen Applaus und wirf eine Münze (oder mehr!) in den Hut.',
+      'Das Spektakel Landshut ist ein Hut-Festival – der Eintritt ist frei! Die Künstlerinnen und Künstler leben von deiner Wertschätzung. Zeig deinen Applaus und wirf eine Münze (oder mehr!) in den Hut.',
     featured_heading: 'Aus dem Line-Up',
     schedule_heading: 'Spielplan-Vorschau',
     schedule_link: 'Ganzer Spielplan →',

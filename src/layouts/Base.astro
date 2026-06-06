@@ -10,7 +10,7 @@ interface Props {
 }
 
 const {
-  title = 'SPEKTAKEL! Landshut – Strassenkunst Festival',
+  title = 'Spektakel Landshut – Strassenkunst Festival',
   description = 'Das Strassenkunst-Festival in Landshut: Akrobatik, Jonglage, Musik, Comedy und Street Art mitten in der Altstadt.',
   ogImage = '/assets/img/og/jonglage.png',
   locale = 'de',
@@ -18,7 +18,7 @@ const {
 } = Astro.props;
 
 const isEn = locale === 'en';
-const siteName = 'SPEKTAKEL! Landshut';
+const siteName = 'Spektakel Landshut';
 const fullTitle = title.includes('SPEKTAKEL') ? title : `${title} – ${siteName}`;
 ---
 
