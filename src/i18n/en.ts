@@ -54,7 +54,7 @@ export const en = {
     showOnMap: 'Show on map',
     showList: 'Show list',
     backToMap: '← Back to map',
-    backToList: 'Back to list',
+    backToList: 'Close',
     venueProgram: 'Programme at this venue',
     myLocation: 'Show me where I am',
     noSchedule: 'No programme scheduled.',

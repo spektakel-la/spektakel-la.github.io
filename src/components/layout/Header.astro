@@ -28,7 +28,8 @@ const homeHref = localePath('/', lang);
 ---
 
 <header
-  class="sticky top-0 z-[var(--z-header)] bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm relative"
+  class="sticky top-0 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm relative"
+  style="z-index: 1200;"
   role="banner"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -95,11 +96,19 @@ const homeHref = localePath('/', lang);
 
 </header>
 
+<!-- Mobile Menu Backdrop -->
+<div
+  id="mobile-menu-backdrop"
+  class="hidden lg:hidden fixed inset-0 bg-black/25"
+  style="z-index: 1250;"
+  aria-hidden="true"
+></div>
+
 <!-- Mobile Menu (fixed, außerhalb des Headers, damit kein Stacking-Context-Clip) -->
 <div
   id="mobile-menu"
   class="hidden lg:hidden fixed right-4 top-16 min-w-[180px] rounded-lg border border-gray-100 bg-white shadow-lg"
-  style="z-index: calc(var(--z-header, 50) + 10);"
+  style="z-index: 1300;"
   aria-hidden="true"
 >
   <div class="py-2 px-2">
@@ -110,37 +119,46 @@ const homeHref = localePath('/', lang);
 <script>
   const toggle = document.getElementById('menu-toggle');
   const menu = document.getElementById('mobile-menu');
+  const backdrop = document.getElementById('mobile-menu-backdrop');
   const iconOpen = document.getElementById('icon-open');
   const iconClose = document.getElementById('icon-close');
 
+  function closeMenu() {
+    menu?.classList.add('hidden');
+    menu?.setAttribute('aria-hidden', 'true');
+    backdrop?.classList.add('hidden');
+    backdrop?.setAttribute('aria-hidden', 'true');
+    toggle?.setAttribute('aria-expanded', 'false');
+    toggle?.setAttribute('aria-label', 'Menü öffnen');
+    iconOpen?.classList.remove('hidden');
+    iconClose?.classList.add('hidden');
+  }
+
+  function openMenu() {
+    menu?.classList.remove('hidden');
+    menu?.setAttribute('aria-hidden', 'false');
+    backdrop?.classList.remove('hidden');
+    backdrop?.setAttribute('aria-hidden', 'false');
+    toggle?.setAttribute('aria-expanded', 'true');
+    toggle?.setAttribute('aria-label', 'Menü schließen');
+    iconOpen?.classList.add('hidden');
+    iconClose?.classList.remove('hidden');
+  }
+
   toggle?.addEventListener('click', () => {
     const isOpen = menu?.classList.contains('hidden') === false;
+    if (isOpen) closeMenu();
+    else openMenu();
+  });
 
-    if (isOpen) {
-      menu?.classList.add('hidden');
-      menu?.setAttribute('aria-hidden', 'true');
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', 'Menü öffnen');
-      iconOpen?.classList.remove('hidden');
-      iconClose?.classList.add('hidden');
-    } else {
-      menu?.classList.remove('hidden');
-      menu?.setAttribute('aria-hidden', 'false');
-      toggle.setAttribute('aria-expanded', 'true');
-      toggle.setAttribute('aria-label', 'Menü schließen');
-      iconOpen?.classList.add('hidden');
-      iconClose?.classList.remove('hidden');
-    }
+  backdrop?.addEventListener('click', closeMenu);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
   });
 
   // Menü schließen bei Navigation (SPA-like)
   menu?.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => {
-      menu.classList.add('hidden');
-      menu.setAttribute('aria-hidden', 'true');
-      toggle?.setAttribute('aria-expanded', 'false');
-      iconOpen?.classList.remove('hidden');
-      iconClose?.classList.add('hidden');
-    });
+    link.addEventListener('click', closeMenu);
   });
 </script>

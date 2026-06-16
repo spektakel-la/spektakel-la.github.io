@@ -55,7 +55,7 @@ export const de = {
     showOnMap: 'Auf Karte zeigen',
     showList: 'Liste anzeigen',
     backToMap: '← Zurück zur Karte',
-    backToList: 'Zurück zur Liste',
+    backToList: 'Schließen',
     venueProgram: 'Programm an diesem Spielort',
     myLocation: 'Zeig mir, wo ich bin',
     noSchedule: 'Kein Programm geplant.',

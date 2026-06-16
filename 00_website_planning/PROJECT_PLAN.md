@@ -867,7 +867,7 @@ export default defineConfig({
 - [x] Featured-Artists-Slider (4 Artists mit Bild + Kategorie-Badge)
 - [x] Spielplan-Vorschau (Freitag, 5 Einträge)
 - [x] i18n-Strings `home.*` in de.ts + en.ts ergänzt
-- [ ] **Design-Abgleich Desktop + Mobile** (`design_concept.png`)
+- [x] **Design-Abgleich Desktop + Mobile** (`design_concept.png`) ✅ – bestätigt 16.06.2026
 
 ### Phase 5 – Programmseite (3–4 h)
 

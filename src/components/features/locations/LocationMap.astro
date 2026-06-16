@@ -66,10 +66,12 @@ import 'leaflet/dist/leaflet.css';
     }).addTo(map);
 
     const markers = locations.map((loc: any) => {
+      const markerText = String(loc.label);
+      const markerFontSize = markerText === 'i' ? 18 : markerText.length > 1 ? 14 : 16;
       const labelHtml =
-        loc.label === 'i'
-          ? `<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><text x="7" y="11" text-anchor="middle" fill="white" font-family="sans-serif" font-size="12" font-weight="bold">i</text></svg>`
-          : `<span>${loc.label}</span>`;
+        `<svg class="spk-marker-label-svg" viewBox="0 0 26 26" width="26" height="26" aria-hidden="true" focusable="false">
+          <text x="13" y="13" text-anchor="middle" dominant-baseline="central" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" font-size="${markerFontSize}" font-weight="800" fill="#1f2937">${markerText}</text>
+        </svg>`;
 
       const icon = L.divIcon({
         className: `spk-marker spk-marker-${loc.color}`,
@@ -131,14 +133,25 @@ import 'leaflet/dist/leaflet.css';
 
   :global(.spk-marker-inner) {
     position: absolute;
-    width: 100%;
-    top: 6px;
-    text-align: center;
-    font-weight: 700;
-    font-size: 13px;
-    color: white;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    /* Label sitzt im weißen Kreis am Marker-Kopf */
+    width: 26px;
+    top: 2px;
+    height: 26px;
+    /* Marker-Assets enthalten rechts Transparenz/Schatten; Kreis-Mitte liegt bei x=15 (iconAnchor) */
+    left: 15px;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+    color: #333;
     line-height: 1;
+  }
+
+  :global(.spk-marker-label-svg) {
+    display: block;
+    overflow: visible;
   }
 
   :global(.spk-marker-pink)   { background-image: url('/assets/img/map/marker-pink.webp'); }
