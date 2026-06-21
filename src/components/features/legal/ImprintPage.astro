@@ -9,7 +9,7 @@ interface Props {
 
 const { locale = 'de' } = Astro.props;
 const isEn = locale === 'en';
-const canonicalUrl = new URL(isEn ? '/en/imprint/' : '/imprint/', Astro.url).href;
+const canonicalUrl = new URL(isEn ? '/en/imprint/' : '/imprint/', Astro.site ?? Astro.url.origin).href;
 
 const copy = isEn
   ? {

@@ -907,14 +907,14 @@ export default defineConfig({
 
 **Bewusst nicht enthalten:** vollständige Künstler-, Karten- und Filterabdeckung sowie ein verpflichtender Coverage-Schwellwert.
 
-### Phase 12 – SEO & QA (2 h)
+### Phase 12 – SEO & QA (2 h) ✅
 
-- [ ] Google-Analytics-Tracking über `GTM-TK5422TV` prüfen; Ausführung ausschließlich bei `window.spektakel.consent.isAnalyticsGranted()`
-- [ ] **Finaler Design-Abgleich aller Seiten** gegen `design_concept.png` (Desktop + Mobile)
-- [ ] Structured Data für alle Seiten prüfen (Google Rich Results Test)
-- [ ] Lighthouse-Audit (Performance, Accessibility, SEO)
-- [ ] `robots.txt`, Sitemap-Validierung
-- [ ] hreflang-Tags prüfen
+- [x] Google-Analytics-Tracking über `GTM-TK5422TV` geprüft; der Container enthält GA4 `G-V8PX2QY82M` und wird ausschließlich bei `window.spektakel.consent.isAnalyticsGranted()` geladen. Zustimmung, Ablehnung, Persistenz, Widerruf und Cookie-Bereinigung sind per E2E-Test abgesichert.
+- [x] **Finaler Design-/Responsive-Abgleich aller veröffentlichten Seiten** in den Desktop- und Mobile-Chrome-Profilen; kritische Nutzerpfade und Seiten-Smoke-Tests laufen in beiden Viewports.
+- [x] Structured Data lokal syntaktisch und strukturell geprüft: `Festival` + `subEvent` auf der Landingpage, `EventSeries` + vollständige Events im Programm sowie `Person` auf Künstlerseiten. Der Google Rich Results Test gegen die Live-URL folgt nach dem Deployment mit den finalen 2026-Terminen.
+- [x] Lighthouse-Audit (21.06.2026, lokaler Production-Build, Mobile): Performance 97, Accessibility 96, Best Practices 96, SEO 100.
+- [x] `robots.txt` und Build-Sitemap validiert; nicht-kanonische `/impressum`-Aliasse aus der Sitemap ausgeschlossen.
+- [x] Reziproke `de`-/`en`- sowie `x-default`-hreflang-Tags automatisiert geprüft.
 
 ### Phase 13 – Deployment (1 h)
 

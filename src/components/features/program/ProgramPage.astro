@@ -184,7 +184,7 @@ const mergedByDay: Record<string, MergedEntry[]> = Object.fromEntries(
 const siteUrl = 'https://spektakel-la.github.io';
 const programUrl = locale === 'en' ? `${siteUrl}/en/program/` : `${siteUrl}/program/`;
 
-const jsonLdSubEvents = schedule
+const jsonLdSubEvents = mergeConsecutiveSlots(schedule)
   .filter((e) => {
     const artist = artistMap[e.artist_id];
     return artist && !artist.data.organizational;
@@ -192,22 +192,27 @@ const jsonLdSubEvents = schedule
   .map((e) => {
     const artist = artistMap[e.artist_id];
     const location = locationMap[e.location_id];
-    const startIso = e.time.toISOString().replace('Z', '+02:00').replace(/\.\d{3}/, '');
-    const endDate = new Date(e.time.getTime() + 45 * 60 * 1000);
-    const endIso = endDate.toISOString().replace('Z', '+02:00').replace(/\.\d{3}/, '');
-    const name = locale === 'en'
-      ? (artist.data.en?.description ? artist.data.name : artist.data.name)
-      : artist.data.name;
+    const artistUrl = `${siteUrl}${basePath}/artists/${artist.data.artist_id}/`;
+    const image = artist.data.images?.[0] ? new URL(artist.data.images[0], siteUrl).href : undefined;
     const eventObj: Record<string, unknown> = {
       '@type': 'Event',
-      name,
-      startDate: startIso,
-      endDate: endIso,
+      name: `${artist.data.name} – Spektakel Landshut`,
+      startDate: e.startTime.toISOString(),
+      endDate: e.endTime.toISOString(),
       url: programUrl,
-      organizer: { '@type': 'Organization', name: 'Spektakel Landshut' },
+      performer: { '@type': 'PerformingGroup', name: artist.data.name, url: artistUrl },
+      organizer: { '@type': 'Organization', name: 'Spektakel Landshut', url: siteUrl },
       eventStatus: 'https://schema.org/EventScheduled',
       eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+      offers: {
+        '@type': 'Offer',
+        price: 0,
+        priceCurrency: 'EUR',
+        url: programUrl,
+        availability: 'https://schema.org/InStock',
+      },
     };
+    if (image) eventObj.image = image;
     if (location) {
       eventObj.location = {
         '@type': 'Place',

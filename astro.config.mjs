@@ -21,6 +21,9 @@ export default defineConfig({
 
   integrations: [
     sitemap({
+      // Alte /impressum-Aliasse haben /imprint als Canonical und gehören
+      // deshalb nicht als eigenständige URLs in den Sitemap-Index.
+      filter: (page) => !new URL(page).pathname.match(/^\/(?:en\/)?impressum\/?$/),
       i18n: {
         defaultLocale: 'de',
         locales: {

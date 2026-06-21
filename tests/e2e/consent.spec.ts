@@ -8,16 +8,22 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('zeigt den Banner beim Erstbesuch und lädt GTM erst nach Zustimmung', async ({ page }) => {
+  const googleRequests: string[] = [];
+  page.on('request', (request) => {
+    if (/google(?:tagmanager|-analytics)\.com/.test(request.url())) googleRequests.push(request.url());
+  });
   await page.goto('/');
 
   const banner = page.locator('[data-cookie-banner]');
   await expect(banner).toBeVisible();
   await expect(page.locator(gtmSelector)).toHaveCount(0);
+  expect(googleRequests).toEqual([]);
 
   await banner.getByRole('button', { name: 'Ja, gerne' }).click();
 
   await expect(banner).toBeHidden();
   await expect(page.locator(gtmSelector)).toHaveCount(1);
+  await expect.poll(() => googleRequests.some((url) => url.includes('GTM-TK5422TV'))).toBe(true);
   await expect.poll(() => page.evaluate((key) => localStorage.getItem(key), consentKey)).toBe('accepted');
 });
 
@@ -51,6 +57,10 @@ test('stellt den Consent-Status für Analytics bereit und erlaubt den Widerruf i
 
   await expect.poll(() => page.evaluate(() => window.spektakel.consent.getStatus())).toBe('accepted');
   await expect.poll(() => page.evaluate(() => window.spektakel.consent.isAnalyticsGranted())).toBe(true);
+  await page.evaluate(() => {
+    document.cookie = '_ga=GA1.1.123.456; path=/';
+    document.cookie = '_gid=GA1.1.789.012; path=/';
+  });
 
   await page.getByRole('button', { name: 'Cookie-Einstellungen' }).click();
   await expect(page.locator('[data-cookie-banner]')).toBeVisible();
@@ -59,4 +69,6 @@ test('stellt den Consent-Status für Analytics bereit und erlaubt den Widerruf i
   await page.waitForLoadState('domcontentloaded');
   await expect.poll(() => page.evaluate(() => window.spektakel.consent.getStatus())).toBe('declined');
   await expect(page.locator(gtmSelector)).toHaveCount(0);
+  await expect.poll(() => page.evaluate(() => document.cookie)).not.toContain('_ga=');
+  await expect.poll(() => page.evaluate(() => document.cookie)).not.toContain('_gid=');
 });

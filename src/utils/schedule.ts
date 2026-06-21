@@ -72,9 +72,10 @@ function getBerlinHour(date: Date): number {
     new Intl.DateTimeFormat('en-US', {
       hour: 'numeric',
       hour12: false,
+      hourCycle: 'h23',
       timeZone: FESTIVAL_TZ,
     }).format(date),
-  );
+  ) % 24;
 }
 
 /**

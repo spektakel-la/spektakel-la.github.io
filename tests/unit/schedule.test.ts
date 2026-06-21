@@ -45,11 +45,19 @@ describe('loadSchedule', () => {
 describe('Nacht-Logik (Events 0–3 Uhr → Vortag)', () => {
   it('Event um 02:00 Uhr zählt zum Vortag', () => {
     const entries = loadSchedule(csvPath);
-    // Suche nach einem Eintrag nach Mitternacht (falls vorhanden)
-    const nightEntry = entries.find((e) => e.time.getHours() < 3 && e.time.getHours() >= 0);
+    const berlinHour = (date: Date) => Number(new Intl.DateTimeFormat('en-US', {
+      hour: 'numeric',
+      hourCycle: 'h23',
+      timeZone: 'Europe/Berlin',
+    }).format(date)) % 24;
+    // Suche unabhängig von der Zeitzone des Test-Runners nach einem Eintrag nach Mitternacht.
+    const nightEntry = entries.find((e) => berlinHour(e.time) < 3);
     if (nightEntry) {
-      const expectedDay = new Date(nightEntry.time);
-      expectedDay.setDate(expectedDay.getDate() - 1);
+      const localDate = new Intl.DateTimeFormat('en-CA', {
+        year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Europe/Berlin',
+      }).format(nightEntry.time);
+      const expectedDay = new Date(`${localDate}T12:00:00Z`);
+      expectedDay.setUTCDate(expectedDay.getUTCDate() - 1);
       expect(nightEntry.festivalDay).toBe(expectedDay.toISOString().slice(0, 10));
     }
   });

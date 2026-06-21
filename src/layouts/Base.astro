@@ -12,14 +12,20 @@ interface Props {
 const {
   title = 'Spektakel Landshut – Strassenkunst Festival',
   description = 'Das Strassenkunst-Festival in Landshut: Akrobatik, Jonglage, Musik, Comedy und Street Art mitten in der Altstadt.',
-  ogImage = '/assets/img/og/jonglage.png',
+  ogImage = '/assets/img/artists/gaudeo.webp',
   locale = 'de',
-  canonicalUrl = Astro.url.href,
+  canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).href,
 } = Astro.props;
 
 const isEn = locale === 'en';
 const siteName = 'Spektakel Landshut';
 const fullTitle = title.includes('SPEKTAKEL') ? title : `${title} – ${siteName}`;
+const canonical = new URL(canonicalUrl);
+const localizedPath = isEn
+  ? canonical.pathname.replace(/^\/en(?=\/|$)/, '') || '/'
+  : canonical.pathname;
+const deUrl = new URL(localizedPath, canonical.origin).href;
+const enUrl = new URL(`/en${localizedPath === '/' ? '/' : localizedPath}`, canonical.origin).href;
 ---
 
 <!doctype html>
@@ -31,29 +37,28 @@ const fullTitle = title.includes('SPEKTAKEL') ? title : `${title} – ${siteName
 
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalUrl} />
+    <link rel="canonical" href={canonical.href} />
 
     <!-- Hreflang -->
-    {isEn
-      ? <link rel="alternate" hreflang="de" href={canonicalUrl.replace('/en/', '/')} />
-      : <link rel="alternate" hreflang="en" href={canonicalUrl.replace(Astro.url.origin, Astro.url.origin + '/en')} />
-    }
-    <link rel="alternate" hreflang="x-default" href={canonicalUrl.replace('/en/', '/')} />
+    <link rel="alternate" hreflang="de" href={deUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={deUrl} />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={siteName} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(ogImage, Astro.url).href} />
-    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={new URL(ogImage, canonical.origin).href} />
+    <meta property="og:url" content={canonical.href} />
     <meta property="og:locale" content={isEn ? 'en_US' : 'de_DE'} />
+    <meta property="og:locale:alternate" content={isEn ? 'de_DE' : 'en_US'} />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={new URL(ogImage, Astro.url).href} />
+    <meta name="twitter:image" content={new URL(ogImage, canonical.origin).href} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/assets/img/logo/logo.png" />
@@ -77,6 +82,19 @@ const fullTitle = title.includes('SPEKTAKEL') ? title : `${title} – ${siteName
             if (validStates.indexOf(nextState) === -1) return;
             state = nextState;
             try { localStorage.setItem(storageKey, nextState); } catch (_) {}
+            if (nextState === 'declined') {
+              // Von GA gesetzte First-Party-Cookies beim Widerruf entfernen.
+              try {
+                document.cookie.split(';').forEach(function (cookie) {
+                  var name = cookie.split('=')[0].trim();
+                  if (!/^(_ga|_gid|_gat|_gac_|_gcl_)/.test(name)) return;
+                  var expires = '=; Max-Age=0; path=/; SameSite=Lax';
+                  document.cookie = name + expires;
+                  document.cookie = name + expires + '; domain=' + location.hostname;
+                  document.cookie = name + expires + '; domain=.' + location.hostname;
+                });
+              } catch (_) {}
+            }
             window.dispatchEvent(new CustomEvent('spektakel:consent-changed', {
               detail: { status: state, analytics: state === 'accepted' }
             }));

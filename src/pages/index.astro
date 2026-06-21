@@ -8,7 +8,7 @@ import { localePath, useTranslations, type Locale } from '../i18n/utils';
 import Page from '../layouts/Page.astro';
 import { Category } from '../utils/categories';
 import { artistPath, ROUTES } from '../utils/routes';
-import { formatTime, getFestivalDays, groupByDay, loadSchedule } from '../utils/schedule';
+import { formatTime, getFestivalDays, groupByDay, loadSchedule, mergeConsecutiveSlots } from '../utils/schedule';
 
 // ─── Assets ────────────────────────────────────────────────────────────────
 import catAcrobatic from '../assets/categories/acrobatic.png';
@@ -43,6 +43,7 @@ const meta = locale === 'en'
 
 // ─── Featured Artists ──────────────────────────────────────────────────────
 const allArtists: CollectionEntry<'artists'>[] = await getCollection('artists');
+const allLocations: CollectionEntry<'locations'>[] = await getCollection('locations');
 const featuredArtists = allArtists
   .filter(a => !a.data.organizational && Array.isArray(a.data.images) && a.data.images.length > 0)
   .slice(0, 4);
@@ -56,6 +57,57 @@ const previewEntries = (byDay[previewDay] ?? [])
   .filter(e => !e.artist_id.startsWith('organization_'))
   .slice(0, 5);
 const artistMap = Object.fromEntries(allArtists.map(a => [a.data.artist_id, a]));
+const locationMap = Object.fromEntries(allLocations.map(location => [location.data.location_id, location]));
+
+// ─── Structured Data ──────────────────────────────────────────────────────
+const siteUrl = 'https://spektakel-la.github.io';
+const homeUrl = locale === 'en' ? `${siteUrl}/en/` : `${siteUrl}/`;
+const programUrl = locale === 'en' ? `${siteUrl}/en/program/` : `${siteUrl}/program/`;
+const publicPerformances = mergeConsecutiveSlots(schedule.filter(entry => {
+  const artist = artistMap[entry.artist_id];
+  return artist && !artist.data.organizational && locationMap[entry.location_id];
+}));
+const festivalJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Festival',
+  name: 'Spektakel Landshut 2025',
+  description: meta.description,
+  startDate: publicPerformances[0]?.startTime.toISOString(),
+  endDate: publicPerformances.at(-1)?.endTime.toISOString(),
+  url: homeUrl,
+  image: `${siteUrl}/assets/img/artists/gaudeo.webp`,
+  eventStatus: 'https://schema.org/EventScheduled',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  location: {
+    '@type': 'Place',
+    name: 'Altstadt Landshut',
+    address: { '@type': 'PostalAddress', addressLocality: 'Landshut', addressCountry: 'DE' },
+  },
+  organizer: { '@type': 'Organization', name: 'Spektakel Landshut', url: siteUrl },
+  subEvent: publicPerformances.map(entry => {
+    const artist = artistMap[entry.artist_id];
+    const location = locationMap[entry.location_id];
+    return {
+      '@type': 'Event',
+      name: `${artist.data.name} – Spektakel Landshut`,
+      startDate: entry.startTime.toISOString(),
+      endDate: entry.endTime.toISOString(),
+      url: programUrl,
+      image: artist.data.images?.[0] ? new URL(artist.data.images[0], siteUrl).href : undefined,
+      performer: { '@type': 'PerformingGroup', name: artist.data.name },
+      location: {
+        '@type': 'Place',
+        name: location.data.description,
+        geo: { '@type': 'GeoCoordinates', latitude: location.data.gps[0], longitude: location.data.gps[1] },
+        address: { '@type': 'PostalAddress', addressLocality: 'Landshut', addressCountry: 'DE' },
+      },
+      organizer: { '@type': 'Organization', name: 'Spektakel Landshut', url: siteUrl },
+      eventStatus: 'https://schema.org/EventScheduled',
+      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+      offers: { '@type': 'Offer', price: 0, priceCurrency: 'EUR', url: programUrl, availability: 'https://schema.org/InStock' },
+    };
+  }),
+};
 
 const dayLabels: Record<string, string> = {
   '2025-09-19': locale === 'en' ? 'Friday, 19 September' : 'Freitag, 19. September',
@@ -78,6 +130,7 @@ const categories: Array<{ key: Category; label: string; img: ImageMetadata }> = 
   description={meta.description}
   locale={locale}
 >
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(festivalJsonLd)} />
 
   <!-- ═══ HERO ══════════════════════════════════════════════════════════════ -->
   <section class="relative min-h-screen bg-white overflow-hidden flex items-center">
