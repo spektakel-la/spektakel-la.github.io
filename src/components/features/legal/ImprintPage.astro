@@ -1,0 +1,96 @@
+---
+import type { Locale } from '../../../i18n/utils';
+import { imprint } from '../../../data/imprint';
+import Page from '../../../layouts/Page.astro';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'de' } = Astro.props;
+const isEn = locale === 'en';
+const canonicalUrl = new URL(isEn ? '/en/imprint/' : '/imprint/', Astro.url).href;
+
+const copy = isEn
+  ? {
+      title: 'Imprint',
+      description: 'Legal provider information for Spektakel Landshut.',
+      provider: 'Provider information pursuant to Section 5 DDG',
+      represented: 'Owner and person responsible for the content',
+      contact: 'Contact',
+      editorial: 'Responsible for journalistic and editorial content pursuant to Section 18(2) MStV',
+      copyright: 'Copyright',
+      copyrightText:
+        'The content and works created for this website are subject to German copyright law. Third-party content is identified as such where applicable. Please contact us if you become aware of a possible copyright infringement.',
+      legalNote:
+        'This English translation is provided for convenience. The German version is authoritative for the statutory provider information.',
+    }
+  : {
+      title: 'Impressum',
+      description: 'Gesetzliche Anbieterkennzeichnung für das Spektakel Landshut.',
+      provider: 'Angaben gemäß § 5 DDG',
+      represented: 'Inhaber und inhaltlich verantwortlich',
+      contact: 'Kontakt',
+      editorial: 'Verantwortlich für journalistisch-redaktionelle Inhalte gemäß § 18 Abs. 2 MStV',
+      copyright: 'Urheberrecht',
+      copyrightText:
+        'Die für diese Website erstellten Inhalte und Werke unterliegen dem deutschen Urheberrecht. Inhalte Dritter werden, soweit erforderlich, als solche gekennzeichnet. Sollten Sie auf eine mögliche Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis.',
+      legalNote: '',
+    };
+---
+
+<Page title={copy.title} description={copy.description} locale={locale} canonicalUrl={canonicalUrl}>
+  <article class="bg-white py-16 sm:py-24">
+    <div class="mx-auto max-w-3xl px-6">
+      <header class="mb-12 border-b border-dark/10 pb-8">
+        <h1 class="font-display text-5xl leading-none text-dark sm:text-7xl">{copy.title}</h1>
+        {copy.legalNote && <p class="mt-5 rounded-lg bg-lime/20 p-4 text-sm leading-relaxed text-dark/75">{copy.legalNote}</p>}
+      </header>
+
+      <div class="space-y-10 text-dark/80">
+        <section aria-labelledby="provider-heading">
+          <h2 id="provider-heading" class="font-display text-3xl text-dark sm:text-4xl">{copy.provider}</h2>
+          <address class="mt-4 not-italic leading-7">
+            <strong class="text-dark">{imprint.businessName}</strong><br />
+            {imprint.owner}<br />
+            {imprint.street}<br />
+            {imprint.postalCode} {imprint.city}<br />
+            {isEn ? 'Germany' : imprint.country}
+          </address>
+          <p class="mt-4 leading-7">
+            <strong class="text-dark">{copy.represented}:</strong><br />
+            {imprint.owner}
+          </p>
+        </section>
+
+        <section aria-labelledby="contact-heading">
+          <h2 id="contact-heading" class="font-display text-3xl text-dark sm:text-4xl">{copy.contact}</h2>
+          <p class="mt-4 leading-8">
+            {isEn ? 'Telephone' : 'Telefon'}:
+            <a class="ml-2 text-primary underline decoration-primary/30 underline-offset-4 hover:decoration-primary" href={`tel:${imprint.phoneHref}`}>
+              {imprint.phoneDisplay}
+            </a><br />
+            E-Mail:
+            <a class="ml-2 break-all text-primary underline decoration-primary/30 underline-offset-4 hover:decoration-primary" href={`mailto:${imprint.email}`}>
+              {imprint.email}
+            </a>
+          </p>
+        </section>
+
+        <section aria-labelledby="editorial-heading">
+          <h2 id="editorial-heading" class="font-display text-3xl text-dark sm:text-4xl">{copy.editorial}</h2>
+          <address class="mt-4 not-italic leading-7">
+            {imprint.owner}<br />
+            {imprint.street}<br />
+            {imprint.postalCode} {imprint.city}
+          </address>
+        </section>
+
+        <section aria-labelledby="copyright-heading">
+          <h2 id="copyright-heading" class="font-display text-3xl text-dark sm:text-4xl">{copy.copyright}</h2>
+          <p class="mt-4 leading-7">{copy.copyrightText}</p>
+        </section>
+      </div>
+    </div>
+  </article>
+</Page>

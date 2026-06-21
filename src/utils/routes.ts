@@ -10,8 +10,7 @@ export const ROUTES = {
   locations: '/locations/',
   impressions: '/impressions/',
   sponsors: '/sponsors/',
-  impressum: '/impressum/',
-  info: '/impressum/', // TODO: eigene Info-Seite planen (derzeit → Impressum)
+  imprint: '/imprint/',
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;

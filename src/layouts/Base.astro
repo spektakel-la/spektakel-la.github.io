@@ -58,10 +58,34 @@ const fullTitle = title.includes('SPEKTAKEL') ? title : `${title} – ${siteName
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/assets/img/logo/logo.png" />
 
-    <!-- GTM (nur nach Cookie-Consent via CustomEvent) -->
+    <!-- Consent-API + GTM: GTM wird erst nach Analytics-Zustimmung geladen. -->
     <script is:inline>
+      (function () {
+        var storageKey = 'gtm-consent';
+        var validStates = ['accepted', 'declined'];
+        var storedState = null;
+        try {
+          storedState = localStorage.getItem(storageKey);
+        } catch (_) {}
+
+        var state = validStates.indexOf(storedState) !== -1 ? storedState : 'pending';
+        window.spektakel = window.spektakel || {};
+        window.spektakel.consent = {
+          getStatus: function () { return state; },
+          isAnalyticsGranted: function () { return state === 'accepted'; },
+          setStatus: function (nextState) {
+            if (validStates.indexOf(nextState) === -1) return;
+            state = nextState;
+            try { localStorage.setItem(storageKey, nextState); } catch (_) {}
+            window.dispatchEvent(new CustomEvent('spektakel:consent-changed', {
+              detail: { status: state, analytics: state === 'accepted' }
+            }));
+          }
+        };
+      })();
+
       window.__gtmLoaded = false;
-      document.addEventListener('spektakel:consent-accepted', function () {
+      function loadGtm() {
         if (window.__gtmLoaded) return;
         window.__gtmLoaded = true;
         (function (w, d, s, l, i) {
@@ -74,26 +98,16 @@ const fullTitle = title.includes('SPEKTAKEL') ? title : `${title} – ${siteName
           j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
           f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-TK5422TV');
-      });
-    </script>
-    <!-- Service Worker: Zuerst alle alten SWs deregistrieren (inkl. alter Workbox/Vite-PWA dev-sw),
-         dann Cleanup-SW registrieren, der verbleibende Caches löscht -->
-    <script is:inline>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistrations().then(function(registrations) {
-          registrations.forEach(function(r) { r.unregister(); });
-        });
-        navigator.serviceWorker.register('/sw.js');
       }
+
+      if (window.spektakel.consent.isAnalyticsGranted()) loadGtm();
+      window.addEventListener('spektakel:consent-changed', function (event) {
+        if (event.detail && event.detail.analytics) loadGtm();
+      });
     </script>
     <slot name="head" />
   </head>
   <body class="bg-[var(--color-bg)] text-[var(--color-dark)] font-sans antialiased">
-    <!-- GTM noscript (kein Tracking ohne JS) -->
-    <noscript>
-      <!-- GTM noscript only rendered after consent via JS, intentionally empty here -->
-    </noscript>
-
     <slot />
 
   </body>

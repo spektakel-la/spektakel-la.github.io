@@ -4,7 +4,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import Badge from '../components/ui/Badge.astro';
 import Button from '../components/ui/Button.astro';
 import PaintSplatter from '../components/ui/PaintSplatter.astro';
-import { useTranslations } from '../i18n/utils';
+import { localePath, useTranslations, type Locale } from '../i18n/utils';
 import Page from '../layouts/Page.astro';
 import { Category } from '../utils/categories';
 import { artistPath, ROUTES } from '../utils/routes';
@@ -18,8 +18,28 @@ import catMusic from '../assets/categories/music.png';
 import catStreetart from '../assets/categories/streetart.png';
 import heroImg from '../assets/hero/hero2.png';
 
-const locale = 'de' as const;
+const locale: Locale = Astro.url.pathname.startsWith('/en') ? 'en' : 'de';
 const t = useTranslations(locale);
+const localize = (path: string) => localePath(path, locale);
+const meta = locale === 'en'
+  ? {
+      title: 'Spektakel Landshut – International street art festival',
+      description: 'Landshut’s street art festival: acrobatics, juggling, music, comedy and street art in the historic city centre.',
+      accessibleTitle: 'Spektakel Landshut – International street art festival',
+      heroTop: 'INTERNATIONAL',
+      heroMiddle: 'STREET ART',
+      heroBottom: 'FESTIVAL',
+      hatBadge: ['ARTISTS', 'PERFORM FOR', 'YOUR TIPS!'],
+    }
+  : {
+      title: 'Spektakel Landshut – Straßenkunstfestival',
+      description: 'Das Straßenkunst-Festival in Landshut: Akrobatik, Jonglage, Musik, Comedy und Street Art mitten in der Altstadt.',
+      accessibleTitle: 'Spektakel Landshut – Internationales Straßenkunstfestival',
+      heroTop: 'INTERNATIONALES',
+      heroMiddle: 'STRASSENKUNST',
+      heroBottom: 'FESTIVAL',
+      hatBadge: ['KÜNSTLER', 'SPIELEN FÜR', 'DEN HUT!'],
+    };
 
 // ─── Featured Artists ──────────────────────────────────────────────────────
 const allArtists: CollectionEntry<'artists'>[] = await getCollection('artists');
@@ -38,24 +58,24 @@ const previewEntries = (byDay[previewDay] ?? [])
 const artistMap = Object.fromEntries(allArtists.map(a => [a.data.artist_id, a]));
 
 const dayLabels: Record<string, string> = {
-  '2025-09-19': 'Freitag, 19. September',
-  '2025-09-20': 'Samstag, 20. September',
-  '2025-09-21': 'Sonntag, 21. September',
+  '2025-09-19': locale === 'en' ? 'Friday, 19 September' : 'Freitag, 19. September',
+  '2025-09-20': locale === 'en' ? 'Saturday, 20 September' : 'Samstag, 20. September',
+  '2025-09-21': locale === 'en' ? 'Sunday, 21 September' : 'Sonntag, 21. September',
 };
 
 // ─── Kategorie-Daten ───────────────────────────────────────────────────────
 const categories: Array<{ key: Category; label: string; img: ImageMetadata }> = [
-  { key: Category.Akrobatik, label: 'Akrobatik', img: catAcrobatic },
-  { key: Category.Musik,     label: 'Musik',     img: catMusic     },
-  { key: Category.Comedy,    label: 'Comedy',    img: catComedy    },
-  { key: Category.Magie,     label: 'Magie',     img: catMagic     },
-  { key: Category.StreetArt, label: 'Street Art',img: catStreetart },
+  { key: Category.Akrobatik, label: t.program.catAkrobatik, img: catAcrobatic },
+  { key: Category.Musik,     label: t.program.catMusik,     img: catMusic     },
+  { key: Category.Comedy,    label: t.program.catComedy,    img: catComedy    },
+  { key: Category.Magie,     label: t.program.catMagie,     img: catMagic     },
+  { key: Category.StreetArt, label: t.program.catStreetArt, img: catStreetart },
 ];
 ---
 
 <Page
-  title="Spektakel Landshut – Straßenkunstfestival"
-  description="Das Straßenkunst-Festival in Landshut: Akrobatik, Jonglage, Musik, Comedy und Street Art mitten in der Altstadt."
+  title={meta.title}
+  description={meta.description}
   locale={locale}
 >
 
@@ -98,7 +118,7 @@ const categories: Array<{ key: Category; label: string; img: ImageMetadata }> = 
       aria-hidden="true"
     >
       <p class="font-display text-white text-center leading-tight px-3 text-lg lg:text-xl">
-        KÜNSTLER<br />SPIELEN FÜR<br />DEN HUT!
+        {meta.hatBadge.map((line, index) => <>{line}{index < meta.hatBadge.length - 1 && <br />}</>)}
       </p>
     </div>
 
@@ -107,7 +127,7 @@ const categories: Array<{ key: Category; label: string; img: ImageMetadata }> = 
       <div class="max-w-lg">
 
         <!-- Barrierefreie h1 -->
-        <h1 class="sr-only">Spektakel Landshut – Internationales Straßenkunstfestival</h1>
+        <h1 class="sr-only">{meta.accessibleTitle}</h1>
 
         <!-- Glas-Wrapper: passt sich nur der Text-Breite an, kein Card-Effekt -->
         <div class="w-fit backdrop-blur-sm bg-white/75 rounded-xl px-4 pt-4 pb-5
@@ -118,17 +138,17 @@ const categories: Array<{ key: Category; label: string; img: ImageMetadata }> = 
             class="font-display leading-none text-dark"
             style="font-size: clamp(2.5rem, 7vw, 5.5rem)"
             aria-hidden="true"
-          >INTERNATIONALES</p>
+          >{meta.heroTop}</p>
           <p
             class="font-display leading-none text-primary"
             style="font-size: clamp(2.5rem, 7vw, 5.5rem)"
             aria-hidden="true"
-          >STRASSENKUNST</p>
+          >{meta.heroMiddle}</p>
           <p
             class="font-display leading-none text-dark mb-5"
             style="font-size: clamp(2.5rem, 7vw, 5.5rem)"
             aria-hidden="true"
-          >FESTIVAL</p>
+          >{meta.heroBottom}</p>
 
           <!-- Datum -->
           <p class="font-display text-2xl text-dark mb-3">{t.home.hero_dates}</p>
@@ -147,8 +167,8 @@ const categories: Array<{ key: Category; label: string; img: ImageMetadata }> = 
 
         <!-- CTAs (außerhalb des Glas-Wrappers) -->
         <div class="flex flex-wrap gap-4 mt-8">
-          <Button href={ROUTES.program} variant="primary" size="lg">{t.home.cta_program}</Button>
-          <Button href={ROUTES.artists} variant="ghost" size="lg">{t.home.cta_artists}</Button>
+          <Button href={localize(ROUTES.program)} variant="primary" size="lg">{t.home.cta_program}</Button>
+          <Button href={localize(ROUTES.artists)} variant="ghost" size="lg">{t.home.cta_artists}</Button>
         </div>
 
       </div>
@@ -216,17 +236,17 @@ const categories: Array<{ key: Category; label: string; img: ImageMetadata }> = 
 
         <div class="flex items-baseline justify-between mb-12">
           <h2 class="font-display text-5xl">{t.home.featured_heading}</h2>
-          <a href={ROUTES.artists} class="text-primary font-semibold hover:underline text-sm sm:text-base shrink-0 ml-4">
+          <a href={localize(ROUTES.artists)} class="text-primary font-semibold hover:underline text-sm sm:text-base shrink-0 ml-4">
             {t.nav.artists} →
           </a>
         </div>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           {featuredArtists.map(artist => {
-            const firstCat = artist.data.de?.categories?.[0];
+            const firstCat = artist.data[locale]?.categories?.[0];
             return (
               <a
-                href={artistPath(artist.data.artist_id)}
+                href={localize(artistPath(artist.data.artist_id))}
                 class="group block rounded-xl overflow-hidden bg-white shadow-md hover:shadow-xl transition-shadow duration-300"
               >
                 <div class="aspect-[3/4] overflow-hidden bg-gray-100">
@@ -261,7 +281,7 @@ const categories: Array<{ key: Category; label: string; img: ImageMetadata }> = 
 
         <div class="flex items-baseline justify-between mb-3">
           <h2 class="font-display text-5xl text-white">{t.home.schedule_heading}</h2>
-          <a href={ROUTES.program} class="text-lime font-semibold hover:underline text-sm sm:text-base shrink-0 ml-4">
+          <a href={localize(ROUTES.program)} class="text-lime font-semibold hover:underline text-sm sm:text-base shrink-0 ml-4">
             {t.home.schedule_link}
           </a>
         </div>

@@ -4,7 +4,6 @@ export const de = {
     artists: 'Künstler',
     locations: 'Spielorte',
     gallery: 'Galerie',
-    info: 'Infos',
   },
   common: {
     all: 'Alle',
@@ -70,19 +69,26 @@ export const de = {
     previous: 'Vorheriges Bild',
     next: 'Nächstes Bild',
   },
-  info: {
-    title: 'Festival-Infos',
-  },
   footer: {
-    about: 'Über uns',
     sponsors: 'Sponsoren',
     imprint: 'Impressum',
-    privacy: 'Datenschutz',
+    cookieSettings: 'Cookie-Einstellungen',
+  },
+  sponsors: {
+    title: 'Unsere Sponsoren',
+    tagline: 'Das Spektakel Landshut wird durch die Unterstützung dieser Partner möglich.',
+    visit: 'Website von',
+  },
+  imprint: {
+    title: 'Impressum',
   },
   cookie: {
-    message: 'Wir verwenden Cookies und Google Tag Manager, um diese Website zu verbessern.',
-    accept: 'Akzeptieren',
-    decline: 'Ablehnen',
+    eyebrow: 'Ein Geben und Nehmen',
+    title: 'Gemeinsam besser',
+    message: 'Du bekommst alle Festivalinfos auf einen Blick. Wenn du uns zeigst, welche Inhalte besonders gefragt sind, können wir diese Website noch hilfreicher machen.',
+    detailText: 'Dafür laden wir nach deiner Zustimmung Google Tag Manager und erfassen, wie die Website genutzt wird. Du kannst ohne Einschränkungen ablehnen und deine Auswahl jederzeit über „Cookie-Einstellungen“ im Footer ändern.',
+    accept: 'Ja, gerne',
+    decline: 'Nein, danke',
     details: 'Details',
   },
   home: {

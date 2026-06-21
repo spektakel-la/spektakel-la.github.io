@@ -10,9 +10,8 @@
 | Ziel                   | Details                                                                              |
 | ---------------------- | ------------------------------------------------------------------------------------ |
 | Modernes Redesign      | Neues optisches Gewand nach Mockup (Farben, Typografie, Interaktion)                 |
-| Voller Funktionsumfang | Programm, Künstler, Spielorte+Karte, Galerie, Info, Über uns, Sponsoren              |
+| Voller Funktionsumfang | Programm, Künstler, Spielorte+Karte, Galerie, Sponsoren, Impressum                   |
 | DSGVO-konform          | Cookie-Consent + GTM nur nach Zustimmung                                             |
-| PWA / Offline          | Option C: Programm + Karte + Künstler offline, Galerie nur bei Bedarf                |
 | Mehrsprachig           | `de` (Default) + `en` via Astro i18n-Routing                                         |
 | Statisches Hosting     | GitHub Pages, 100 % statisch gebaut                                                  |
 | SEO                    | Structured Data (Event/Schedule), Sitemap, OpenGraph, vollständige Google-Auswertung |
@@ -125,11 +124,11 @@ Checkliste pro Seite:
 ### 3.1 Navigationsitems
 
 ```
-PROGRAMM | KÜNSTLER | SPIELORTE | GALERIE | INFOS
-                                              [Hamburger auf Mobile]
+PROGRAMM | KÜNSTLER | SPIELORTE | GALERIE
+                                      [Hamburger auf Mobile]
 ```
 
-> **Über uns** und **Sponsoren** sind im Footer verlinkt, nicht in der Hauptnavigation.
+> **Sponsoren** und **Impressum** sind im Footer verlinkt, nicht in der Hauptnavigation.
 > NEWS wird in einem späteren Release ergänzt.
 
 ### 3.2 Seiten-Inventar
@@ -143,13 +142,11 @@ PROGRAMM | KÜNSTLER | SPIELORTE | GALERIE | INFOS
 | `/locations`      | `/en/locations`      | Karte + Spielortliste                 | P0           |
 | `/locations/[id]` | `/en/locations/[id]` | Spielort-Detailseite                  | P0           |
 | `/impressions`    | `/en/impressions`    | Foto-Galerie                          | P0           |
-| `/info`           | `/en/info`           | Festival-Infos (Anfahrt, Parken, FAQ) | P1           |
-| `/about`          | `/en/about`          | Über das Festival / Team              | P1           |
 | `/sponsors`       | `/en/sponsors`       | Sponsoren                             | P1           |
 | `/imprint`        | `/en/imprint`        | Impressum                             | P0 (Pflicht) |
-| `/privacy`        | `/en/privacy`        | Datenschutz                           | P0 (Pflicht) |
 | `/404`            | (global)             | 404-Fehlerseite (Theming-passend)     | P0 (Pflicht) |
-| `/offline`        | (global)             | PWA-Offline-Fallback-Seite            | P1           |
+
+> **Scope-Entscheidung (21.06.2026):** `/info`, `/about` und `/privacy` werden vorerst nicht umgesetzt, auch wenn sie im Designkonzept vorgesehen sind.
 
 ### 3.3 URL-Kontinuität & Redirect-Strategie
 
@@ -189,11 +186,8 @@ Die Astro-URLs sind **bewusst identisch** mit den alten Jekyll-URLs gewählt –
 | `@astrojs/sitemap`                             | Sitemap-Generierung                                       |
 | `@astrojs/image`                               | Bild-Optimierung (WebP, AVIF, responsive sizes)           |
 | `@fontsource/bebas-neue` + `@fontsource/inter` | Self-hosted Fonts (DSGVO-konform, kein Google-Request)    |
-| ~~`@vite-pwa/astro`~~                          | ~~Service Worker / PWA-Manifest~~ → **ausgebaut, s. §11** |
-| ~~`vite-plugin-pwa`~~                          | ~~Workbox-Konfiguration~~ → **ausgebaut, s. §11**         |
 | Astro i18n (built-in)                          | Mehrsprachigkeit de/en                                    |
 | `leaflet` + `@types/leaflet`                   | Interaktive Karte (CSR)                                   |
-| `workbox-precaching`                           | Offline-Caching                                           |
 | `astro-seo` oder manuell                       | Meta-Tags, OpenGraph, LD+JSON                             |
 
 ### 4.3 Testing
@@ -236,11 +230,8 @@ spektakel-la.github.io/
 │   │   └── img/
 │   │       ├── artists/          # ← aus altem Projekt
 │   │       ├── impressions/      # ← aus altem Projekt
-│   │       ├── icons/            # PWA-Icons
 │   │       └── logo.webp
-│   ├── manifest.webmanifest      # PWA-Manifest
-│   ├── robots.txt
-│   └── sw.js                     # (wird von Workbox generiert)
+│   └── robots.txt
 ├── src/
 │   ├── assets/                   # Astro-managed Assets (Logo, Paint-Splatter SVGs)
 │   ├── components/
@@ -272,7 +263,7 @@ spektakel-la.github.io/
 │   │       │   ├── ArtistCard.astro
 │   │       │   └── ArtistCategoryFilter.astro
 │   │       └── consent/
-│   │           └── CookieBanner.astro      # client:load
+│   │           └── CookieBanner.astro      # Vanilla-JS, global in Page.astro
 │   ├── content/
 │   │   ├── config.ts                       # Collection-Schemas (Zod)
 │   │   ├── artists/                        # .md pro Künstler (aus altem Projekt)
@@ -293,14 +284,10 @@ spektakel-la.github.io/
 │   ├── pages/
 │   │   ├── index.astro                     # de Default → Landingpage
 │   │   ├── 404.astro                       # GitHub Pages: 404.html (Theming-passend, mit Heimlink)
-│   │   ├── offline.astro                   # PWA-Offline-Fallback-Seite
 │   │   ├── program.astro
 │   │   ├── impressions.astro
-│   │   ├── info.astro
-│   │   ├── about.astro
 │   │   ├── sponsors.astro
 │   │   ├── imprint.astro
-│   │   ├── privacy.astro
 │   │   ├── artists/
 │   │   │   ├── index.astro
 │   │   │   └── [slug].astro
@@ -311,11 +298,8 @@ spektakel-la.github.io/
 │   │       ├── index.astro
 │   │       ├── program.astro
 │   │       ├── impressions.astro
-│   │       ├── info.astro
-│   │       ├── about.astro
 │   │       ├── sponsors.astro
 │   │       ├── imprint.astro
-│   │       ├── privacy.astro
 │   │       ├── artists/
 │   │       │   ├── index.astro
 │   │       │   └── [slug].astro
@@ -526,7 +510,7 @@ Artist- und Location-Inhalte bleiben mehrsprachig in den `.md`-Frontmatters (Fel
 4. **Teaser-Slider**: 3–4 Featured Artists (Carousel)
 5. **Vorschau Spielplan**: Aktueller/nächster Festivaldag-Auszug
 6. **Orte auf einen Blick**: Mini-Map oder Location-Kacheln
-7. **Footer**: Social-Links, Impressum, Datenschutz
+7. **Footer**: Social-Links, Sponsoren, Impressum
 
 ### 9.2 Programm (`/program`)
 
@@ -576,7 +560,7 @@ Artist- und Location-Inhalte bleiben mehrsprachig in den `.md`-Frontmatters (Fel
 - Panel: Aktuelles Programm + nächste 3 Stunden
 - „Mehr Infos" → Detailseite
 - Legende: Spielortname + Farbe + Kategorie-Punkte
-- Offline: OSM-Tiles werden gecacht (Workbox TileCache-Strategie)
+- OSM-Tiles werden lokal aus `public/assets/img/map/tiles/` ausgeliefert
 - **Mobile**: Karte nimmt Vollbreite; Spielort-Panel erscheint unterhalb der Karte beim Marker-Click (kein Bottom-Sheet-Pattern)
 
 **Spielort-Detailseite:**
@@ -605,21 +589,11 @@ Artist- und Location-Inhalte bleiben mehrsprachig in den `.md`-Frontmatters (Fel
 - Typisierte Datenquelle `src/data/impressions.ts` – automatische Bilderkennung plus Video-Metadaten (`file`, `caption?`, `type`, `youtubeId?`) – s. §6.4
 - Ermöglicht Captions und YouTube-Kacheln ohne CMS, Kategorien oder leere Markdown-Hüllen
 
-### 9.6 Info-Seite (`/info`)
-
-Statischer Content (Markdown oder Astro):
-
-- Anfahrt (ÖPNV, Auto, Fahrrad)
-- Parken
-- Barrierefreiheit
-- FAQ
-- Kontakt
-
-### 9.7 Abendprogramm
+### 9.6 Abendprogramm
 
 > **Entscheidung (21.06.2026)**: Nightlife wird nicht als eigenes Feature, eigene Kategorie oder eigene Route umgesetzt. Späte Auftritte und die zugehörigen Spielorte erscheinen ohne Sonderbehandlung im regulären Spielplan.
 
-### 9.8 Sponsoren (`/sponsors`)
+### 9.7 Sponsoren (`/sponsors`)
 
 - Grid aller Sponsor-Logos gleichgestellt (aus `content/sponsors/`)
 - Kein Tier-System – alle Sponsoren erscheinen gleichberechtigt
@@ -640,20 +614,30 @@ Statischer Content (Markdown oder Astro):
 
 ```astro
 <!-- Base.astro -->
-<CookieBanner client:load />
+<CookieBanner locale={locale} />
 <!-- GTM-Snippet wird via CookieBanner nach Consent injiziert -->
 ```
 
-**CookieBanner.astro** (client:load):
+**CookieBanner.astro** (Vanilla-JS):
 
 1. Prüft `localStorage.getItem('gtm-consent')`
 2. Falls null → Banner anzeigen
 3. Bei Akzeptieren: Consent speichern + GTM-Script dynamisch laden
 4. Bei Ablehnen: Nur Consent speichern, kein GTM
-5. Datenschutz-Link im Banner
-6. Sprache: über i18n-Strings
+5. Sprache: über i18n-Strings
 
-### 10.3 YouTube-Videos & DSGVO
+### 10.3 Consent-Schnittstelle für Analytics
+
+In Anlehnung an das alte Jekyll-Projekt stellt `Base.astro` den aktuellen Zustand zentral bereit:
+
+- `window.spektakel.consent.getStatus()` → `pending | accepted | declined`
+- `window.spektakel.consent.isAnalyticsGranted()` → boolescher Status für Analytics-Code
+- `window.spektakel.consent.setStatus(...)` → speichert die Auswahl und löst `spektakel:consent-changed` aus
+- „Cookie-Einstellungen“ im Footer öffnet den Banner erneut; ein Widerruf beendet bereits geladenes Tracking durch einen Reload
+
+Phase 12 darf Google-Analytics-Code ausschließlich ausführen, wenn `isAnalyticsGranted()` wahr ist, oder auf `spektakel:consent-changed` mit `detail.analytics === true` reagieren. Der GTM-Container wird – anders als im alten Projekt mit Consent Mode – selbst erst nach Zustimmung geladen.
+
+### 10.4 YouTube-Videos & DSGVO
 
 YouTube-Videos in der Galerie (`/impressions`) werden **ohne iFrame** eingebunden:
 
@@ -663,46 +647,9 @@ YouTube-Videos in der Galerie (`/impressions`) werden **ohne iFrame** eingebunde
 
 > **Entscheidung**: Link-statt-iFrame-Ansatz. DSGVO-sauber, ohne Consent-Gate, ohne Facade-Komplexität.
 
-### 10.4 Consent-Scope (GTM)
+### 10.5 Consent-Scope (GTM)
 
 Der GTM-Container `GTM-TK5422TV` enthält ausschließlich Analytics-Tags (kein Marketing-/Retargeting-Tracking). Eine **einfache binäre Zustimmung** (Akzeptieren / Ablehnen) ist ausreichend und DSGVO-konform. Keine granulare Kategorisierung erforderlich.
-
----
-
-## 11. PWA & Service Worker
-
-> ⚠️ **Status: Ausgebaut (Mai 2026)** – Der Service Worker wurde aus dem Build entfernt, um Komplexität zu reduzieren (Caching-Bugs, SW-Interferenz beim lokalen Testing). Am Ende des Projekts wird neu bewertet, ob ein SW-Ansatz noch sinnvoll ist – ggf. entfällt er bei ausreichend optimierter, schlanker Site komplett.
-> **TODO (Ende Projekt)**: SW-Bedarf bewerten: Ladezeiten ohne SW messen, Offline-Anforderungen klären, ggf. `@vite-pwa/astro` wieder einbinden oder dauerhaft weglassen.
-
-### 11.1 Konfiguration (`vite-plugin-pwa` via `@vite-pwa/astro`) – REFERENZ (inaktiv)
-
-**Cache-Strategie Option C:**
-
-| Asset-Typ          | Strategie                | Details                         |
-| ------------------ | ------------------------ | ------------------------------- |
-| HTML-Seiten        | `NetworkFirst`           | Immer aktuell, Fallback offline |
-| CSS / JS           | `CacheFirst`             | Versioniert (Content-Hash)      |
-| Künstler-Bilder    | `CacheFirst`             | Precache bei Install            |
-| Spielplan-Daten    | In HTML eingebettet      | Kein separater Fetch nötig      |
-| Karten-Tiles (OSM) | `CacheFirst` + TileCache | Bounding Box Landshut           |
-| Impressionen-Fotos | `StaleWhileRevalidate`   | Kein Precache, bei Bedarf       |
-
-> **OSM-Tile-Migration**: Das alte Projekt enthält bereits gerenderte Offline-Tiles unter `assets/img/map/tiles/` (Zoomstufen 16–19, Bounding Box Landshut). Diese werden direkt nach `public/assets/img/map/tiles/` übernommen und vom Service Worker per `CacheFirst` aus dem Build-Output bedient.
-
-### 11.2 Manifest (`manifest.webmanifest`)
-
-```json
-{
-  "name": "Spektakel Landshut",
-  "short_name": "Spektakel",
-  "start_url": "/",
-  "display": "standalone",
-  "theme_color": "#FF2D7A",
-  "background_color": "#F6F7FB",
-  "lang": "de",
-  "icons": [...]
-}
-```
 
 ---
 
@@ -807,16 +754,15 @@ export default defineConfig({
 
 ### Phase 0 – Projekt-Setup (1–2 h) ✅
 
-- [x] `npm install` (Astro, Tailwind, vite-plugin-pwa, Leaflet, Sitemap)
+- [x] `npm install` (Astro, Tailwind, Leaflet, Sitemap)
 - [x] `npm install -D vitest @vitest/coverage-v8 @playwright/test` (Test-Dependencies)
-- [x] `astro.config.mjs` vollständig konfigurieren (i18n, sitemap, pwa, output)
+- [x] `astro.config.mjs` vollständig konfigurieren (i18n, sitemap, output)
 - [x] `vitest.config.ts` anlegen (include: `tests/unit/**`, `tests/integration/**`)
 - [x] `playwright.config.ts` anlegen (baseURL, Projektprofile: Desktop Chrome, Mobile Chrome)
 - [x] `package.json` – npm-Scripts: `test`, `test:unit`, `test:e2e`, `test:coverage`
 - [x] `tailwind.config.mjs` mit Design-Tokens
 - [x] `tsconfig.json` – strict mode
 - [x] `src/styles/tokens.css` – CSS Custom Properties
-- [x] ⚠️ **Asset-Request**: PWA-Icons aus altem Projekt prüfen (Größe, Maskability) – ggf. Neuerstellung anfordern (siehe Abschnitt 17)
 
 ### Phase 1 – Content-Foundation (2–3 h) ✅
 
@@ -834,7 +780,7 @@ export default defineConfig({
 ### Phase 2 – Layout & i18n (2–3 h) ✅
 
 - [x] ⚠️ **Asset-Request**: Logo-PNG vorhanden (`/assets/img/logo/logo.png`); OG-Social-Image fehlt noch → siehe §18 Technical Debt
-- [x] `src/layouts/Base.astro` (HTML-Shell, Meta, GTM-Placeholder, SW-Registration)
+- [x] `src/layouts/Base.astro` (HTML-Shell, Meta, GTM-Placeholder)
 - [x] `src/layouts/Page.astro` (Header/Footer-Wrapper)
 - [x] `src/components/layout/Header.astro` (Logo, Navigation, Sprachwechsler)
 - [x] `src/components/layout/Navigation.astro` (Desktop + Mobile Hamburger)
@@ -933,54 +879,48 @@ export default defineConfig({
 - [x] `/impressions` + `/en/impressions`
 - [x] **Design-Abgleich Desktop + Mobile** (`design_concept.png`) ✅ – bestätigt 21.06.2026
 
-### Phase 9 – Restliche Seiten (2 h)
+### Phase 9 – Restliche Seiten (2 h) ✅
 
-> **Scope-Hinweis**: Die ehemals geplante Nightlife-Seite entfällt. Sämtliche Abendauftritte bleiben Bestandteil des regulären Spielplans.
+> **Scope-Hinweis**: Die ehemals geplante Nightlife-Seite entfällt. Sämtliche Abendauftritte bleiben Bestandteil des regulären Spielplans. `/info`, `/about` und `/privacy` werden vorerst ebenfalls nicht umgesetzt, unabhängig von ihrer Darstellung im Designkonzept.
 
-- [ ] ⚠️ **Asset-Request**: Sponsor-Logos prüfen (Vollständigkeit, einheitliche Höhe ~80 px, WebP) – Spezifikation folgt zu Beginn dieser Phase
-- [ ] `/info`
-- [ ] `/about`
-- [ ] `/sponsors`
-- [ ] `/imprint`
-- [ ] `/privacy`
-- [ ] `404.astro` – Theming-passende 404-Seite mit Heimlink (GitHub Pages erkennt `404.html` automatisch)
-- [ ] `offline.astro` – PWA-Offline-Fallback-Seite
-- [ ] EN-Pendants aller Seiten
+- [x] Sponsor-Logos geprüft: 25 Content-Einträge, alle referenzierten WebP-Dateien vorhanden; einheitliche Darstellung über `object-contain` und maximale Logo-Höhe
+- [x] `/sponsors`
+- [x] `/imprint` (`/impressum` bleibt als kompatibler Altpfad erhalten)
+- [x] `404.astro` – zweisprachige, Theming-passende 404-Seite mit Heimlinks (GitHub Pages erkennt `404.html` automatisch)
+- [x] EN-Pendants aller Seiten
 
-### Phase 10 – DSGVO & PWA (2–3 h)
+### Phase 10 – DSGVO (2 h) ✅
 
-- [ ] `CookieBanner.astro`
-- [ ] GTM-Integration (consent-gesteuert)
-- [ ] `vite-plugin-pwa` Konfiguration (Workbox)
-- [ ] `manifest.webmanifest`
-- [ ] SW-Registrierung im Layout
-- [ ] **E2E-Test**: `tests/e2e/consent.spec.ts` (Banner erscheint, GTM-Script nur nach Consent im DOM)
+- [x] `CookieBanner.astro` – zweisprachig, responsive und im Festival-Design
+- [x] GTM-Integration (consent-gesteuert; Entscheidung in `localStorage` unter `gtm-consent`)
+- [x] **E2E-Test**: `tests/e2e/consent.spec.ts` (Banner erscheint, Ablehnung lädt kein GTM, Zustimmung und persistierte Zustimmung laden das GTM-Script genau einmal, Status-API und Widerruf funktionieren)
+- [x] **Design-Abgleich Desktop + Mobile** (`design_concept.png`) ✅ – geprüft 21.06.2026
 
-### Phase 11 – E2E-Tests (2–3 h)
+### Phase 11 – Kritische E2E-Smoke-Tests (1–2 h)
 
-- [ ] `tests/e2e/navigation.spec.ts` – Routing de/en, alle Seiten erreichbar (200), aktive Nav-Links
-- [ ] `tests/e2e/program.spec.ts` – Tag-Tabs wechseln, Spielort-Filter, Tabellen- vs. Listen-View-Toggle
-- [ ] `tests/e2e/artists.spec.ts` – Grid rendert, Kategorie-Filter reduziert Einträge, Detailseite öffnet
-- [ ] `tests/e2e/locations.spec.ts` – Karte lädt, Marker-Click öffnet Panel, Panel-Inhalt korrekt
-- [ ] `tests/e2e/impressions.spec.ts` – Galerie-Filter, Lightbox öffnen/schließen, Counter korrekt
-- [ ] **Mobile-Viewports**: Alle E2E-Tests laufen auch im Mobile-Chrome-Profil (375 px)
-- [ ] `npm run test:coverage` – Unit/Integration-Coverage-Report prüfen
+> **Reduzierter Scope (21.06.2026):** Keine vollständige E2E-Abdeckung. Getestet werden nur kritische Nutzerpfade und die Erreichbarkeit aller veröffentlichten Sprachvarianten.
+
+- [ ] `tests/e2e/navigation.spec.ts` – alle veröffentlichten DE-/EN-Routen erreichbar; Sprachwechsel führt zur entsprechenden Route
+- [ ] `tests/e2e/program.spec.ts` – Tagesauswahl und mindestens ein zentraler Filter funktionieren
+- [ ] `tests/e2e/impressions.spec.ts` – Lightbox öffnen, navigieren und schließen
+- [ ] Smoke-Tests im Desktop-Chrome- und Mobile-Chrome-Profil (375 px) ausführen
+
+**Bewusst nicht enthalten:** vollständige Künstler-, Karten- und Filterabdeckung sowie ein verpflichtender Coverage-Schwellwert.
 
 ### Phase 12 – SEO & QA (2 h)
 
+- [ ] Google-Analytics-Tracking über `GTM-TK5422TV` prüfen; Ausführung ausschließlich bei `window.spektakel.consent.isAnalyticsGranted()`
 - [ ] **Finaler Design-Abgleich aller Seiten** gegen `design_concept.png` (Desktop + Mobile)
 - [ ] Structured Data für alle Seiten prüfen (Google Rich Results Test)
-- [ ] Lighthouse-Audit (Performance, PWA, Accessibility, SEO)
+- [ ] Lighthouse-Audit (Performance, Accessibility, SEO)
 - [ ] `robots.txt`, Sitemap-Validierung
 - [ ] hreflang-Tags prüfen
-- [ ] Offline-Test im DevTools
 
 ### Phase 13 – Deployment (1 h)
 
 - [ ] `astro.config.mjs` – `site` URL setzen
 - [ ] GitHub Actions Workflow
 - [ ] Erst-Deployment + Smoke-Test
-- [ ] ⚠️ **Asset-Request**: PWA-Screenshots nach Redesign neu erstellen (Desktop 2880×1800, Mobile 750×1334) und in `manifest.webmanifest` aktualisieren
 
 ---
 
@@ -992,8 +932,8 @@ export default defineConfig({
 | 2   | Neue Künstler-Fotos / Assets für 2026             | ⏳ Kommt mit Termin                                          |
 | 3   | Font-System: Display- und Body-Font wählen        | ✅ Bebas Neue + Inter (s. §2.2, §4.2)                        |
 | 4   | Impressionen: zentrale Datenquelle                | ✅ Typisierte Datenquelle `src/data/impressions.ts` (s. §6.4) |
-| 5   | INFO-Seite: Texte (Anfahrt, Parken, FAQ)          | 🔲 Seite wird mit Platzhaltern gebaut; echter Content später |
-| 6   | ÜBER UNS: Text + Teamfotos                        | 🔲 Seite wird mit Platzhaltern gebaut; echter Content später |
+| 5   | INFO-Seite                                       | ➖ Vorerst aus dem Scope gestrichen                           |
+| 6   | ÜBER UNS                                         | ➖ Vorerst aus dem Scope gestrichen                           |
 | 7   | NEWS: Feature-Scope wird später definiert         | 🔲 Zurückgestellt                                            |
 | 9   | Display-Font: Bebas Neue                          | ✅ `@fontsource/bebas-neue` (s. §2.2)                        |
 | 10  | Body-Font: Inter                                  | ✅ `@fontsource/inter` (s. §2.2)                             |
@@ -1015,9 +955,6 @@ Hier landen bekannte Lücken, die bewusst zurückgestellt wurden und **vor dem G
 
 - [Astro i18n Routing](https://docs.astro.build/en/guides/internationalization/)
 - [Astro Content Collections](https://docs.astro.build/en/guides/content-collections/)
-- [vite-plugin-pwa für Astro](https://vite-pwa-org.netlify.app/frameworks/astro.html)
-- [Workbox Strategies](https://developer.chrome.com/docs/workbox/modules/workbox-strategies/)
-- [Leaflet Offline](https://github.com/allartk/leaflet.offline)
 - [Google Rich Results: Event](https://developers.google.com/search/docs/appearance/structured-data/event)
 - [Astro Sitemap](https://docs.astro.build/en/guides/integrations-guide/sitemap/)
 
@@ -1037,12 +974,10 @@ Nicht alle benötigten Grafiken sind im alten Projekt vorhanden. Bevor eine Phas
 | --- | ------------------------------------------------------------------------------------ | -------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ----------------------- |
 | 1   | **Paint-Splatter-SVGs** (4–6 Varianten, Farben: Magenta, Lime, Cyan, Orange)         | Dekorative Elemente hinter Headlines, Hero-Sektion | Nein                                                                                               | Phase 3                 |
 | 2   | **Kategorie-Icons** (Akrobatik, Musik, Comedy, Magie, Street Art) als SVG            | Landingpage Icon-Leiste, Filter-Chips              | Teilweise als PNG in `assets/img/icons/`                                                           | Phase 3                 |
-| 3   | **Logo** „Spektakel!“ im neuen Stil (SVG + WebP)                                     | Header, PWA-Manifest, OG-Bild                      | `assets/img/spektakel-logo.webp` vorhanden – ggf. anpassen                                         | Phase 2                 |
+| 3   | **Logo** „Spektakel!“ im neuen Stil (SVG + WebP)                                     | Header, OG-Bild                                    | `assets/img/spektakel-logo.webp` vorhanden – ggf. anpassen                                         | Phase 2                 |
 | 4   | **Hero-Bild / Festival-Hauptmotiv** (mind. 1920×1080 px, WebP)                       | Landingpage-Hero, OG-Image                         | `assets/img/plakat2025.webp` vorhanden – 2026 benötigt                                             | Phase 4                 |
 | 5   | **„Hut“-Illustration oder Icon** für die Hut-Panel-Sektion                           | Hut-Box auf Landingpage                            | Nein                                                                                               | Phase 4                 |
-| 6   | **PWA-Icons** (192×192 px, 512×512 px, maskable)                                     | Web App Manifest                                   | `assets/img/icons/icon_192.png`, `icon_512.png` – prüfen ob aktuell                                | Phase 0                 |
 | 7   | **OG-Social-Image** (1200×630 px, WebP)                                              | OpenGraph / Twitter Card                           | Platzhalter: `jonglage.png` (1536×1024, falsches Seitenverhältnis) → Screenshot der fertigen Seite | Phase 13                |
-| 8   | **PWA-Screenshots** (Desktop 2880×1800, Mobile 750×1334)                             | `manifest.webmanifest`                             | Alte Screenshots vorhanden – müssen nach Redesign neu erstellt werden                              | Phase 13                |
 | 9   | **Karten-Marker-Icons** (SVG, farbkodiert je Spielort)                               | Leaflet-Map, Legende                               | `assets/img/map/` vorhanden – Format prüfen                                                        | Phase 7                 |
 | 10  | **Sponsor-Logos** (WebP, einheitliche Höhe ~80 px)                                   | Sponsoren-Seite                                    | `assets/img/sponsors/` vorhanden – Vollständigkeit prüfen                                          | Phase 9                 |
 | 11  | **Artist-Fotos 2026** (WebP, mind. 800×800 px, quadratisch oder 4:3)                 | Künstler-Grid, Detailseiten                        | Nur 2025-Assets vorhanden                                                                          | Nach Termin-Bekanntgabe |
@@ -1054,10 +989,9 @@ Die folgenden Phasen enthalten explizite **„⚠️ Asset-Request“**-Einträg
 
 | Phase    | Asset-Request-Zeitpunkt | Betrifft                                                                                    |
 | -------- | ----------------------- | ------------------------------------------------------------------------------------------- |
-| Phase 0  | Vor Projektstart        | PWA-Icons prüfen (Größe, Maskability)                                                       |
 | Phase 2  | Vor Header-Bau          | Logo-SVG                                                                                    |
 | Phase 3  | Vor Komponenten-Bau     | Paint-Splatter-SVGs, Kategorie-Icons                                                        |
 | Phase 4  | Vor Landingpage-Bau     | Hero-Bild, Hut-Illustration                                                                 |
 | Phase 7  | Vor Karten-Bau          | Marker-Icons (SVG, Farben)                                                                  |
 | Phase 9  | Vor Sponsoren-Seite     | Sponsor-Logos Vollständigkeitsprüfung                                                       |
-| Phase 13 | Nach Deployment         | PWA-Screenshots neu erstellen; OG-Social-Image (Screenshot der fertigen Seite, 1200×630 px) |
+| Phase 13 | Nach Deployment         | OG-Social-Image (Screenshot der fertigen Seite, 1200×630 px)                                |

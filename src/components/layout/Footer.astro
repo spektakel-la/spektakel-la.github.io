@@ -11,10 +11,8 @@ const t = useTranslations(locale);
 const lang = locale as Locale;
 
 const footerLinks = [
-  { label: t.footer.sponsors, href: localePath('/#sponsoren', lang) },
-  { label: t.footer.about, href: localePath('/#ueber-uns', lang) },
-  { label: t.footer.imprint, href: localePath('/impressum/', lang) },
-  { label: t.footer.privacy, href: localePath('/datenschutz/', lang) },
+  { label: t.footer.sponsors, href: localePath('/sponsors/', lang) },
+  { label: t.footer.imprint, href: localePath('/imprint/', lang) },
 ];
 
 const socialLinks = [
@@ -72,6 +70,15 @@ const socialLinks = [
               </a>
             </li>
           ))}
+          <li>
+            <button
+              type="button"
+              data-cookie-settings
+              class="cursor-pointer border-0 bg-transparent p-0 text-left text-sm text-gray-400 hover:text-[var(--color-primary)] transition-colors"
+            >
+              {t.footer.cookieSettings}
+            </button>
+          </li>
         </ul>
       </nav>
 
