@@ -7,6 +7,9 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://spektakel-la.github.io',
   output: 'static',
+  devToolbar: {
+    enabled: process.env.PLAYWRIGHT !== '1',
+  },
 
   i18n: {
     defaultLocale: 'de',

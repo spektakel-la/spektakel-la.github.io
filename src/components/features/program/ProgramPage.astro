@@ -371,6 +371,7 @@ const jsonLd = {
       categoryBtns.forEach((b) => {
         const isActive = (b.dataset.category ?? '') === activeCategory;
         b.classList.toggle('chip--active', isActive);
+        b.setAttribute('aria-pressed', String(isActive));
       });
       applyFilters();
     });

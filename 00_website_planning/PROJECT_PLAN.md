@@ -896,14 +896,14 @@ export default defineConfig({
 - [x] **E2E-Test**: `tests/e2e/consent.spec.ts` (Banner erscheint, Ablehnung lädt kein GTM, Zustimmung und persistierte Zustimmung laden das GTM-Script genau einmal, Status-API und Widerruf funktionieren)
 - [x] **Design-Abgleich Desktop + Mobile** (`design_concept.png`) ✅ – geprüft 21.06.2026
 
-### Phase 11 – Kritische E2E-Smoke-Tests (1–2 h)
+### Phase 11 – Kritische E2E-Smoke-Tests (1–2 h) ✅
 
 > **Reduzierter Scope (21.06.2026):** Keine vollständige E2E-Abdeckung. Getestet werden nur kritische Nutzerpfade und die Erreichbarkeit aller veröffentlichten Sprachvarianten.
 
-- [ ] `tests/e2e/navigation.spec.ts` – alle veröffentlichten DE-/EN-Routen erreichbar; Sprachwechsel führt zur entsprechenden Route
-- [ ] `tests/e2e/program.spec.ts` – Tagesauswahl und mindestens ein zentraler Filter funktionieren
-- [ ] `tests/e2e/impressions.spec.ts` – Lightbox öffnen, navigieren und schließen
-- [ ] Smoke-Tests im Desktop-Chrome- und Mobile-Chrome-Profil (375 px) ausführen
+- [x] `tests/e2e/navigation.spec.ts` – alle veröffentlichten DE-/EN-Routen erreichbar; Sprachwechsel führt zur entsprechenden Route
+- [x] `tests/e2e/program.spec.ts` – Tagesauswahl und Kategorie-Filter funktionieren
+- [x] `tests/e2e/impressions.spec.ts` – Lightbox öffnen, navigieren und schließen
+- [x] Smoke-Tests im Desktop-Chrome- und Mobile-Chrome-Profil (375 px) ausführen
 
 **Bewusst nicht enthalten:** vollständige Künstler-, Karten- und Filterabdeckung sowie ein verpflichtender Coverage-Schwellwert.
 
