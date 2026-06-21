@@ -68,7 +68,6 @@ const catLabels: Record<Category, string> = {
   [Category.Comedy]:    t.program.catComedy,
   [Category.Magie]:     t.program.catMagie,
   [Category.StreetArt]: t.program.catStreetArt,
-  [Category.Nightlife]: t.program.catNightlife,
 };
 
 function getDayLabel(dayStr: string): string {
@@ -90,7 +89,7 @@ function getShortDate(dayStr: string): string {
 const dayItems = days.map((d) => ({ iso: d, label: getDayLabel(d), shortDate: getShortDate(d) }));
 
 const venueOptions = allLocations
-  .filter((l) => !l.data.nightlife && !l.data.organizational)
+  .filter((l) => !l.data.organizational)
   .sort((a, b) => (a.data.sort_order ?? 99) - (b.data.sort_order ?? 99))
   .map((l) => ({ id: l.data.location_id, label: l.data.description }));
 
@@ -106,24 +105,17 @@ type TableGrid = {
   rows: { timeStr: string; isoTime: string; cells: Record<string, GridCell> }[];
 };
 
-// Nightlife-Location-IDs (werden aus Grid-Spalten und Zeitslots gefiltert)
-const nightlifeLocIds = new Set(
-  allLocations.filter((l) => l.data.nightlife).map((l) => l.data.location_id),
-);
-
 function getLocationsForDay(dayStr: string): CollectionEntry<'locations'>[] {
   const ids = [...new Set((byDay[dayStr] ?? []).map((e) => e.location_id))];
   return allLocations
-    .filter((l) => ids.includes(l.data.location_id) && !l.data.nightlife)
+    .filter((l) => ids.includes(l.data.location_id))
     .sort((a, b) => (a.data.sort_order ?? 99) - (b.data.sort_order ?? 99));
 }
 
 function getTimeSlotsForDay(dayStr: string): string[] {
-  // Nur Nicht-Nightlife-Einträge → keine "00:30"-Zeilen im Hauptgrid
   const slots = [
     ...new Set(
       (byDay[dayStr] ?? [])
-        .filter((e) => !nightlifeLocIds.has(e.location_id))
         .map((e) => formatTime(e.time)),
     ),
   ];

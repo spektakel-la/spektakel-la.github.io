@@ -40,7 +40,7 @@ export const FESTIVAL_TZ = 'Europe/Berlin';
 
 /**
  * Events bis 3 Uhr morgens zählen noch zum Vortag
- * (Nachtprogramm-Logik aus altem Projekt).
+ * (Mitternachtslogik aus dem alten Projekt).
  */
 export const NIGHT_CUTOFF_HOUR = 3;
 

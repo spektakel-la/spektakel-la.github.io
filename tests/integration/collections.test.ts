@@ -45,7 +45,6 @@ const locationSchema = z.object({
   description: z.string(),
   gps: z.tuple([z.number(), z.number()]),
   marker_color: z.string(),
-  nightlife: z.boolean().optional(),
   organizational: z.boolean().optional(),
 });
 

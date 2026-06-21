@@ -94,7 +94,6 @@ const GENRE_LABELS: Record<string, string> = {
   comedy: 'Comedy',
   street_art: locale === 'en' ? 'Street Art' : 'Street Art',
   magie: locale === 'en' ? 'Magic' : 'Magie',
-  nightlife: 'Nightlife',
 };
 const genre = macroCategory ? (GENRE_LABELS[macroCategory] ?? macroCategory) : undefined;
 const keywords = locData.tags && locData.tags.length > 0 ? locData.tags.join(', ') : undefined;

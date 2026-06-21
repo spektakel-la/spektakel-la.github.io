@@ -10,7 +10,7 @@
 | Ziel                   | Details                                                                              |
 | ---------------------- | ------------------------------------------------------------------------------------ |
 | Modernes Redesign      | Neues optisches Gewand nach Mockup (Farben, Typografie, Interaktion)                 |
-| Voller Funktionsumfang | Programm, Künstler, Spielorte+Karte, Galerie, Nightlife, Info, Über uns, Sponsoren   |
+| Voller Funktionsumfang | Programm, Künstler, Spielorte+Karte, Galerie, Info, Über uns, Sponsoren              |
 | DSGVO-konform          | Cookie-Consent + GTM nur nach Zustimmung                                             |
 | PWA / Offline          | Option C: Programm + Karte + Künstler offline, Galerie nur bei Bedarf                |
 | Mehrsprachig           | `de` (Default) + `en` via Astro i18n-Routing                                         |
@@ -77,7 +77,6 @@ Du kannst jederzeit Implementierungsdetails anpassen, Abschnitte zurücksetzen o
 | Comedy     | `#B7FF00` (Lime)                           |
 | Street Art | `#FF6B1A` (Orange – aus Mockup abgeleitet) |
 | Magie      | `#9B59B6` (Lila – aus Mockup abgeleitet)   |
-| Nightlife  | `#1A1A1A` (Dunkel)                         |
 
 > **Zentrale Theme-Verwaltung**: Alle Tokens sind ausschließlich in `src/styles/tokens.css` als CSS Custom Properties definiert. Das ist die **einzige Stelle** für Farb-, Typo- und Spacing-Änderungen. Tailwind-Klassen und Komponenten referenzieren nur diese Tokens – nie Hex-Werte direkt im Code.
 
@@ -126,7 +125,7 @@ Checkliste pro Seite:
 ### 3.1 Navigationsitems
 
 ```
-PROGRAMM | KÜNSTLER | SPIELORTE | GALERIE | INFOS | NIGHTLIFE
+PROGRAMM | KÜNSTLER | SPIELORTE | GALERIE | INFOS
                                               [Hamburger auf Mobile]
 ```
 
@@ -144,7 +143,6 @@ PROGRAMM | KÜNSTLER | SPIELORTE | GALERIE | INFOS | NIGHTLIFE
 | `/locations`      | `/en/locations`      | Karte + Spielortliste                 | P0           |
 | `/locations/[id]` | `/en/locations/[id]` | Spielort-Detailseite                  | P0           |
 | `/impressions`    | `/en/impressions`    | Foto-Galerie                          | P0           |
-| `/nightlife`      | `/en/nightlife`      | Nachtprogramm                         | P0           |
 | `/info`           | `/en/info`           | Festival-Infos (Anfahrt, Parken, FAQ) | P1           |
 | `/about`          | `/en/about`          | Über das Festival / Team              | P1           |
 | `/sponsors`       | `/en/sponsors`       | Sponsoren                             | P1           |
@@ -164,7 +162,6 @@ Die Astro-URLs sind **bewusst identisch** mit den alten Jekyll-URLs gewählt –
 | `/artists`            | `/artists`        | ✅ Identisch                                 |
 | `/locations`          | `/locations`      | ✅ Identisch                                 |
 | `/impressions`        | `/impressions`    | ✅ Identisch                                 |
-| `/nightlife`          | `/nightlife`      | ✅ Identisch                                 |
 | `/sponsors`           | `/sponsors`       | ✅ Identisch                                 |
 | `/artists/[slug]`     | `/artists/[slug]` | ✅ Neu (kein Konflikt mit alten URLs)        |
 | `/locations/[id]`     | `/locations/[id]` | ✅ Neu (kein Konflikt mit alten URLs)        |
@@ -270,8 +267,7 @@ spektakel-la.github.io/
 │   │       │   └── VenuePanel.astro        # Sidebar-Detailpanel
 │   │       ├── gallery/
 │   │       │   ├── Gallery.astro
-│   │       │   ├── GalleryFilter.astro
-│   │       │   └── Lightbox.astro          # client:load
+│   │       │   └── Lightbox                # nativ in Gallery.astro
 │   │       ├── artists/
 │   │       │   ├── ArtistCard.astro
 │   │       │   └── ArtistCategoryFilter.astro
@@ -283,7 +279,7 @@ spektakel-la.github.io/
 │   │   ├── locations/                      # .md pro Spielort
 │   │   └── sponsors/                       # .md pro Sponsor
 │   ├── data/
-│   │   └── schedule.csv                    # Spielplan; Nightlife via Location-Flag `nightlife: true`
+│   │   └── schedule.csv                    # Vollständiger Spielplan aller Auftritte
 │   ├── i18n/
 │   │   ├── de.ts                           # Deutsche UI-Strings
 │   │   ├── en.ts                           # Englische UI-Strings
@@ -299,7 +295,6 @@ spektakel-la.github.io/
 │   │   ├── 404.astro                       # GitHub Pages: 404.html (Theming-passend, mit Heimlink)
 │   │   ├── offline.astro                   # PWA-Offline-Fallback-Seite
 │   │   ├── program.astro
-│   │   ├── nightlife.astro
 │   │   ├── impressions.astro
 │   │   ├── info.astro
 │   │   ├── about.astro
@@ -315,7 +310,6 @@ spektakel-la.github.io/
 │   │   └── en/                             # Englische Routen (Astro i18n)
 │   │       ├── index.astro
 │   │       ├── program.astro
-│   │       ├── nightlife.astro
 │   │       ├── impressions.astro
 │   │       ├── info.astro
 │   │       ├── about.astro
@@ -414,7 +408,6 @@ const locations = defineCollection({
     description: z.string(),
     gps: z.tuple([z.number(), z.number()]),
     marker_color: z.string(),
-    nightlife: z.boolean().optional(),
     organizational: z.boolean().optional(),
   }),
 });
@@ -439,20 +432,22 @@ const sponsors = defineCollection({
 ### 6.4 Gallery (Impressionen)
 
 ```typescript
-const gallery = defineCollection({
-  type: 'content',
-  schema: z.object({
-    file: z.string(), // Pfad relativ zu public/assets/img/impressions/
-    category: z.enum(['akrobatik', 'musik', 'comedy', 'street_art', 'nightlife']),
-    year: z.number(),
-    caption: z.string().optional(),
-    type: z.enum(['image', 'youtube']).default('image'),
-    youtubeId: z.string().optional(), // nur wenn type === "youtube"
-  }),
-});
+// src/data/impressions.ts
+export interface GalleryItem {
+  file: string; // Pfad relativ zu public/assets/img/impressions/
+  thumbnail: string;
+  caption?: string;
+  type: 'image' | 'youtube';
+  youtubeId?: string; // nur wenn type === "youtube"
+}
+
+export const impressions: GalleryItem[] = [
+  // Lokale Bilder werden beim Build automatisch erkannt,
+  // Videos werden mit Thumbnail, Caption und YouTube-ID ergänzt.
+];
 ```
 
-> **Entscheidung**: Eine Markdown-Datei pro Bild/Video in `src/content/gallery/`. Ermöglicht Filter-Chips (Kategorie + Jahr), YouTube-Link-Kacheln (kein iFrame → kein Consent) und Captions – wartbar ohne Code-Änderungen. Astro Content Collections übernehmen Zod-Validierung.
+> **Entscheidung (aktualisiert 21.06.2026)**: `src/data/impressions.ts` ist die zentrale, typisierte Datenquelle. Lokale Bilder in `public/assets/img/impressions/` werden beim Build automatisch erkannt; YouTube-Videos werden explizit ergänzt. Die Galerie wird bewusst nicht kategorisiert oder gefiltert.
 
 ---
 
@@ -472,8 +467,8 @@ time,location_id,artist_id,notes
 - Verknüpft `location_id` → Location-Collection-Eintrag
 - Gruppiert nach Festivaltag (Events 0–3 Uhr → Vortag, wie im alten Projekt)
 - Gibt typisierte `ScheduleEntry[]`-Daten zurück
-- Wird in `program.astro`, `nightlife.astro` und `locations/[id].astro` genutzt
-- **Nightlife-Filter**: Keine separate CSV – Nightlife-Events sind Einträge, deren Location `nightlife: true` gesetzt hat
+- Wird in `program.astro` und `locations/[id].astro` genutzt
+- Alle Auftritte werden unabhängig von Uhrzeit und Spielort im regulären Spielplan angezeigt
 - **Organizational-Filter**: Artists mit `organizational: true` erscheinen im Spielplan ohne klickbaren Detaillink
 - **Slot-Merging** (`mergeConsecutiveSlots`): aufeinanderfolgende 30-min-Slots desselben Künstlers an derselben Location werden zur Build-Zeit zu einem `MergedEntry` zusammengefasst
 
@@ -526,7 +521,7 @@ Artist- und Location-Inhalte bleiben mehrsprachig in den `.md`-Frontmatters (Fel
 **Sektionen:**
 
 1. **Hero**: Vollbild-Hintergrund mit Artist-Foto, Paint-Splatter-SVGs, Headline, Datum-Badge, Subtext, CTA „Zum Programm"
-2. **Kategorie-Icons**: Horizontale Icon-Leiste (Akrobatik, Musik, Comedy, Magie, Street Art, Nightlife) mit Hover-Animations
+2. **Kategorie-Icons**: Horizontale Icon-Leiste (Akrobatik, Musik, Comedy, Magie, Street Art) mit Hover-Animationen
 3. **Hut-Box**: Dunkles Panel „KÜNSTLER SPIELEN FÜR DEN HUT" mit Erklärtext
 4. **Teaser-Slider**: 3–4 Featured Artists (Carousel)
 5. **Vorschau Spielplan**: Aktueller/nächster Festivaldag-Auszug
@@ -542,7 +537,8 @@ Artist- und Location-Inhalte bleiben mehrsprachig in den `.md`-Frontmatters (Fel
 - **View-Toggle**: Tabellen-Ansicht (Desktop default) ↔ Listen-Ansicht (Mobile default)
 - **Tabellen-Ansicht**: Zeilen = Zeitslots (30-min-Raster), Spalten = Spielorte, Zellen farbkodiert nach Kategorie
 - **Listen-Ansicht**: Sortiert nach Zeit, Künstler + Spielort + Kategorie-Chip
-- **Live-Indikator**: Wenn Serverzeit im Zeitfenster → Zelle hervorheben (nur Client-side via `Date.now()`)- **Kategorie-Filter**: Filter-Chips (Alle / Musik / Akrobatik / Comedy / Magie / Street Art / Nightlife); kombinierbar mit Spielort-Filter und Tages-Tab
+- **Live-Indikator**: Wenn Serverzeit im Zeitfenster → Zelle hervorheben (nur Client-side via `Date.now()`)
+- **Kategorie-Filter**: Filter-Chips (Alle / Musik / Akrobatik / Comedy / Magie / Street Art); kombinierbar mit Spielort-Filter und Tages-Tab
 - **Favoriten** (♥): Button auf jeder Karte / Timetable-Zelle; gespeichert in `localStorage`, kein Login erforderlich; Filter „Nur meine Favoriten“; **Bonus-Feature**: eigene Festivalplan-Ansicht mit allen gemerkten Acts (Komponente `FavoritesButton.astro`, Logik in `utils/favorites.ts`)- Hinweis „Änderungen vorbehalten"
 
 ### 9.3 Künstler (`/artists`, `/artists/[slug]`)
@@ -550,7 +546,7 @@ Artist- und Location-Inhalte bleiben mehrsprachig in den `.md`-Frontmatters (Fel
 **Listing-Seite `/artists`:**
 
 - **Hero-Sektion**: Headline „ALLE KÜNSTLER AUF EINEN BLICK", Tagline, Performer-Foto rechts, Paint-Splatter-Dekoration, „Künstler spielen für den Hut!"-Badge
-- **Filter Zeile 1**: Kategorie-Chips (ALLE | ARTISTIK | MUSIK | COMEDY | MAGIE | STREET ART | NIGHTLIFE)
+- **Filter Zeile 1**: Kategorie-Chips (ALLE | ARTISTIK | MUSIK | COMEDY | MAGIE | STREET ART)
 - **Filter Zeile 2**: Suchfeld „Künstler suchen…" | Dropdown „Alle Kategorien" | Dropdown „Alle Spielorte" | Dropdown Sortierung (A–Z)
 - **Mobile Filter**: Klick auf Filter-Button öffnet Fullscreen-Drawer mit Kategorie-Chips, Spielort-Dropdown, Sortierung, Zurücksetzen + Anwenden
 - **Künstler-Cards**: Foto, Stern-Icon (Favorit) oben rechts, Name, Kategorie-Label, Spielort-Icon + Spielortname, Spielplan-Kurzform (Fr 16:00 | Sa 18:00 | So 16:00)
@@ -593,22 +589,21 @@ Artist- und Location-Inhalte bleiben mehrsprachig in den `.md`-Frontmatters (Fel
 
 **Features:**
 
-- Filter-Chips: ALLE, AKROBATIK, MUSIK, COMEDY, STREET ART, NIGHTLIFE
-- Masonry-Grid (3 Spalten Desktop, 2 Tablet, 1 Mobile)
+- Visuell abwechslungsreiches Masonry-Grid (3 Spalten Desktop, 2 Tablet, 1 Mobile)
 - Bilder aus `public/assets/img/impressions/` (bestehende Assets)
-- Lazy-Loading mit `loading="lazy"` + Astro `<Image>`
-- Lightbox (z. B. **GLightbox** oder **PhotoSwipe**): Vollbild, Vor/Zurück, Counter „1/24", Caption
+- Lokale 300-px-Thumbnails + Lazy-Loading; Originale werden erst in der Vollbildansicht geladen
+- Native `<dialog>`-Lightbox: Vollbild, Vor/Zurück, Tastatursteuerung, Counter und Caption
 
 **YouTube-Videos (DSGVO-konform – kein iFrame):**
 
-- Darstellung als Kachel mit statischem YouTube-Thumbnail
+- Darstellung mit lokal gespeichertem Original-YouTube-Thumbnail, Play-Symbol und Video-Caption
 - Klick öffnet `youtube.com/watch?v=...` in neuem Tab
 - **Kein iFrame** auf unserer Seite → kein Third-Party-Tracking → **kein Consent erforderlich**
 
 **Bild-Metadaten:**
 
-- Astro Content Collection `src/content/gallery/` – eine `.md`-Datei pro Bild/Video (Frontmatter: `file`, `category`, `year`, `caption?`, `type`, `youtubeId?`) – s. §6.4
-- Ermöglicht Filter + Captions + YouTube-Kacheln ohne CMS, mit Zod-Validierung
+- Typisierte Datenquelle `src/data/impressions.ts` – automatische Bilderkennung plus Video-Metadaten (`file`, `caption?`, `type`, `youtubeId?`) – s. §6.4
+- Ermöglicht Captions und YouTube-Kacheln ohne CMS, Kategorien oder leere Markdown-Hüllen
 
 ### 9.6 Info-Seite (`/info`)
 
@@ -620,14 +615,9 @@ Statischer Content (Markdown oder Astro):
 - FAQ
 - Kontakt
 
-### 9.7 Nightlife (`/nightlife`)
+### 9.7 Abendprogramm
 
-- Analog zur Programmseite, gefiltert aus dem Haupt-Spielplan (`schedule.csv`)
-- Filter-Kriterium: Die verknüpfte Location hat `nightlife: true` im Frontmatter
-- Keine separate `nightlife.csv` – Datenquelle ist `src/utils/schedule.ts` mit Nightlife-Filter
-- Spezifische Spielorte (nur Nightlife-Locations aus der Location-Collection)
-
-> **Offen**: Das Metadaten-Format wird spätestens in Phase 1 mit den echten 2026-Spielplan-Daten finalisiert.
+> **Entscheidung (21.06.2026)**: Nightlife wird nicht als eigenes Feature, eigene Kategorie oder eigene Route umgesetzt. Späte Auftritte und die zugehörigen Spielorte erscheinen ohne Sonderbehandlung im regulären Spielplan.
 
 ### 9.8 Sponsoren (`/sponsors`)
 
@@ -835,7 +825,7 @@ export default defineConfig({
 - [x] Markdown-Migration: `_artists/` → `src/content/artists/`
 - [x] Markdown-Migration: `_locations/` → `src/content/locations/`
 - [x] Markdown-Migration: `_sponsors/` → `src/content/sponsors/`
-- [x] `data/schedule.csv` + `nightlife.csv` kopieren
+- [x] `data/schedule.csv` kopieren
 - [x] `src/utils/schedule.ts` – CSV-Parser
 - [x] **Unit-Tests**: `tests/unit/schedule.test.ts` (CSV-Parser, Tagesgruppierung, Nacht-Logik 0–3 Uhr)
 - [x] **Unit-Tests**: `tests/unit/i18n.test.ts` (Sprach-Fallback, alle Schlüssel vorhanden)
@@ -853,7 +843,7 @@ export default defineConfig({
 
 ### Phase 3 – Design-System-Komponenten (2–3 h) ✅
 
-- [x] ⚠️ **Asset-Request**: Paint-Splatter-PNGs (5 Varianten) + Kategorie-Icons (6 Stück als PNG) unter `src/assets/splatter/` und `src/assets/categories/` abgelegt
+- [x] ⚠️ **Asset-Request**: Paint-Splatter-PNGs (5 Varianten) + Kategorie-Icons (5 Stück als PNG) unter `src/assets/splatter/` und `src/assets/categories/` abgelegt
 - [x] `Badge.astro`, `Button.astro`, `CategoryChip.astro`
 - [x] `PaintSplatter.astro` – dekoratives PNG-Element via Astro `<Image>`
 - [x] Globales CSS (Typografie, Farben, Reset)
@@ -862,7 +852,7 @@ export default defineConfig({
 
 - [x] ⚠️ **Asset-Request**: Hero-Bild (`hero1.png` ✅) + Hut-Illustration (→ TD2: SVG-Platzhalter)
 - [x] Hero-Sektion (Logo, Datum-Badge, Subtext, CTAs, Juggler-Figur, Paint-Splatter)
-- [x] Kategorie-Icon-Leiste (6 Icons mit Hover-Animation)
+- [x] Kategorie-Icon-Leiste (5 Icons mit Hover-Animation)
 - [x] Hut-Panel (SVG-Platzhalter, TD2)
 - [x] Featured-Artists-Slider (4 Artists mit Bild + Kategorie-Badge)
 - [x] Spielplan-Vorschau (Freitag, 5 Einträge)
@@ -932,22 +922,22 @@ export default defineConfig({
 - [x] i18n-Strings `locations.*` in `de.ts` + `en.ts` erweitert
 - [x] `/locations/index.astro` + `/en/locations/index.astro`
 - [x] `/locations/[id].astro` + `/en/locations/[id].astro`
-- [ ] **Design-Abgleich Desktop + Mobile** (`design_concept.png`)
+- [x] **Design-Abgleich Desktop + Mobile** (`design_concept.png`) ✅ – bestätigt 21.06.2026
 
 > **Tile-Strategie**: Keine Online-OSM-Kacheln – alle Tiles sind lokal vorgerendert und liegen in `public/assets/img/map/tiles/`. OSM-Attribution gemäß Lizenz im Leaflet-Layer vorhanden.
 
-### Phase 8 – Galerie (2–3 h)
+### Phase 8 – Galerie (2–3 h) ✅
 
-- [ ] `src/data/impressions.ts` (Metadaten-Manifest)
-- [ ] `GalleryFilter.astro`
-- [ ] `Gallery.astro` (Masonry-Grid)
-- [ ] `Lightbox.astro` (GLightbox)
-- [ ] **Design-Abgleich Desktop + Mobile** (`design_concept.png`)
+- [x] `src/data/impressions.ts` (Metadaten-Manifest)
+- [x] `Gallery.astro` (Masonry-Grid + native Lightbox)
+- [x] `/impressions` + `/en/impressions`
+- [x] **Design-Abgleich Desktop + Mobile** (`design_concept.png`) ✅ – bestätigt 21.06.2026
 
 ### Phase 9 – Restliche Seiten (2 h)
 
+> **Scope-Hinweis**: Die ehemals geplante Nightlife-Seite entfällt. Sämtliche Abendauftritte bleiben Bestandteil des regulären Spielplans.
+
 - [ ] ⚠️ **Asset-Request**: Sponsor-Logos prüfen (Vollständigkeit, einheitliche Höhe ~80 px, WebP) – Spezifikation folgt zu Beginn dieser Phase
-- [ ] `/nightlife`
 - [ ] `/info`
 - [ ] `/about`
 - [ ] `/sponsors`
@@ -1001,11 +991,10 @@ export default defineConfig({
 | 1   | Festival-Termin 2026 (Datum, Spielplan, Künstler) | ⏳ Kommt in den nächsten Wochen                              |
 | 2   | Neue Künstler-Fotos / Assets für 2026             | ⏳ Kommt mit Termin                                          |
 | 3   | Font-System: Display- und Body-Font wählen        | ✅ Bebas Neue + Inter (s. §2.2, §4.2)                        |
-| 4   | Impressionen: Kategorisierungs-Datei erstellen    | ✅ Content Collection `src/content/gallery/` (s. §6.4)       |
+| 4   | Impressionen: zentrale Datenquelle                | ✅ Typisierte Datenquelle `src/data/impressions.ts` (s. §6.4) |
 | 5   | INFO-Seite: Texte (Anfahrt, Parken, FAQ)          | 🔲 Seite wird mit Platzhaltern gebaut; echter Content später |
 | 6   | ÜBER UNS: Text + Teamfotos                        | 🔲 Seite wird mit Platzhaltern gebaut; echter Content später |
 | 7   | NEWS: Feature-Scope wird später definiert         | 🔲 Zurückgestellt                                            |
-| 8   | Nightlife: Metadaten-Format im Spielplan          | 🔲 In Phase 1 mit echten 2026-Daten finalisieren             |
 | 9   | Display-Font: Bebas Neue                          | ✅ `@fontsource/bebas-neue` (s. §2.2)                        |
 | 10  | Body-Font: Inter                                  | ✅ `@fontsource/inter` (s. §2.2)                             |
 
@@ -1047,7 +1036,7 @@ Nicht alle benötigten Grafiken sind im alten Projekt vorhanden. Bevor eine Phas
 | #   | Asset                                                                                | Zweck                                              | Vorhandenes Pendant?                                                                               | Wann benötigt           |
 | --- | ------------------------------------------------------------------------------------ | -------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ----------------------- |
 | 1   | **Paint-Splatter-SVGs** (4–6 Varianten, Farben: Magenta, Lime, Cyan, Orange)         | Dekorative Elemente hinter Headlines, Hero-Sektion | Nein                                                                                               | Phase 3                 |
-| 2   | **Kategorie-Icons** (Akrobatik, Musik, Comedy, Magie, Street Art, Nightlife) als SVG | Landingpage Icon-Leiste, Filter-Chips              | Teilweise als PNG in `assets/img/icons/`                                                           | Phase 3                 |
+| 2   | **Kategorie-Icons** (Akrobatik, Musik, Comedy, Magie, Street Art) als SVG            | Landingpage Icon-Leiste, Filter-Chips              | Teilweise als PNG in `assets/img/icons/`                                                           | Phase 3                 |
 | 3   | **Logo** „Spektakel!“ im neuen Stil (SVG + WebP)                                     | Header, PWA-Manifest, OG-Bild                      | `assets/img/spektakel-logo.webp` vorhanden – ggf. anpassen                                         | Phase 2                 |
 | 4   | **Hero-Bild / Festival-Hauptmotiv** (mind. 1920×1080 px, WebP)                       | Landingpage-Hero, OG-Image                         | `assets/img/plakat2025.webp` vorhanden – 2026 benötigt                                             | Phase 4                 |
 | 5   | **„Hut“-Illustration oder Icon** für die Hut-Panel-Sektion                           | Hut-Box auf Landingpage                            | Nein                                                                                               | Phase 4                 |

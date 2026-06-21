@@ -9,7 +9,6 @@ export const ROUTES = {
   artists: '/artists/',
   locations: '/locations/',
   impressions: '/impressions/',
-  nightlife: '/nightlife/',
   sponsors: '/sponsors/',
   impressum: '/impressum/',
   info: '/impressum/', // TODO: eigene Info-Seite planen (derzeit → Impressum)

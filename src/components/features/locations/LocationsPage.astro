@@ -54,7 +54,6 @@ const mapLocations: MapLocation[] = sortedLocations.map((loc) => {
     gps: loc.data.gps,
     color: loc.data.marker_color,
     label: loc.data.location_label ?? locId,
-    nightlife: loc.data.nightlife ?? false,
     entries,
   } satisfies MapLocation;
 });

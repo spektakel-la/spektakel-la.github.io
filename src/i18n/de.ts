@@ -5,7 +5,6 @@ export const de = {
     locations: 'Spielorte',
     gallery: 'Galerie',
     info: 'Infos',
-    nightlife: 'Nightlife',
   },
   common: {
     all: 'Alle',
@@ -41,7 +40,6 @@ export const de = {
     catComedy: 'Comedy',
     catMagie: 'Magie',
     catStreetArt: 'Street Art',
-    catNightlife: 'Nightlife',
   },
   artists: {
     title: 'Alle Künstler auf einen Blick',
@@ -64,9 +62,13 @@ export const de = {
   },
   gallery: {
     title: 'Impressionen',
-  },
-  nightlife: {
-    title: 'Nightlife',
+    tagline: 'Ein Blick zurück auf magische Momente aus den letzten Jahren.',
+    video: 'Festivalvideo',
+    openImage: 'Bild öffnen',
+    lightbox: 'Vollbildgalerie',
+    close: 'Galerie schließen',
+    previous: 'Vorheriges Bild',
+    next: 'Nächstes Bild',
   },
   info: {
     title: 'Festival-Infos',

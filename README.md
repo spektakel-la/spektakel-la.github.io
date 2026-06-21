@@ -1,43 +1,73 @@
-# Astro Starter Kit: Minimal
+# Spektakel Landshut
+
+Astro-Website fuer das Spektakel Landshut.
+
+## Entwicklung
+
+Voraussetzungen:
+
+- Node.js `>=22.12.0`
+- npm
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Der Entwicklungsserver ist anschliessend unter `http://localhost:4321` erreichbar.
 
-## 🚀 Project Structure
+| Kommando                | Aufgabe                                      |
+| ----------------------- | -------------------------------------------- |
+| `npm run dev`           | Lokalen Entwicklungsserver starten           |
+| `npm run build`         | Statischen Produktions-Build erzeugen        |
+| `npm run preview`       | Produktions-Build lokal anzeigen             |
+| `npm run test:unit`     | Unit- und Integrationstests ausfuehren       |
+| `npm run test:e2e`      | Playwright-End-to-End-Tests ausfuehren       |
+| `npm run test:coverage` | Test-Coverage erzeugen                       |
 
-Inside of your Astro project, you'll see the following folders and files:
+## Galerie-Bilder
+
+Originalbilder liegen unter:
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+public/assets/img/impressions/
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Die Galerie erkennt neue Bilder in diesem Verzeichnis beim Build automatisch. Fuer das Masonry-Raster werden separate Vorschaubilder aus `public/assets/img/impressions/thumbs/` geladen; die Originale werden erst beim Oeffnen der Lightbox angefordert.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+### Thumbnails erzeugen
 
-Any static assets, like images, can be placed in the `public/` directory.
+Voraussetzung ist ImageMagick mit dem `magick`-Kommando:
 
-## 🧞 Commands
+```sh
+magick -version
+```
 
-All commands are run from the root of the project, from a terminal:
+Das folgende Kommando wird im Projektverzeichnis ausgefuehrt. Es erzeugt fuer alle unterstuetzten Originalbilder Thumbnails mit maximal 1000 x 1000 Pixeln, behaelt das Seitenverhaeltnis bei und skaliert kleine Bilder nicht hoch:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+```sh
+mkdir -p public/assets/img/impressions/thumbs
 
-## 👀 Want to learn more?
+find public/assets/img/impressions \
+  -maxdepth 1 \
+  -type f \
+  \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' -o -iname '*.avif' \) \
+  -exec magick mogrify \
+    -path public/assets/img/impressions/thumbs \
+    -auto-orient \
+    -thumbnail '1000x1000>' \
+    -strip \
+    -quality 84 \
+    {} +
+```
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Die Zielgroesse von 1000 Pixeln deckt die maximale Kachelbreite von etwa 500 CSS-Pixeln auch auf Displays mit Device-Pixel-Ratio 2 ab. `-strip` entfernt unnoetige EXIF-Metadaten; `-quality 84` bietet fuer JPEG/WebP einen guten Kompromiss zwischen Schaerfe und Dateigroesse.
+
+Bei neuen Bildern genuegt es, die Originaldateien in den Ordner zu legen und das Kommando erneut auszufuehren. Vorhandene Thumbnails werden dabei aktualisiert.
+
+Anzahl und Abmessungen lassen sich anschliessend pruefen:
+
+```sh
+find public/assets/img/impressions/thumbs -maxdepth 1 -type f | wc -l
+magick identify -format '%f: %wx%h\n' public/assets/img/impressions/thumbs/*
+```

@@ -13,7 +13,6 @@ export const Category = {
   Comedy: 'comedy',
   Magie: 'magie',
   StreetArt: 'street-art',
-  Nightlife: 'nightlife',
 } as const;
 
 /** Union aller gültigen Kategorie-Werte, z. B. `'akrobatik' | 'musik' | …` */
@@ -47,5 +46,4 @@ export const CATEGORY_COLORS: Readonly<Record<Category, string>> = {
   [Category.Comedy]: '#b7ff00',
   [Category.StreetArt]: '#ff6b1a',
   [Category.Magie]: '#9b59b6',
-  [Category.Nightlife]: '#1a1a1a',
 } as const;

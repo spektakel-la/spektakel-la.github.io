@@ -1,0 +1,506 @@
+---
+import Page from '../../../layouts/Page.astro';
+import { useTranslations } from '../../../i18n/utils';
+import { impressions } from '../../../data/impressions';
+import PaintSplatter from '../../ui/PaintSplatter.astro';
+
+interface Props {
+  locale: 'de' | 'en';
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<Page locale={locale} title={t.gallery.title} description={t.gallery.tagline}>
+  <section class="gallery-hero">
+    <div class="gallery-hero__splatter" aria-hidden="true">
+      <PaintSplatter variant={1} width={420} />
+    </div>
+    <div class="gallery-hero__inner">
+      <p class="gallery-hero__eyebrow">SPEKTAKEL LANDSHUT</p>
+      <h1>{t.gallery.title}</h1>
+      <p>{t.gallery.tagline}</p>
+    </div>
+  </section>
+
+  <section class="gallery-wrap" aria-label={t.gallery.title}>
+    <div class="gallery-grid" id="gallery-grid">
+      {impressions.map((item, index) => (
+        item.type === 'youtube' ? (
+          <a
+            class="gallery-tile gallery-tile--video"
+            href={`https://www.youtube.com/watch?v=${item.youtubeId}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${item.caption ?? t.gallery.video} – YouTube`}
+          >
+            <img
+              src={item.thumbnail}
+              alt={item.caption ?? t.gallery.video}
+              width="320"
+              height="180"
+              loading={index < 4 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
+            <span class="gallery-tile__shade"></span>
+            <span class="gallery-tile__play" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                <path d="M8 5v14l11-7z"></path>
+              </svg>
+            </span>
+            <span class="gallery-tile__caption">{item.caption}</span>
+          </a>
+        ) : (
+          <button
+            class="gallery-tile"
+            type="button"
+            data-gallery-index={index}
+            aria-label={`${t.gallery.openImage} ${index + 1}`}
+          >
+            <img
+              src={item.thumbnail}
+              alt=""
+              width="300"
+              height="225"
+              loading={index < 8 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
+            <span class="gallery-tile__zoom" aria-hidden="true">+</span>
+          </button>
+        )
+      ))}
+    </div>
+  </section>
+
+  <dialog class="lightbox" id="gallery-lightbox" aria-label={t.gallery.lightbox}>
+    <div class="lightbox__backdrop" data-close-lightbox></div>
+    <div class="lightbox__stage">
+      <button class="lightbox__close" type="button" data-close-lightbox aria-label={t.gallery.close}>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18"></path>
+        </svg>
+      </button>
+      <p class="lightbox__counter" aria-live="polite"></p>
+      <button class="lightbox__nav lightbox__nav--prev" type="button" data-gallery-prev aria-label={t.gallery.previous}>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6"></path>
+        </svg>
+      </button>
+      <img class="lightbox__image" src="" alt="" />
+      <button class="lightbox__nav lightbox__nav--next" type="button" data-gallery-next aria-label={t.gallery.next}>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M9 6l6 6-6 6"></path>
+        </svg>
+      </button>
+      <p class="lightbox__caption"></p>
+    </div>
+  </dialog>
+</Page>
+
+<script define:vars={{ items: impressions.filter((item) => item.type === 'image') }}>
+  const dialog = document.querySelector('#gallery-lightbox');
+  const image = dialog?.querySelector('.lightbox__image');
+  const counter = dialog?.querySelector('.lightbox__counter');
+  const caption = dialog?.querySelector('.lightbox__caption');
+  const imageButtons = [...document.querySelectorAll('[data-gallery-index]')];
+  let activeIndex = 0;
+
+  function render(index) {
+    if (!dialog || !image || !counter || items.length === 0) return;
+    activeIndex = (index + items.length) % items.length;
+    const item = items[activeIndex];
+    image.src = item.file;
+    image.alt = item.caption ?? '';
+    counter.textContent = `${activeIndex + 1} / ${items.length}`;
+    if (caption) {
+      caption.textContent = item.caption ?? '';
+      caption.hidden = !item.caption;
+    }
+  }
+
+  imageButtons.forEach((button, imageIndex) => {
+    button.addEventListener('click', () => {
+      render(imageIndex);
+      dialog?.showModal();
+      document.documentElement.classList.add('gallery-open');
+    });
+  });
+
+  function closeLightbox() {
+    dialog?.close();
+    document.documentElement.classList.remove('gallery-open');
+  }
+
+  dialog?.querySelectorAll('[data-close-lightbox]').forEach((button) => {
+    button.addEventListener('click', closeLightbox);
+  });
+  dialog?.querySelector('[data-gallery-prev]')?.addEventListener('click', () => render(activeIndex - 1));
+  dialog?.querySelector('[data-gallery-next]')?.addEventListener('click', () => render(activeIndex + 1));
+  dialog?.addEventListener('close', () => document.documentElement.classList.remove('gallery-open'));
+  dialog?.addEventListener('cancel', (event) => {
+    event.preventDefault();
+    closeLightbox();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (!dialog?.open) return;
+    if (event.key === 'ArrowLeft') render(activeIndex - 1);
+    if (event.key === 'ArrowRight') render(activeIndex + 1);
+  });
+</script>
+
+<style>
+  :global(html.gallery-open) {
+    overflow: hidden;
+  }
+
+  .gallery-hero {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-white);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .gallery-hero__inner {
+    position: relative;
+    z-index: 1;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 3.5rem 1.25rem 3rem;
+  }
+
+  .gallery-hero__eyebrow {
+    margin: 0 0 0.35rem;
+    color: var(--color-primary);
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+  }
+
+  .gallery-hero h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(3.75rem, 8vw, 6.5rem);
+    line-height: 0.86;
+    text-transform: uppercase;
+  }
+
+  .gallery-hero__inner > p:last-child {
+    max-width: 38rem;
+    margin: 1rem 0 0;
+    color: var(--color-text-muted);
+  }
+
+  .gallery-hero__splatter {
+    position: absolute;
+    top: -9rem;
+    right: -3rem;
+    width: 26rem;
+    opacity: 0.75;
+    transform: rotate(-9deg);
+  }
+
+  .gallery-wrap {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+
+  .gallery-grid {
+    columns: 1;
+    column-gap: 0.65rem;
+  }
+
+  .gallery-tile {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin: 0 0 0.65rem;
+    padding: 0;
+    overflow: hidden;
+    break-inside: avoid;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: var(--color-dark);
+    color: var(--color-white);
+    cursor: zoom-in;
+    aspect-ratio: 4 / 3;
+  }
+
+  .gallery-tile img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow), filter var(--transition-normal);
+  }
+
+  .gallery-tile:nth-child(5n + 2),
+  .gallery-tile:nth-child(7n + 4) {
+    aspect-ratio: 4 / 5;
+  }
+
+  .gallery-tile:nth-child(9n + 6) {
+    aspect-ratio: 1 / 1;
+  }
+
+  .gallery-tile:hover img,
+  .gallery-tile:focus-visible img {
+    transform: scale(1.035);
+    filter: saturate(1.12) contrast(1.03);
+  }
+
+  .gallery-tile:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .gallery-tile__zoom {
+    position: absolute;
+    right: 0.65rem;
+    bottom: 0.65rem;
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--color-dark) 72%, transparent);
+    font-size: 1.4rem;
+    line-height: 1;
+    opacity: 0;
+    transform: translateY(0.35rem);
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .gallery-tile:hover .gallery-tile__zoom,
+  .gallery-tile:focus-visible .gallery-tile__zoom {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .gallery-tile--video {
+    cursor: pointer;
+    aspect-ratio: 16 / 9;
+  }
+
+  .gallery-tile--video img {
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .gallery-tile__shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 35%, rgba(0, 0, 0, 0.82));
+  }
+
+  .gallery-tile__play {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    display: grid;
+    width: 4rem;
+    height: 4rem;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--color-primary);
+    transform: translate(-50%, -50%);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .gallery-tile__caption {
+    position: absolute;
+    right: 1rem;
+    bottom: 0.8rem;
+    left: 1rem;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    text-align: left;
+  }
+
+  .lightbox {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-white);
+  }
+
+  .lightbox::backdrop {
+    background: rgba(0, 0, 0, 0.94);
+  }
+
+  .lightbox__backdrop {
+    position: fixed;
+    inset: 0;
+  }
+
+  .lightbox__stage {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    padding: 0.5rem;
+    pointer-events: none;
+  }
+
+  .lightbox__image {
+    grid-area: 1 / 1;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: calc(100vh - 1rem);
+    max-height: calc(100dvh - 1rem);
+    margin: auto;
+    object-fit: contain;
+    pointer-events: auto;
+  }
+
+  .lightbox__close,
+  .lightbox__nav {
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-white);
+    cursor: pointer;
+    pointer-events: auto;
+    z-index: 2;
+    backdrop-filter: blur(8px);
+  }
+
+  .lightbox__close svg,
+  .lightbox__nav svg {
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .lightbox__close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    background: rgba(0, 0, 0, 0.58);
+  }
+
+  .lightbox__counter {
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    z-index: 2;
+    margin: 0;
+    padding: 0.35rem 0.7rem;
+    border-radius: var(--radius-full);
+    background: rgba(0, 0, 0, 0.58);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    transform: translateX(-50%);
+    backdrop-filter: blur(8px);
+  }
+
+  .lightbox__nav {
+    width: 3rem;
+    height: 3rem;
+    position: absolute;
+    top: 50%;
+    background: rgba(0, 0, 0, 0.58);
+    transform: translateY(-50%);
+  }
+
+  .lightbox__nav--prev {
+    left: 0.75rem;
+  }
+
+  .lightbox__nav--next {
+    right: 0.75rem;
+  }
+
+  .lightbox__caption {
+    position: absolute;
+    right: 1rem;
+    bottom: 0.75rem;
+    left: 1rem;
+    z-index: 2;
+    margin: 0;
+    padding: 0.45rem 0.75rem;
+    border-radius: var(--radius-full);
+    background: rgba(0, 0, 0, 0.58);
+    color: rgba(255, 255, 255, 0.8);
+    font-size: var(--text-sm);
+    text-align: center;
+    backdrop-filter: blur(8px);
+  }
+
+  @media (min-width: 640px) {
+    .gallery-grid {
+      columns: 2;
+    }
+  }
+
+  @media (min-width: 960px) {
+    .gallery-wrap {
+      padding: 1.25rem;
+    }
+
+    .gallery-grid {
+      columns: 3;
+      column-gap: 0.85rem;
+    }
+
+    .gallery-tile {
+      margin-bottom: 0.85rem;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .gallery-hero__inner {
+      padding: 2.4rem 1rem 2rem;
+    }
+
+    .gallery-hero__splatter {
+      top: -6rem;
+      right: -8rem;
+      width: 20rem;
+      opacity: 0.5;
+    }
+
+    .gallery-wrap {
+      padding: 0.45rem;
+    }
+
+    .gallery-grid {
+      columns: 2;
+      column-gap: 0.4rem;
+    }
+
+    .gallery-tile {
+      margin-bottom: 0.4rem;
+    }
+
+    .lightbox__nav {
+      width: 2.75rem;
+      height: 2.75rem;
+    }
+
+    .lightbox__nav--prev {
+      left: 0.35rem;
+    }
+
+    .lightbox__nav--next {
+      right: 0.35rem;
+    }
+  }
+</style>

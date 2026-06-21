@@ -48,7 +48,6 @@ const locations = defineCollection({
     marker_color: z.string(),
     /** "i" für Info-Standorte; sonst wird location_id als Label verwendet */
     location_label: z.string().optional(),
-    nightlife: z.boolean().optional(),
     organizational: z.boolean().optional(),
   }),
 });
@@ -62,16 +61,4 @@ const sponsors = defineCollection({
   }),
 });
 
-const gallery = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/gallery' }),
-  schema: z.object({
-    file: z.string(),
-    category: z.enum(['akrobatik', 'musik', 'comedy', 'street_art', 'nightlife']),
-    year: z.number(),
-    caption: z.string().optional(),
-    type: z.enum(['image', 'youtube']).default('image'),
-    youtubeId: z.string().optional(),
-  }),
-});
-
-export const collections = { artists, locations, sponsors, gallery };
+export const collections = { artists, locations, sponsors };
