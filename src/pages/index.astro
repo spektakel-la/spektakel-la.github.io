@@ -44,9 +44,10 @@ const meta = locale === 'en'
 // ─── Featured Artists ──────────────────────────────────────────────────────
 const allArtists: CollectionEntry<'artists'>[] = await getCollection('artists');
 const allLocations: CollectionEntry<'locations'>[] = await getCollection('locations');
-const featuredArtists = allArtists
-  .filter(a => !a.data.organizational && Array.isArray(a.data.images) && a.data.images.length > 0)
-  .slice(0, 4);
+const artistsWithImages = allArtists.filter(
+  (artist) => !artist.data.organizational && (artist.data.images?.length ?? 0) > 0,
+);
+const featuredArtists = artistsWithImages;
 
 // ─── Spielplan-Vorschau ────────────────────────────────────────────────────
 const schedule = loadSchedule();
@@ -294,14 +295,18 @@ const categories: Array<{ key: Category; label: string; img: ImageMetadata }> = 
           </a>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-          {featuredArtists.map(artist => {
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6" data-featured-artists-grid>
+          {featuredArtists.map((artist, index) => {
             const firstCat = artist.data[locale]?.categories?.[0];
             const imgPos = artist.data.image_position ?? 'center';
             return (
               <a
                 href={localize(artistPath(artist.data.artist_id))}
-                class="group block rounded-xl overflow-hidden bg-white shadow-md hover:shadow-xl transition-shadow duration-300"
+                class:list={[
+                  'group block rounded-xl overflow-hidden bg-white shadow-md hover:shadow-xl transition-shadow duration-300',
+                  index >= 4 && 'hidden',
+                ]}
+                data-featured-artist
               >
                 <div class="aspect-[3/4] overflow-hidden bg-gray-100">
                   <img
@@ -324,6 +329,22 @@ const categories: Array<{ key: Category; label: string; img: ImageMetadata }> = 
             );
           })}
         </div>
+
+        <script is:inline>
+          const grid = document.querySelector('[data-featured-artists-grid]');
+          const cards = Array.from(grid?.querySelectorAll('[data-featured-artist]') ?? []);
+
+          for (let i = cards.length - 1; i > 0; i -= 1) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [cards[i], cards[j]] = [cards[j], cards[i]];
+          }
+
+          cards.forEach((card) => card.classList.add('hidden'));
+          cards.slice(0, 4).forEach((card) => {
+            card.classList.remove('hidden');
+            grid?.appendChild(card);
+          });
+        </script>
 
       </div>
     </section>
