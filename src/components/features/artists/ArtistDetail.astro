@@ -45,9 +45,9 @@ const artistEntries = schedule.filter((e) => e.artist_id === artist_id);
 const merged = mergeConsecutiveSlots(artistEntries);
 
 const dayFull: Record<string, string> = {
-  '2025-09-19': locale === 'de' ? 'Freitag 19.09.' : 'Friday Sep 19',
-  '2025-09-20': locale === 'de' ? 'Samstag 20.09.' : 'Saturday Sep 20',
-  '2025-09-21': locale === 'de' ? 'Sonntag 21.09.' : 'Sunday Sep 21',
+  '2026-09-18': locale === 'de' ? 'Freitag 18.09.' : 'Friday Sep 18',
+  '2026-09-19': locale === 'de' ? 'Samstag 19.09.' : 'Saturday Sep 19',
+  '2026-09-20': locale === 'de' ? 'Sonntag 20.09.' : 'Sunday Sep 20',
 };
 
 const mainImage = images?.[0] ?? null;
@@ -209,7 +209,8 @@ if (performerIn.length > 0) jsonLd.performerIn = performerIn;
         <img
           src={mainImage}
           alt=""
-          class={`w-full h-full object-cover object-${imgPos}`}
+          class="w-full h-full object-cover"
+          style={`object-position: ${imgPos};`}
           loading="eager"
         />
       </div>
@@ -233,7 +234,8 @@ if (performerIn.length > 0) jsonLd.performerIn = performerIn;
         <img
           src={mainImage}
           alt=""
-          class={`w-full h-full object-cover object-${imgPos}`}
+          class="w-full h-full object-cover"
+          style={`object-position: ${imgPos};`}
           loading="eager"
         />
       </div>

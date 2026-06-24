@@ -70,7 +70,7 @@ const publicPerformances = mergeConsecutiveSlots(schedule.filter(entry => {
 const festivalJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Festival',
-  name: 'Spektakel Landshut 2025',
+  name: 'Spektakel Landshut 2026',
   description: meta.description,
   startDate: publicPerformances[0]?.startTime.toISOString(),
   endDate: publicPerformances.at(-1)?.endTime.toISOString(),
@@ -110,9 +110,9 @@ const festivalJsonLd = {
 };
 
 const dayLabels: Record<string, string> = {
-  '2025-09-19': locale === 'en' ? 'Friday, 19 September' : 'Freitag, 19. September',
-  '2025-09-20': locale === 'en' ? 'Saturday, 20 September' : 'Samstag, 20. September',
-  '2025-09-21': locale === 'en' ? 'Sunday, 21 September' : 'Sonntag, 21. September',
+  '2026-09-18': locale === 'en' ? 'Friday, 18 September' : 'Freitag, 18. September',
+  '2026-09-19': locale === 'en' ? 'Saturday, 19 September' : 'Samstag, 19. September',
+  '2026-09-20': locale === 'en' ? 'Sunday, 20 September' : 'Sonntag, 20. September',
 };
 
 // ─── Kategorie-Daten ───────────────────────────────────────────────────────
@@ -297,6 +297,7 @@ const categories: Array<{ key: Category; label: string; img: ImageMetadata }> = 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           {featuredArtists.map(artist => {
             const firstCat = artist.data[locale]?.categories?.[0];
+            const imgPos = artist.data.image_position ?? 'center';
             return (
               <a
                 href={localize(artistPath(artist.data.artist_id))}
@@ -307,6 +308,7 @@ const categories: Array<{ key: Category; label: string; img: ImageMetadata }> = 
                     src={artist.data.images![0]}
                     alt={artist.data.name}
                     class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    style={`object-position: ${imgPos};`}
                     loading="lazy"
                   />
                 </div>

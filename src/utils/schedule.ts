@@ -21,7 +21,7 @@ export interface RawScheduleRow {
 export interface ScheduleEntry {
   /** ISO-Datumstring des Auftritts */
   time: Date;
-  /** Festivaltag-Key: z. B. "2025-09-19" */
+  /** Festivaltag-Key: z. B. "2026-09-18" */
   festivalDay: string;
   location_id: string;
   artist_id: string;

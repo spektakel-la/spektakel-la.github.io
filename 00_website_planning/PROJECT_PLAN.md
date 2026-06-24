@@ -348,6 +348,7 @@ const artists = defineCollection({
     artist_id: z.string(),
     name: z.string(),
     images: z.array(z.string()).min(1), // mind. 1 Bild; weitere Bilder für Galerie auf Detailseite
+    image_position: z.enum(['top', 'center', 'bottom']).optional(), // Fokus bei zugeschnittenen Künstlerbildern
     duration: z.string().optional(), // z. B. "45 Minuten" – sprachunabhängig
     hut_act: z.boolean().optional(), // true → Badge "Künstler spielen für den Hut!"
     facebook: z.string().url().optional(),

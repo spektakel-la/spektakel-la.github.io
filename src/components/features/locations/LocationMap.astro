@@ -38,8 +38,8 @@ const mapJson = JSON.stringify(locations);
 <script type="application/json" id="spektakel-map-data" set:html={mapJson}></script>
 
 <script>
-  import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
+  import * as L from 'leaflet/dist/leaflet-src.esm.js';
+  import 'leaflet/dist/leaflet.css';
 
   const BOUNDS: [[number, number], [number, number]] = [
     [48.5261029, 12.1322959],

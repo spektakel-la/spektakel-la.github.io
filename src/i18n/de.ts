@@ -94,7 +94,7 @@ export const de = {
   home: {
     hero_subtext:
       'Drei Tage voller Artistik, Musik, Comedy und unvergesslicher Momente in der historischen Altstadt von Landshut.',
-    hero_dates: '19. – 21. September 2025',
+    hero_dates: '18. – 20. September 2026',
     cta_program: 'Zum Programm',
     cta_artists: 'Alle Künstler',
     categories_heading: 'Was erwartet dich?',

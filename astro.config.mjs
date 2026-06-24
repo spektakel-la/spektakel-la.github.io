@@ -37,5 +37,8 @@ export default defineConfig({
   vite: {
     // @ts-expect-error – Vite-Typ-Konflikt zwischen astro/node_modules/vite und top-level vite
     plugins: [tailwindcss()],
+    optimizeDeps: {
+      exclude: ['leaflet'],
+    },
   },
 });

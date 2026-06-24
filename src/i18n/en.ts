@@ -92,7 +92,7 @@ export const en = {
   },
   home: {
     hero_subtext: "Three days of acrobatics, music, comedy and unforgettable moments in Landshut's historic old town.",
-    hero_dates: '19 – 21 September 2025',
+    hero_dates: '18 – 20 September 2026',
     cta_program: 'See the programme',
     cta_artists: 'All artists',
     categories_heading: 'What to expect?',

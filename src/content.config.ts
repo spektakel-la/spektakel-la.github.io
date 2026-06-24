@@ -2,7 +2,7 @@ import { glob } from 'astro/loaders';
 import { defineCollection, z } from 'astro:content';
 
 const artists = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/artists' }),
+  loader: glob({ pattern: '*.md', base: './src/content/artists' }),
   schema: z.object({
     artist_id: z.string(),
     name: z.string(),

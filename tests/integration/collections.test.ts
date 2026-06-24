@@ -10,6 +10,7 @@ const artistSchema = z.object({
   artist_id: z.string(),
   name: z.string(),
   images: z.array(z.string()).min(1).optional(),
+  image_position: z.enum(['top', 'center', 'bottom']).optional(),
   duration: z.string().optional(),
   hut_act: z.boolean().optional(),
   facebook: z.string().url().nullish(),

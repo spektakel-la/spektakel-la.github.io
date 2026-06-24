@@ -20,9 +20,9 @@ const img = images?.[0] ?? null;
 const href = `${basePath}/artists/${artist.id}/`;
 
 const DAY_SHORT: Record<string, string> = {
-  '2025-09-19': 'Fr',
-  '2025-09-20': 'Sa',
-  '2025-09-21': 'So',
+  '2026-09-18': 'Fr',
+  '2026-09-19': 'Sa',
+  '2026-09-20': 'So',
 };
 
 // Kompakte Spielzeiten: "Fr 16:00 | Sa 18:00"
@@ -45,7 +45,8 @@ const timeLine = entries
         alt={name}
         loading="lazy"
         decoding="async"
-        class={`w-full h-full object-cover object-${imgPos} group-hover:scale-105 transition-transform duration-300`}
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        style={`object-position: ${imgPos};`}
       />
     ) : (
       <div class="w-full h-full flex items-center justify-center text-dark/20">
