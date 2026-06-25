@@ -4,7 +4,7 @@ name: "Radio Canta Con Noi"
 de:
   country: "Deutschland"
   description: >
-    Das Trio Radio Canta Con Noi lädt euch ein, bekannte italienische Lieder mitzusingen. Tauchen Sie ein in die lebendige Atmosphäre Italiens. Liederhefte werden verteilt, damit Sie gemeinsam mit anderen die Texte mitsingen können. Wer kennt sie nicht, die italienischen Gassenhauer von Adriano Celentano, Toto Cutugno und Paolo Conte?
+    Das Trio Radio Canta Con Noi lädt Sie ein, bekannte italienische Lieder mitzusingen. Tauchen Sie ein in die lebendige Atmosphäre Italiens. Liederhefte werden verteilt, damit Sie gemeinsam mit anderen die Texte mitsingen können. Wer kennt sie nicht, die italienischen Gassenhauer von Adriano Celentano, Toto Cutugno und Paolo Conte?
   highlight: "Italienische Gassenhauer zum Mitsingen beim Spektakel Landshut."
   categories:
     - Musik

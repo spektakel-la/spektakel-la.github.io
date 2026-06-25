@@ -10,7 +10,7 @@ youtube: https://www.youtube.com/watch?v=tvV8Ua47Bk0
 de:
   country: "Chile - Mexiko - Spanien - Peru"
   description: >
-    El Flecha Negra steht für eine wilde und ungewöhnliche Mischung aus Cumbia, Reggae und lateinamerikanischen Klängen. Die Musiker treffen mit ihrer stimmigen Musik und musikalischer Leichtigkeit direkt ins Herz. Trompeten, traditionelle Flöten, psychedelische Chicha-Gitarre und Schlagzeug mischen im Repertoire mit.
+    El Flecha Negra steht für eine wilde und ungewöhnliche Mischung aus Cumbia, Reggae und lateinamerikanischen Klängen. Die Musiker treffen mit ihrer stimmigen Musik und ihrer musikalischen Leichtigkeit direkt ins Herz. Trompeten, traditionelle Flöten, psychedelische Chicha-Gitarre und Schlagzeug mischen im Repertoire mit.
   highlight: "Abtanzen, feiern - El Flecha Negra ist in der Stadt."
   categories:
     - Musik

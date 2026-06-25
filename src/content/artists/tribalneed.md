@@ -6,7 +6,7 @@ images:
 de:
   country: "Südafrika - Italien"
   description: >
-    Die wahnwitzige Kombination aus Synth, Didgeridoo, Percussion, Hang, Beatboxing und Loopstation bildet den instrumentellen Werkzeugkasten des Riccardo M. Projekts „TribalNeed“. Scharfe Melodien und melancholischer Sound erzählen die Geschichte eines Electro-Nomaden und seiner Reise durch die Welt. Ein gern gesehener Künstler des Spektakel Landshut und mittlerweile ein Topact bei großen internationalen Musikfestivals in Spanien, Indien und Südafrika.
+    Die wahnwitzige Kombination aus Synth, Didgeridoo, Percussion, Hang, Beatboxing und Loopstation bildet den instrumentellen Werkzeugkasten des Riccardo-M.-Projekts „TribalNeed“. Scharfe Melodien und melancholischer Sound erzählen die Geschichte eines Electro-Nomaden und seiner Reise durch die Welt. Ein gern gesehener Künstler des Spektakel Landshut und mittlerweile ein Top-Act bei großen internationalen Musikfestivals in Spanien, Indien und Südafrika.
   highlight: "Clubsound für die Straße vom Feinsten."
   categories:
     - Musik

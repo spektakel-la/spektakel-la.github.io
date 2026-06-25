@@ -6,8 +6,8 @@ images:
 de:
   country: "Deutschland"
   description: >
-    Anne K. ist eine Fusstheaterschauspielerin mit inszenierter Körperbeherrschung auf höchstem Niveau. Ausgestattet mit Nasen, Mützen und Gewändern verwandeln sich ihre Füsse zu eigenständigen Persönlichkeiten. Sie „erzählen“ bekannte und unbekannte Geschichten. Mit Ironie und in kluger, humorvoller Dramaturgie durchleben sie Beziehungsdramen, Märchen, sogar Opern.
-  highlight: "Top Act des diesjährigen Festivals für die ganze Familie."
+    Anne K. ist eine Fußtheaterschauspielerin mit inszenierter Körperbeherrschung auf höchstem Niveau. Ausgestattet mit Nasen, Mützen und Gewändern verwandeln sich ihre Füße zu eigenständigen Persönlichkeiten. Sie „erzählen“ bekannte und unbekannte Geschichten. Mit Ironie und in kluger, humorvoller Dramaturgie durchleben sie Beziehungsdramen, Märchen, sogar Opern.
+  highlight: "Top-Act des diesjährigen Festivals für die ganze Familie."
   categories:
     - Theater
 en:

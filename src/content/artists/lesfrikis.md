@@ -6,7 +6,7 @@ images:
 de:
   country: "Argentinien"
   description: >
-    Les Frikis ist eine verrückte, komische und musikalische Show. Das exzentrische Komikerpaar bietet eine außergewöhnliche Show aus Magie, Zirkus, Gesang und Tanz voller verrückter komischer Situationen. Die FRIKIS sind ein durchgeknalltes Komikerpaar - sie hat ein natürliches Talent und er leidet unter den lächerlichen Situationen. Am Ende ist ihnen klar: Nur die Liebe, die sie füreinander empfinden, wird sie zum Erfolg führen.
+    Les Frikis ist eine verrückte, komische und musikalische Show. Das exzentrische Komikerpaar bietet eine außergewöhnliche Show aus Magie, Zirkus, Gesang und Tanz voller verrückter, komischer Situationen. Die FRIKIS sind ein durchgeknalltes Komikerpaar - sie hat ein natürliches Talent und er leidet unter den lächerlichen Situationen. Am Ende ist ihnen klar: Nur die Liebe, die sie füreinander empfinden, wird sie zum Erfolg führen.
   highlight: "Eines der Highlights des Spektakel 2026 - unbedingt ansehen!"
   categories:
     - Akrobatik

@@ -6,7 +6,7 @@ images:
 de:
   country: "USA"
   description: >
-    Peter ist einer der berühmtesten Clowns der Welt. Er hatte langjährige Engagements bei Roncalli und Cirque du Soleil und ist Preisträger des Silver Circus Festivals in Monte Carlo. Der Großmeister seines Fachs war äußerst erfolgreich bei RTL Samstag Nacht Comedy und trat mit Roman Polanski im Theaterstück „Amadeus“ auf. Ein Showhighlight des 20. Spektakel: komisch, geistreich und hinreißend albern begeistert Peter die internationale Varieté- und Eventszene.
+    Peter ist einer der berühmtesten Clowns der Welt. Er hatte langjährige Engagements bei Roncalli und Cirque du Soleil und ist Preisträger des Silver Circus Festivals in Monte Carlo. Der Großmeister seines Fachs war äußerst erfolgreich bei RTL Samstag Nacht Comedy und trat mit Roman Polanski im Theaterstück „Amadeus“ auf. Ein Showhighlight des 20. Spektakels: Komisch, geistreich und hinreißend albern begeistert Peter die internationale Varieté- und Eventszene.
   highlight: "Internationale Größe und Highlight des diesjährigen Festivals - nicht versäumen!"
   categories:
     - Comedy

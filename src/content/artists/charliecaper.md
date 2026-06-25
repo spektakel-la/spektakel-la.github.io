@@ -8,8 +8,8 @@ youtube: https://www.youtube.com/watch?v=wQOtvZKxGNM
 de:
   country: "Schweden"
   description: >
-    Magie der Superlative: Charlie ist Zauberweltmeister mit eigener Fernsehshow in Schweden, Gewinner der schwedischen „Supertalent“-Show und mehrfacher Preisträger für „best Show“ und „best Cabaret“. Er hat den Hütchentrick perfektioniert und aufgepeppt. Er lebt in Stockholm, ist aber wahrscheinlich einer der internationalsten Zauberer der Welt. Charlie hat bisher in 53 Ländern und 7 Sprachen gearbeitet und war in über einem Dutzend Ländern im Fernsehen zu sehen.
-  highlight: "Ein absolutes „must see“."
+    Magie der Superlative: Charlie ist Zauberweltmeister mit eigener Fernsehshow in Schweden, Gewinner der schwedischen „Supertalent“-Show und mehrfacher Preisträger für „Best Show“ und „Best Cabaret“. Er hat den Hütchentrick perfektioniert und aufgepeppt. Er lebt in Stockholm, ist aber wahrscheinlich einer der internationalsten Zauberer der Welt. Charlie hat bisher in 53 Ländern und 7 Sprachen gearbeitet und war in über einem Dutzend Ländern im Fernsehen zu sehen.
+  highlight: "Ein absolutes „Must-see“."
   categories:
     - Magie
     - Zauberkunst

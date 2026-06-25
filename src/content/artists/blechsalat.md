@@ -10,7 +10,7 @@ youtube: https://www.youtube.com/watch?v=m2ZZcxMnvtA
 de:
   country: "Österreich"
   description: >
-    Blechsalat ist die kleinste Blaskapelle der Erde. Freut euch auf einen kopfüber spielenden Saxophonisten, eine Disco-Glitzer-Tuba und etliche Überraschungen. Es ist eine Show, um sich selbst etwas Gutes zu tun. So minimalistisch die Besetzung, so gross die Performance. Wildheit, Humor und Romantik geben sich die Hand und Blasmusik wird neu interpretiert.
+    Blechsalat ist die kleinste Blaskapelle der Erde. Freut euch auf einen kopfüber spielenden Saxophonisten, eine Disco-Glitzer-Tuba und etliche Überraschungen. Es ist eine Show, um sich selbst etwas Gutes zu tun. So minimalistisch die Besetzung, so groß die Performance. Wildheit, Humor und Romantik geben sich die Hand und Blasmusik wird neu interpretiert.
   highlight: "Abtanzen, feiern: Blechsalat aus Linz - Lebensfreude pur."
   categories:
     - Musik

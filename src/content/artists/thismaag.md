@@ -10,7 +10,7 @@ vimeo: https://vimeo.com/778066480
 de:
   country: "Schweiz"
   description: >
-    Seit mehr als 30 Jahren begeistert This mit seinen interaktiven Shows, die von alpenländischem Wahnsinn und EU-zertifiziertem Schweizer Humor geprägt sind. In seinen Shows beweist der Züricher Temperament durch Improvisation und immer neue, frische Interaktion mit dem Publikum. Der diplomierte Schauspieler wurde vielfach ausgezeichnet.
+    Seit mehr als 30 Jahren begeistert This mit seinen interaktiven Shows, die von alpenländischem Wahnsinn und EU-zertifiziertem Schweizer Humor geprägt sind. In seinen Shows beweist der Zürcher sein Temperament durch Improvisation und immer neue, frische Interaktion mit dem Publikum. Der diplomierte Schauspieler wurde vielfach ausgezeichnet.
   highlight: "Gastspiel mit neuer Show „am laufenden Band“ - Top-Tipp."
   categories:
     - Theater

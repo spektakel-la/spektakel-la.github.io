@@ -10,7 +10,7 @@ youtube: https://www.youtube.com/watch?v=Ok2aN_qUZGw
 de:
   country: "Spanien"
   description: >
-    Seine Erscheinung sieht aus, als spaziert er direkt aus einem Comic in das wahre Leben. Kiki ist ein alter Bekannter und eine feste Größe des Landshuter Festivals. Perfekte Jongliertechnik, seine Comedy und seine Wurftechnik mit Gabeln, nicht Messern, begeistern Groß und Klein. Für unser Jubiläumsfestival zeigt Mr. Vita seine neue Show als Deutschland-Premiere.
+    Er sieht aus, als spazierte er direkt aus einem Comic in das wahre Leben. Kiki ist ein alter Bekannter und eine feste Größe des Landshuter Festivals. Perfekte Jongliertechnik, seine Comedy und seine Wurftechnik mit Gabeln, nicht Messern, begeistern Groß und Klein. Für unser Jubiläumsfestival zeigt Mr. Vita seine neue Show als Deutschland-Premiere.
   highlight: "Absoluter Publikumsliebling mit neuer Show - Top-Tipp."
   categories:
     - Akrobatik

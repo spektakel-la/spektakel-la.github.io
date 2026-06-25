@@ -7,7 +7,7 @@ de:
   country: "Italien"
   description: >
     Die Band vereint Professionalität, Energie und Leidenschaft. Das gesamte Publikum jeden Alters wird einbezogen und macht die Show zu einem einzigartigen und unvergesslichen Erlebnis. Rock’n’Roll und Rockabilly aus der Lombardei bringen den authentischen Vintage-Charme der 1950er Jahre auf die Bühne, angeführt von einer kraftvollen Frauenstimme.
-  highlight: "Die Band zelebriert die goldene Ära und reisst das Publikum mit."
+  highlight: "Die Band zelebriert die goldene Ära und reißt das Publikum mit."
   categories:
     - Musik
 en:
