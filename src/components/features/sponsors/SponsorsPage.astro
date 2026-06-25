@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import type { Locale } from '../../../i18n/utils';
 import { useTranslations } from '../../../i18n/utils';
 import Page from '../../../layouts/Page.astro';
+import Picture from '../../ui/Picture.astro';
 
 interface Props {
   locale?: Locale;
@@ -41,7 +42,7 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) =>
                 aria-label={`${t.sponsors.visit} ${data.name}`}
                 class="group flex h-36 items-center justify-center rounded-xl border border-dark/10 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:h-44 sm:p-8"
               >
-                <img
+                <Picture
                   src={data.logo}
                   alt={data.name}
                   width="320"
@@ -53,7 +54,7 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) =>
               </a>
             ) : (
               <div class="flex h-36 items-center justify-center rounded-xl border border-dark/10 bg-white p-5 shadow-sm sm:h-44 sm:p-8">
-                <img
+                <Picture
                   src={data.logo}
                   alt={data.name}
                   width="320"

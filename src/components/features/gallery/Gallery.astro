@@ -35,14 +35,17 @@ const t = useTranslations(locale);
             rel="noopener noreferrer"
             aria-label={`${item.caption ?? t.gallery.video} – YouTube`}
           >
-            <img
-              src={item.thumbnail}
-              alt={item.caption ?? t.gallery.video}
-              width="320"
-              height="180"
-              loading={index < 4 ? 'eager' : 'lazy'}
-              decoding="async"
-            />
+            <picture>
+              {item.webpThumbnail && <source srcset={item.webpThumbnail} type="image/webp" />}
+              <img
+                src={item.thumbnail}
+                alt={item.caption ?? t.gallery.video}
+                width="320"
+                height="180"
+                loading={index < 4 ? 'eager' : 'lazy'}
+                decoding="async"
+              />
+            </picture>
             <span class="gallery-tile__shade"></span>
             <span class="gallery-tile__play" aria-hidden="true">
               <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
@@ -58,14 +61,17 @@ const t = useTranslations(locale);
             data-gallery-index={index}
             aria-label={`${t.gallery.openImage} ${index + 1}`}
           >
-            <img
-              src={item.thumbnail}
-              alt=""
-              width="300"
-              height="225"
-              loading={index < 8 ? 'eager' : 'lazy'}
-              decoding="async"
-            />
+            <picture>
+              {item.webpThumbnail && <source srcset={item.webpThumbnail} type="image/webp" />}
+              <img
+                src={item.thumbnail}
+                alt=""
+                width="300"
+                height="225"
+                loading={index < 8 ? 'eager' : 'lazy'}
+                decoding="async"
+              />
+            </picture>
             <span class="gallery-tile__zoom" aria-hidden="true">+</span>
           </button>
         )
@@ -110,7 +116,11 @@ const t = useTranslations(locale);
     if (!dialog || !image || !counter || items.length === 0) return;
     activeIndex = (index + items.length) % items.length;
     const item = items[activeIndex];
-    image.src = item.file;
+    image.onerror = item.webpFile ? () => {
+      image.onerror = null;
+      image.src = item.file;
+    } : null;
+    image.src = item.webpFile ?? item.file;
     image.alt = item.caption ?? '';
     counter.textContent = `${activeIndex + 1} / ${items.length}`;
     if (caption) {

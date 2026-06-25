@@ -12,7 +12,7 @@ interface Props {
 const {
   title = 'Spektakel Landshut – Strassenkunst Festival',
   description = 'Das Strassenkunst-Festival in Landshut: Akrobatik, Jonglage, Musik, Comedy und Street Art mitten in der Altstadt.',
-  ogImage = '/assets/img/artists/gaudeo.webp',
+  ogImage = '/assets/img/logo/logo.webp',
   locale = 'de',
   canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).href,
 } = Astro.props;
@@ -123,9 +123,44 @@ const enUrl = new URL(`/en${localizedPath === '/' ? '/' : localizedPath}`, canon
         if (event.detail && event.detail.analytics) loadGtm();
       });
     </script>
+    <script is:inline>
+      (function () {
+        if (!('serviceWorker' in navigator)) return;
+
+        var allowedHosts = ['localhost', '127.0.0.1', 'spektakel-la.github.io'];
+        if (allowedHosts.indexOf(window.location.hostname) === -1) return;
+
+        async function clearServiceWorkers() {
+          try {
+            await Promise.allSettled([
+              navigator.serviceWorker.register('/sw.js', { scope: '/' }),
+              navigator.serviceWorker.register('/ServiceWorker.js', { scope: '/' }),
+              navigator.serviceWorker.register('/service-worker.js', { scope: '/' }),
+              navigator.serviceWorker.register('/serviceWorker.js', { scope: '/' }),
+            ]);
+
+            if ('caches' in window) {
+              var cacheNames = await caches.keys();
+              await Promise.all(cacheNames.map(function (cacheName) {
+                return caches.delete(cacheName);
+              }));
+            }
+
+            var registrations = await navigator.serviceWorker.getRegistrations();
+            await Promise.all(registrations.map(function (registration) {
+              return registration.unregister();
+            }));
+          } catch (error) {
+            console.warn('[ServiceWorker cleanup] Failed:', error);
+          }
+        }
+
+        window.addEventListener('load', clearServiceWorkers, { once: true });
+      })();
+    </script>
     <slot name="head" />
   </head>
-  <body class="bg-[var(--color-bg)] text-[var(--color-dark)] font-sans antialiased">
+  <body class="bg-[var(--color-bg)] text-[var(--color-dark)] font-body antialiased">
     <slot />
 
   </body>

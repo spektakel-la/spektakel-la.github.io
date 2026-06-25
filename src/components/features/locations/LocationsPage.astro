@@ -12,6 +12,7 @@ import { loadSchedule, mergeConsecutiveSlots } from '../../../utils/schedule';
 import { ROUTES } from '../../../utils/routes';
 import Page from '../../../layouts/Page.astro';
 import PaintSplatter from '../../ui/PaintSplatter.astro';
+import Picture from '../../ui/Picture.astro';
 import LocationMap, { type MapLocation, type MapEntry } from './LocationMap.astro';
 
 interface Props {
@@ -109,7 +110,7 @@ const venueList = sortedLocations.filter((l) => !l.data.organizational);
             data-venue-id={loc.data.location_id}
             class="venue-list-btn w-full flex items-center gap-3 px-4 py-4 hover:bg-gray-50 text-left border-b border-gray-100"
           >
-            <img src={`/assets/img/map/marker-${loc.data.marker_color}.webp`} alt="" aria-hidden="true" width="24" height="32" class="flex-shrink-0" />
+            <Picture src={`/assets/img/map/marker-${loc.data.marker_color}.webp`} alt="" ariaHidden="true" width="24" height="32" class="flex-shrink-0" />
             <span class="font-semibold text-sm text-[var(--color-dark)]">
               {loc.data.location_id} – {loc.data.description}
             </span>
@@ -135,7 +136,7 @@ const venueList = sortedLocations.filter((l) => !l.data.organizational);
           data-venue-id={loc.data.location_id}
           class="venue-list-btn inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gray-50 border border-gray-200 text-xs font-medium hover:border-[var(--color-primary)] transition-colors"
         >
-          <img src={`/assets/img/map/marker-${loc.data.marker_color}.webp`} alt="" aria-hidden="true" width="14" height="18" />
+          <Picture src={`/assets/img/map/marker-${loc.data.marker_color}.webp`} alt="" ariaHidden="true" width="14" height="18" />
           {loc.data.description}
         </button>
       ))}

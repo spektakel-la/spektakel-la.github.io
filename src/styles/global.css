@@ -61,6 +61,7 @@ body {
   --color-bg: #f6f7fb;
   --color-bg-light: #e7f3f5;
 
-  --font-display: 'Bebas Neue', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-display: 'Bebas Neue', 'Impact', sans-serif;
+  --font-body: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --font-sans: 'Inter', 'Helvetica Neue', Arial, sans-serif;
 }

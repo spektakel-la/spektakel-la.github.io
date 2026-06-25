@@ -24,6 +24,33 @@ Der Entwicklungsserver ist anschliessend unter `http://localhost:4321` erreichba
 | `npm run test:unit`     | Unit- und Integrationstests ausfuehren       |
 | `npm run test:e2e`      | Playwright-End-to-End-Tests ausfuehren       |
 | `npm run test:coverage` | Test-Coverage erzeugen                       |
+| `npm run images:webp`   | JPG/PNG-Assets lokal nach WebP konvertieren  |
+
+## WebP-Bilder erzeugen
+
+WebP-Dateien werden lokal erzeugt und mit eingecheckt. Der GitHub-Actions-Build muss dadurch keine Bildkonvertierung ausfuehren.
+
+Voraussetzung ist ImageMagick mit dem `magick`-Kommando:
+
+```sh
+magick -version
+```
+
+Das Script konvertiert standardmaessig alle JPG/JPEG/PNG-Dateien unter `public/assets/img` und `src/assets` in gleichnamige `.webp`-Dateien. Bereits vorhandene WebP-Dateien werden uebersprungen:
+
+```sh
+npm run images:webp
+```
+
+Nuetzliche Varianten:
+
+```sh
+npm run images:webp -- --dry-run
+npm run images:webp -- --force
+npm run images:webp -- --quality 88 public/assets/img/artists
+```
+
+Aktueller Bestand: Map-Tiles und Sponsorenlogos haben bereits WebP-Pendants. Noch zu konvertieren sind vor allem aktuelle Kuenstlerbilder, Galerie-Originale, Galerie-Thumbnails, Video-Thumbnails, Logo-PNGs und importierte `src/assets`-PNG-Dateien.
 
 ## Galerie-Bilder
 

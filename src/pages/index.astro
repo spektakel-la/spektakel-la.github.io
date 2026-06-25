@@ -4,9 +4,11 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import Badge from '../components/ui/Badge.astro';
 import Button from '../components/ui/Button.astro';
 import PaintSplatter from '../components/ui/PaintSplatter.astro';
+import Picture from '../components/ui/Picture.astro';
 import { localePath, useTranslations, type Locale } from '../i18n/utils';
 import Page from '../layouts/Page.astro';
 import { Category } from '../utils/categories';
+import { preferWebp } from '../utils/imageVariants';
 import { artistPath, ROUTES } from '../utils/routes';
 import { formatTime, getFestivalDays, groupByDay, loadSchedule, mergeConsecutiveSlots } from '../utils/schedule';
 
@@ -23,19 +25,19 @@ const t = useTranslations(locale);
 const localize = (path: string) => localePath(path, locale);
 const meta = locale === 'en'
   ? {
-      title: 'Spektakel Landshut – International street art festival',
-      description: 'Landshut’s street art festival: acrobatics, juggling, music, comedy and street art in the historic city centre.',
-      accessibleTitle: 'Spektakel Landshut – International street art festival',
-      heroTop: 'INTERNATIONAL',
+      title: 'Spektakel Landshut – 20th international street art festival',
+      description: 'The 20th international street art festival in Landshut: acrobatics, juggling, music, comedy and street art in the historic city centre.',
+      accessibleTitle: 'Spektakel Landshut – 20th international street art festival',
+      heroTop: '20TH INTERNATIONAL',
       heroMiddle: 'STREET ART',
       heroBottom: 'FESTIVAL',
       hatBadge: ['ARTISTS', 'PERFORM FOR', 'YOUR TIPS!'],
     }
   : {
-      title: 'Spektakel Landshut – Straßenkunstfestival',
-      description: 'Das Straßenkunst-Festival in Landshut: Akrobatik, Jonglage, Musik, Comedy und Street Art mitten in der Altstadt.',
-      accessibleTitle: 'Spektakel Landshut – Internationales Straßenkunstfestival',
-      heroTop: 'INTERNATIONALES',
+      title: 'Spektakel Landshut – 20. internationales Straßenkunstfestival',
+      description: 'Das 20. internationale Straßenkunst-Festival in Landshut: Akrobatik, Jonglage, Musik, Comedy und Street Art mitten in der Altstadt.',
+      accessibleTitle: 'Spektakel Landshut – 20. internationales Straßenkunstfestival',
+      heroTop: '20. INTERNATIONALES',
       heroMiddle: 'STRASSENKUNST',
       heroBottom: 'FESTIVAL',
       hatBadge: ['KÜNSTLER', 'SPIELEN FÜR', 'DEN HUT!'],
@@ -76,7 +78,7 @@ const festivalJsonLd = {
   startDate: publicPerformances[0]?.startTime.toISOString(),
   endDate: publicPerformances.at(-1)?.endTime.toISOString(),
   url: homeUrl,
-  image: `${siteUrl}/assets/img/artists/gaudeo.webp`,
+  image: `${siteUrl}/assets/img/logo/logo.webp`,
   eventStatus: 'https://schema.org/EventScheduled',
   eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
   location: {
@@ -94,7 +96,7 @@ const festivalJsonLd = {
       startDate: entry.startTime.toISOString(),
       endDate: entry.endTime.toISOString(),
       url: programUrl,
-      image: artist.data.images?.[0] ? new URL(artist.data.images[0], siteUrl).href : undefined,
+      image: artist.data.images?.[0] ? new URL(preferWebp(artist.data.images[0]), siteUrl).href : undefined,
       performer: { '@type': 'PerformingGroup', name: artist.data.name },
       location: {
         '@type': 'Place',
@@ -178,7 +180,7 @@ const categories: Array<{ key: Category; label: string; img: ImageMetadata }> = 
 
     <!-- Seiten-Inhalt -->
     <div class="relative z-10 w-full max-w-7xl mx-auto px-6 py-20 lg:py-28">
-      <div class="max-w-lg">
+      <div class="max-w-xl">
 
         <!-- Barrierefreie h1 -->
         <h1 class="sr-only">{meta.accessibleTitle}</h1>
@@ -189,17 +191,17 @@ const categories: Array<{ key: Category; label: string; img: ImageMetadata }> = 
 
           <!-- Visueller Headline-Block -->
           <p
-            class="font-display leading-none text-dark"
+            class="hero-title-line font-display leading-none text-dark"
             style="font-size: clamp(2.5rem, 7vw, 5.5rem)"
             aria-hidden="true"
           >{meta.heroTop}</p>
           <p
-            class="font-display leading-none text-primary"
+            class="hero-title-line font-display leading-none text-primary"
             style="font-size: clamp(2.5rem, 7vw, 5.5rem)"
             aria-hidden="true"
           >{meta.heroMiddle}</p>
           <p
-            class="font-display leading-none text-dark mb-5"
+            class="hero-title-line font-display leading-none text-dark mb-5"
             style="font-size: clamp(2.5rem, 7vw, 5.5rem)"
             aria-hidden="true"
           >{meta.heroBottom}</p>
@@ -309,7 +311,7 @@ const categories: Array<{ key: Category; label: string; img: ImageMetadata }> = 
                 data-featured-artist
               >
                 <div class="aspect-[3/4] overflow-hidden bg-gray-100">
-                  <img
+                  <Picture
                     src={artist.data.images![0]}
                     alt={artist.data.name}
                     class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
@@ -387,3 +389,18 @@ const categories: Array<{ key: Category; label: string; img: ImageMetadata }> = 
   )}
 
 </Page>
+
+<style>
+  .hero-title-line {
+    -webkit-text-stroke: 0.75px rgba(255, 255, 255, 0.82);
+    paint-order: stroke fill;
+    text-shadow:
+      1px 0 0 rgba(255, 255, 255, 0.82),
+      -1px 0 0 rgba(255, 255, 255, 0.82),
+      0 1px 0 rgba(255, 255, 255, 0.82),
+      0 -1px 0 rgba(255, 255, 255, 0.82),
+      0 0 2px rgba(255, 255, 255, 0.95),
+      0 0 8px rgba(255, 255, 255, 0.72),
+      0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+</style>

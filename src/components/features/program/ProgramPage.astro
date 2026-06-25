@@ -19,6 +19,7 @@ import VenueFilter from './VenueFilter.astro';
 import ProgramList from './ProgramList.astro';
 import ProgramGrid from './ProgramGrid.astro';
 import { Category, CATEGORY_KEYWORDS } from '../../../utils/categories';
+import { preferWebp } from '../../../utils/imageVariants';
 
 interface Props {
   locale: 'de' | 'en';
@@ -193,7 +194,7 @@ const jsonLdSubEvents = mergeConsecutiveSlots(schedule)
     const artist = artistMap[e.artist_id];
     const location = locationMap[e.location_id];
     const artistUrl = `${siteUrl}${basePath}/artists/${artist.data.artist_id}/`;
-    const image = artist.data.images?.[0] ? new URL(artist.data.images[0], siteUrl).href : undefined;
+    const image = artist.data.images?.[0] ? new URL(preferWebp(artist.data.images[0]), siteUrl).href : undefined;
     const eventObj: Record<string, unknown> = {
       '@type': 'Event',
       name: `${artist.data.name} – Spektakel Landshut`,
