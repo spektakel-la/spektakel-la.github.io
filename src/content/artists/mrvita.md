@@ -3,6 +3,10 @@ artist_id: "mrvita"
 name: "Mr. Vita"
 images:
   - "/assets/img/artists/mrvita.jpg"
+homepage: https://www.lascossasnostra.com/the-tnt-show
+facebook: https://www.facebook.com/kiki.ray.9
+instagram: https://www.instagram.com/kiki.vita.artist/
+youtube: https://www.youtube.com/watch?v=Ok2aN_qUZGw
 de:
   country: "Spanien"
   description: >

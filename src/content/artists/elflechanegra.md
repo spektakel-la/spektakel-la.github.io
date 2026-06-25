@@ -3,6 +3,10 @@ artist_id: "elflechanegra"
 name: "El Flecha Negra"
 images:
   - "/assets/img/artists/elflechanegra.jpg"
+homepage: https://www.elflechanegra.com/
+facebook: https://www.facebook.com/ElFlechaNegra
+instagram: https://www.instagram.com/elflechanegra/
+youtube: https://www.youtube.com/watch?v=tvV8Ua47Bk0
 de:
   country: "Chile - Mexiko - Spanien - Peru"
   description: >

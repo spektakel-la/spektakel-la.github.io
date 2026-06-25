@@ -4,6 +4,10 @@ name: "Brunitus"
 images:
   - "/assets/img/artists/brunitus.jpg"
 image_position: top
+homepage: http://www.brunitus.com/eng/bio.html
+facebook: https://www.facebook.com/profile.php?id=100004550522188
+instagram: https://www.instagram.com/brunitus.arte/
+youtube: https://www.youtube.com/watch?v=_pR6E4_neq8
 de:
   country: "Argentinien"
   description: >

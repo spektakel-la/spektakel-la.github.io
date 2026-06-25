@@ -16,6 +16,7 @@ const artistSchema = z.object({
   facebook: z.string().url().nullish(),
   instagram: z.string().url().nullish(),
   youtube: z.string().url().nullish(),
+  vimeo: z.string().url().nullish(),
   homepage: z.string().url().nullish(),
   organizational: z.boolean().optional(),
   de: z.object({

@@ -3,6 +3,10 @@ artist_id: "blechsalat"
 name: "Blechsalat"
 images:
   - "/assets/img/artists/blechsalat.jpg"
+homepage: https://www.blechsalat.at/
+facebook: https://www.facebook.com/BlechsalatLinz/
+instagram: https://www.instagram.com/blechsalat/
+youtube: https://www.youtube.com/watch?v=m2ZZcxMnvtA
 de:
   country: "Österreich"
   description: >

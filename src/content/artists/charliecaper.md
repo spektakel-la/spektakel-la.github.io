@@ -3,6 +3,8 @@ artist_id: "charliecaper"
 name: "Charlie Caper"
 images:
   - "/assets/img/artists/charliecaper.jpg"
+homepage: https://charliecaper.com/
+youtube: https://www.youtube.com/watch?v=wQOtvZKxGNM
 de:
   country: "Schweden"
   description: >

@@ -3,6 +3,10 @@ artist_id: "thismaag"
 name: "This Maag"
 images:
   - "/assets/img/artists/thismaag.jpg"
+homepage: https://www.this-maag.de/
+facebook: https://www.facebook.com/ThisMaag
+instagram: https://www.instagram.com/this_maag_official/
+vimeo: https://vimeo.com/778066480
 de:
   country: "Schweiz"
   description: >

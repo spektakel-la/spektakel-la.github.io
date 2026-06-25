@@ -3,6 +3,10 @@ artist_id: "matricardo"
 name: "Mat Ricardo"
 images:
   - "/assets/img/artists/matricardo.jpg"
+homepage: https://www.matricardo.com/#new-page
+facebook: https://www.facebook.com/mat.ricardo
+instagram: https://www.instagram.com/matricardo/
+youtube: https://www.youtube.com/watch?v=4fSbRC4jxPk
 de:
   country: "England"
   description: >

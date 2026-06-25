@@ -3,6 +3,10 @@ artist_id: "daianalou"
 name: "Daiana Lou"
 images:
   - "/assets/img/artists/daianalou.jpg"
+homepage: https://daianalou.company.site/
+facebook: https://www.facebook.com/DaianaLouOfficial
+instagram: https://www.instagram.com/daianalou/
+youtube: https://www.youtube.com/watch?v=6zrfDt82988
 de:
   country: "Italien"
   description: >

@@ -3,6 +3,10 @@ artist_id: "secretcircus"
 name: "Secret Circus"
 images:
   - "/assets/img/artists/secretcircus.jpg"
+homepage: https://secretcircusshow.com/
+facebook: https://www.facebook.com/SecretCircusShow
+instagram: https://www.instagram.com/secretcircusshow/
+vimeo: https://vimeo.com/236970513
 de:
   country: "USA"
   description: >
