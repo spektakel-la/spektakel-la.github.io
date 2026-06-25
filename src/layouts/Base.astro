@@ -132,12 +132,7 @@ const enUrl = new URL(`/en${localizedPath === '/' ? '/' : localizedPath}`, canon
 
         async function clearServiceWorkers() {
           try {
-            await Promise.allSettled([
-              navigator.serviceWorker.register('/sw.js', { scope: '/' }),
-              navigator.serviceWorker.register('/ServiceWorker.js', { scope: '/' }),
-              navigator.serviceWorker.register('/service-worker.js', { scope: '/' }),
-              navigator.serviceWorker.register('/serviceWorker.js', { scope: '/' }),
-            ]);
+            await navigator.serviceWorker.register('/sw.js', { scope: '/' });
 
             if ('caches' in window) {
               var cacheNames = await caches.keys();
