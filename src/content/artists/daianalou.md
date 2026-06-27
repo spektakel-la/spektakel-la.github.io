@@ -2,7 +2,7 @@
 artist_id: "daianalou"
 name: "Daiana Lou"
 images:
-  - "/assets/img/artists/daianalou.jpg"
+  - "/assets/img/artists/daianalou.webp"
 homepage: https://daianalou.company.site/
 facebook: https://www.facebook.com/DaianaLouOfficial
 instagram: https://www.instagram.com/daianalou/

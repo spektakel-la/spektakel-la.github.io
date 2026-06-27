@@ -2,7 +2,7 @@
 artist_id: "billykidd"
 name: "Billy Kidd"
 images:
-  - "/assets/img/artists/billykidd.jpg"
+  - "/assets/img/artists/billykidd.webp"
 de:
   country: "Kanada - England"
   description: >

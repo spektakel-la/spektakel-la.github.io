@@ -2,7 +2,7 @@
 artist_id: "woidwoife"
 name: "Woid Woife"
 images:
-  - "/assets/img/artists/woidwoife.jpg"
+  - "/assets/img/artists/woidwoife.webp"
 duration: "90 Minuten"
 de:
   country: "Deutschland"

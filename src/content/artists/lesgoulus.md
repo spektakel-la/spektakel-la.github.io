@@ -2,7 +2,7 @@
 artist_id: "lesgoulus"
 name: "Les Goulus - The Horsemen"
 images:
-  - "/assets/img/artists/lesgoulus.jpg"
+  - "/assets/img/artists/lesgoulus.webp"
 de:
   country: "Frankreich"
   description: >

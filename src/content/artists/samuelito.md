@@ -2,7 +2,7 @@
 artist_id: "samuelito"
 name: "Samuelito"
 images:
-  - "/assets/img/artists/samuelito.jpg"
+  - "/assets/img/artists/samuelito.webp"
 image_position: top
 de:
   country: "Schweiz"

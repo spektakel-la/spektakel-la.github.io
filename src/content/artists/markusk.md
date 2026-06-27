@@ -2,7 +2,7 @@
 artist_id: "markusk"
 name: "Markus K."
 images:
-  - "/assets/img/artists/markusk.jpg"
+  - "/assets/img/artists/markusk.webp"
 de:
   country: "Niederlande"
   description: >

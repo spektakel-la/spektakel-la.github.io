@@ -2,7 +2,7 @@
 artist_id: "tribalneed"
 name: "TribalNeed"
 images:
-  - "/assets/img/artists/tribalneed.jpg"
+  - "/assets/img/artists/tribalneed.webp"
 de:
   country: "Südafrika - Italien"
   description: >

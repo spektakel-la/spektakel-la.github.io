@@ -2,7 +2,7 @@
 artist_id: "charliecaper"
 name: "Charlie Caper"
 images:
-  - "/assets/img/artists/charliecaper.jpg"
+  - "/assets/img/artists/charliecaper.webp"
 homepage: https://charliecaper.com/
 youtube: https://www.youtube.com/watch?v=wQOtvZKxGNM
 de:

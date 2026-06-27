@@ -2,7 +2,7 @@
 artist_id: "adamkadabra"
 name: "Adam Kadabra"
 images:
-  - "/assets/img/artists/adamkadabra.jpg"
+  - "/assets/img/artists/adamkadabra.webp"
 de:
   country: "Schottland"
   description: >

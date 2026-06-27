@@ -2,7 +2,7 @@
 artist_id: "petershub"
 name: "Peter Shub"
 images:
-  - "/assets/img/artists/petershub.jpg"
+  - "/assets/img/artists/petershub.webp"
 de:
   country: "USA"
   description: >

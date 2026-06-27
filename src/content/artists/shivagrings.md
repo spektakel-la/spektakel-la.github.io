@@ -2,7 +2,7 @@
 artist_id: "shivagrings"
 name: "Shiva Grings"
 images:
-  - "/assets/img/artists/shivagrings.jpg"
+  - "/assets/img/artists/shivagrings.webp"
 de:
   country: "Irland"
   description: >

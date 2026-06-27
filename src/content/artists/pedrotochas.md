@@ -2,7 +2,7 @@
 artist_id: "pedrotochas"
 name: "Pedro Tochas"
 images:
-  - "/assets/img/artists/pedrotochas.jpg"
+  - "/assets/img/artists/pedrotochas.webp"
 de:
   country: "Portugal"
   description: >

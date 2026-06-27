@@ -2,7 +2,7 @@
 artist_id: "mrvita"
 name: "Mr. Vita"
 images:
-  - "/assets/img/artists/mrvita.jpg"
+  - "/assets/img/artists/mrvita.webp"
 homepage: https://www.lascossasnostra.com/the-tnt-show
 facebook: https://www.facebook.com/kiki.ray.9
 instagram: https://www.instagram.com/kiki.vita.artist/

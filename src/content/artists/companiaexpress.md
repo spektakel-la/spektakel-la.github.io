@@ -2,7 +2,7 @@
 artist_id: "companiaexpress"
 name: "Cia Express"
 images:
-  - "/assets/img/artists/companiaexpress.jpg"
+  - "/assets/img/artists/companiaexpress.webp"
 de:
   country: "Mexiko - Schweiz"
   description: >

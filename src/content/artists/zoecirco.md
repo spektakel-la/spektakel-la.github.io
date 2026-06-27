@@ -2,7 +2,7 @@
 artist_id: "zoecirco"
 name: "Zoè Circo - Pauline Zoè"
 images:
-  - "/assets/img/artists/zoecirco.jpg"
+  - "/assets/img/artists/zoecirco.webp"
 de:
   country: "Belgien"
   description: >

@@ -2,7 +2,7 @@
 artist_id: "lesfrikis"
 name: "Les Frikis"
 images:
-  - "/assets/img/artists/lesfrikis.jpg"
+  - "/assets/img/artists/lesfrikis.webp"
 de:
   country: "Argentinien"
   description: >

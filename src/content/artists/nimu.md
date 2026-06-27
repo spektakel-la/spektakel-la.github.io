@@ -2,7 +2,7 @@
 artist_id: "nimu"
 name: "niMù"
 images:
-  - "/assets/img/artists/nimu.jpg"
+  - "/assets/img/artists/nimu.webp"
 image_position: top
 de:
   country: "Spanien"

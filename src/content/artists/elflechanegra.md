@@ -2,7 +2,7 @@
 artist_id: "elflechanegra"
 name: "El Flecha Negra"
 images:
-  - "/assets/img/artists/elflechanegra.jpg"
+  - "/assets/img/artists/elflechanegra.webp"
 homepage: https://www.elflechanegra.com/
 facebook: https://www.facebook.com/ElFlechaNegra
 instagram: https://www.instagram.com/elflechanegra/

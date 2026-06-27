@@ -25,10 +25,13 @@ Der Entwicklungsserver ist anschliessend unter `http://localhost:4321` erreichba
 | `npm run test:e2e`      | Playwright-End-to-End-Tests ausfuehren       |
 | `npm run test:coverage` | Test-Coverage erzeugen                       |
 | `npm run images:webp`   | JPG/PNG-Assets lokal nach WebP konvertieren  |
+| `npm run images:clean`  | JPG/PNG-Dubletten mit WebP-Pendant entfernen |
+| `npm run images:check`  | Produktive Bildpfade auf WebP-only pruefen   |
+| `npm run hooks:install` | Lokalen Pre-Push-Hook aktivieren             |
 
 ## WebP-Bilder erzeugen
 
-WebP-Dateien werden lokal erzeugt und mit eingecheckt. Der GitHub-Actions-Build muss dadurch keine Bildkonvertierung ausfuehren.
+Die Website laeuft in den produktiven Asset-Pfaden WebP-only. WebP-Dateien werden lokal erzeugt und mit eingecheckt. Der GitHub-Actions-Build muss dadurch keine Bildkonvertierung ausfuehren.
 
 Voraussetzung ist ImageMagick mit dem `magick`-Kommando:
 
@@ -42,6 +45,19 @@ Das Script konvertiert standardmaessig alle JPG/JPEG/PNG-Dateien unter `public/a
 npm run images:webp
 ```
 
+Nach der Konvertierung werden die Quellbilder entfernt, sofern ein gleichnamiges WebP-Pendant existiert:
+
+```sh
+npm run images:clean:dry
+npm run images:clean
+```
+
+Der Produktions-Build fuehrt `npm run images:check` aus und bricht ab, wenn unter `public/assets/img` oder `src/assets` noch `.jpg`, `.jpeg` oder `.png` liegt. Fuer denselben Check vor dem Push kann der lokale Git-Hook aktiviert werden:
+
+```sh
+npm run hooks:install
+```
+
 Nuetzliche Varianten:
 
 ```sh
@@ -50,7 +66,7 @@ npm run images:webp -- --force
 npm run images:webp -- --quality 88 public/assets/img/artists
 ```
 
-Aktueller Bestand: Map-Tiles und Sponsorenlogos haben bereits WebP-Pendants. Noch zu konvertieren sind vor allem aktuelle Kuenstlerbilder, Galerie-Originale, Galerie-Thumbnails, Video-Thumbnails, Logo-PNGs und importierte `src/assets`-PNG-Dateien.
+Neue Bilder werden als Quellbild abgelegt, mit `npm run images:webp` konvertiert und anschliessend mit `npm run images:clean` bereinigt.
 
 ## Galerie-Bilder
 
@@ -78,7 +94,7 @@ mkdir -p public/assets/img/impressions/thumbs
 find public/assets/img/impressions \
   -maxdepth 1 \
   -type f \
-  \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' -o -iname '*.avif' \) \
+  -iname '*.webp' \
   -exec magick mogrify \
     -path public/assets/img/impressions/thumbs \
     -auto-orient \

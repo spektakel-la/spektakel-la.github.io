@@ -61,7 +61,6 @@ const mapJson = JSON.stringify(locations);
       minZoom: 16,
       maxZoom: 19,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
-      errorTileUrl: '/assets/img/map/tiles/{z}/{x}/{y}.jpg',
     }).addTo(map);
 
     const markers = locations.map((loc: any) => {
@@ -154,31 +153,24 @@ const mapJson = JSON.stringify(locations);
   }
 
   :global(.spk-marker-pink) {
-    background-image: url('/assets/img/map/marker-pink.png');
-    background-image: image-set(url('/assets/img/map/marker-pink.webp') type('image/webp'), url('/assets/img/map/marker-pink.png') type('image/png'));
+    background-image: url('/assets/img/map/marker-pink.webp');
   }
   :global(.spk-marker-blue) {
-    background-image: url('/assets/img/map/marker-blue.png');
-    background-image: image-set(url('/assets/img/map/marker-blue.webp') type('image/webp'), url('/assets/img/map/marker-blue.png') type('image/png'));
+    background-image: url('/assets/img/map/marker-blue.webp');
   }
   :global(.spk-marker-green) {
-    background-image: url('/assets/img/map/marker-green.png');
-    background-image: image-set(url('/assets/img/map/marker-green.webp') type('image/webp'), url('/assets/img/map/marker-green.png') type('image/png'));
+    background-image: url('/assets/img/map/marker-green.webp');
   }
   :global(.spk-marker-orange) {
-    background-image: url('/assets/img/map/marker-orange.png');
-    background-image: image-set(url('/assets/img/map/marker-orange.webp') type('image/webp'), url('/assets/img/map/marker-orange.png') type('image/png'));
+    background-image: url('/assets/img/map/marker-orange.webp');
   }
   :global(.spk-marker-red) {
-    background-image: url('/assets/img/map/marker-red.png');
-    background-image: image-set(url('/assets/img/map/marker-red.webp') type('image/webp'), url('/assets/img/map/marker-red.png') type('image/png'));
+    background-image: url('/assets/img/map/marker-red.webp');
   }
   :global(.spk-marker-yellow) {
-    background-image: url('/assets/img/map/marker-yellow.png');
-    background-image: image-set(url('/assets/img/map/marker-yellow.webp') type('image/webp'), url('/assets/img/map/marker-yellow.png') type('image/png'));
+    background-image: url('/assets/img/map/marker-yellow.webp');
   }
   :global(.spk-marker-purple) {
-    background-image: url('/assets/img/map/marker-purple.png');
-    background-image: image-set(url('/assets/img/map/marker-purple.webp') type('image/webp'), url('/assets/img/map/marker-purple.png') type('image/png'));
+    background-image: url('/assets/img/map/marker-purple.webp');
   }
 </style>

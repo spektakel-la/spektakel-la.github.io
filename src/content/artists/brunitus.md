@@ -2,7 +2,7 @@
 artist_id: "brunitus"
 name: "Brunitus"
 images:
-  - "/assets/img/artists/brunitus.jpg"
+  - "/assets/img/artists/brunitus.webp"
 image_position: top
 homepage: http://www.brunitus.com/eng/bio.html
 facebook: https://www.facebook.com/profile.php?id=100004550522188

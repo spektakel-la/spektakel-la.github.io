@@ -2,7 +2,7 @@
 artist_id: "anneklinge"
 name: "Anne Klinge"
 images:
-  - "/assets/img/artists/anneklinge.jpg"
+  - "/assets/img/artists/anneklinge.webp"
 de:
   country: "Deutschland"
   description: >

@@ -2,7 +2,7 @@
 artist_id: "surfinclaire"
 name: "Surfin`Claire and The Whisky Rockers"
 images:
-  - "/assets/img/artists/surfinclaire.jpg"
+  - "/assets/img/artists/surfinclaire.webp"
 de:
   country: "Italien"
   description: >

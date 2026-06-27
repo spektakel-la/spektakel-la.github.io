@@ -2,7 +2,7 @@
 artist_id: "thismaag"
 name: "This Maag"
 images:
-  - "/assets/img/artists/thismaag.jpg"
+  - "/assets/img/artists/thismaag.webp"
 homepage: https://www.this-maag.de/
 facebook: https://www.facebook.com/ThisMaag
 instagram: https://www.instagram.com/this_maag_official/

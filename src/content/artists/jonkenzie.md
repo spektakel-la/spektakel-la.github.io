@@ -2,7 +2,7 @@
 artist_id: "jonkenzie"
 name: "Jon Kenzie"
 images:
-  - "/assets/img/artists/jonkenzie.jpg"
+  - "/assets/img/artists/jonkenzie.webp"
 de:
   country: "England"
   description: >

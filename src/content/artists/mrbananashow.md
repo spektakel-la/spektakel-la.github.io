@@ -2,7 +2,7 @@
 artist_id: "mrbananashow"
 name: "Mr. Banana Show"
 images:
-  - "/assets/img/artists/mrbananashow.jpg"
+  - "/assets/img/artists/mrbananashow.webp"
 de:
   country: "Kanada"
   description: >

@@ -2,7 +2,7 @@
 artist_id: "blechsalat"
 name: "Blechsalat"
 images:
-  - "/assets/img/artists/blechsalat.jpg"
+  - "/assets/img/artists/blechsalat.webp"
 homepage: https://www.blechsalat.at/
 facebook: https://www.facebook.com/BlechsalatLinz/
 instagram: https://www.instagram.com/blechsalat/

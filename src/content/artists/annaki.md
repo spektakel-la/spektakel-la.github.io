@@ -2,7 +2,7 @@
 artist_id: "annaki"
 name: "Anna Ki"
 images:
-  - "/assets/img/artists/annaki.jpg"
+  - "/assets/img/artists/annaki.webp"
 image_position: bottom
 de:
   country: "Estland"

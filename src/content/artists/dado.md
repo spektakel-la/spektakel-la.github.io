@@ -2,7 +2,7 @@
 artist_id: "dado"
 name: "DADO"
 images:
-  - "/assets/img/artists/dado.jpg"
+  - "/assets/img/artists/dado.webp"
 de:
   country: "Kanada"
   description: >
