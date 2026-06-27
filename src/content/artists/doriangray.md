@@ -1,6 +1,8 @@
 ---
 artist_id: "doriangray"
 name: "Das Bildnis des Dorian Gray"
+images:
+  - "/assets/img/artists/doriangray.webp"
 facebook: https://www.facebook.com/thomas.ecker.79
 instagram: https://www.instagram.com/thomas_ecker_storytelling/
 de:
