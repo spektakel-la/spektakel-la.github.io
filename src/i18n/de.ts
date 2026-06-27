@@ -4,6 +4,7 @@ export const de = {
     artists: 'Künstler',
     locations: 'Spielorte',
     gallery: 'Galerie',
+    sponsors: 'Sponsoren',
   },
   common: {
     all: 'Alle',
@@ -102,6 +103,10 @@ export const de = {
     cta_program: 'Zum Programm',
     cta_artists: 'Alle Künstler',
     categories_heading: 'Was erwartet dich?',
+    announcements_heading: 'Ankündigungen & Aktuelles',
+    announcements_text:
+      'Das 20. Spektakel Landshut beginnt 2026 mit besonderen Auftaktterminen, bevor die Altstadt drei Tage lang zur großen Straßenkunstbühne wird.',
+    announcements_contact: 'Anfragen via Email',
     hut_heading: 'Künstler spielen für den Hut!',
     hut_text:
       'Das Spektakel Landshut ist ein Hut-Festival – der Eintritt ist frei! Die Künstlerinnen und Künstler leben von deiner Wertschätzung. Zeig deinen Applaus und wirf eine Münze (oder mehr!) in den Hut.',

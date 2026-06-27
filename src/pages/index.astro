@@ -7,18 +7,13 @@ import PaintSplatter from '../components/ui/PaintSplatter.astro';
 import Picture from '../components/ui/Picture.astro';
 import { localePath, useTranslations, type Locale } from '../i18n/utils';
 import Page from '../layouts/Page.astro';
-import { Category } from '../utils/categories';
 import { preferWebp } from '../utils/imageVariants';
 import { artistPath, ROUTES } from '../utils/routes';
 import { formatTime, getFestivalDays, groupByDay, loadSchedule, mergeConsecutiveSlots } from '../utils/schedule';
 
 // ─── Assets ────────────────────────────────────────────────────────────────
-import catAcrobatic from '../assets/categories/acrobatic.webp';
-import catComedy from '../assets/categories/comedy.webp';
-import catMagic from '../assets/categories/macic.webp'; // TD2: Tippfehler im Dateinamen
-import catMusic from '../assets/categories/music.webp';
-import catStreetart from '../assets/categories/streetart.webp';
 import heroImg from '../assets/hero/hero2.webp';
+import hatImg from '../assets/hat/hat.webp';
 
 const locale: Locale = Astro.url.pathname.startsWith('/en') ? 'en' : 'de';
 const t = useTranslations(locale);
@@ -118,14 +113,51 @@ const dayLabels: Record<string, string> = {
   '2026-09-20': locale === 'en' ? 'Sunday, 20 September' : 'Sonntag, 20. September',
 };
 
-// ─── Kategorie-Daten ───────────────────────────────────────────────────────
-const categories: Array<{ key: Category; label: string; img: ImageMetadata }> = [
-  { key: Category.Akrobatik, label: t.program.catAkrobatik, img: catAcrobatic },
-  { key: Category.Musik,     label: t.program.catMusik,     img: catMusic     },
-  { key: Category.Comedy,    label: t.program.catComedy,    img: catComedy    },
-  { key: Category.Magie,     label: t.program.catMagie,     img: catMagic     },
-  { key: Category.StreetArt, label: t.program.catStreetArt, img: catStreetart },
-];
+const announcementEvents = locale === 'en'
+  ? [
+      {
+        date: 'Wednesday, 16 Sept.',
+        time: '19:30',
+        location: 'Rathaus Prunksaal',
+        title: 'Preview: "The Picture of Dorian Gray"',
+      },
+      {
+        date: 'Thursday, 17 Sept.',
+        time: '20:00',
+        location: 'Theaterzelt Landshut',
+        title: 'BMW Spektakel Gala 2026',
+        detail: 'Opening of the 20th Spektakel La.',
+      },
+      {
+        date: 'Friday, 18 Sept. - Sunday, 20 Sept.',
+        time: '',
+        location: 'Rathaus Prunksaal, Salzstadel, Landtor and old town',
+        title: 'Spektakel Landshut',
+        detail: 'More than 200 shows in three days ...',
+      },
+    ]
+  : [
+      {
+        date: 'Mittwoch, 16. Sept.',
+        time: '19:30',
+        location: 'Rathaus Prunksaal',
+        title: 'Vorpremiere „Das Bildnis des Dorian Gray"',
+      },
+      {
+        date: 'Donnerstag, 17. Sept.',
+        time: '20:00',
+        location: 'Theaterzelt Landshut',
+        title: 'BMW Spektakel Gala 2026',
+        detail: 'Eröffnung 20. Spektakel La.',
+      },
+      {
+        date: 'Freitag 18. Sept. – Sonntag 20. Sept.',
+        time: '',
+        location: 'Rathaus Prunksaal, Salzstadel, Ländtor und Altstadt',
+        title: 'Spektakel Landshut',
+        detail: 'Über 200 Shows in drei Tagen ...',
+      },
+    ];
 ---
 
 <Page
@@ -231,49 +263,88 @@ const categories: Array<{ key: Category; label: string; img: ImageMetadata }> = 
     </div>
   </section>
 
-  <!-- ═══ KATEGORIEN ════════════════════════════════════════════════════════ -->
-  <section class="py-16 sm:py-24 bg-bg">
-    <div class="max-w-5xl mx-auto px-6">
-      <h2 class="font-display text-5xl text-center mb-14">{t.home.categories_heading}</h2>
-      <ul class="grid grid-cols-3 sm:grid-cols-6 gap-6 sm:gap-10 list-none p-0 m-0">
-        {categories.map(cat => (
-          <li class="flex flex-col items-center gap-3 group">
-            <div class="w-16 h-16 sm:w-20 sm:h-20 transition-transform duration-200 group-hover:scale-110">
-              <Image
-                src={cat.img}
-                alt={cat.label}
-                width={80}
-                height={80}
-                class="w-full h-full object-contain"
+  <!-- ═══ ANKÜNDIGUNGEN ═════════════════════════════════════════════════════ -->
+  <section id="aktuelles" class="relative overflow-hidden py-16 sm:py-24 bg-bg">
+    <div class="absolute -right-20 top-8 opacity-25 pointer-events-none" aria-hidden="true">
+      <PaintSplatter variant={2} width={320} />
+    </div>
+    <div class="absolute -left-24 bottom-0 opacity-20 pointer-events-none" aria-hidden="true">
+      <PaintSplatter variant={3} width={280} />
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-6">
+      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-10 lg:gap-16 items-start">
+        <div>
+          <h2 class="font-display text-5xl sm:text-6xl text-dark leading-tight">
+            {t.home.announcements_heading}
+          </h2>
+          <p class="mt-5 text-dark/70 text-lg leading-relaxed max-w-md">
+            {t.home.announcements_text}
+          </p>
+          <a
+            href="mailto:stadtspektakel@gmail.com"
+            class="inline-flex items-center gap-3 mt-8 bg-primary text-white font-display text-xl px-5 py-3 rounded-sm shadow-md hover:bg-dark transition-colors"
+          >
+            {t.home.announcements_contact}
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <ol class="grid gap-4 list-none p-0 m-0">
+          {announcementEvents.map((event, index) => (
+            <li class="relative overflow-hidden bg-white border border-dark/10 rounded-lg shadow-md">
+              <div
+                class:list={[
+                  'absolute inset-y-0 left-0 w-2',
+                  index === 0 && 'bg-primary',
+                  index === 1 && 'bg-cyan',
+                  index === 2 && 'bg-lime',
+                ]}
+                aria-hidden="true"
               />
-            </div>
-            <span class="font-body font-semibold text-xs sm:text-sm text-center text-dark">
-              {cat.label}
-            </span>
-          </li>
-        ))}
-      </ul>
+              <div class="p-5 sm:p-6 pl-7 sm:pl-8">
+                <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 mb-3">
+                  <p class="font-display text-2xl sm:text-3xl text-dark leading-none">
+                    {event.date}
+                  </p>
+                  {event.time && (
+                    <p class="font-display text-xl text-primary leading-none tabular-nums">
+                      {event.time}
+                    </p>
+                  )}
+                </div>
+                <p class="text-dark/55 text-sm font-semibold uppercase tracking-normal mb-2">
+                  {event.location}
+                </p>
+                <h3 class="font-display text-3xl sm:text-4xl text-dark leading-tight">
+                  {event.title}
+                </h3>
+                {event.detail && (
+                  <p class="mt-2 text-dark/70 text-base sm:text-lg leading-relaxed">
+                    {event.detail}
+                  </p>
+                )}
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
     </div>
   </section>
 
   <!-- ═══ HUT-BOX ══════════════════════════════════════════════════════════ -->
-  <section class="py-20 sm:py-32 bg-dark">
+  <section class="py-14 sm:py-20 bg-dark">
     <div class="max-w-3xl mx-auto px-6 text-center">
 
-      <!-- SVG-Hut-Platzhalter (TD2: durch Illustration ersetzen) -->
-      <div class="w-24 h-20 mx-auto mb-8 text-lime" aria-hidden="true">
-        <svg viewBox="0 0 120 96" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
-          <ellipse cx="60" cy="86" rx="56" ry="9" fill="currentColor" opacity="0.85"/>
-          <rect x="26" y="24" width="68" height="64" rx="3" fill="currentColor"/>
-          <ellipse cx="60" cy="24" rx="34" ry="8" fill="currentColor"/>
-          <rect x="26" y="62" width="68" height="9" fill="#ff2d7a"/>
-          <circle cx="92" cy="14" r="7" fill="#b7ff00"/>
-          <circle cx="103" cy="4"  r="5" fill="#b7ff00" opacity="0.7"/>
-          <circle cx="79"  cy="9"  r="4" fill="#b7ff00" opacity="0.6"/>
-          <line x1="87" y1="22" x2="92" y2="14" stroke="#b7ff00" stroke-width="2" stroke-linecap="round"/>
-          <line x1="97" y1="18" x2="103" y2="11" stroke="#b7ff00" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </div>
+      <Image
+        src={hatImg}
+        alt=""
+        width={832}
+        height={832}
+        class="w-[15.6rem] sm:w-[19.5rem] h-auto mx-auto mb-8"
+        aria-hidden="true"
+        loading="lazy"
+      />
 
       <h2 class="font-display text-5xl sm:text-6xl text-white mb-6 leading-tight">
         {t.home.hut_heading}
@@ -305,7 +376,7 @@ const categories: Array<{ key: Category; label: string; img: ImageMetadata }> = 
               <a
                 href={localize(artistPath(artist.data.artist_id))}
                 class:list={[
-                  'group block rounded-xl overflow-hidden bg-white shadow-md hover:shadow-xl transition-shadow duration-300',
+                  'featured-artist-card group block rounded-xl overflow-hidden bg-white shadow-md hover:shadow-xl transition-[opacity,transform,box-shadow] duration-300',
                   index >= 4 && 'hidden',
                 ]}
                 data-featured-artist
@@ -332,9 +403,45 @@ const categories: Array<{ key: Category; label: string; img: ImageMetadata }> = 
           })}
         </div>
 
+        <style is:inline>
+          [data-featured-artist] {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            transition-duration: var(--featured-artist-transition-duration, 300ms) !important;
+            will-change: opacity, transform;
+          }
+
+          [data-featured-artist].is-entering {
+            opacity: 0;
+            transform: translateY(0.75rem) scale(0.98);
+          }
+
+          [data-featured-artist].is-exiting {
+            opacity: 0;
+            transform: translateY(-0.75rem) scale(0.98);
+            pointer-events: none;
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            [data-featured-artist] {
+              transition: none !important;
+            }
+          }
+        </style>
+
         <script is:inline>
           const grid = document.querySelector('[data-featured-artists-grid]');
           const cards = Array.from(grid?.querySelectorAll('[data-featured-artist]') ?? []);
+          const visibleCards = [];
+          const visibleCount = Math.min(4, cards.length);
+          const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          const rotateDelay = 5200;
+          const exitTransitionDelay = 700;
+          const enterTransitionDelay = 950;
+          let nextCardIndex = visibleCount;
+          let visibleSlot = 0;
+          let rotationTimer;
+          let isPaused = false;
 
           for (let i = cards.length - 1; i > 0; i -= 1) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -342,10 +449,82 @@ const categories: Array<{ key: Category; label: string; img: ImageMetadata }> = 
           }
 
           cards.forEach((card) => card.classList.add('hidden'));
-          cards.slice(0, 4).forEach((card) => {
+          cards.slice(0, visibleCount).forEach((card) => {
             card.classList.remove('hidden');
             grid?.appendChild(card);
+            visibleCards.push(card);
           });
+
+          function findNextCard() {
+            for (let i = 0; i < cards.length; i += 1) {
+              const candidate = cards[nextCardIndex % cards.length];
+              nextCardIndex += 1;
+
+              if (!visibleCards.includes(candidate)) {
+                return candidate;
+              }
+            }
+
+            return null;
+          }
+
+          function rotateFeaturedArtist() {
+            if (!grid || isPaused || document.hidden || cards.length <= visibleCount) return;
+
+            const outgoing = visibleCards[visibleSlot];
+            const incoming = findNextCard();
+            if (!outgoing || !incoming || outgoing.contains(document.activeElement)) return;
+
+            outgoing.style.setProperty('--featured-artist-transition-duration', `${exitTransitionDelay}ms`);
+            outgoing.classList.add('is-exiting');
+
+            window.setTimeout(() => {
+              outgoing.classList.add('hidden');
+              outgoing.classList.remove('is-exiting');
+              outgoing.style.removeProperty('--featured-artist-transition-duration');
+
+              incoming.style.setProperty('--featured-artist-transition-duration', `${enterTransitionDelay}ms`);
+              incoming.classList.add('is-entering');
+              incoming.classList.remove('hidden');
+              grid.insertBefore(incoming, outgoing);
+              visibleCards[visibleSlot] = incoming;
+              visibleSlot = (visibleSlot + 1) % visibleCount;
+
+              incoming.getBoundingClientRect();
+              incoming.classList.remove('is-entering');
+              window.setTimeout(() => {
+                incoming.style.removeProperty('--featured-artist-transition-duration');
+              }, enterTransitionDelay);
+            }, exitTransitionDelay);
+          }
+
+          function startRotation() {
+            if (prefersReducedMotion || cards.length <= visibleCount) return;
+            window.clearInterval(rotationTimer);
+            rotationTimer = window.setInterval(rotateFeaturedArtist, rotateDelay);
+          }
+
+          grid?.addEventListener('mouseenter', () => {
+            isPaused = true;
+          });
+
+          grid?.addEventListener('mouseleave', () => {
+            isPaused = false;
+          });
+
+          grid?.addEventListener('focusin', () => {
+            isPaused = true;
+          });
+
+          grid?.addEventListener('focusout', () => {
+            isPaused = grid.contains(document.activeElement);
+          });
+
+          document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) startRotation();
+          });
+
+          startRotation();
         </script>
 
       </div>

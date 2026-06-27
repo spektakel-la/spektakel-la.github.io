@@ -7,11 +7,13 @@ describe('useTranslations', () => {
   it('gibt das deutsche Objekt für "de" zurück', () => {
     const t = useTranslations('de');
     expect(t.nav.artists).toBe('Künstler');
+    expect(t.nav.sponsors).toBe('Sponsoren');
   });
 
   it('gibt das englische Objekt für "en" zurück', () => {
     const t = useTranslations('en');
     expect(t.nav.artists).toBe('Artists');
+    expect(t.nav.sponsors).toBe('Sponsors');
   });
 
   it('fällt auf Deutsch zurück für unbekannte Locale', () => {

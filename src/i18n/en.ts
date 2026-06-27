@@ -4,6 +4,7 @@ export const en = {
     artists: 'Artists',
     locations: 'Venues',
     gallery: 'Gallery',
+    sponsors: 'Sponsors',
   },
   common: {
     all: 'All',
@@ -100,6 +101,10 @@ export const en = {
     cta_program: 'See the programme',
     cta_artists: 'All artists',
     categories_heading: 'What to expect?',
+    announcements_heading: 'Announcements & News',
+    announcements_text:
+      'The 20th Spektakel Landshut opens in 2026 with special preview events before the old town becomes a three-day street art stage.',
+    announcements_contact: 'Requests via email',
     hut_heading: 'Artists perform for tips!',
     hut_text:
       'Spektakel Landshut is a hat festival – admission is free! The artists rely on your appreciation. Show your applause and toss a coin (or more!) into the hat.',
