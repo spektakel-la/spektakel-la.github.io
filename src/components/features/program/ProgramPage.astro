@@ -286,6 +286,15 @@ const jsonLd = {
     </div>
   </section>
 
+  <!-- ─── Spielzeiten-Hinweis ──────────────────────────────────────────────── -->
+  <section class="program-schedule-notice" aria-labelledby="program-schedule-notice-title">
+    <div class="program-schedule-notice__inner">
+      <p class="program-schedule-notice__eyebrow">{t.program.scheduleNoticeEyebrow}</p>
+      <h2 id="program-schedule-notice-title">{t.program.scheduleNoticeTitle}</h2>
+      <p>{t.program.scheduleNoticeText}</p>
+    </div>
+  </section>
+
   <!-- ─── Sticky Filter-Bar ────────────────────────────────────────────────── -->
   <div id="program-filters" class="sticky top-0 z-30 bg-white border-b border-gray-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
@@ -505,3 +514,65 @@ const jsonLd = {
   updateLive();
   setInterval(updateLive, 60_000);
 </script>
+
+<style>
+  .program-schedule-notice {
+    background: var(--color-white);
+    border-top: 1px solid var(--color-border);
+    color: var(--color-dark);
+  }
+
+  .program-schedule-notice__inner {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: var(--space-6);
+    border-left: 4px solid var(--color-primary);
+    display: grid;
+    grid-template-columns: minmax(12rem, auto) minmax(0, 1fr);
+    gap: var(--space-3) var(--space-6);
+    align-items: center;
+  }
+
+  .program-schedule-notice__eyebrow {
+    margin: 0;
+    color: var(--color-primary);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    letter-spacing: .11em;
+    text-transform: uppercase;
+  }
+
+  .program-schedule-notice h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 400;
+    line-height: var(--leading-tight);
+    text-transform: uppercase;
+  }
+
+  .program-schedule-notice p:not(.program-schedule-notice__eyebrow) {
+    grid-column: 2;
+    max-width: 42rem;
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+  }
+
+  @media (max-width: 40rem) {
+    .program-schedule-notice__inner {
+      display: block;
+      padding: var(--space-5) var(--space-4);
+    }
+
+    .program-schedule-notice__eyebrow {
+      margin-bottom: var(--space-1);
+    }
+
+    .program-schedule-notice h2 {
+      margin-bottom: var(--space-2);
+      font-size: var(--text-xl);
+    }
+  }
+</style>

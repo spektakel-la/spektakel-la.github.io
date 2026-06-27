@@ -27,6 +27,10 @@ export const de = {
   },
   program: {
     title: 'Spielplan',
+    scheduleNoticeEyebrow: 'Schon mal stöbern',
+    scheduleNoticeTitle: 'Die Spielzeiten stimmen wir noch ab',
+    scheduleNoticeText:
+      'Der genaue Zeitplan steht noch nicht fest. Du kannst dir aber jetzt schon die Künstlerinnen und Künstler ansehen und vormerken, worauf du dich freuen möchtest.',
     friday: 'Freitag',
     saturday: 'Samstag',
     sunday: 'Sonntag',

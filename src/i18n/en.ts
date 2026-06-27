@@ -27,6 +27,10 @@ export const en = {
   },
   program: {
     title: 'Program',
+    scheduleNoticeEyebrow: 'Start exploring',
+    scheduleNoticeTitle: 'Performance times are still being finalised',
+    scheduleNoticeText:
+      'The exact schedule is not set yet. You can already browse the artists and save the acts you are looking forward to.',
     friday: 'Friday',
     saturday: 'Saturday',
     sunday: 'Sunday',
