@@ -3,6 +3,9 @@ artist_id: "companiaexpress"
 name: "Cia Express"
 images:
   - "/assets/img/artists/companiaexpress.webp"
+homepage: https://www.cia-express.com/de
+instagram: https://www.instagram.com/express.cia/
+youtube: https://www.youtube.com/watch?v=1FYNMU9Adh0
 de:
   country: "Mexiko - Schweiz"
   description: >

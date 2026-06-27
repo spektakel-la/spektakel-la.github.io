@@ -6,7 +6,7 @@ images:
 homepage: https://daianalou.company.site/
 facebook: https://www.facebook.com/DaianaLouOfficial
 instagram: https://www.instagram.com/daianalou/
-youtube: https://www.youtube.com/watch?v=6zrfDt82988
+youtube: https://www.youtube.com/watch?v=6zrfDt82988&t=2s
 de:
   country: "Italien"
   description: >

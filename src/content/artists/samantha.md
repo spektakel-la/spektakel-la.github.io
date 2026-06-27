@@ -3,9 +3,10 @@ artist_id: "samantha"
 name: "Samantha G."
 images:
   - "/assets/img/artists/samantha.webp"
+homepage: https://www.amelia-cadwallader.com/
 facebook: https://www.facebook.com/1amelia
 instagram: https://www.instagram.com/ameliacadwallader/
-youtube: https://www.youtube.com/watch?v=RyhphfqNKIs
+youtube: https://www.youtube.com/watch?v=c-8JTyiyIVg
 de:
   country: "Australien"
   description: >

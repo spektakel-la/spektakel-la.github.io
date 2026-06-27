@@ -4,6 +4,9 @@ name: "Woid Woife"
 images:
   - "/assets/img/artists/woidwoife.webp"
 duration: "90 Minuten"
+homepage: https://www.wolfgangschreil.de
+facebook: https://www.facebook.com/WoidWoife
+youtube: https://www.youtube.com/watch?v=7WnKnymMHxY
 de:
   country: "Deutschland"
   description: >

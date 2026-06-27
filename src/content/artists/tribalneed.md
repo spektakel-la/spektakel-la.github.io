@@ -3,6 +3,10 @@ artist_id: "tribalneed"
 name: "TribalNeed"
 images:
   - "/assets/img/artists/tribalneed.webp"
+homepage: https://tribalneed.com/
+facebook: https://www.facebook.com/tribalneed
+instagram: https://www.instagram.com/tribalneed/
+youtube: https://www.youtube.com/watch?v=gFIIeRDM28o&list=RDgFIIeRDM28o&start_radio=1
 de:
   country: "Südafrika - Italien"
   description: >

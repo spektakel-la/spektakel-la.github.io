@@ -3,6 +3,10 @@ artist_id: "dado"
 name: "DADO"
 images:
   - "/assets/img/artists/dado.webp"
+homepage: https://www.dadoshow.com/
+facebook: https://www.facebook.com/Dadoshow
+instagram: https://www.instagram.com/thedadoshow/
+youtube: https://www.youtube.com/watch?v=qmZweuQBtB8
 de:
   country: "Kanada"
   description: >

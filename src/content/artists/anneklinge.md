@@ -3,6 +3,10 @@ artist_id: "anneklinge"
 name: "Anne Klinge"
 images:
   - "/assets/img/artists/anneklinge.webp"
+homepage: http://www.fusstheater.de/
+facebook: https://www.facebook.com/fusstheater/?locale=de_DE
+instagram: https://www.instagram.com/fusstheater/
+youtube: https://www.youtube.com/watch?v=Q0K1zUVfx8w
 de:
   country: "Deutschland"
   description: >

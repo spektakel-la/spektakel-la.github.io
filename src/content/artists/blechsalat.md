@@ -4,9 +4,9 @@ name: "Blechsalat"
 images:
   - "/assets/img/artists/blechsalat.webp"
 homepage: https://www.blechsalat.at/
-facebook: https://www.facebook.com/BlechsalatLinz/
+facebook: https://www.facebook.com/BlechsalatLinz
 instagram: https://www.instagram.com/blechsalat/
-youtube: https://www.youtube.com/watch?v=m2ZZcxMnvtA
+youtube: https://www.youtube.com/shorts/EoXsP9sKpeg
 de:
   country: "Österreich"
   description: >

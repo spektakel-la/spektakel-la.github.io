@@ -3,6 +3,10 @@ artist_id: "pedrotochas"
 name: "Pedro Tochas"
 images:
   - "/assets/img/artists/pedrotochas.webp"
+homepage: https://www.pedrotochas.com/
+facebook: https://www.facebook.com/pedrotochas
+instagram: https://www.instagram.com/pedrotochas/
+tiktok: https://www.tiktok.com/@pedrotochas/video/7610024659823709472
 de:
   country: "Portugal"
   description: >

@@ -4,9 +4,9 @@ name: "Secret Circus"
 images:
   - "/assets/img/artists/secretcircus.webp"
 homepage: https://secretcircusshow.com/
-facebook: https://www.facebook.com/SecretCircusShow
+facebook: https://www.facebook.com/SecretCircusShow/
 instagram: https://www.instagram.com/secretcircusshow/
-vimeo: https://vimeo.com/236970513
+vimeo: https://vimeo.com/1019816452?fl=pl&fe=vl
 de:
   country: "USA"
   description: >

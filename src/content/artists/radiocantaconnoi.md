@@ -1,6 +1,10 @@
 ---
 artist_id: "radiocantaconnoi"
 name: "Radio Canta Con Noi"
+images:
+  - "/assets/img/artists/radiocantaconnoi.webp"
+homepage: https://radiocantaconnoi.wordpress.com/
+facebook: https://www.facebook.com/RadioCantaConNoi/
 de:
   country: "Deutschland"
   description: >

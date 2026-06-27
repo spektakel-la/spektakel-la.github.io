@@ -3,6 +3,10 @@ artist_id: "shivagrings"
 name: "Shiva Grings"
 images:
   - "/assets/img/artists/shivagrings.webp"
+homepage: https://shivagrings.com/
+facebook: https://www.facebook.com/shiva.grings
+instagram: https://www.instagram.com/shiva.grings/
+youtube: https://www.youtube.com/watch?v=FQXom3v6UEQ&t=4s
 de:
   country: "Irland"
   description: >

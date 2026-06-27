@@ -3,6 +3,10 @@ artist_id: "lesfrikis"
 name: "Les Frikis"
 images:
   - "/assets/img/artists/lesfrikis.webp"
+homepage: https://mundocostrini.wixsite.com/mundocostrini
+facebook: https://www.facebook.com/Les.frikis
+instagram: https://www.instagram.com/les_frikis/
+youtube: https://www.youtube.com/watch?v=W-mzeeAvWdY
 de:
   country: "Argentinien"
   description: >

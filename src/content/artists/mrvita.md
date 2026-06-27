@@ -6,7 +6,7 @@ images:
 homepage: https://www.lascossasnostra.com/the-tnt-show
 facebook: https://www.facebook.com/kiki.ray.9
 instagram: https://www.instagram.com/kiki.vita.artist/
-youtube: https://www.youtube.com/watch?v=Ok2aN_qUZGw
+youtube: https://www.youtube.com/watch?v=FCdzgHqrbl8
 de:
   country: "Spanien"
   description: >

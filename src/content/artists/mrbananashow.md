@@ -3,6 +3,9 @@ artist_id: "mrbananashow"
 name: "Mr. Banana Show"
 images:
   - "/assets/img/artists/mrbananashow.webp"
+homepage: https://ahumaproductions.com/bananorama/
+facebook: https://www.facebook.com/mrbananashow
+youtube: https://www.youtube.com/watch?v=HZkUOQXlWfQ
 de:
   country: "Kanada"
   description: >

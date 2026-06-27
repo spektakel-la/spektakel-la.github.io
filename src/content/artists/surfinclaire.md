@@ -3,6 +3,10 @@ artist_id: "surfinclaire"
 name: "Surfin`Claire and The Whisky Rockers"
 images:
   - "/assets/img/artists/surfinclaire.webp"
+homepage: https://surfinclaireandthewhiskyrockers.bandcamp.com/
+facebook: https://www.facebook.com/surfinclaireandthewhiskyrockers
+instagram: https://www.instagram.com/surfinclairewhiskyrockers/
+youtube: https://www.youtube.com/watch?v=p09rgHXD6K4
 de:
   country: "Italien"
   description: >

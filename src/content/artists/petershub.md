@@ -3,6 +3,10 @@ artist_id: "petershub"
 name: "Peter Shub"
 images:
   - "/assets/img/artists/petershub.webp"
+homepage: https://www.petershub.com/
+facebook: https://www.facebook.com/profile.php?id=100063574447384
+instagram: https://www.instagram.com/petershub_/
+youtube: https://www.youtube.com/watch?v=7XWS3qRDc-g&t=43s
 de:
   country: "USA"
   description: >

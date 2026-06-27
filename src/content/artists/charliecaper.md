@@ -4,7 +4,9 @@ name: "Charlie Caper"
 images:
   - "/assets/img/artists/charliecaper.webp"
 homepage: https://charliecaper.com/
-youtube: https://www.youtube.com/watch?v=wQOtvZKxGNM
+facebook: https://www.facebook.com/charlescaper
+instagram: https://www.instagram.com/charliecaper/
+youtube: https://www.youtube.com/watch?v=TBSLu4NFXgc
 de:
   country: "Schweden"
   description: >

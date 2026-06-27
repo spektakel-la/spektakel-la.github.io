@@ -3,6 +3,10 @@ artist_id: "adamkadabra"
 name: "Adam Kadabra"
 images:
   - "/assets/img/artists/adamkadabra.webp"
+homepage: https://adamkadabra.bandcamp.com/album/a-shift-in-perspective
+facebook: https://www.facebook.com/adam.kadabra.9
+instagram: https://www.instagram.com/adamkadabra/
+youtube: https://www.youtube.com/watch?v=JioOw2njtSY&t=2s
 de:
   country: "Schottland"
   description: >

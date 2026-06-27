@@ -3,6 +3,10 @@ artist_id: "jonkenzie"
 name: "Jon Kenzie"
 images:
   - "/assets/img/artists/jonkenzie.webp"
+homepage: https://www.jonkenzie.com/tourdates.html
+facebook: https://www.facebook.com/jonkenziemusic
+instagram: https://www.instagram.com/jonkenzie/
+youtube: https://www.youtube.com/watch?v=tqFngSxrqvU&list=RDtqFngSxrqvU&start_radio=1
 de:
   country: "England"
   description: >

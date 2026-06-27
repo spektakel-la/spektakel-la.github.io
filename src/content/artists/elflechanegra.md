@@ -5,8 +5,8 @@ images:
   - "/assets/img/artists/elflechanegra.webp"
 homepage: https://www.elflechanegra.com/
 facebook: https://www.facebook.com/ElFlechaNegra
-instagram: https://www.instagram.com/elflechanegra/
-youtube: https://www.youtube.com/watch?v=tvV8Ua47Bk0
+instagram: https://www.instagram.com/elflechanegra
+youtube: https://www.youtube.com/watch?v=r2p7c2SNaWo&list=RDr2p7c2SNaWo&start_radio=1
 de:
   country: "Chile - Mexiko - Spanien - Peru"
   description: >

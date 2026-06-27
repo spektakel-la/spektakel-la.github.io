@@ -4,6 +4,10 @@ name: "Anna Ki"
 images:
   - "/assets/img/artists/annaki.webp"
 image_position: bottom
+homepage: https://www.annakristinmccarthy.com/d
+facebook: https://www.facebook.com/annakr.azy/
+instagram: https://www.instagram.com/annakr.eations/
+youtube: https://www.youtube.com/watch?v=p8fuG-oLUGs
 de:
   country: "Estland"
   description: >

@@ -3,6 +3,10 @@ artist_id: "markusk"
 name: "Markus K."
 images:
   - "/assets/img/artists/markusk.webp"
+homepage: https://www.streetjelly.com/Markus-K
+facebook: https://www.facebook.com/search/top?q=markus k
+instagram: https://www.instagram.com/markuskstreetconcerts/
+youtube: https://www.youtube.com/watch?v=QikKRwUHGHo&list=RDEMBlsgh8FIA5aw8A0IaoYiMA&start_radio=1
 de:
   country: "Niederlande"
   description: >

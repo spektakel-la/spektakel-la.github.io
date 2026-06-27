@@ -4,6 +4,10 @@ name: "Samuelito"
 images:
   - "/assets/img/artists/samuelito.webp"
 image_position: top
+homepage: https://www.samuelito.ch/
+facebook: https://www.facebook.com/samuelito.news/
+instagram: https://www.instagram.com/samuelito.news/
+youtube: https://www.youtube.com/watch?v=g_XH9eoR6Xs
 de:
   country: "Schweiz"
   description: >

@@ -1,6 +1,12 @@
 ---
 artist_id: "vogelphillip"
 name: "Vogel Phillip"
+images:
+  - "/assets/img/artists/vogelphillip.webp"
+homepage: https://www.vogelphilipp.de/
+facebook: https://www.facebook.com/dervogelphilipp
+instagram: https://www.instagram.com/dervogelphilipp/
+youtube: https://www.youtube.com/watch?v=D-E3Uo8H3PY
 de:
   country: "Deutschland"
   description: >

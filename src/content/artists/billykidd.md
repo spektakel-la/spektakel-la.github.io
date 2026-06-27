@@ -3,6 +3,10 @@ artist_id: "billykidd"
 name: "Billy Kidd"
 images:
   - "/assets/img/artists/billykidd.webp"
+homepage: https://www.billykiddshow.com/
+facebook: https://www.facebook.com/billykiddshow
+instagram: https://www.instagram.com/billykiddshow/
+youtube: https://www.youtube.com/watch?v=07GM0kG8F8M
 de:
   country: "Kanada - England"
   description: >

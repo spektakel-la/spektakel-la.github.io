@@ -3,6 +3,10 @@ artist_id: "lesgoulus"
 name: "Les Goulus - The Horsemen"
 images:
   - "/assets/img/artists/lesgoulus.webp"
+homepage: https://lesgoulus.com/
+facebook: https://www.facebook.com/LesGoulus93/
+instagram: https://www.instagram.com/lesgoulus_cie/
+youtube: https://www.youtube.com/watch?v=K-hbiz8tEaw&list=PLrkXEhTmklfyGH_LK1CUVZstNVAtJRAik
 de:
   country: "Frankreich"
   description: >

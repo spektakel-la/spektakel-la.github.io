@@ -4,6 +4,10 @@ name: "niMù"
 images:
   - "/assets/img/artists/nimu.webp"
 image_position: top
+homepage: https://cianimu.com/
+facebook: https://www.facebook.com/nimucircoteatro/mentions/
+instagram: https://www.instagram.com/nimucircoteatro/
+vimeo: https://vimeo.com/364875017?fl=pl&fe=vl
 de:
   country: "Spanien"
   description: >
