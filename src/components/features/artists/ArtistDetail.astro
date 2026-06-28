@@ -1,5 +1,6 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { festival } from '../../../data/festival';
 import { useTranslations } from '../../../i18n/utils';
 import Page from '../../../layouts/Page.astro';
 import { Category, CATEGORY_KEYWORDS } from '../../../utils/categories';
@@ -86,7 +87,7 @@ function durationToISO(dur?: string): string | undefined {
 const durationISO = durationToISO(duration);
 
 // ─── JSON-LD Person ──────────────────────────────────────────────────────────
-const siteUrl = 'https://spektakel.la';
+const siteUrl = festival.siteUrl;
 const artistUrl = `${siteUrl}${basePath}/artists/${artist_id}/`;
 
 const sameAs: string[] = [
@@ -116,18 +117,18 @@ const performerIn = merged.map((entry) => {
   const programUrl = locale === 'en' ? `${siteUrl}/en/program/` : `${siteUrl}/program/`;
   const eventObj: Record<string, unknown> = {
     '@type': 'Event',
-    name: `${name} – Spektakel Landshut`,
+    name: `${name} – ${festival.organizerName}`,
     startDate: entry.startTime.toISOString(),
     endDate: entry.endTime.toISOString(),
     url: programUrl,
-    organizer: { '@type': 'Organization', name: 'Spektakel Landshut', url: siteUrl },
+    organizer: { '@type': 'Organization', name: festival.organizerName, url: siteUrl },
     performer: performerRef,
     eventStatus: 'https://schema.org/EventScheduled',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     offers: {
       '@type': 'Offer',
-      price: 0,
-      priceCurrency: 'EUR',
+      price: festival.admissionPrice,
+      priceCurrency: festival.currency,
       url: programUrl,
       availability: 'https://schema.org/InStock',
     },
@@ -145,8 +146,8 @@ const performerIn = merged.map((entry) => {
       },
       address: {
         '@type': 'PostalAddress',
-        addressLocality: 'Landshut',
-        addressCountry: 'DE',
+        addressLocality: festival.addressLocality,
+        addressCountry: festival.addressCountry,
       },
     };
   }

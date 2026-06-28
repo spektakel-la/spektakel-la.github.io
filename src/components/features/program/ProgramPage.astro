@@ -21,6 +21,7 @@ import ProgramList from './ProgramList.astro';
 import ProgramGrid from './ProgramGrid.astro';
 import { Category, CATEGORY_KEYWORDS } from '../../../utils/categories';
 import { preferWebp } from '../../../utils/imageVariants';
+import { festival } from '../../../data/festival';
 
 interface Props {
   locale: 'de' | 'en';
@@ -183,7 +184,7 @@ const mergedByDay: Record<string, MergedEntry[]> = Object.fromEntries(
 
 // ─── JSON-LD Events ──────────────────────────────────────────────────────────
 
-const siteUrl = 'https://spektakel.la';
+const siteUrl = festival.siteUrl;
 const programUrl = locale === 'en' ? `${siteUrl}/en/program/` : `${siteUrl}/program/`;
 
 const jsonLdSubEvents = mergeConsecutiveSlots(schedule)
@@ -198,18 +199,18 @@ const jsonLdSubEvents = mergeConsecutiveSlots(schedule)
     const image = artist.data.images?.[0] ? new URL(preferWebp(artist.data.images[0]), siteUrl).href : undefined;
     const eventObj: Record<string, unknown> = {
       '@type': 'Event',
-      name: `${artist.data.name} – Spektakel Landshut`,
+      name: `${artist.data.name} – ${festival.organizerName}`,
       startDate: e.startTime.toISOString(),
       endDate: e.endTime.toISOString(),
       url: programUrl,
       performer: { '@type': 'PerformingGroup', name: artist.data.name, url: artistUrl },
-      organizer: { '@type': 'Organization', name: 'Spektakel Landshut', url: siteUrl },
+      organizer: { '@type': 'Organization', name: festival.organizerName, url: siteUrl },
       eventStatus: 'https://schema.org/EventScheduled',
       eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
       offers: {
         '@type': 'Offer',
-        price: 0,
-        priceCurrency: 'EUR',
+        price: festival.admissionPrice,
+        priceCurrency: festival.currency,
         url: programUrl,
         availability: 'https://schema.org/InStock',
       },
@@ -226,8 +227,8 @@ const jsonLdSubEvents = mergeConsecutiveSlots(schedule)
         },
         address: {
           '@type': 'PostalAddress',
-          addressLocality: 'Landshut',
-          addressCountry: 'DE',
+          addressLocality: festival.addressLocality,
+          addressCountry: festival.addressCountry,
         },
       };
     }
@@ -237,22 +238,22 @@ const jsonLdSubEvents = mergeConsecutiveSlots(schedule)
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'EventSeries',
-  name: 'Spektakel Landshut 2026',
-  startDate: '2026-09-18',
-  endDate: '2026-09-20',
+  name: festival.name,
+  startDate: festival.startDate,
+  endDate: festival.endDate,
   url: programUrl,
   location: {
     '@type': 'Place',
-    name: 'Altstadt Landshut',
+    name: festival.locationName,
     address: {
       '@type': 'PostalAddress',
-      addressLocality: 'Landshut',
-      addressCountry: 'DE',
+      addressLocality: festival.addressLocality,
+      addressCountry: festival.addressCountry,
     },
   },
   organizer: {
     '@type': 'Organization',
-    name: 'Spektakel Landshut',
+    name: festival.organizerName,
     url: siteUrl,
   },
   subEvent: jsonLdSubEvents,

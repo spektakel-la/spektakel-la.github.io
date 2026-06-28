@@ -7,6 +7,7 @@
  *   Mobile:  Vollbild-Karte mit "Liste anzeigen"-Toggle; Panel als Overlay
  */
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { festival } from '../../../data/festival';
 import { useTranslations } from '../../../i18n/utils';
 import { loadSchedule, mergeConsecutiveSlots } from '../../../utils/schedule';
 import { ROUTES } from '../../../utils/routes';
@@ -22,6 +23,8 @@ interface Props {
 const { locale } = Astro.props;
 const t = useTranslations(locale);
 const basePath = locale === 'en' ? '/en' : '';
+const festivalLiveStart = festival.liveStart;
+const festivalLiveEnd = festival.liveEnd;
 
 const allLocations: CollectionEntry<'locations'>[] = await getCollection('locations');
 const allArtists: CollectionEntry<'artists'>[] = await getCollection('artists');
@@ -144,9 +147,9 @@ const venueList = sortedLocations.filter((l) => !l.data.organizational);
   </section>
 </Page>
 
-<script>
-  const FESTIVAL_START = new Date('2026-09-18T14:00:00+02:00').getTime();
-  const FESTIVAL_END   = new Date('2026-09-21T03:00:00+02:00').getTime();
+<script define:vars={{ festivalLiveStart, festivalLiveEnd }}>
+  const FESTIVAL_START = new Date(festivalLiveStart).getTime();
+  const FESTIVAL_END   = new Date(festivalLiveEnd).getTime();
   const THREE_HOURS    = 3 * 60 * 60 * 1000;
 
   function fmt(iso: string): string {

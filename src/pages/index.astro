@@ -5,6 +5,7 @@ import Badge from '../components/ui/Badge.astro';
 import Button from '../components/ui/Button.astro';
 import PaintSplatter from '../components/ui/PaintSplatter.astro';
 import Picture from '../components/ui/Picture.astro';
+import { festival } from '../data/festival';
 import { localePath, useTranslations, type Locale } from '../i18n/utils';
 import Page from '../layouts/Page.astro';
 import { imagePositionToObjectPosition } from '../utils/imagePosition';
@@ -59,36 +60,43 @@ const artistMap = Object.fromEntries(allArtists.map(a => [a.data.artist_id, a]))
 const locationMap = Object.fromEntries(allLocations.map(location => [location.data.location_id, location]));
 
 // ─── Structured Data ──────────────────────────────────────────────────────
-const siteUrl = 'https://spektakel.la';
+const siteUrl = festival.siteUrl;
 const homeUrl = locale === 'en' ? `${siteUrl}/en/` : `${siteUrl}/`;
 const programUrl = locale === 'en' ? `${siteUrl}/en/program/` : `${siteUrl}/program/`;
 const publicPerformances = mergeConsecutiveSlots(schedule.filter(entry => {
   const artist = artistMap[entry.artist_id];
   return artist && !artist.data.organizational && locationMap[entry.location_id];
 }));
+const festivalPerformers = featuredArtists.map(artist => ({
+  '@type': 'PerformingGroup',
+  name: artist.data.name,
+  url: `${siteUrl}${locale === 'en' ? '/en' : ''}${artistPath(artist.data.artist_id)}`,
+}));
 const festivalJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Festival',
-  name: 'Spektakel Landshut 2026',
+  name: festival.name,
   description: meta.description,
-  startDate: publicPerformances[0]?.startTime.toISOString(),
-  endDate: publicPerformances.at(-1)?.endTime.toISOString(),
+  startDate: publicPerformances[0]?.startTime.toISOString() ?? festival.startDate,
+  endDate: publicPerformances.at(-1)?.endTime.toISOString() ?? festival.endDate,
   url: homeUrl,
   image: `${siteUrl}/assets/img/logo/logo.webp`,
+  performer: festivalPerformers,
   eventStatus: 'https://schema.org/EventScheduled',
   eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
   location: {
     '@type': 'Place',
-    name: 'Altstadt Landshut',
-    address: { '@type': 'PostalAddress', addressLocality: 'Landshut', addressCountry: 'DE' },
+    name: festival.locationName,
+    address: { '@type': 'PostalAddress', addressLocality: festival.addressLocality, addressCountry: festival.addressCountry },
   },
-  organizer: { '@type': 'Organization', name: 'Spektakel Landshut', url: siteUrl },
+  organizer: { '@type': 'Organization', name: festival.organizerName, url: siteUrl },
+  offers: { '@type': 'Offer', price: festival.admissionPrice, priceCurrency: festival.currency, url: programUrl, availability: 'https://schema.org/InStock' },
   subEvent: publicPerformances.map(entry => {
     const artist = artistMap[entry.artist_id];
     const location = locationMap[entry.location_id];
     return {
       '@type': 'Event',
-      name: `${artist.data.name} – Spektakel Landshut`,
+      name: `${artist.data.name} – ${festival.organizerName}`,
       startDate: entry.startTime.toISOString(),
       endDate: entry.endTime.toISOString(),
       url: programUrl,
@@ -98,12 +106,12 @@ const festivalJsonLd = {
         '@type': 'Place',
         name: location.data.description,
         geo: { '@type': 'GeoCoordinates', latitude: location.data.gps[0], longitude: location.data.gps[1] },
-        address: { '@type': 'PostalAddress', addressLocality: 'Landshut', addressCountry: 'DE' },
+        address: { '@type': 'PostalAddress', addressLocality: festival.addressLocality, addressCountry: festival.addressCountry },
       },
-      organizer: { '@type': 'Organization', name: 'Spektakel Landshut', url: siteUrl },
+      organizer: { '@type': 'Organization', name: festival.organizerName, url: siteUrl },
       eventStatus: 'https://schema.org/EventScheduled',
       eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-      offers: { '@type': 'Offer', price: 0, priceCurrency: 'EUR', url: programUrl, availability: 'https://schema.org/InStock' },
+      offers: { '@type': 'Offer', price: festival.admissionPrice, priceCurrency: festival.currency, url: programUrl, availability: 'https://schema.org/InStock' },
     };
   }),
 };
