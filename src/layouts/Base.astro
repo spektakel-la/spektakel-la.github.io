@@ -169,7 +169,7 @@ const enUrl = new URL(`/en${localizedPath === '/' ? '/' : localizedPath}`, canon
       (function () {
         if (!('serviceWorker' in navigator)) return;
 
-        var allowedHosts = ['spektakel-la.github.io'];
+        var allowedHosts = ['spektakel.la'];
         if (allowedHosts.indexOf(window.location.hostname) === -1) return;
 
         async function clearServiceWorkers() {

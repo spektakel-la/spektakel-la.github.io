@@ -53,17 +53,17 @@ describe('Vollständigkeit der Übersetzungsschlüssel', () => {
 
 describe('getLocale', () => {
   it('gibt "en" für /en/artists zurück', () => {
-    const url = new URL('https://spektakel-la.github.io/en/artists');
+    const url = new URL('https://spektakel.la/en/artists');
     expect(getLocale(url)).toBe('en');
   });
 
   it('gibt "de" für /artists zurück', () => {
-    const url = new URL('https://spektakel-la.github.io/artists');
+    const url = new URL('https://spektakel.la/artists');
     expect(getLocale(url)).toBe('de');
   });
 
   it('gibt "de" für / zurück', () => {
-    const url = new URL('https://spektakel-la.github.io/');
+    const url = new URL('https://spektakel.la/');
     expect(getLocale(url)).toBe('de');
   });
 });

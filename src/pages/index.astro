@@ -59,7 +59,7 @@ const artistMap = Object.fromEntries(allArtists.map(a => [a.data.artist_id, a]))
 const locationMap = Object.fromEntries(allLocations.map(location => [location.data.location_id, location]));
 
 // ─── Structured Data ──────────────────────────────────────────────────────
-const siteUrl = 'https://spektakel-la.github.io';
+const siteUrl = 'https://spektakel.la';
 const homeUrl = locale === 'en' ? `${siteUrl}/en/` : `${siteUrl}/`;
 const programUrl = locale === 'en' ? `${siteUrl}/en/program/` : `${siteUrl}/program/`;
 const publicPerformances = mergeConsecutiveSlots(schedule.filter(entry => {

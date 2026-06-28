@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-const siteUrl = 'https://spektakel-la.github.io';
+const siteUrl = 'https://spektakel.la';
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem('gtm-consent', 'declined'));
@@ -51,7 +51,7 @@ test('liefert valides Festival-, Event- und Künstler-JSON-LD', async ({ page })
 test('stellt robots.txt und Sitemap bereit', async ({ request }) => {
   const robots = await request.get('/robots.txt');
   expect(robots.ok()).toBe(true);
-  await expect(robots.text()).resolves.toContain(`Sitemap: ${siteUrl}/sitemap-index.xml`);
+  await expect(robots.text()).resolves.toContain(`Sitemap: ${siteUrl}/sitemap.xml`);
 
   // Der Dev-Server generiert keine Sitemap; deren Existenz und Inhalte werden im Build geprüft.
 });

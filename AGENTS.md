@@ -9,6 +9,8 @@ Arbeitsanweisungen fuer Codex und andere Coding-Agents in diesem Repository.
 - Package Manager: npm.
 - Lockfile: `package-lock.json`.
 - Node-Version: `>=24.0.0` laut `package.json`.
+- Produktionsdomain: `https://spektakel.la`.
+- SEO-, Canonical-, Sitemap-, robots.txt- und JSON-LD-URLs sollen diese Domain verwenden.
 - Die Website ist statisch gebaut und verwendet produktiv WebP-only-Bildpfade.
 
 ## Laufzeit und Package Manager

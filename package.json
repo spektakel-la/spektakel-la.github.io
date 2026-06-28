@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "npm run images:check && astro build",
+    "build": "npm run images:check && astro build && npm run sitemap:alias",
     "preview": "astro preview",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "vitest run",
@@ -18,6 +18,7 @@
     "images:clean": "node scripts/clean-webp-duplicates.mjs",
     "images:clean:dry": "node scripts/clean-webp-duplicates.mjs --dry-run",
     "images:check": "node scripts/check-webp-only.mjs",
+    "sitemap:alias": "node scripts/create-sitemap-alias.mjs",
     "hooks:install": "git config core.hooksPath .githooks"
   },
   "dependencies": {
