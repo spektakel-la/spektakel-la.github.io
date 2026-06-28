@@ -68,6 +68,7 @@ const enUrl = new URL(`/en${localizedPath === '/' ? '/' : localizedPath}`, canon
       (function () {
         var storageKey = 'gtm-consent';
         var validStates = ['accepted', 'declined'];
+        var analyticsHost = window.location.hostname === 'spektakel.la';
         var storedState = null;
         try {
           storedState = localStorage.getItem(storageKey);
@@ -77,7 +78,7 @@ const enUrl = new URL(`/en${localizedPath === '/' ? '/' : localizedPath}`, canon
         window.spektakel = window.spektakel || {};
         window.spektakel.consent = {
           getStatus: function () { return state; },
-          isAnalyticsGranted: function () { return state === 'accepted'; },
+          isAnalyticsGranted: function () { return analyticsHost && state === 'accepted'; },
           setStatus: function (nextState) {
             if (validStates.indexOf(nextState) === -1) return;
             state = nextState;
@@ -96,7 +97,7 @@ const enUrl = new URL(`/en${localizedPath === '/' ? '/' : localizedPath}`, canon
               } catch (_) {}
             }
             window.dispatchEvent(new CustomEvent('spektakel:consent-changed', {
-              detail: { status: state, analytics: state === 'accepted' }
+              detail: { status: state, analytics: analyticsHost && state === 'accepted' }
             }));
           }
         };
