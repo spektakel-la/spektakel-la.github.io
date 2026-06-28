@@ -3,6 +3,7 @@ artist_id: "adamkadabra"
 name: "Adam Kadabra"
 images:
   - "/assets/img/artists/adamkadabra.webp"
+image_position: 20
 homepage: https://adamkadabra.bandcamp.com/album/a-shift-in-perspective
 facebook: https://www.facebook.com/adam.kadabra.9
 instagram: https://www.instagram.com/adamkadabra/

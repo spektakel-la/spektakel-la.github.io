@@ -3,6 +3,7 @@ artist_id: "secretcircus"
 name: "Secret Circus"
 images:
   - "/assets/img/artists/secretcircus.webp"
+image_position: 20
 homepage: https://secretcircusshow.com/
 facebook: https://www.facebook.com/SecretCircusShow/
 instagram: https://www.instagram.com/secretcircusshow/

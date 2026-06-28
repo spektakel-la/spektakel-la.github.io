@@ -3,6 +3,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import { useTranslations } from '../../../i18n/utils';
 import Page from '../../../layouts/Page.astro';
 import { Category, CATEGORY_KEYWORDS } from '../../../utils/categories';
+import { imagePositionToObjectPosition } from '../../../utils/imagePosition';
 import { preferWebp } from '../../../utils/imageVariants';
 import { formatTime, loadSchedule, mergeConsecutiveSlots } from '../../../utils/schedule';
 import CategoryChip from '../../ui/CategoryChip.astro';
@@ -20,7 +21,7 @@ const t = useTranslations(locale);
 const basePath = locale === 'en' ? '/en' : '';
 
 const { name, images, facebook, instagram, youtube, vimeo, tiktok, homepage, hut_act, artist_id, duration, image_position } = artist.data;
-const imgPos = image_position ?? 'center';
+const objectPosition = imagePositionToObjectPosition(image_position);
 const locData = locale === 'en' ? (artist.data.en ?? artist.data.de) : artist.data.de;
 const descriptionParagraphs = locData.description
   .split(/\n\s*\n/)
@@ -202,7 +203,7 @@ if (performerIn.length > 0) jsonLd.performerIn = performerIn;
           src={mainImage}
           alt=""
           class="w-full h-full object-cover"
-          style={`filter: blur(60px); transform: scale(1.2); object-position: ${imgPos};`}
+          style={`filter: blur(60px); transform: scale(1.2); object-position: ${objectPosition};`}
           loading="eager"
         />
       </div>
@@ -219,7 +220,7 @@ if (performerIn.length > 0) jsonLd.performerIn = performerIn;
           src={mainImage}
           alt=""
           class="w-full h-full object-cover"
-          style={`object-position: ${imgPos};`}
+          style={`object-position: ${objectPosition};`}
           loading="eager"
         />
       </div>
@@ -244,7 +245,7 @@ if (performerIn.length > 0) jsonLd.performerIn = performerIn;
           src={mainImage}
           alt=""
           class="w-full h-full object-cover"
-          style={`object-position: ${imgPos};`}
+          style={`object-position: ${objectPosition};`}
           loading="eager"
         />
       </div>

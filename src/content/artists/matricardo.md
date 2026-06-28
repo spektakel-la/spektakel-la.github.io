@@ -3,6 +3,7 @@ artist_id: "matricardo"
 name: "Mat Ricardo"
 images:
   - "/assets/img/artists/matricardo.webp"
+image_position: 20
 homepage: https://www.matricardo.com/
 facebook: https://www.facebook.com/MatRicardoOfficial
 instagram: https://www.instagram.com/matricardo/

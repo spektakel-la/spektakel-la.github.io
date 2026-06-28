@@ -7,6 +7,7 @@ import PaintSplatter from '../components/ui/PaintSplatter.astro';
 import Picture from '../components/ui/Picture.astro';
 import { localePath, useTranslations, type Locale } from '../i18n/utils';
 import Page from '../layouts/Page.astro';
+import { imagePositionToObjectPosition } from '../utils/imagePosition';
 import { preferWebp } from '../utils/imageVariants';
 import { artistPath, ROUTES } from '../utils/routes';
 import { formatTime, getFestivalDays, groupByDay, loadSchedule, mergeConsecutiveSlots } from '../utils/schedule';
@@ -371,7 +372,7 @@ const announcementEvents = locale === 'en'
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6" data-featured-artists-grid>
           {featuredArtists.map((artist, index) => {
             const firstCat = artist.data[locale]?.categories?.[0];
-            const imgPos = artist.data.image_position ?? 'center';
+            const objectPosition = imagePositionToObjectPosition(artist.data.image_position);
             return (
               <a
                 href={localize(artistPath(artist.data.artist_id))}
@@ -386,7 +387,7 @@ const announcementEvents = locale === 'en'
                     src={artist.data.images![0]}
                     alt={artist.data.name}
                     class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    style={`object-position: ${imgPos};`}
+                    style={`object-position: ${objectPosition};`}
                     loading="lazy"
                   />
                 </div>

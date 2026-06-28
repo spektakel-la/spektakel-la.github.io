@@ -1,6 +1,7 @@
 ---
 import { type CollectionEntry } from 'astro:content';
 import { type Category } from '../../../utils/categories';
+import { imagePositionToObjectPosition } from '../../../utils/imagePosition';
 import { type MergedEntry, formatTime } from '../../../utils/schedule';
 import CategoryChip from '../../ui/CategoryChip.astro';
 import Picture from '../../ui/Picture.astro';
@@ -15,7 +16,7 @@ interface Props {
 
 const { artist, category, basePath, locale, entries = [] } = Astro.props;
 const { name, images, hut_act, image_position } = artist.data;
-const imgPos = image_position ?? 'center';
+const objectPosition = imagePositionToObjectPosition(image_position);
 const locData = locale === 'en' ? (artist.data.en ?? artist.data.de) : artist.data.de;
 const img = images?.[0] ?? null;
 const href = `${basePath}/artists/${artist.id}/`;
@@ -49,7 +50,7 @@ const timeLine = entries
         loading="lazy"
         decoding="async"
         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        style={`object-position: ${imgPos};`}
+        style={`object-position: ${objectPosition};`}
       />
     ) : (
       <div class="w-full h-full flex items-center justify-center text-dark/20">

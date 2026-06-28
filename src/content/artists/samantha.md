@@ -3,6 +3,7 @@ artist_id: "samantha"
 name: "Samantha G."
 images:
   - "/assets/img/artists/samantha.webp"
+image_position: 30
 homepage: https://www.amelia-cadwallader.com/
 facebook: https://www.facebook.com/1amelia
 instagram: https://www.instagram.com/ameliacadwallader/

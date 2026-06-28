@@ -6,11 +6,16 @@ import { z } from 'zod';
 
 // ─── Schemas (gespiegelt aus src/content.config.ts) ──────────────────────────
 
+const imagePositionSchema = z.union([
+  z.enum(['top', 'center', 'bottom']),
+  z.number().int().min(0).max(100),
+]);
+
 const artistSchema = z.object({
   artist_id: z.string(),
   name: z.string(),
   images: z.array(z.string()).min(1).optional(),
-  image_position: z.enum(['top', 'center', 'bottom']).optional(),
+  image_position: imagePositionSchema.optional(),
   duration: z.string().optional(),
   hut_act: z.boolean().optional(),
   facebook: z.string().url().nullish(),

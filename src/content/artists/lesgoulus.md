@@ -3,6 +3,7 @@ artist_id: "lesgoulus"
 name: "Les Goulus - The Horsemen"
 images:
   - "/assets/img/artists/lesgoulus.webp"
+image_position: 20
 homepage: https://lesgoulus.com/
 facebook: https://www.facebook.com/LesGoulus93/
 instagram: https://www.instagram.com/lesgoulus_cie/

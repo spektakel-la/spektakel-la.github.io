@@ -3,6 +3,7 @@ artist_id: "zoecirco"
 name: "Zoè Circo - Pauline Zoè"
 images:
   - "/assets/img/artists/zoecirco.webp"
+image_position: 40
 homepage: https://www.paulinezoe.com/en
 facebook: https://www.facebook.com/profile.php?id=100063617119087
 instagram: https://www.instagram.com/pauline_zoe_circo/

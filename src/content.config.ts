@@ -1,13 +1,18 @@
 import { glob } from 'astro/loaders';
 import { defineCollection, z } from 'astro:content';
 
+const imagePositionSchema = z.union([
+  z.enum(['top', 'center', 'bottom']),
+  z.number().int().min(0).max(100),
+]);
+
 const artists = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/artists' }),
   schema: z.object({
     artist_id: z.string(),
     name: z.string(),
     images: z.array(z.string()).min(1).optional(),
-    image_position: z.enum(['top', 'center', 'bottom']).optional(),
+    image_position: imagePositionSchema.optional(),
     duration: z.string().optional(),
     hut_act: z.boolean().optional(),
     facebook: z.string().url().nullish(),

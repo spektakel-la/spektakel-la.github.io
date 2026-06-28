@@ -3,6 +3,7 @@ artist_id: "markusk"
 name: "Markus K."
 images:
   - "/assets/img/artists/markusk.webp"
+image_position: 20
 homepage: https://www.streetjelly.com/Markus-K
 facebook: https://www.facebook.com/search/top?q=markus k
 instagram: https://www.instagram.com/markuskstreetconcerts/

@@ -3,6 +3,7 @@ artist_id: "tribalneed"
 name: "TribalNeed"
 images:
   - "/assets/img/artists/tribalneed.webp"
+image_position: 20
 homepage: https://tribalneed.com/
 facebook: https://www.facebook.com/tribalneed
 instagram: https://www.instagram.com/tribalneed/
