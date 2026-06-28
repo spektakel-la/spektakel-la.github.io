@@ -5,6 +5,7 @@ import { useTranslations } from '../../../i18n/utils';
 import { Category, CATEGORY_KEYWORDS } from '../../../utils/categories';
 import { loadSchedule, mergeConsecutiveSlots, type MergedEntry } from '../../../utils/schedule';
 import Page from '../../../layouts/Page.astro';
+import PageHero from '../../layout/PageHero.astro';
 import PaintSplatter from '../../ui/PaintSplatter.astro';
 import CategoryFilter from '../program/CategoryFilter.astro';
 import ArtistCard from './ArtistCard.astro';
@@ -70,9 +71,13 @@ const catLabels: Record<Category, string> = {
   title={t.artists.title}
   description={t.artists.tagline}
 >
-  <!-- ─── Hero ──────────────────────────────────────────────────────────────── -->
-  <section class="relative bg-white overflow-hidden py-14 md:py-20">
-    <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+  <PageHero
+    eyebrow="SPEKTAKEL LANDSHUT 2026"
+    title={locale === 'de' ? 'ALLE KÜNSTLER' : 'ALL ARTISTS'}
+    accentTitle={locale === 'de' ? 'AUF EINEN BLICK' : 'AT A GLANCE'}
+    subtitle={t.artists.tagline}
+  >
+    <div slot="decor">
       <div class="absolute -top-16 -right-20 opacity-30">
         <PaintSplatter variant={3} width={520} />
       </div>
@@ -83,35 +88,22 @@ const catLabels: Record<Category, string> = {
         <PaintSplatter variant={1} width={300} />
       </div>
     </div>
-    <div class="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 items-end gap-4">
-      <!-- Links: Text-Content -->
-      <div class="pb-4 md:pb-8">
-        <p class="text-primary font-display text-xl tracking-widest mb-2">SPEKTAKEL LANDSHUT 2026</p>
-        <!-- Zweizeiliger Titel: erste Zeile dunkel, zweite Zeile magenta -->
-        <h1 class="font-display leading-none" style="font-size: clamp(2.8rem, 9vw, 7rem)">
-          <span class="block text-dark">{locale === 'de' ? 'ALLE KÜNSTLER' : 'ALL ARTISTS'}</span>
-          <span class="block text-primary">{locale === 'de' ? 'AUF EINEN BLICK' : 'AT A GLANCE'}</span>
-        </h1>
-        <p class="mt-4 text-dark/50 max-w-xl">{t.artists.tagline}</p>
-        <!-- Für-den-Hut Badge -->
-        <div class="mt-6 inline-flex items-center gap-2 bg-dark text-white rounded-full px-4 py-2 text-sm font-display tracking-wider">
-          <span aria-hidden="true">🎩</span>
-          {t.common.hutAct.toUpperCase()}
-        </div>
-      </div>
-      <!-- Rechts: Hero-Figur (nur Desktop) -->
-      <div class="hidden md:flex items-end justify-end overflow-hidden" style="max-height: 400px;">
-        <Image
-          src={hero4}
-          alt=""
-          aria-hidden="true"
-          width={380}
-          loading="eager"
-          class="object-contain object-bottom max-h-[400px] w-auto"
-        />
-      </div>
+
+    <div class="mt-6 inline-flex items-center gap-2 bg-dark text-white rounded-full px-4 py-2 text-sm font-display tracking-wider">
+      <span aria-hidden="true">🎩</span>
+      {t.common.hutAct.toUpperCase()}
     </div>
-  </section>
+
+    <Image
+      slot="media"
+      src={hero4}
+      alt=""
+      aria-hidden="true"
+      width={380}
+      loading="eager"
+      class="object-contain object-bottom max-h-[400px] w-auto"
+    />
+  </PageHero>
 
   <!-- ─── Filter-Bar ─────────────────────────────────────────────────────────── -->
   <div id="artists-filters" class="sticky top-0 z-30 bg-white border-b border-gray-200 shadow-sm">
@@ -166,6 +158,11 @@ const catLabels: Record<Category, string> = {
 
   let activeCategory = '';
   let searchTerm = '';
+  let searchTimer: ReturnType<typeof setTimeout> | undefined;
+
+  const track = (eventName: string, params: Record<string, unknown> = {}) => {
+    window.spektakel?.analytics?.track(eventName, params);
+  };
 
   function applyFilters() {
     let visible = 0;
@@ -177,6 +174,7 @@ const catLabels: Record<Category, string> = {
       if (show) visible++;
     });
     noResults?.classList.toggle('hidden', visible > 0);
+    return visible;
   }
 
   categoryBtns.forEach((btn) => {
@@ -185,13 +183,26 @@ const catLabels: Record<Category, string> = {
       categoryBtns.forEach((b) => {
         b.classList.toggle('chip--active', (b.dataset.category ?? '') === activeCategory);
       });
-      applyFilters();
+      const visibleResults = applyFilters();
+      track('artist_category_filtered', {
+        category: activeCategory || 'all',
+        search_active: searchTerm.length > 0,
+        visible_results: visibleResults,
+      });
     });
   });
 
   searchInput?.addEventListener('input', () => {
     searchTerm = (searchInput.value ?? '').toLowerCase().trim();
-    applyFilters();
+    const visibleResults = applyFilters();
+    if (searchTimer) clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+      track('artist_search_used', {
+        search_length: searchTerm.length,
+        category: activeCategory || undefined,
+        visible_results: visibleResults,
+      });
+    }, 600);
   });
 
   // ─── Favoriten-Sterne in Cards ────────────────────────────────────────────
@@ -213,9 +224,25 @@ const catLabels: Record<Category, string> = {
     update(getFavs().has(id));
     btn.addEventListener('click', () => {
       const favs = getFavs();
-      if (favs.has(id)) { favs.delete(id); update(false); }
+      const wasFavorite = favs.has(id);
+      if (wasFavorite) { favs.delete(id); update(false); }
       else { favs.add(id); update(true); }
       saveFavs(favs);
+      track(wasFavorite ? 'artist_favorite_removed' : 'artist_favorite_added', {
+        artist_id: id,
+        source: 'artist_grid',
+        favorite_count: favs.size,
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLAnchorElement>('.artist-card[data-artist-id]').forEach((card) => {
+    card.addEventListener('click', () => {
+      track('artist_card_clicked', {
+        artist_id: card.dataset.artistId,
+        artist_name: card.dataset.artistName,
+        category: card.dataset.category || undefined,
+      });
     });
   });
 </script>

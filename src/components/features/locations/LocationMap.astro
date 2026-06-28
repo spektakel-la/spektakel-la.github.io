@@ -81,7 +81,7 @@ const mapJson = JSON.stringify(locations);
       const marker = L.marker(loc.gps, { icon });
       marker.on('click', () => {
         mapEl.dispatchEvent(
-          new CustomEvent('venue-selected', { detail: loc, bubbles: true })
+          new CustomEvent('venue-selected', { detail: { ...loc, source: 'map' }, bubbles: true })
         );
         history.replaceState(null, '', `#${loc.id}`);
       });
@@ -98,7 +98,7 @@ const mapJson = JSON.stringify(locations);
       if (loc) {
         setTimeout(() => {
           mapEl.dispatchEvent(
-            new CustomEvent('venue-selected', { detail: loc, bubbles: true })
+            new CustomEvent('venue-selected', { detail: { ...loc, source: 'hash' }, bubbles: true })
           );
         }, 300);
       }

@@ -3,6 +3,8 @@ import { getCollection } from 'astro:content';
 import type { Locale } from '../../../i18n/utils';
 import { useTranslations } from '../../../i18n/utils';
 import Page from '../../../layouts/Page.astro';
+import PageHero from '../../layout/PageHero.astro';
+import PaintSplatter from '../../ui/PaintSplatter.astro';
 import Picture from '../../ui/Picture.astro';
 
 interface Props {
@@ -21,16 +23,16 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) =>
   description={t.sponsors.tagline}
   locale={locale}
 >
-  <section class="relative overflow-hidden bg-white py-16 sm:py-24">
-    <div class="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-lime/35 blur-3xl" aria-hidden="true"></div>
-    <div class="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-primary/20 blur-3xl" aria-hidden="true"></div>
+  <PageHero eyebrow="SPEKTAKEL LANDSHUT" title={t.sponsors.title} subtitle={t.sponsors.tagline}>
+    <div slot="decor">
+      <div class="absolute -right-12 -top-36 w-96 opacity-70 sm:right-0">
+        <PaintSplatter variant={3} width={420} />
+      </div>
+    </div>
+  </PageHero>
 
-    <div class="relative mx-auto max-w-7xl px-6">
-      <header class="mx-auto mb-12 max-w-3xl text-center sm:mb-16">
-        <h1 class="font-display text-5xl leading-none text-dark sm:text-7xl">{t.sponsors.title}</h1>
-        <p class="mt-5 text-base leading-relaxed text-dark/65 sm:text-lg">{t.sponsors.tagline}</p>
-      </header>
-
+  <section class="bg-white py-10 sm:py-14">
+    <div class="mx-auto max-w-7xl px-6">
       <ul class="m-0 grid list-none grid-cols-2 gap-4 p-0 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4">
         {sponsors.map(({ data }) => (
           <li class="min-w-0">
@@ -40,7 +42,7 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) =>
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${t.sponsors.visit} ${data.name}`}
-                class="group flex h-36 items-center justify-center rounded-xl border border-dark/10 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:h-44 sm:p-8"
+                class="flex h-36 items-center justify-center rounded-xl border border-dark/10 bg-white p-5 shadow-sm transition duration-200 hover:border-primary/40 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:h-44 sm:p-8"
               >
                 <Picture
                   src={data.logo}
@@ -49,7 +51,7 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) =>
                   height="160"
                   loading="lazy"
                   decoding="async"
-                  class="max-h-20 w-full object-contain grayscale transition duration-200 group-hover:grayscale-0 sm:max-h-24"
+                  class="max-h-20 w-full object-contain sm:max-h-24"
                 />
               </a>
             ) : (
@@ -61,7 +63,7 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) =>
                   height="160"
                   loading="lazy"
                   decoding="async"
-                  class="max-h-20 w-full object-contain grayscale sm:max-h-24"
+                  class="max-h-20 w-full object-contain sm:max-h-24"
                 />
               </div>
             )}

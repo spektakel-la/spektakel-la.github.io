@@ -100,6 +100,17 @@ const enUrl = new URL(`/en${localizedPath === '/' ? '/' : localizedPath}`, canon
             }));
           }
         };
+        window.spektakel.analytics = {
+          track: function (eventName, params) {
+            if (!eventName || !window.spektakel.consent.isAnalyticsGranted()) return;
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push(Object.assign({
+              event: eventName,
+              page_path: window.location.pathname,
+              page_language: document.documentElement.lang || undefined
+            }, params || {}));
+          }
+        };
       })();
 
       window.__gtmLoaded = false;
@@ -122,15 +133,54 @@ const enUrl = new URL(`/en${localizedPath === '/' ? '/' : localizedPath}`, canon
       window.addEventListener('spektakel:consent-changed', function (event) {
         if (event.detail && event.detail.analytics) loadGtm();
       });
+
+      document.addEventListener('click', function (event) {
+        var target = event.target;
+        if (!(target instanceof Element)) return;
+
+        var link = target.closest('a[href]');
+        if (!(link instanceof HTMLAnchorElement)) return;
+
+        var url;
+        try {
+          url = new URL(link.href, window.location.href);
+        } catch (_) {
+          return;
+        }
+
+        if (url.origin === window.location.origin) return;
+
+        var linkType = link.dataset.analyticsLinkType || 'external';
+        if (/instagram\.com/i.test(url.hostname)) linkType = link.dataset.analyticsLinkType || 'social_instagram';
+        if (/facebook\.com/i.test(url.hostname)) linkType = link.dataset.analyticsLinkType || 'social_facebook';
+        if (/youtube\.com|youtu\.be/i.test(url.hostname)) linkType = link.dataset.analyticsLinkType || 'video_youtube';
+        if (/vimeo\.com/i.test(url.hostname)) linkType = link.dataset.analyticsLinkType || 'video_vimeo';
+        if (/tiktok\.com/i.test(url.hostname)) linkType = link.dataset.analyticsLinkType || 'social_tiktok';
+
+        window.spektakel.analytics.track('outbound_link_clicked', {
+          destination_domain: url.hostname.replace(/^www\./, ''),
+          link_type: linkType,
+          artist_id: link.dataset.artistId,
+          youtube_id: link.dataset.youtubeId
+        });
+      });
     </script>
     <script is:inline>
       (function () {
         if (!('serviceWorker' in navigator)) return;
 
-        var allowedHosts = ['localhost', '127.0.0.1', 'spektakel-la.github.io'];
+        var allowedHosts = ['spektakel-la.github.io'];
         if (allowedHosts.indexOf(window.location.hostname) === -1) return;
 
         async function clearServiceWorkers() {
+          var cleanupKey = 'spektakel-sw-cleanup-done';
+          try {
+            if (localStorage.getItem(cleanupKey) === '1') return;
+            localStorage.setItem(cleanupKey, '1');
+          } catch (_) {
+            return;
+          }
+
           try {
             await navigator.serviceWorker.register('/sw.js', { scope: '/' });
 

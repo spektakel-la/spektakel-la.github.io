@@ -949,6 +949,7 @@ Hier landen bekannte Lücken, die bewusst zurückgestellt wurden und **vor dem G
 | --- | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | -------------------------------------- | --------- |
 | TD1 | **OG-Social-Image** (1200×630 px WebP) | Fehlt vollständig. Aktuell Fallback auf `jonglage.png` (falsches Seitenverhältnis). Muss vor Go-Live erstellt werden. | `Base.astro` `og:image` / Twitter Card | 🔴 Hoch   |
 | TD2 | **Hut-Illustration / Icon**            | Aktuell Platzhalter (einfaches SVG + Text). Soll durch echte Illustration ersetzt werden (Hutmotiv, festivalig).      | Landingpage Hut-Box-Sektion            | 🟡 Mittel |
+| TD3 | **Analytics für finale Spielplan-Tage und Auftritte** | Sobald der finale Spielplan echte Festivaltage und konkrete Slots enthält, müssen die Tagesfilter und Programm-Einträge explizite Analytics-Events senden (`program_day_selected`, `program_entry_clicked`) mit Festivaltag, Uhrzeit, Spielort und Künstler-ID. Ziel: auswerten, welche Festivaltage und Vorstellungen besonders starkes Interesse erzeugen. | `ProgramPage.astro`, `ProgramList.astro`, `ProgramGrid.astro` | 🟡 Mittel |
 
 ---
 

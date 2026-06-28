@@ -81,7 +81,8 @@ export const de = {
   },
   sponsors: {
     title: 'Unsere Sponsoren',
-    tagline: 'Das Spektakel Landshut wird durch die Unterstützung dieser Partner möglich.',
+    tagline:
+      'Das Spektakel Landshut wäre ohne die großzügige Unterstützung unserer Sponsoren nicht möglich. Ihnen gilt ein besonderer Dank: Sie ermöglichen außergewöhnliche Straßenkunst im Herzen Landshuts und leisten damit einen wertvollen Beitrag zum kulturellen Leben unserer Stadt.',
     visit: 'Website von',
   },
   imprint: {

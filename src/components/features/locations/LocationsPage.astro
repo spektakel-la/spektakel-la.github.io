@@ -239,6 +239,7 @@ const venueList = sortedLocations.filter((l) => !l.data.organizational);
   }
 
   function closePanel() {
+    window.spektakel?.analytics?.track('venue_panel_closed');
     document.dispatchEvent(new CustomEvent('venue-closed'));
     history.replaceState(null, '', ' ');
     const overlay = document.getElementById('venue-panel-overlay');
@@ -257,7 +258,14 @@ const venueList = sortedLocations.filter((l) => !l.data.organizational);
 
     // Karte → Panel
     document.addEventListener('venue-selected', (e: Event) => {
-      openPanel((e as CustomEvent).detail, lang);
+      const loc = (e as CustomEvent).detail;
+      openPanel(loc, lang);
+      window.spektakel?.analytics?.track('venue_selected', {
+        venue_id: loc.id,
+        venue_name: loc.description,
+        source: loc.source ?? 'map',
+        entries_count: loc.entries?.length ?? 0,
+      });
     });
 
     // Desktop Panel-Buttons
@@ -267,6 +275,7 @@ const venueList = sortedLocations.filter((l) => !l.data.organizational);
     document.getElementById('mobile-list-btn')?.addEventListener('click', () => {
       const overlay = document.getElementById('mobile-overlay');
       overlay?.classList.remove('hidden'); overlay?.classList.add('flex');
+      window.spektakel?.analytics?.track('mobile_venue_list_opened');
     });
     document.getElementById('mobile-close-btn')?.addEventListener('click', () => {
       const overlay = document.getElementById('mobile-overlay');
@@ -281,7 +290,16 @@ const venueList = sortedLocations.filter((l) => !l.data.organizational);
         const mapDataEl = document.getElementById('spektakel-map-data');
         if (!mapDataEl || !venueId) return;
         const loc = JSON.parse(mapDataEl.textContent || '[]').find((l: any) => l.id === venueId);
-        if (loc) { openPanel(loc, lang); history.replaceState(null, '', `#${venueId}`); }
+        if (loc) {
+          openPanel(loc, lang);
+          history.replaceState(null, '', `#${venueId}`);
+          window.spektakel?.analytics?.track('venue_selected', {
+            venue_id: loc.id,
+            venue_name: loc.description,
+            source: 'list',
+            entries_count: loc.entries?.length ?? 0,
+          });
+        }
       });
     });
   });

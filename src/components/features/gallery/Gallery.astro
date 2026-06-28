@@ -1,5 +1,6 @@
 ---
 import Page from '../../../layouts/Page.astro';
+import PageHero from '../../layout/PageHero.astro';
 import { useTranslations } from '../../../i18n/utils';
 import { impressions } from '../../../data/impressions';
 import PaintSplatter from '../../ui/PaintSplatter.astro';
@@ -13,16 +14,13 @@ const t = useTranslations(locale);
 ---
 
 <Page locale={locale} title={t.gallery.title} description={t.gallery.tagline}>
-  <section class="gallery-hero">
-    <div class="gallery-hero__splatter" aria-hidden="true">
-      <PaintSplatter variant={1} width={420} />
+  <PageHero eyebrow="SPEKTAKEL LANDSHUT" title={t.gallery.title} subtitle={t.gallery.tagline}>
+    <div slot="decor">
+      <div class="gallery-hero__splatter">
+        <PaintSplatter variant={1} width={420} />
+      </div>
     </div>
-    <div class="gallery-hero__inner">
-      <p class="gallery-hero__eyebrow">SPEKTAKEL LANDSHUT</p>
-      <h1>{t.gallery.title}</h1>
-      <p>{t.gallery.tagline}</p>
-    </div>
-  </section>
+  </PageHero>
 
   <section class="gallery-wrap" aria-label={t.gallery.title}>
     <div class="gallery-grid" id="gallery-grid">
@@ -33,6 +31,8 @@ const t = useTranslations(locale);
             href={`https://www.youtube.com/watch?v=${item.youtubeId}`}
             target="_blank"
             rel="noopener noreferrer"
+            data-youtube-id={item.youtubeId}
+            data-analytics-link-type="gallery_youtube"
             aria-label={`${item.caption ?? t.gallery.video} – YouTube`}
           >
             <img
@@ -105,6 +105,7 @@ const t = useTranslations(locale);
   const caption = dialog?.querySelector('.lightbox__caption');
   const imageButtons = [...document.querySelectorAll('[data-gallery-index]')];
   let activeIndex = 0;
+  const track = (eventName, params = {}) => window.spektakel?.analytics?.track(eventName, params);
 
   function render(index) {
     if (!dialog || !image || !counter || items.length === 0) return;
@@ -124,10 +125,21 @@ const t = useTranslations(locale);
       render(imageIndex);
       dialog?.showModal();
       document.documentElement.classList.add('gallery-open');
+      track('gallery_image_opened', {
+        image_index: activeIndex + 1,
+        image_count: items.length,
+        image_file: items[activeIndex]?.file?.split('/').pop(),
+      });
     });
   });
 
   function closeLightbox() {
+    if (dialog?.open) {
+      track('gallery_closed', {
+        image_index: activeIndex + 1,
+        image_count: items.length,
+      });
+    }
     dialog?.close();
     document.documentElement.classList.remove('gallery-open');
   }
@@ -135,8 +147,14 @@ const t = useTranslations(locale);
   dialog?.querySelectorAll('[data-close-lightbox]').forEach((button) => {
     button.addEventListener('click', closeLightbox);
   });
-  dialog?.querySelector('[data-gallery-prev]')?.addEventListener('click', () => render(activeIndex - 1));
-  dialog?.querySelector('[data-gallery-next]')?.addEventListener('click', () => render(activeIndex + 1));
+  dialog?.querySelector('[data-gallery-prev]')?.addEventListener('click', () => {
+    render(activeIndex - 1);
+    track('gallery_image_navigated', { direction: 'previous', image_index: activeIndex + 1, image_count: items.length });
+  });
+  dialog?.querySelector('[data-gallery-next]')?.addEventListener('click', () => {
+    render(activeIndex + 1);
+    track('gallery_image_navigated', { direction: 'next', image_index: activeIndex + 1, image_count: items.length });
+  });
   dialog?.addEventListener('close', () => document.documentElement.classList.remove('gallery-open'));
   dialog?.addEventListener('cancel', (event) => {
     event.preventDefault();
@@ -145,50 +163,20 @@ const t = useTranslations(locale);
 
   document.addEventListener('keydown', (event) => {
     if (!dialog?.open) return;
-    if (event.key === 'ArrowLeft') render(activeIndex - 1);
-    if (event.key === 'ArrowRight') render(activeIndex + 1);
+    if (event.key === 'ArrowLeft') {
+      render(activeIndex - 1);
+      track('gallery_image_navigated', { direction: 'previous', input: 'keyboard', image_index: activeIndex + 1, image_count: items.length });
+    }
+    if (event.key === 'ArrowRight') {
+      render(activeIndex + 1);
+      track('gallery_image_navigated', { direction: 'next', input: 'keyboard', image_index: activeIndex + 1, image_count: items.length });
+    }
   });
 </script>
 
 <style>
   :global(html.gallery-open) {
     overflow: hidden;
-  }
-
-  .gallery-hero {
-    position: relative;
-    overflow: hidden;
-    background: var(--color-white);
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .gallery-hero__inner {
-    position: relative;
-    z-index: 1;
-    max-width: var(--container-max);
-    margin: 0 auto;
-    padding: 3.5rem 1.25rem 3rem;
-  }
-
-  .gallery-hero__eyebrow {
-    margin: 0 0 0.35rem;
-    color: var(--color-primary);
-    font-family: var(--font-display);
-    font-size: 1.15rem;
-  }
-
-  .gallery-hero h1 {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: clamp(3.75rem, 8vw, 6.5rem);
-    line-height: 0.86;
-    text-transform: uppercase;
-  }
-
-  .gallery-hero__inner > p:last-child {
-    max-width: 38rem;
-    margin: 1rem 0 0;
-    color: var(--color-text-muted);
   }
 
   .gallery-hero__splatter {
@@ -466,10 +454,6 @@ const t = useTranslations(locale);
   }
 
   @media (max-width: 639px) {
-    .gallery-hero__inner {
-      padding: 2.4rem 1rem 2rem;
-    }
-
     .gallery-hero__splatter {
       top: -6rem;
       right: -8rem;

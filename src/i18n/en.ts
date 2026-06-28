@@ -80,7 +80,8 @@ export const en = {
   },
   sponsors: {
     title: 'Our sponsors',
-    tagline: 'Spektakel Landshut is made possible by the support of these partners.',
+    tagline:
+      'Spektakel Landshut would not be possible without the generous support of our sponsors. We owe them special thanks: they make extraordinary street art possible in the heart of Landshut and make a valuable contribution to the cultural life of our city.',
     visit: 'Visit the website of',
   },
   imprint: {

@@ -1,0 +1,144 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  accentTitle?: string;
+  subtitle?: string;
+  footnote?: string;
+}
+
+const { eyebrow, title, accentTitle, subtitle, footnote } = Astro.props;
+const hasMedia = Astro.slots.has('media');
+---
+
+<section class:list={['page-hero', hasMedia && 'page-hero--with-media']}>
+  <div class="page-hero__decor" aria-hidden="true">
+    <slot name="decor" />
+  </div>
+
+  <div class="page-hero__inner">
+    <div class="page-hero__copy">
+      <p class="page-hero__eyebrow">{eyebrow}</p>
+      <h1 class="page-hero__title">
+        <span>{title}</span>
+        {accentTitle && <span class="page-hero__title-accent">{accentTitle}</span>}
+      </h1>
+      {subtitle && <p class="page-hero__subtitle">{subtitle}</p>}
+      {footnote && <p class="page-hero__footnote">{footnote}</p>}
+      <slot />
+    </div>
+  </div>
+
+  {hasMedia && (
+    <div class="page-hero__media" aria-hidden="true">
+      <slot name="media" />
+    </div>
+  )}
+</section>
+
+<style>
+  .page-hero {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-white);
+  }
+
+  .page-hero__decor {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .page-hero__inner {
+    position: relative;
+    z-index: 2;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 5rem 1.5rem 4.5rem;
+  }
+
+  .page-hero--with-media .page-hero__copy {
+    max-width: min(100%, 47rem);
+  }
+
+  .page-hero__eyebrow {
+    margin: 0 0 0.5rem;
+    color: var(--color-primary);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .page-hero__title {
+    margin: 0;
+    color: var(--color-dark);
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 10vw, 7rem);
+    line-height: 0.88;
+    text-transform: uppercase;
+  }
+
+  .page-hero__title span {
+    display: block;
+  }
+
+  .page-hero__title-accent {
+    color: var(--color-primary);
+  }
+
+  .page-hero__subtitle {
+    max-width: 44rem;
+    margin: 1.25rem 0 0;
+    color: color-mix(in srgb, var(--color-dark) 65%, transparent);
+    font-size: 1.125rem;
+    line-height: 1.65;
+  }
+
+  .page-hero__footnote {
+    margin: 1rem 0 0;
+    color: color-mix(in srgb, var(--color-dark) 40%, transparent);
+    font-size: 0.875rem;
+  }
+
+  .page-hero__media {
+    position: absolute;
+    right: max(1.5rem, calc((100vw - var(--container-max)) / 2 + 1.5rem));
+    bottom: 0;
+    z-index: 1;
+    display: none;
+    max-height: 26rem;
+  }
+
+  @media (min-width: 768px) {
+    .page-hero--with-media .page-hero__copy {
+      max-width: 55%;
+    }
+
+    .page-hero__media {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .page-hero__inner {
+      padding: 3rem 1rem 2.75rem;
+    }
+
+    .page-hero__eyebrow {
+      font-size: 1.05rem;
+    }
+
+    .page-hero__title {
+      font-size: clamp(3rem, 18vw, 5.25rem);
+    }
+
+    .page-hero__subtitle {
+      font-size: 1rem;
+    }
+  }
+</style>

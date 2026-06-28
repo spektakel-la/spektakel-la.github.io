@@ -12,6 +12,7 @@ import {
   type ScheduleEntry,
 } from '../../../utils/schedule';
 import Page from '../../../layouts/Page.astro';
+import PageHero from '../../layout/PageHero.astro';
 import PaintSplatter from '../../ui/PaintSplatter.astro';
 import DayTabs from './DayTabs.astro';
 import CategoryFilter from './CategoryFilter.astro';
@@ -267,9 +268,12 @@ const jsonLd = {
 >
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
 
-  <!-- ─── Hero ─────────────────────────────────────────────────────────────── -->
-  <section class="relative bg-white overflow-hidden py-16 md:py-20">
-    <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+  <PageHero
+    eyebrow="SPEKTAKEL LANDSHUT 2026"
+    title={t.program.title}
+    footnote={t.common.disclaimer}
+  >
+    <div slot="decor">
       <div class="absolute -top-16 -right-20 opacity-25">
         <PaintSplatter variant={2} width={480} />
       </div>
@@ -277,14 +281,7 @@ const jsonLd = {
         <PaintSplatter variant={5} width={300} />
       </div>
     </div>
-    <div class="relative z-10 max-w-7xl mx-auto px-6">
-      <p class="text-primary font-display text-xl tracking-widest mb-1">SPEKTAKEL LANDSHUT 2026</p>
-      <h1 class="font-display leading-none text-dark" style="font-size: clamp(3rem, 10vw, 7rem)">
-        {t.program.title.toUpperCase()}
-      </h1>
-      <p class="mt-4 text-dark/40 text-sm">{t.common.disclaimer}</p>
-    </div>
-  </section>
+  </PageHero>
 
   <!-- ─── Spielzeiten-Hinweis ──────────────────────────────────────────────── -->
   <section class="program-schedule-notice" aria-labelledby="program-schedule-notice-title">
@@ -361,6 +358,9 @@ const jsonLd = {
   const categoryBtns = document.querySelectorAll<HTMLButtonElement>('#program-filters .chip');
   const venueSelect = document.querySelector<HTMLSelectElement>('#venue-filter');
   const viewBtns = document.querySelectorAll<HTMLButtonElement>('[data-view-toggle]');
+  const track = (eventName: string, params: Record<string, unknown> = {}) => {
+    window.spektakel?.analytics?.track(eventName, params);
+  };
 
   // ─── Day-Tabs ────────────────────────────────────────────────────────────────
   tabs.forEach((tab) => {
@@ -375,7 +375,14 @@ const jsonLd = {
         t.classList.toggle('text-dark/50', !active);
       });
       dayPanels.forEach((p) => p.classList.toggle('hidden', p.dataset.dayPanel !== activeDay));
-      applyFilters();
+      const visibleResults = applyFilters();
+      track('program_day_selected', {
+        day: activeDay,
+        category: activeCategory || undefined,
+        venue: activeVenue || undefined,
+        view: activeView,
+        visible_results: visibleResults,
+      });
     });
   });
 
@@ -388,18 +395,32 @@ const jsonLd = {
         b.classList.toggle('chip--active', isActive);
         b.setAttribute('aria-pressed', String(isActive));
       });
-      applyFilters();
+      const visibleResults = applyFilters();
+      track('program_category_filtered', {
+        day: activeDay,
+        category: activeCategory || 'all',
+        venue: activeVenue || undefined,
+        view: activeView,
+        visible_results: visibleResults,
+      });
     });
   });
 
   // ─── Spielort-Filter ─────────────────────────────────────────────────────────
   venueSelect?.addEventListener('change', () => {
     activeVenue = venueSelect.value;
-    applyFilters();
+    const visibleResults = applyFilters();
+    track('program_venue_filtered', {
+      day: activeDay,
+      category: activeCategory || undefined,
+      venue: activeVenue || 'all',
+      view: activeView,
+      visible_results: visibleResults,
+    });
   });
 
   // ─── Ansicht-Toggle ──────────────────────────────────────────────────────────
-  function setView(view: 'list' | 'table') {
+  function setView(view: 'list' | 'table', shouldTrack = false) {
     activeView = view;
     viewBtns.forEach((b) => {
       const active = b.dataset.viewToggle === activeView;
@@ -411,19 +432,35 @@ const jsonLd = {
     document.querySelectorAll<HTMLElement>('[data-view-panel]').forEach((panel) => {
       panel.classList.toggle('hidden', panel.dataset.viewPanel !== activeView);
     });
+    if (shouldTrack) {
+      track('program_view_changed', {
+        day: activeDay,
+        category: activeCategory || undefined,
+        venue: activeVenue || undefined,
+        view: activeView,
+        visible_results: getVisibleProgramCount(),
+      });
+    }
   }
 
   viewBtns.forEach((btn) => {
-    btn.addEventListener('click', () => setView((btn.dataset.viewToggle as 'list' | 'table') ?? 'list'));
+    btn.addEventListener('click', () => setView((btn.dataset.viewToggle as 'list' | 'table') ?? 'list', true));
   });
 
   // ─── Initial-Ansicht je Bildschirmbreite ─────────────────────────────────────
   setView(window.matchMedia('(min-width: 640px)').matches ? 'table' : 'list');
 
   // ─── Filterlogik ─────────────────────────────────────────────────────────────
+  function getVisibleProgramCount() {
+    const activePanel = document.querySelector<HTMLElement>(`[data-day-panel="${activeDay}"]`);
+    if (!activePanel) return 0;
+    return [...activePanel.querySelectorAll<HTMLElement>('.program-entry')]
+      .filter((entry) => !entry.classList.contains('hidden')).length;
+  }
+
   function applyFilters() {
     const activePanel = document.querySelector<HTMLElement>(`[data-day-panel="${activeDay}"]`);
-    if (!activePanel) return;
+    if (!activePanel) return 0;
 
     // Listen-Ansicht
     const entries = activePanel.querySelectorAll<HTMLElement>('.program-entry');
@@ -498,6 +535,8 @@ const jsonLd = {
         row.classList.toggle('hidden', !rowOk);
       });
     }
+
+    return visible;
   }
 
   // ─── Live-Indikator ──────────────────────────────────────────────────────────

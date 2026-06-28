@@ -18,6 +18,14 @@ Arbeitsanweisungen fuer Codex und andere Coding-Agents in diesem Repository.
 - npm ist der Package Manager fuer Installation, Skripte und Lockfile-Pflege.
 - Keine globale Node.js-Installation voraussetzen oder empfehlen.
 - Node.js ueber FNM (Fast Node Manager) verwenden.
+- Wenn `fnm` nicht im aktuellen `PATH` liegt, den Homebrew-Pfad `/opt/homebrew/bin/fnm` verwenden.
+- Fuer npm-, Build- und Test-Kommandos in zsh die FNM-Umgebung explizit laden und das eigentliche Kommando in derselben Shell-Kette ausfuehren:
+
+```sh
+eval "$(/opt/homebrew/bin/fnm env --shell zsh)" && /opt/homebrew/bin/fnm use 24 && npm run build
+```
+
+- `npm run build` im Beispiel durch das benoetigte Kommando ersetzen, z. B. `npm install`, `npm run dev`, `npm run test` oder `npm run build`.
 - Wenn eine passende Node-Version fehlt, FNM verwenden, z. B.:
 
 ```sh
@@ -81,6 +89,7 @@ npm run images:clean
 - Fuer reine Content-Aenderungen mindestens die betroffenen Seiten lokal plausibilisieren.
 - Fuer Logik- oder Datenstruktur-Aenderungen relevante Vitest-Tests ausfuehren.
 - Fuer Navigation, Consent, Programm, Galerie oder SEO relevante Playwright-Tests ausfuehren.
+- Bei Browser-Plugin-Pruefungen fuer diese statisch gebaute Astro-Seite `load` statt `networkidle` als Wait-State verwenden; der Browser-Wrapper unterstuetzt `networkidle` hier nicht.
 - Vor groesseren Abschluessen bevorzugt `npm run build` ausfuehren.
 - Wenn Tests nicht ausgefuehrt werden koennen, im Ergebnis klar sagen, was nicht geprueft wurde.
 
