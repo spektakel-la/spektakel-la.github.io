@@ -195,8 +195,8 @@ const enUrl = new URL(`/en${localizedPath === '/' ? '/' : localizedPath}`, canon
             await Promise.all(registrations.map(function (registration) {
               return registration.unregister();
             }));
-          } catch (error) {
-            console.warn('[ServiceWorker cleanup] Failed:', error);
+          } catch (_) {
+            // Best-effort cleanup only. Some crawlers and privacy modes reject service worker registration.
           }
         }
 
