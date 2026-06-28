@@ -86,6 +86,7 @@ npm run images:clean
 - Code-Duplikation vermeiden: gemeinsam genutzte Logik, Datenstrukturen, Mapping-Tabellen und Browser-Helfer in passende Komponenten-, Daten- oder `src/utils`-Dateien auslagern statt sie mehrfach lokal zu definieren.
 - Bei UI-Aenderungen responsive Darstellung und bestehende Gestaltung pruefen.
 - Bei Content-Aenderungen deutsche und englische Seiten bzw. i18n-Daten im Blick behalten.
+- Contents aus 2025 ignorieren, es sei denn sie werden explizit gefordert.
 
 ## Tests und Verifikation
 
