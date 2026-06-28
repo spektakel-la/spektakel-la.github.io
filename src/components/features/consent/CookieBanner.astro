@@ -148,13 +148,21 @@ const t = useTranslations(locale);
     padding: var(--space-3) var(--space-5);
     font: 700 var(--text-sm)/1 var(--font-body);
     cursor: pointer;
-    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    transition:
+      background-color var(--transition-fast),
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast),
+      color var(--transition-fast),
+      transform var(--transition-fast);
   }
 
-  .cookie-banner__button:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 var(--color-dark); }
+  .cookie-banner__button:hover { border-color: var(--color-primary); transform: translateY(-1px); }
+  .cookie-banner__button:active { transform: translateY(0); }
   .cookie-banner__button:focus-visible { outline: 3px solid var(--color-cyan); outline-offset: 3px; }
   .cookie-banner__button--accept { background: var(--color-primary); color: var(--color-white); }
+  .cookie-banner__button--accept:hover { background: #e81768; box-shadow: 0 4px 10px rgba(255, 45, 122, 0.22); }
   .cookie-banner__button--decline { background: var(--color-white); color: var(--color-dark); }
+  .cookie-banner__button--decline:hover { color: var(--color-primary); }
 
   @media (max-width: 40rem) {
     .cookie-banner {

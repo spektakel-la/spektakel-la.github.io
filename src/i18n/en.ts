@@ -89,8 +89,8 @@ export const en = {
   cookie: {
     eyebrow: 'Give and take',
     title: 'Better together',
-    message: 'You get all the festival information at a glance. By showing us which content matters most to you, you help us make this website even more useful.',
-    detailText: 'With your consent, we load Google Tag Manager to record how the website is used. You can decline without any restriction and change your choice at any time via “Cookie settings” in the footer.',
+    message: 'Help us understand which programme items, venues and information matter most. This lets us improve the festival website in a more focused way.',
+    detailText: 'With your consent, we learn how the website is used and can work on targeted improvements. You can decline without any restriction and change your choice at any time via “Cookie settings” in the footer.',
     accept: 'Yes, happy to help',
     decline: 'No, thanks',
     details: 'Details',

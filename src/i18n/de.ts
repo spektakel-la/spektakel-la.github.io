@@ -90,9 +90,9 @@ export const de = {
   cookie: {
     eyebrow: 'Ein Geben und Nehmen',
     title: 'Gemeinsam besser',
-    message: 'Du bekommst alle Festivalinfos auf einen Blick. Wenn du uns zeigst, welche Inhalte besonders gefragt sind, können wir diese Website noch hilfreicher machen.',
-    detailText: 'Dafür laden wir nach deiner Zustimmung Google Tag Manager und erfassen, wie die Website genutzt wird. Du kannst ohne Einschränkungen ablehnen und deine Auswahl jederzeit über „Cookie-Einstellungen“ im Footer ändern.',
-    accept: 'Ja, gerne',
+    message: 'Hilf uns zu verstehen, welche Programmpunkte, Orte und Infos besonders gefragt sind. So können wir die Website fürs Festival gezielter verbessern.',
+    detailText: 'Mit deiner Zustimmung erfahren wir, wie die Website genutzt wird, und können gezielt an Verbesserungen arbeiten. Du kannst ohne Einschränkungen ablehnen und deine Auswahl jederzeit über „Cookie-Einstellungen“ im Footer ändern.',
+    accept: 'Ja, ich helfe gerne',
     decline: 'Nein, danke',
     details: 'Details',
   },

@@ -19,7 +19,7 @@ test('zeigt den Banner beim Erstbesuch und lädt GTM erst nach Zustimmung', asyn
   await expect(page.locator(gtmSelector)).toHaveCount(0);
   expect(googleRequests).toEqual([]);
 
-  await banner.getByRole('button', { name: 'Ja, gerne' }).click();
+  await banner.getByRole('button', { name: 'Ja, ich helfe gerne' }).click();
 
   await expect(banner).toBeHidden();
   await expect(page.locator(gtmSelector)).toHaveCount(1);
@@ -53,7 +53,7 @@ test('lädt GTM bei bereits erteilter Zustimmung genau einmal', async ({ page })
 
 test('stellt den Consent-Status für Analytics bereit und erlaubt den Widerruf im Footer', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('button', { name: 'Ja, gerne' }).click();
+  await page.getByRole('button', { name: 'Ja, ich helfe gerne' }).click();
 
   await expect.poll(() => page.evaluate(() => window.spektakel.consent.getStatus())).toBe('accepted');
   await expect.poll(() => page.evaluate(() => window.spektakel.consent.isAnalyticsGranted())).toBe(true);

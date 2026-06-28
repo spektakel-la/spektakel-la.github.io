@@ -22,6 +22,10 @@ const basePath = locale === 'en' ? '/en' : '';
 const { name, images, facebook, instagram, youtube, vimeo, tiktok, homepage, hut_act, artist_id, duration, image_position } = artist.data;
 const imgPos = image_position ?? 'center';
 const locData = locale === 'en' ? (artist.data.en ?? artist.data.de) : artist.data.de;
+const descriptionParagraphs = locData.description
+  .split(/\n\s*\n/)
+  .map((paragraph) => paragraph.trim())
+  .filter(Boolean);
 
 // Kategorie bestimmen
 function getMacroCategory(): Category | '' {
@@ -341,7 +345,11 @@ if (performerIn.length > 0) jsonLd.performerIn = performerIn;
           </p>
         )}
 
-        <p class="text-dark/70 leading-relaxed mb-6">{locData.description}</p>
+        <div class="text-dark/70 leading-relaxed mb-6 space-y-4">
+          {descriptionParagraphs.map((paragraph) => (
+            <p class="whitespace-pre-line">{paragraph}</p>
+          ))}
+        </div>
 
         {(locData.categories?.length ?? 0) > 0 && (
           <div class="flex flex-wrap gap-2">
