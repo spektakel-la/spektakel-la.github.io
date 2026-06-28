@@ -2,7 +2,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 import { useTranslations } from '../../../i18n/utils';
-import { Category, CATEGORY_KEYWORDS } from '../../../utils/categories';
+import { getArtistMacroCategory, getCategoryLabels } from '../../../utils/categories';
 import { loadSchedule, mergeConsecutiveSlots, type MergedEntry } from '../../../utils/schedule';
 import Page from '../../../layouts/Page.astro';
 import PageHero from '../../layout/PageHero.astro';
@@ -26,22 +26,8 @@ const artists = allArtists
   .filter((a) => !a.data.organizational)
   .sort((a, b) => a.data.name.localeCompare(b.data.name, locale));
 
-function getMacroCategory(artist: CollectionEntry<'artists'>): Category | '' {
-  const cats =
-    locale === 'en'
-      ? (artist.data.en?.categories ?? artist.data.de?.categories ?? [])
-      : (artist.data.de?.categories ?? []);
-  for (const cat of cats) {
-    const c = cat.toLowerCase();
-    for (const { cat: macro, keywords } of CATEGORY_KEYWORDS) {
-      if (keywords.some((k) => c.includes(k))) return macro;
-    }
-  }
-  return '';
-}
-
 const categoryMap = Object.fromEntries(
-  artists.map((a) => [a.id, getMacroCategory(a)])
+  artists.map((a) => [a.id, getArtistMacroCategory(a.data, locale)])
 );
 
 // Schedule für Cards (Spielzeiten)
@@ -57,13 +43,7 @@ for (const artist of artists) {
   scheduleMap[artist.id] = merged;
 }
 
-const catLabels: Record<Category, string> = {
-  [Category.Akrobatik]: t.program.catAkrobatik,
-  [Category.Musik]:     t.program.catMusik,
-  [Category.Comedy]:    t.program.catComedy,
-  [Category.Magie]:     t.program.catMagie,
-  [Category.StreetArt]: t.program.catStreetArt,
-};
+const catLabels = getCategoryLabels(t);
 ---
 
 <Page
@@ -151,6 +131,8 @@ const catLabels: Record<Category, string> = {
 </Page>
 
 <script>
+  import { getFavorites, toggleFavorite } from '../../../utils/favorites';
+
   const searchInput = document.querySelector<HTMLInputElement>('#artist-search');
   const categoryBtns = document.querySelectorAll<HTMLButtonElement>('#artists-filters .chip');
   const cards = document.querySelectorAll<HTMLElement>('.artist-card');
@@ -206,13 +188,6 @@ const catLabels: Record<Category, string> = {
   });
 
   // ─── Favoriten-Sterne in Cards ────────────────────────────────────────────
-  const STORAGE_KEY = 'spektakel-favorites';
-  const getFavs = (): Set<string> => {
-    try { return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]')); }
-    catch { return new Set(); }
-  };
-  const saveFavs = (s: Set<string>) => localStorage.setItem(STORAGE_KEY, JSON.stringify([...s]));
-
   document.querySelectorAll<HTMLButtonElement>('.fav-card-btn').forEach((btn) => {
     const id = btn.dataset.artistId ?? '';
     const icon = btn.querySelector<SVGElement>('.fav-card-icon');
@@ -221,17 +196,15 @@ const catLabels: Record<Category, string> = {
       btn.classList.toggle('text-dark/40', !isFav);
       if (icon) icon.setAttribute('fill', isFav ? 'currentColor' : 'none');
     };
-    update(getFavs().has(id));
+    update(getFavorites().has(id));
     btn.addEventListener('click', () => {
-      const favs = getFavs();
-      const wasFavorite = favs.has(id);
-      if (wasFavorite) { favs.delete(id); update(false); }
-      else { favs.add(id); update(true); }
-      saveFavs(favs);
+      const wasFavorite = getFavorites().has(id);
+      const isFavorite = toggleFavorite(id);
+      update(isFavorite);
       track(wasFavorite ? 'artist_favorite_removed' : 'artist_favorite_added', {
         artist_id: id,
         source: 'artist_grid',
-        favorite_count: favs.size,
+        favorite_count: getFavorites().size,
       });
     });
   });

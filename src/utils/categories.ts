@@ -12,7 +12,7 @@ export const Category = {
   Musik: 'musik',
   Comedy: 'comedy',
   Magie: 'magie',
-  StreetArt: 'street-art',
+  Sonstiges: 'sonstiges',
 } as const;
 
 /** Union aller gültigen Kategorie-Werte, z. B. `'akrobatik' | 'musik' | …` */
@@ -27,11 +27,87 @@ export const CATEGORY_KEYWORDS: ReadonlyArray<{ cat: Category; keywords: readonl
   { cat: Category.Musik, keywords: ['musik', 'music'] },
   { cat: Category.Comedy, keywords: ['comedy', 'theater'] },
   { cat: Category.Magie, keywords: ['magie', 'magic', 'zauber'] },
-  {
-    cat: Category.StreetArt,
-    keywords: ['street art', 'fotographie', 'photography', 'lightshow', 'speedpainting', 'graffiti'],
-  },
+  { cat: Category.Sonstiges, keywords: ['natur', 'nature', 'poesie', 'poetry', 'vortrag', 'talk'] },
 ];
+
+export type Locale = 'de' | 'en';
+
+type LocalizedCategoryData = {
+  categories?: string[];
+};
+
+type ArtistCategoryData = {
+  organizational?: boolean;
+  de?: LocalizedCategoryData;
+  en?: LocalizedCategoryData;
+};
+
+type CategoryLabelTranslations = {
+  program: {
+    catAkrobatik: string;
+    catMusik: string;
+    catComedy: string;
+    catMagie: string;
+    catSonstiges: string;
+  };
+};
+
+export function getLocalizedArtistCategories(artist: ArtistCategoryData, locale: Locale): string[] {
+  return locale === 'en'
+    ? (artist.en?.categories ?? artist.de?.categories ?? [])
+    : (artist.de?.categories ?? []);
+}
+
+export function getMacroCategoryFromRaw(raw: string): Category | undefined {
+  const normalized = raw.toLowerCase();
+  for (const { cat, keywords } of CATEGORY_KEYWORDS) {
+    if (keywords.some((keyword) => normalized.includes(keyword))) return cat;
+  }
+  return undefined;
+}
+
+export function getMacroCategoryFromCategories(categories: readonly string[]): Category | '' {
+  for (const category of categories) {
+    const macro = getMacroCategoryFromRaw(category);
+    if (macro) return macro;
+  }
+  return '';
+}
+
+export function getArtistMacroCategory(artist: ArtistCategoryData, locale: Locale): Category | '' {
+  if (artist.organizational) return '';
+  return getMacroCategoryFromCategories(getLocalizedArtistCategories(artist, locale));
+}
+
+export function getCategoryLabels(t: CategoryLabelTranslations): Record<Category, string> {
+  return {
+    [Category.Akrobatik]: t.program.catAkrobatik,
+    [Category.Musik]: t.program.catMusik,
+    [Category.Comedy]: t.program.catComedy,
+    [Category.Magie]: t.program.catMagie,
+    [Category.Sonstiges]: t.program.catSonstiges,
+  };
+}
+
+export function getCategoryGenreLabel(category: Category, locale: Locale): string {
+  const labels: Record<Locale, Record<Category, string>> = {
+    de: {
+      [Category.Akrobatik]: 'Akrobatik',
+      [Category.Musik]: 'Musik',
+      [Category.Comedy]: 'Comedy',
+      [Category.Magie]: 'Magie',
+      [Category.Sonstiges]: 'Sonstiges',
+    },
+    en: {
+      [Category.Akrobatik]: 'Acrobatics',
+      [Category.Musik]: 'Music',
+      [Category.Comedy]: 'Comedy',
+      [Category.Magie]: 'Magic',
+      [Category.Sonstiges]: 'Other',
+    },
+  };
+  return labels[locale][category];
+}
 
 /**
  * Kategorie-Farben als JS-Konstanten.
@@ -44,6 +120,6 @@ export const CATEGORY_COLORS: Readonly<Record<Category, string>> = {
   [Category.Akrobatik]: '#00b4db',
   [Category.Musik]: '#ff2d7a',
   [Category.Comedy]: '#b7ff00',
-  [Category.StreetArt]: '#ff6b1a',
   [Category.Magie]: '#9b59b6',
+  [Category.Sonstiges]: '#ff6b1a',
 } as const;

@@ -1,0 +1,25 @@
+---
+import type { Locale } from '../../i18n/utils';
+
+interface Props {
+  href: string;
+  locale: Locale;
+  variant?: 'desktop' | 'mobile';
+}
+
+const { href, locale, variant = 'desktop' } = Astro.props;
+const label = locale === 'en' ? 'EN' : 'DE';
+const ariaLabel = locale === 'en' ? 'Switch to English' : 'Zu Deutsch wechseln';
+const sizeClass = variant === 'desktop' ? 'ml-4 px-3 py-1.5' : 'px-2.5 py-1';
+---
+
+<a
+  href={href}
+  class:list={[
+    sizeClass,
+    'rounded border border-gray-300 text-xs font-bold uppercase tracking-widest hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition-colors',
+  ]}
+  aria-label={ariaLabel}
+>
+  {label}
+</a>

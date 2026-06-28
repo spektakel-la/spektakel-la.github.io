@@ -1,0 +1,20 @@
+---
+import Picture from '../../ui/Picture.astro';
+
+interface Props {
+  src: string;
+  alt: string;
+}
+
+const { src, alt } = Astro.props;
+---
+
+<Picture
+  src={src}
+  alt={alt}
+  width="320"
+  height="160"
+  loading="lazy"
+  decoding="async"
+  class="max-h-20 w-full object-contain sm:max-h-24"
+/>

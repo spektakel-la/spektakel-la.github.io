@@ -6,6 +6,17 @@ const imagePositionSchema = z.union([
   z.number().int().min(0).max(100),
 ]);
 
+const localizedArtistSchema = z.object({
+  country: z.string().optional(),
+  description: z.string(),
+  highlight: z.string().optional(),
+  categories: z.array(z.string()).default([]),
+  tags: z.array(z.string()).optional(),
+  age_recommendation: z.string().optional(),
+  language: z.string().optional(),
+  special: z.string().optional(),
+});
+
 const artists = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/artists' }),
   schema: z.object({
@@ -22,26 +33,8 @@ const artists = defineCollection({
     tiktok: z.string().url().nullish(),
     homepage: z.string().url().nullish(),
     organizational: z.boolean().optional(),
-    de: z.object({
-      country: z.string().optional(),
-      description: z.string(),
-      highlight: z.string().optional(),
-      categories: z.array(z.string()).default([]),
-      tags: z.array(z.string()).optional(),
-      age_recommendation: z.string().optional(),
-      language: z.string().optional(),
-      special: z.string().optional(),
-    }),
-    en: z.object({
-      country: z.string().optional(),
-      description: z.string(),
-      highlight: z.string().optional(),
-      categories: z.array(z.string()).default([]),
-      tags: z.array(z.string()).optional(),
-      age_recommendation: z.string().optional(),
-      language: z.string().optional(),
-      special: z.string().optional(),
-    }),
+    de: localizedArtistSchema,
+    en: localizedArtistSchema,
   }),
 });
 

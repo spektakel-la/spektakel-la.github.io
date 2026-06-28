@@ -43,7 +43,7 @@ export const en = {
     catMusik: 'Music',
     catComedy: 'Comedy',
     catMagie: 'Magic',
-    catStreetArt: 'Street Art',
+    catSonstiges: 'Other',
   },
   artists: {
     title: 'All artists at a glance',

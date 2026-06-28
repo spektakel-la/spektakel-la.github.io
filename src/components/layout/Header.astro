@@ -3,6 +3,7 @@ import Navigation from './Navigation.astro';
 import { localePath } from '../../i18n/utils';
 import type { Locale } from '../../i18n/utils';
 import Picture from '../ui/Picture.astro';
+import LanguageSwitchLink from './LanguageSwitchLink.astro';
 
 interface Props {
   locale?: string;
@@ -53,26 +54,12 @@ const homeHref = localePath('/', lang);
         <Navigation locale={locale} />
 
         <!-- Sprachumschalter -->
-        <a
-          href={switchLangHref()}
-          class="ml-4 px-3 py-1.5 rounded border border-gray-300 text-xs font-bold uppercase tracking-widest
-                 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition-colors"
-          aria-label={otherLocale === 'en' ? 'Switch to English' : 'Zu Deutsch wechseln'}
-        >
-          {otherLocale === 'en' ? 'EN' : 'DE'}
-        </a>
+        <LanguageSwitchLink href={switchLangHref()} locale={otherLocale} />
       </div>
 
       <!-- Mobile: Sprachumschalter + Hamburger -->
       <div class="flex lg:hidden items-center gap-3">
-        <a
-          href={switchLangHref()}
-          class="px-2.5 py-1 rounded border border-gray-300 text-xs font-bold uppercase tracking-widest
-                 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition-colors"
-          aria-label={otherLocale === 'en' ? 'Switch to English' : 'Zu Deutsch wechseln'}
-        >
-          {otherLocale === 'en' ? 'EN' : 'DE'}
-        </a>
+        <LanguageSwitchLink href={switchLangHref()} locale={otherLocale} variant="mobile" />
 
         <button
           id="menu-toggle"

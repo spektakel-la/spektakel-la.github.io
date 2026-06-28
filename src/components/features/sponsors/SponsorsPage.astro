@@ -5,7 +5,7 @@ import { useTranslations } from '../../../i18n/utils';
 import Page from '../../../layouts/Page.astro';
 import PageHero from '../../layout/PageHero.astro';
 import PaintSplatter from '../../ui/PaintSplatter.astro';
-import Picture from '../../ui/Picture.astro';
+import SponsorLogo from './SponsorLogo.astro';
 
 interface Props {
   locale?: Locale;
@@ -44,27 +44,11 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) =>
                 aria-label={`${t.sponsors.visit} ${data.name}`}
                 class="flex h-36 items-center justify-center rounded-xl border border-dark/10 bg-white p-5 shadow-sm transition duration-200 hover:border-primary/40 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:h-44 sm:p-8"
               >
-                <Picture
-                  src={data.logo}
-                  alt={data.name}
-                  width="320"
-                  height="160"
-                  loading="lazy"
-                  decoding="async"
-                  class="max-h-20 w-full object-contain sm:max-h-24"
-                />
+                <SponsorLogo src={data.logo} alt={data.name} />
               </a>
             ) : (
               <div class="flex h-36 items-center justify-center rounded-xl border border-dark/10 bg-white p-5 shadow-sm sm:h-44 sm:p-8">
-                <Picture
-                  src={data.logo}
-                  alt={data.name}
-                  width="320"
-                  height="160"
-                  loading="lazy"
-                  decoding="async"
-                  class="max-h-20 w-full object-contain sm:max-h-24"
-                />
+                <SponsorLogo src={data.logo} alt={data.name} />
               </div>
             )}
           </li>

@@ -3,9 +3,14 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import { festival } from '../../../data/festival';
 import { useTranslations } from '../../../i18n/utils';
 import Page from '../../../layouts/Page.astro';
-import { Category, CATEGORY_KEYWORDS } from '../../../utils/categories';
+import {
+  getCategoryGenreLabel,
+  getMacroCategoryFromCategories,
+  getMacroCategoryFromRaw,
+} from '../../../utils/categories';
 import { imagePositionToObjectPosition } from '../../../utils/imagePosition';
 import { preferWebp } from '../../../utils/imageVariants';
+import { createFestivalEvent } from '../../../utils/jsonLd';
 import { formatTime, loadSchedule, mergeConsecutiveSlots } from '../../../utils/schedule';
 import CategoryChip from '../../ui/CategoryChip.astro';
 import MapPin from '../../ui/MapPin.astro';
@@ -29,18 +34,7 @@ const descriptionParagraphs = locData.description
   .map((paragraph) => paragraph.trim())
   .filter(Boolean);
 
-// Kategorie bestimmen
-function getMacroCategory(): Category | '' {
-  const cats = locData.categories ?? [];
-  for (const cat of cats) {
-    const c = cat.toLowerCase();
-    for (const { cat: macro, keywords } of CATEGORY_KEYWORDS) {
-      if (keywords.some((k) => c.includes(k))) return macro;
-    }
-  }
-  return '';
-}
-const macroCategory = getMacroCategory();
+const macroCategory = getMacroCategoryFromCategories(locData.categories ?? []);
 
 // Auftritte laden
 const schedule = loadSchedule();
@@ -63,15 +57,6 @@ const mainImageForMetadata = mainImage ? preferWebp(mainImage) : null;
 const extraImages = images?.slice(1) ?? [];
 
 const catChipLabel = macroCategory ? (locData.categories[0] ?? macroCategory) : '';
-
-/** Mappt einen Roh-Kategorie-String (z. B. "Jonglage") auf eine Makro-Kategorie. */
-function mapToCategory(raw: string): Category | undefined {
-  const c = raw.toLowerCase();
-  for (const { cat, keywords } of CATEGORY_KEYWORDS) {
-    if (keywords.some((k) => c.includes(k))) return cat;
-  }
-  return undefined;
-}
 
 // ─── Dauer → ISO 8601 für JSON-LD ────────────────────────────────────────────
 function durationToISO(dur?: string): string | undefined {
@@ -99,14 +84,7 @@ const sameAs: string[] = [
   homepage,
 ].filter((u): u is string => typeof u === 'string' && u.length > 0);
 
-const GENRE_LABELS: Record<string, string> = {
-  akrobatik: locale === 'en' ? 'Acrobatics' : 'Akrobatik',
-  musik: locale === 'en' ? 'Music' : 'Musik',
-  comedy: 'Comedy',
-  street_art: locale === 'en' ? 'Street Art' : 'Street Art',
-  magie: locale === 'en' ? 'Magic' : 'Magie',
-};
-const genre = macroCategory ? (GENRE_LABELS[macroCategory] ?? macroCategory) : undefined;
+const genre = macroCategory ? getCategoryGenreLabel(macroCategory, locale) : undefined;
 const keywords = locData.tags && locData.tags.length > 0 ? locData.tags.join(', ') : undefined;
 
 const performerRef: Record<string, unknown> = { '@type': 'PerformingGroup', name, url: artistUrl };
@@ -115,43 +93,21 @@ if (mainImageForMetadata) performerRef.image = mainImageForMetadata;
 const performerIn = merged.map((entry) => {
   const loc = locationMap[entry.location_id];
   const programUrl = locale === 'en' ? `${siteUrl}/en/program/` : `${siteUrl}/program/`;
-  const eventObj: Record<string, unknown> = {
-    '@type': 'Event',
+  return createFestivalEvent({
     name: `${name} – ${festival.organizerName}`,
     startDate: entry.startTime.toISOString(),
     endDate: entry.endTime.toISOString(),
     url: programUrl,
-    organizer: { '@type': 'Organization', name: festival.organizerName, url: siteUrl },
     performer: performerRef,
-    eventStatus: 'https://schema.org/EventScheduled',
-    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-    offers: {
-      '@type': 'Offer',
-      price: festival.admissionPrice,
-      priceCurrency: festival.currency,
-      url: programUrl,
-      availability: 'https://schema.org/InStock',
-    },
-  };
-  if (mainImageForMetadata) eventObj.image = mainImageForMetadata;
-    if (durationISO) eventObj.duration = durationISO;
-    if (loc) {
-    eventObj.location = {
-      '@type': 'Place',
-      name: loc.data.description,
-      geo: {
-        '@type': 'GeoCoordinates',
-        latitude: loc.data.gps[0],
-        longitude: loc.data.gps[1],
-      },
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: festival.addressLocality,
-        addressCountry: festival.addressCountry,
-      },
-    };
-  }
-  return eventObj;
+    image: mainImageForMetadata ?? undefined,
+    duration: durationISO,
+    location: loc
+      ? {
+        name: loc.data.description,
+        gps: loc.data.gps,
+      }
+      : undefined,
+  });
 });
 
 const jsonLd: Record<string, unknown> = {
@@ -359,7 +315,7 @@ if (performerIn.length > 0) jsonLd.performerIn = performerIn;
           <div class="flex flex-wrap gap-2">
             {locData.categories.map((tag: string) => (
               <CategoryChip
-                category={mapToCategory(tag)}
+                category={getMacroCategoryFromRaw(tag)}
                 label={tag}
                 class="pointer-events-none"
               />
@@ -495,17 +451,13 @@ if (performerIn.length > 0) jsonLd.performerIn = performerIn;
 </Page>
 
 <script>
+  import { getFavorites, toggleFavorite } from '../../../utils/favorites';
+
   const btn = document.querySelector<HTMLButtonElement>('.fav-btn');
   if (btn) {
     const artistId = btn.dataset.artistId ?? '';
     const icon = btn.querySelector<SVGElement>('.fav-icon');
     const label = btn.querySelector<HTMLElement>('.fav-label');
-    const STORAGE_KEY = 'spektakel-favorites';
-    const getFavs = (): Set<string> => {
-      try { return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]')); }
-      catch { return new Set(); }
-    };
-    const saveFavs = (s: Set<string>) => localStorage.setItem(STORAGE_KEY, JSON.stringify([...s]));
     const update = (isFav: boolean) => {
       btn.setAttribute('aria-pressed', String(isFav));
       btn.classList.toggle('text-primary', isFav);
@@ -515,17 +467,15 @@ if (performerIn.length > 0) jsonLd.performerIn = performerIn;
         ? (btn.dataset.labelFav ?? '')
         : (btn.dataset.labelUnfav ?? '');
     };
-    update(getFavs().has(artistId));
+    update(getFavorites().has(artistId));
     btn.addEventListener('click', () => {
-      const favs = getFavs();
-      const wasFavorite = favs.has(artistId);
-      if (wasFavorite) { favs.delete(artistId); update(false); }
-      else { favs.add(artistId); update(true); }
-      saveFavs(favs);
+      const wasFavorite = getFavorites().has(artistId);
+      const isFavorite = toggleFavorite(artistId);
+      update(isFavorite);
       window.spektakel?.analytics?.track(wasFavorite ? 'artist_favorite_removed' : 'artist_favorite_added', {
         artist_id: artistId,
         source: 'artist_detail',
-        favorite_count: favs.size,
+        favorite_count: getFavorites().size,
       });
     });
   }

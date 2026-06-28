@@ -19,8 +19,9 @@ import CategoryFilter from './CategoryFilter.astro';
 import VenueFilter from './VenueFilter.astro';
 import ProgramList from './ProgramList.astro';
 import ProgramGrid from './ProgramGrid.astro';
-import { Category, CATEGORY_KEYWORDS } from '../../../utils/categories';
+import { getArtistMacroCategory, getCategoryLabels, type Category } from '../../../utils/categories';
 import { preferWebp } from '../../../utils/imageVariants';
+import { createFestivalEvent, createOrganizer, createPlace } from '../../../utils/jsonLd';
 import { festival } from '../../../data/festival';
 
 interface Props {
@@ -43,35 +44,11 @@ const days = getFestivalDays(schedule);
 const artistMap = Object.fromEntries(allArtists.map((a) => [a.data.artist_id, a]));
 const locationMap = Object.fromEntries(allLocations.map((l) => [l.data.location_id, l]));
 
-// ─── Kategorie-Mapping ───────────────────────────────────────────────────────
-
-function getMacroCategory(artistId: string): Category | '' {
-  const artist = artistMap[artistId];
-  if (!artist || artist.data.organizational) return '';
-  const cats =
-    locale === 'en'
-      ? (artist.data.en?.categories ?? artist.data.de?.categories ?? [])
-      : (artist.data.de?.categories ?? []);
-  for (const cat of cats) {
-    const c = cat.toLowerCase();
-    for (const { cat: macro, keywords } of CATEGORY_KEYWORDS) {
-      if (keywords.some((k) => c.includes(k))) return macro;
-    }
-  }
-  return '';
-}
-
 const categoryMap: Record<string, Category | ''> = Object.fromEntries(
-  allArtists.map((a) => [a.data.artist_id, getMacroCategory(a.data.artist_id)])
+  allArtists.map((a) => [a.data.artist_id, getArtistMacroCategory(a.data, locale)])
 );
 
-const catLabels: Record<Category, string> = {
-  [Category.Akrobatik]: t.program.catAkrobatik,
-  [Category.Musik]:     t.program.catMusik,
-  [Category.Comedy]:    t.program.catComedy,
-  [Category.Magie]:     t.program.catMagie,
-  [Category.StreetArt]: t.program.catStreetArt,
-};
+const catLabels = getCategoryLabels(t);
 
 function getDayLabel(dayStr: string): string {
   const d = new Date(dayStr + 'T12:00:00');
@@ -197,42 +174,20 @@ const jsonLdSubEvents = mergeConsecutiveSlots(schedule)
     const location = locationMap[e.location_id];
     const artistUrl = `${siteUrl}${basePath}/artists/${artist.data.artist_id}/`;
     const image = artist.data.images?.[0] ? new URL(preferWebp(artist.data.images[0]), siteUrl).href : undefined;
-    const eventObj: Record<string, unknown> = {
-      '@type': 'Event',
+    return createFestivalEvent({
       name: `${artist.data.name} – ${festival.organizerName}`,
       startDate: e.startTime.toISOString(),
       endDate: e.endTime.toISOString(),
       url: programUrl,
       performer: { '@type': 'PerformingGroup', name: artist.data.name, url: artistUrl },
-      organizer: { '@type': 'Organization', name: festival.organizerName, url: siteUrl },
-      eventStatus: 'https://schema.org/EventScheduled',
-      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-      offers: {
-        '@type': 'Offer',
-        price: festival.admissionPrice,
-        priceCurrency: festival.currency,
-        url: programUrl,
-        availability: 'https://schema.org/InStock',
-      },
-    };
-    if (image) eventObj.image = image;
-    if (location) {
-      eventObj.location = {
-        '@type': 'Place',
+      image,
+      location: location
+        ? {
         name: location.data.description,
-        geo: {
-          '@type': 'GeoCoordinates',
-          latitude: location.data.gps[0],
-          longitude: location.data.gps[1],
-        },
-        address: {
-          '@type': 'PostalAddress',
-          addressLocality: festival.addressLocality,
-          addressCountry: festival.addressCountry,
-        },
-      };
-    }
-    return eventObj;
+        gps: location.data.gps,
+      }
+        : undefined,
+    });
   });
 
 const jsonLd = {
@@ -243,19 +198,9 @@ const jsonLd = {
   endDate: festival.endDate,
   url: programUrl,
   location: {
-    '@type': 'Place',
-    name: festival.locationName,
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: festival.addressLocality,
-      addressCountry: festival.addressCountry,
-    },
+    ...createPlace(festival.locationName),
   },
-  organizer: {
-    '@type': 'Organization',
-    name: festival.organizerName,
-    url: siteUrl,
-  },
+  organizer: createOrganizer(),
   subEvent: jsonLdSubEvents,
 };
 ---

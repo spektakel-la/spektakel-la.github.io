@@ -83,6 +83,7 @@ npm run images:clean
 - `package-lock.json` erhalten und bei Dependency-Aenderungen mit npm aktualisieren.
 - Unrelated Changes im Working Tree nicht zuruecksetzen oder umformatieren.
 - Aenderungen moeglichst klein und nachvollziehbar halten.
+- Code-Duplikation vermeiden: gemeinsam genutzte Logik, Datenstrukturen, Mapping-Tabellen und Browser-Helfer in passende Komponenten-, Daten- oder `src/utils`-Dateien auslagern statt sie mehrfach lokal zu definieren.
 - Bei UI-Aenderungen responsive Darstellung und bestehende Gestaltung pruefen.
 - Bei Content-Aenderungen deutsche und englische Seiten bzw. i18n-Daten im Blick behalten.
 

@@ -18,8 +18,8 @@
   --color-cat-akrobatik: #00b4db;
   --color-cat-musik: #ff2d7a;
   --color-cat-comedy: #b7ff00;
-  --color-cat-street-art: #ff6b1a;
   --color-cat-magie: #9b59b6;
+  --color-cat-sonstiges: #ff6b1a;
 
   /* Semantische Farben */
   --color-text: var(--color-dark);

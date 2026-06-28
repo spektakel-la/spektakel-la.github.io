@@ -10,6 +10,7 @@ import { localePath, useTranslations, type Locale } from '../i18n/utils';
 import Page from '../layouts/Page.astro';
 import { imagePositionToObjectPosition } from '../utils/imagePosition';
 import { preferWebp } from '../utils/imageVariants';
+import { createFestivalEvent, createOffer, createOrganizer, createPlace } from '../utils/jsonLd';
 import { artistPath, ROUTES } from '../utils/routes';
 import { formatTime, getFestivalDays, groupByDay, loadSchedule, mergeConsecutiveSlots } from '../utils/schedule';
 
@@ -84,18 +85,13 @@ const festivalJsonLd = {
   performer: festivalPerformers,
   eventStatus: 'https://schema.org/EventScheduled',
   eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-  location: {
-    '@type': 'Place',
-    name: festival.locationName,
-    address: { '@type': 'PostalAddress', addressLocality: festival.addressLocality, addressCountry: festival.addressCountry },
-  },
-  organizer: { '@type': 'Organization', name: festival.organizerName, url: siteUrl },
-  offers: { '@type': 'Offer', price: festival.admissionPrice, priceCurrency: festival.currency, url: programUrl, availability: 'https://schema.org/InStock' },
+  location: createPlace(festival.locationName),
+  organizer: createOrganizer(),
+  offers: createOffer(programUrl),
   subEvent: publicPerformances.map(entry => {
     const artist = artistMap[entry.artist_id];
     const location = locationMap[entry.location_id];
-    return {
-      '@type': 'Event',
+    return createFestivalEvent({
       name: `${artist.data.name} – ${festival.organizerName}`,
       startDate: entry.startTime.toISOString(),
       endDate: entry.endTime.toISOString(),
@@ -103,16 +99,10 @@ const festivalJsonLd = {
       image: artist.data.images?.[0] ? new URL(preferWebp(artist.data.images[0]), siteUrl).href : undefined,
       performer: { '@type': 'PerformingGroup', name: artist.data.name },
       location: {
-        '@type': 'Place',
         name: location.data.description,
-        geo: { '@type': 'GeoCoordinates', latitude: location.data.gps[0], longitude: location.data.gps[1] },
-        address: { '@type': 'PostalAddress', addressLocality: festival.addressLocality, addressCountry: festival.addressCountry },
+        gps: location.data.gps,
       },
-      organizer: { '@type': 'Organization', name: festival.organizerName, url: siteUrl },
-      eventStatus: 'https://schema.org/EventScheduled',
-      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-      offers: { '@type': 'Offer', price: festival.admissionPrice, priceCurrency: festival.currency, url: programUrl, availability: 'https://schema.org/InStock' },
-    };
+    });
   }),
 };
 
