@@ -6,7 +6,7 @@ Astro-Website fuer das Spektakel Landshut.
 
 Voraussetzungen:
 
-- Node.js `>=22.12.0`
+- Node.js `>=24.0.0`
 - npm
 
 ```sh
