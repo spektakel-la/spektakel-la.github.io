@@ -152,20 +152,20 @@ const venueList = sortedLocations.filter((l) => !l.data.organizational);
   const FESTIVAL_END   = new Date(festivalLiveEnd).getTime();
   const THREE_HOURS    = 3 * 60 * 60 * 1000;
 
-  function fmt(iso: string): string {
+  function fmt(iso) {
     return new Date(iso).toLocaleTimeString('de-DE', {
       hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Berlin',
     });
   }
 
-  function getDayLabel(dayStr: string, lang: string): string {
+  function getDayLabel(dayStr, lang) {
     return new Date(dayStr + 'T12:00:00').toLocaleDateString(
       lang === 'en' ? 'en-GB' : 'de-DE',
       { weekday: 'long', day: '2-digit', month: '2-digit' }
     );
   }
 
-  function entryHtml(e: any, basePath: string): string {
+  function entryHtml(e, basePath) {
     const time = `${fmt(e.time)} – ${fmt(e.endTime)}`;
     const nameHtml = e.isOrganizational
       ? `<span class="italic text-gray-400 text-sm">${e.artistName}</span>`
@@ -176,28 +176,28 @@ const venueList = sortedLocations.filter((l) => !l.data.organizational);
     </div>`;
   }
 
-  function buildPanelContent(loc: any, lang: string): string {
+  function buildPanelContent(loc, lang) {
     const now = Date.now();
     const duringFestival = now >= FESTIVAL_START && now <= FESTIVAL_END;
     const basePath = lang === 'en' ? '/en' : '';
-    const allEntries: any[] = loc.entries ?? [];
+    const allEntries = loc.entries ?? [];
 
     let html = `<h2 class="font-display text-2xl uppercase tracking-wide text-[var(--color-dark)] mb-4 leading-tight">${loc.description}</h2>`;
 
     if (duringFestival) {
-      const current  = allEntries.filter((e: any) => new Date(e.time).getTime() <= now && new Date(e.endTime).getTime() > now);
-      const upcoming = allEntries.filter((e: any) => new Date(e.time).getTime() > now && new Date(e.time).getTime() <= now + THREE_HOURS);
+      const current  = allEntries.filter((e) => new Date(e.time).getTime() <= now && new Date(e.endTime).getTime() > now);
+      const upcoming = allEntries.filter((e) => new Date(e.time).getTime() > now && new Date(e.time).getTime() <= now + THREE_HOURS);
 
       if (current.length > 0) {
         html += `<div class="mb-5">
           <p class="text-xs uppercase tracking-widest font-semibold text-[var(--color-primary)] mb-2">${lang === 'en' ? 'Now' : 'Jetzt'}</p>
-          ${current.map((e: any) => entryHtml(e, basePath)).join('')}
+          ${current.map((e) => entryHtml(e, basePath)).join('')}
         </div>`;
       }
       if (upcoming.length > 0) {
         html += `<div class="mb-5">
           <p class="text-xs uppercase tracking-widest font-semibold text-gray-400 mb-2">${lang === 'en' ? 'Next 3 hours' : 'Nächste 3 Stunden'}</p>
-          ${upcoming.map((e: any) => entryHtml(e, basePath)).join('')}
+          ${upcoming.map((e) => entryHtml(e, basePath)).join('')}
         </div>`;
       }
       if (current.length === 0 && upcoming.length === 0) {
@@ -208,12 +208,12 @@ const venueList = sortedLocations.filter((l) => !l.data.organizational);
       if (allEntries.length === 0) {
         html += `<p class="text-gray-400 italic text-sm mb-4">${lang === 'en' ? 'No programme scheduled.' : 'Kein Programm geplant.'}</p>`;
       } else {
-        const byDay: Record<string, any[]> = {};
-        allEntries.forEach((e: any) => { (byDay[e.festivalDay] ??= []).push(e); });
+        const byDay = {};
+        allEntries.forEach((e) => { (byDay[e.festivalDay] ??= []).push(e); });
         html += Object.keys(byDay).sort().map((day) =>
           `<div class="mb-5">
             <p class="text-xs uppercase tracking-widest font-semibold text-gray-400 mb-2">${getDayLabel(day, lang)}</p>
-            ${byDay[day].map((e: any) => entryHtml(e, basePath)).join('')}
+            ${byDay[day].map((e) => entryHtml(e, basePath)).join('')}
           </div>`
         ).join('');
       }
@@ -222,7 +222,7 @@ const venueList = sortedLocations.filter((l) => !l.data.organizational);
     return html;
   }
 
-  function openPanel(loc: any, lang: string) {
+  function openPanel(loc, lang) {
     const content = buildPanelContent(loc, lang);
     if (window.innerWidth < 768) {
       const overlay = document.getElementById('mobile-panel-overlay');
@@ -260,8 +260,8 @@ const venueList = sortedLocations.filter((l) => !l.data.organizational);
     const lang = document.documentElement.lang || 'de';
 
     // Karte → Panel
-    document.addEventListener('venue-selected', (e: Event) => {
-      const loc = (e as CustomEvent).detail;
+    document.addEventListener('venue-selected', (e) => {
+      const loc = e.detail;
       openPanel(loc, lang);
       window.spektakel?.analytics?.track('venue_selected', {
         venue_id: loc.id,
@@ -287,12 +287,12 @@ const venueList = sortedLocations.filter((l) => !l.data.organizational);
     document.getElementById('mobile-panel-close')?.addEventListener('click', closePanel);
 
     // Venue-Listen-Buttons (Sidebar + Mobile-Liste + Legende)
-    document.querySelectorAll<HTMLButtonElement>('.venue-list-btn[data-venue-id]').forEach((btn) => {
+    document.querySelectorAll('.venue-list-btn[data-venue-id]').forEach((btn) => {
       btn.addEventListener('click', () => {
         const venueId = btn.dataset.venueId;
         const mapDataEl = document.getElementById('spektakel-map-data');
         if (!mapDataEl || !venueId) return;
-        const loc = JSON.parse(mapDataEl.textContent || '[]').find((l: any) => l.id === venueId);
+        const loc = JSON.parse(mapDataEl.textContent || '[]').find((l) => l.id === venueId);
         if (loc) {
           openPanel(loc, lang);
           history.replaceState(null, '', `#${venueId}`);
