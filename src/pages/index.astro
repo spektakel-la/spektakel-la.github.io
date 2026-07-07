@@ -131,6 +131,18 @@ const announcementEvents = locale === 'en'
         date: 'Friday, 18 Sept. - Sunday, 20 Sept.',
         time: '',
         location: 'Rathaus Prunksaal, Salzstadel, Landtor and old town',
+        title: 'Who will tweet their way to victory?',
+        summary: 'Germany’s first bird-call imitation competition is looking for the best imitations of European wild birds.',
+        detail: [
+          'At Spektakel Landshut in September, people will chirp, whistle and warble: Germany’s first bird-call imitation competition is looking for the best imitators of bird voices.',
+          'Whether blackbird, gull, cuckoo or owl - any European wild bird may be imitated, using only mouth and hands, with no aids.',
+          'The competition takes place in two categories: children up to 12 years, and teenagers & adults from 12 years. A jury will judge the performances, with small prizes included. To take part, send your registration to dervogelphilipp@gmail.com. If there are still slots available, you can also show your imitation spontaneously on stage.',
+        ],
+      },
+      {
+        date: 'Friday, 18 Sept. - Sunday, 20 Sept.',
+        time: '',
+        location: 'Rathaus Prunksaal, Salzstadel, Landtor and old town',
         title: 'Spektakel Landshut',
         detail: 'More than 200 shows in three days ...',
       },
@@ -148,6 +160,18 @@ const announcementEvents = locale === 'en'
         location: 'Theaterzelt Landshut',
         title: 'BMW Spektakel Gala 2026',
         detail: 'Eröffnung 20. Spektakel La.',
+      },
+      {
+        date: 'Freitag 18. Sept. – Sonntag 20. Sept.',
+        time: '',
+        location: 'Rathaus Prunksaal, Salzstadel, Ländtor und Altstadt',
+        title: 'Wer zwitschert sich zum Sieg?',
+        summary: 'Deutschlands erster Vogelstimmenimitationswettbewerb sucht die besten Imitationen europäischer Wildvögel.',
+        detail: [
+          'Beim Spektakel Landshut im September wird gezwitschert, gepfiffen und geträllert: Gesucht werden die besten Vogelstimmenimitatorinnen und -imitatoren bei Deutschlands erstem Vogelstimmenimitationswettbewerb.',
+          'Ob Amsel, Möwe, Kuckuck oder Eule - jeder europäische Wildvogel darf imitiert werden, ausschließlich mit Mund und Händen, ohne Hilfsmittel.',
+          'Der Wettbewerb findet in zwei Kategorien statt: Kinder bis 12 Jahre und Jugendliche & Erwachsene ab 12 Jahren. Eine Jury bewertet die Auftritte, kleine Preise inklusive. Wer teilnehmen möchte, schickt seine Anmeldung an dervogelphilipp@gmail.com. Falls noch Platz ist, kann man seine Imitation auch spontan vor Ort auf der Bühne zeigen.',
+        ],
       },
       {
         date: 'Freitag 18. Sept. – Sonntag 20. Sept.',
@@ -298,6 +322,7 @@ const announcementEvents = locale === 'en'
                   index === 0 && 'bg-primary',
                   index === 1 && 'bg-cyan',
                   index === 2 && 'bg-lime',
+                  index === 3 && 'bg-primary',
                 ]}
                 aria-hidden="true"
               />
@@ -318,10 +343,30 @@ const announcementEvents = locale === 'en'
                 <h3 class="font-display text-3xl sm:text-4xl text-dark leading-tight">
                   {event.title}
                 </h3>
-                {event.detail && (
+                {event.summary && (
                   <p class="mt-2 text-dark/70 text-base sm:text-lg leading-relaxed">
-                    {event.detail}
+                    {event.summary}
                   </p>
+                )}
+                {event.detail && (
+                  Array.isArray(event.detail) ? (
+                    <details class="group mt-3">
+                      <summary class="inline-flex cursor-pointer list-none items-center gap-2 font-semibold text-primary hover:text-dark transition-colors">
+                        <span class="group-open:hidden">{locale === 'de' ? 'Mehr erfahren' : 'Read more'}</span>
+                        <span class="hidden group-open:inline">{locale === 'de' ? 'Weniger anzeigen' : 'Show less'}</span>
+                        <span aria-hidden="true" class="transition-transform group-open:rotate-180">↓</span>
+                      </summary>
+                      <div class="mt-3 space-y-3 text-dark/70 text-base sm:text-lg leading-relaxed">
+                        {event.detail.map((paragraph) => (
+                          <p>{paragraph}</p>
+                        ))}
+                      </div>
+                    </details>
+                  ) : (
+                    <p class="mt-2 text-dark/70 text-base sm:text-lg leading-relaxed">
+                      {event.detail}
+                    </p>
+                  )
                 )}
               </div>
             </li>

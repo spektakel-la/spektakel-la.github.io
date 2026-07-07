@@ -1,12 +1,38 @@
 /* SPEKTAKEL! – Globales CSS */
 
 @import './tokens.css';
-@import '@fontsource/bebas-neue/400.css';
-@import '@fontsource/inter/400.css';
-@import '@fontsource/inter/600.css';
-@import '@fontsource/inter/700.css';
+@import '@fontsource/bebas-neue/latin-400.css';
+@import '@fontsource/bebas-neue/latin-ext-400.css';
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-600.css';
+@import '@fontsource/inter/latin-700.css';
+@import '@fontsource/inter/latin-ext-400.css';
+@import '@fontsource/inter/latin-ext-600.css';
+@import '@fontsource/inter/latin-ext-700.css';
 
 @import 'tailwindcss';
+
+@font-face {
+  font-family: 'Garnois';
+  src:
+    url('/assets/fonts/Garnois-Regular.woff2') format('woff2'),
+    url('/assets/fonts/Garnois-Regular.woff') format('woff'),
+    url('/assets/fonts/Garnois-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Garnois Outline';
+  src:
+    url('/assets/fonts/GarnoisOutline-Regular.woff2') format('woff2'),
+    url('/assets/fonts/GarnoisOutline-Regular.woff') format('woff'),
+    url('/assets/fonts/GarnoisOutline-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
 
 /* === Base-Styles === */
 

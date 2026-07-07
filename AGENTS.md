@@ -75,6 +75,8 @@ npm run images:clean
 
 - Vor Build oder Push bei Bildaenderungen `npm run images:check` ausfuehren.
 - ImageMagick mit dem `magick`-Kommando wird fuer Bildkonvertierungen vorausgesetzt.
+- Eigene Font-Dateien unter `public/assets/fonts/` ablegen, damit sie statisch mit stabilen `/assets/fonts/...`-URLs ausgeliefert werden.
+- Eigene Fonts zentral in `src/styles/global.css` per `@font-face` registrieren; bevorzugt `woff2`, dann `woff`, optional `ttf` als Fallback.
 
 ## Arbeitsweise im Repository
 

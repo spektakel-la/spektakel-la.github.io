@@ -1,5 +1,13 @@
 ---
 import '../styles/global.css';
+import bebasNeueLatin from '@fontsource/bebas-neue/files/bebas-neue-latin-400-normal.woff2?url';
+import bebasNeueLatinExt from '@fontsource/bebas-neue/files/bebas-neue-latin-ext-400-normal.woff2?url';
+import interLatin400 from '@fontsource/inter/files/inter-latin-400-normal.woff2?url';
+import interLatin600 from '@fontsource/inter/files/inter-latin-600-normal.woff2?url';
+import interLatin700 from '@fontsource/inter/files/inter-latin-700-normal.woff2?url';
+import interLatinExt400 from '@fontsource/inter/files/inter-latin-ext-400-normal.woff2?url';
+import interLatinExt600 from '@fontsource/inter/files/inter-latin-ext-600-normal.woff2?url';
+import interLatinExt700 from '@fontsource/inter/files/inter-latin-ext-700-normal.woff2?url';
 
 interface Props {
   title?: string;
@@ -35,6 +43,17 @@ const enUrl = new URL(`/en${localizedPath === '/' ? '/' : localizedPath}`, canon
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#ff2d7a" />
 
+    <link rel="preload" href={bebasNeueLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={bebasNeueLatinExt} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={interLatin400} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={interLatin600} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={interLatin700} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={interLatinExt400} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={interLatinExt600} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={interLatinExt700} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/Garnois-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/GarnoisOutline-Regular.woff2" as="font" type="font/woff2" crossorigin />
+
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical.href} />
@@ -61,7 +80,8 @@ const enUrl = new URL(`/en${localizedPath === '/' ? '/' : localizedPath}`, canon
     <meta name="twitter:image" content={new URL(ogImage, canonical.origin).href} />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/webp" href="/assets/img/logo/logo.webp" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
 
     <!-- Consent-API + GTM: GTM wird erst nach Analytics-Zustimmung geladen. -->
     <script is:inline>

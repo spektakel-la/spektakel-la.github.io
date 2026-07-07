@@ -2,8 +2,8 @@
 import Navigation from './Navigation.astro';
 import { localePath } from '../../i18n/utils';
 import type { Locale } from '../../i18n/utils';
-import Picture from '../ui/Picture.astro';
 import LanguageSwitchLink from './LanguageSwitchLink.astro';
+import SiteLogo from '../ui/SiteLogo.astro';
 
 interface Props {
   locale?: string;
@@ -39,14 +39,7 @@ const homeHref = localePath('/', lang);
 
       <!-- Logo -->
       <a href={homeHref} class="flex-shrink-0 flex items-center gap-3" aria-label="Spektakel Landshut – Startseite">
-        <Picture
-          src="/assets/img/logo/logo.webp"
-          alt="Spektakel Landshut Logo"
-          width="140"
-          height="60"
-          class="h-12 w-auto object-contain"
-          loading="eager"
-        />
+        <SiteLogo variant="header" />
       </a>
 
       <!-- Desktop Navigation -->
