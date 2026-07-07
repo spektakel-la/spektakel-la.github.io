@@ -350,7 +350,7 @@ const announcementEvents = locale === 'en'
                 )}
                 {event.detail && (
                   Array.isArray(event.detail) ? (
-                    <details class="group mt-3">
+                    <details class="group mt-3" data-stable-announcement-details>
                       <summary class="inline-flex cursor-pointer list-none items-center gap-2 font-semibold text-primary hover:text-dark transition-colors">
                         <span class="group-open:hidden">{locale === 'de' ? 'Mehr erfahren' : 'Read more'}</span>
                         <span class="hidden group-open:inline">{locale === 'de' ? 'Weniger anzeigen' : 'Show less'}</span>
@@ -374,6 +374,41 @@ const announcementEvents = locale === 'en'
         </ol>
       </div>
     </div>
+
+    <script>
+      document.querySelectorAll<HTMLDetailsElement>('[data-stable-announcement-details]').forEach((details) => {
+        const summary = details.querySelector('summary');
+        if (!summary) return;
+
+        let summaryTopBeforeToggle: number | null = null;
+
+        summary.addEventListener('click', () => {
+          summaryTopBeforeToggle = summary.getBoundingClientRect().top;
+        });
+
+        details.addEventListener('toggle', () => {
+          if (summaryTopBeforeToggle === null) return;
+
+          requestAnimationFrame(() => {
+            if (summaryTopBeforeToggle === null) return;
+
+            const summaryTopAfterToggle = summary.getBoundingClientRect().top;
+            const scrollDelta = summaryTopAfterToggle - summaryTopBeforeToggle;
+
+            if (Math.abs(scrollDelta) > 1) {
+              const root = document.documentElement;
+              const previousScrollBehavior = root.style.scrollBehavior;
+
+              root.style.scrollBehavior = 'auto';
+              window.scrollBy(0, scrollDelta);
+              root.style.scrollBehavior = previousScrollBehavior;
+            }
+
+            summaryTopBeforeToggle = null;
+          });
+        });
+      });
+    </script>
   </section>
 
   <!-- ═══ HUT-BOX ══════════════════════════════════════════════════════════ -->
