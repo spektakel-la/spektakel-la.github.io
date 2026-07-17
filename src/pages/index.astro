@@ -59,15 +59,17 @@ const previewEntries = (byDay[previewDay] ?? [])
   .slice(0, 5);
 const artistMap = Object.fromEntries(allArtists.map(a => [a.data.artist_id, a]));
 const locationMap = Object.fromEntries(allLocations.map(location => [location.data.location_id, location]));
+const publicScheduleEntries = schedule.filter(entry => {
+  const artist = artistMap[entry.artist_id];
+  return artist && !artist.data.organizational && locationMap[entry.location_id];
+});
+const showProgramCta = publicScheduleEntries.length > 0;
 
 // ─── Structured Data ──────────────────────────────────────────────────────
 const siteUrl = festival.siteUrl;
 const homeUrl = locale === 'en' ? `${siteUrl}/en/` : `${siteUrl}/`;
 const programUrl = locale === 'en' ? `${siteUrl}/en/program/` : `${siteUrl}/program/`;
-const publicPerformances = mergeConsecutiveSlots(schedule.filter(entry => {
-  const artist = artistMap[entry.artist_id];
-  return artist && !artist.data.organizational && locationMap[entry.location_id];
-}));
+const publicPerformances = mergeConsecutiveSlots(publicScheduleEntries);
 const festivalPerformers = featuredArtists.map(artist => ({
   '@type': 'PerformingGroup',
   name: artist.data.name,
@@ -191,18 +193,32 @@ const announcementEvents = locale === 'en'
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(festivalJsonLd)} />
 
   <!-- ═══ HERO ══════════════════════════════════════════════════════════════ -->
-  <section class="relative min-h-screen bg-white overflow-hidden flex items-center">
+  <section class="relative min-h-[calc(100svh-4rem)] md:min-h-screen bg-white overflow-hidden flex items-start md:items-center">
+
+    <!-- Mobile Artist-Moment: bringt die Desktop-Energie in den ersten Viewport -->
+    <div
+      class="absolute top-8 -right-28 w-[23rem] max-w-none opacity-16 md:hidden pointer-events-none select-none"
+      aria-hidden="true"
+    >
+      <Image
+        src={heroImg}
+        alt=""
+        width={420}
+        class="w-full h-auto object-contain"
+        loading="eager"
+      />
+    </div>
 
     <!-- Haupt-Splatter hinter Künstler-Figur (Mitte-rechts) -->
     <div
-      class="absolute top-1/2 right-[10%] -translate-y-1/2 pointer-events-none opacity-80"
+      class="absolute top-[30rem] -right-36 w-[22rem] md:w-auto md:top-1/2 md:right-[10%] md:-translate-y-1/2 pointer-events-none opacity-50 md:opacity-80"
       aria-hidden="true"
     >
       <PaintSplatter variant={1} width={560} />
     </div>
     <!-- Kleiner Akzent-Splatter unten links -->
     <div
-      class="absolute -bottom-10 left-16 pointer-events-none opacity-40"
+      class="hidden md:block absolute md:-bottom-10 md:left-16 pointer-events-none md:opacity-40"
       aria-hidden="true"
     >
       <PaintSplatter variant={4} width={260} />
@@ -234,14 +250,14 @@ const announcementEvents = locale === 'en'
     </div>
 
     <!-- Seiten-Inhalt -->
-    <div class="relative z-10 w-full max-w-7xl mx-auto px-6 py-20 lg:py-28">
+    <div class="relative z-10 w-full max-w-7xl mx-auto px-6 pt-36 pb-14 md:py-20 lg:py-28">
       <div class="max-w-xl">
 
         <!-- Barrierefreie h1 -->
         <h1 class="sr-only">{meta.accessibleTitle}</h1>
 
         <!-- Glas-Wrapper: passt sich nur der Text-Breite an, kein Card-Effekt -->
-        <div class="w-fit backdrop-blur-sm bg-white/75 rounded-xl px-4 pt-4 pb-5
+        <div class="w-fit px-4 pt-4 pb-5
                     md:bg-transparent md:backdrop-blur-none md:px-0 md:pt-0 md:pb-0 md:rounded-none">
 
           <!-- Visueller Headline-Block -->
@@ -278,8 +294,12 @@ const announcementEvents = locale === 'en'
 
         <!-- CTAs (außerhalb des Glas-Wrappers) -->
         <div class="flex flex-wrap gap-4 mt-8">
-          <Button href={localize(ROUTES.program)} variant="primary" size="lg">{t.home.cta_program}</Button>
-          <Button href={localize(ROUTES.artists)} variant="ghost" size="lg">{t.home.cta_artists}</Button>
+          {showProgramCta && (
+            <Button href={localize(ROUTES.program)} variant="primary" size="lg">{t.home.cta_program}</Button>
+          )}
+          <Button href={localize(ROUTES.artists)} variant={showProgramCta ? 'ghost' : 'primary'} size="lg">
+            {t.home.cta_artists}
+          </Button>
         </div>
 
       </div>
