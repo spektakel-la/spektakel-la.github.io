@@ -28,10 +28,11 @@ export const en = {
   },
   program: {
     title: 'Program',
-    scheduleNoticeEyebrow: 'Start exploring',
+    scheduleNoticeEyebrow: 'Explore the line-up',
     scheduleNoticeTitle: 'Performance times are still being finalised',
     scheduleNoticeText:
-      'The exact schedule is not set yet. You can already browse the artists and save the acts you are looking forward to.',
+      'The exact schedule is not set yet. On the artists page, you can already see who is joining us in 2026 and save the acts you are looking forward to.',
+    scheduleNoticeCta: 'View all artists',
     friday: 'Friday',
     saturday: 'Saturday',
     sunday: 'Sunday',

@@ -14,6 +14,7 @@ import {
 import Page from '../../../layouts/Page.astro';
 import PageHero from '../../layout/PageHero.astro';
 import PaintSplatter from '../../ui/PaintSplatter.astro';
+import Button from '../../ui/Button.astro';
 import DayTabs from './DayTabs.astro';
 import CategoryFilter from './CategoryFilter.astro';
 import VenueFilter from './VenueFilter.astro';
@@ -38,6 +39,7 @@ const allArtists: CollectionEntry<'artists'>[] = await getCollection('artists');
 const allLocations: CollectionEntry<'locations'>[] = await getCollection('locations');
 
 const schedule = loadSchedule();
+const hasSchedule = schedule.length > 0;
 const byDay = groupByDay(schedule);
 const days = getFestivalDays(schedule);
 
@@ -229,66 +231,75 @@ const jsonLd = {
     </div>
   </PageHero>
 
-  <!-- ─── Spielzeiten-Hinweis ──────────────────────────────────────────────── -->
-  <section class="program-schedule-notice" aria-labelledby="program-schedule-notice-title">
-    <div class="program-schedule-notice__inner">
-      <p class="program-schedule-notice__eyebrow">{t.program.scheduleNoticeEyebrow}</p>
-      <h2 id="program-schedule-notice-title">{t.program.scheduleNoticeTitle}</h2>
-      <p>{t.program.scheduleNoticeText}</p>
-    </div>
-  </section>
-
-  <!-- ─── Sticky Filter-Bar ────────────────────────────────────────────────── -->
-  <div id="program-filters" class="sticky top-0 z-30 bg-white border-b border-gray-200 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <DayTabs
-        days={dayItems}
-        locale={locale}
-        listViewLabel={t.program.listView}
-        tableViewLabel={t.program.tableView}
-      />
-      <!-- Zeile 2: Kategorie-Chips + Spielort-Filter -->
-      <div class="flex flex-wrap items-center gap-2 py-2 border-t border-gray-100">
-        <CategoryFilter catLabels={catLabels} allLabel={t.common.all} locale={locale} />
-        <div class="ml-auto">
-          <VenueFilter locations={venueOptions} allLabel={t.common.allLocations} />
+  {hasSchedule ? (
+    <>
+      <!-- ─── Sticky Filter-Bar ────────────────────────────────────────────────── -->
+      <div id="program-filters" class="sticky top-0 z-30 bg-white border-b border-gray-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+          <DayTabs
+            days={dayItems}
+            locale={locale}
+            listViewLabel={t.program.listView}
+            tableViewLabel={t.program.tableView}
+          />
+          <!-- Zeile 2: Kategorie-Chips + Spielort-Filter -->
+          <div class="flex flex-wrap items-center gap-2 py-2 border-t border-gray-100">
+            <CategoryFilter catLabels={catLabels} allLabel={t.common.all} locale={locale} />
+            <div class="ml-auto">
+              <VenueFilter locations={venueOptions} allLabel={t.common.allLocations} />
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- ─── Programm-Inhalt ───────────────────────────────────────────────────── -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-    {days.map((day, dayIdx) => (
-      <div
-        id={`panel-${day}`}
-        role="tabpanel"
-        aria-labelledby={`tab-${day}`}
-        data-day-panel={day}
-        class:list={[dayIdx !== 0 && 'hidden']}
-      >
-        <ProgramList
-          entries={mergedByDay[day] ?? []}
-          artistMap={artistMap}
-          locationMap={locationMap}
-          categoryMap={categoryMap}
-          catLabels={catLabels}
-          basePath={basePath}
-          locale={locale}
-          noResultsLabel={t.program.noResults}
-          liveNowLabel={t.program.liveNow}
-          hutActLabel={t.common.hutAct}
-        />
-        <ProgramGrid
-          grid={tableGrids[day]}
-          artistMap={artistMap}
-          categoryMap={categoryMap}
-          basePath={basePath}
-          locale={locale}
-        />
+      <!-- ─── Programm-Inhalt ───────────────────────────────────────────────────── -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+        {days.map((day, dayIdx) => (
+          <div
+            id={`panel-${day}`}
+            role="tabpanel"
+            aria-labelledby={`tab-${day}`}
+            data-day-panel={day}
+            class:list={[dayIdx !== 0 && 'hidden']}
+          >
+            <ProgramList
+              entries={mergedByDay[day] ?? []}
+              artistMap={artistMap}
+              locationMap={locationMap}
+              categoryMap={categoryMap}
+              catLabels={catLabels}
+              basePath={basePath}
+              locale={locale}
+              noResultsLabel={t.program.noResults}
+              liveNowLabel={t.program.liveNow}
+              hutActLabel={t.common.hutAct}
+            />
+            <ProgramGrid
+              grid={tableGrids[day]}
+              artistMap={artistMap}
+              categoryMap={categoryMap}
+              basePath={basePath}
+              locale={locale}
+            />
+          </div>
+        ))}
       </div>
-    ))}
-  </div>
+    </>
+  ) : (
+    <!-- ─── Spielzeiten-Hinweis ──────────────────────────────────────────────── -->
+    <section class="program-schedule-notice" aria-labelledby="program-schedule-notice-title">
+      <div class="program-schedule-notice__inner">
+        <p class="program-schedule-notice__eyebrow">{t.program.scheduleNoticeEyebrow}</p>
+        <h2 id="program-schedule-notice-title">{t.program.scheduleNoticeTitle}</h2>
+        <div class="program-schedule-notice__body">
+          <p>{t.program.scheduleNoticeText}</p>
+          <Button href={`${basePath}/artists/`} variant="primary" size="md">
+            {t.program.scheduleNoticeCta}
+          </Button>
+        </div>
+      </div>
+    </section>
+  )}
 
 </Page>
 
@@ -536,9 +547,16 @@ const jsonLd = {
     text-transform: uppercase;
   }
 
-  .program-schedule-notice p:not(.program-schedule-notice__eyebrow) {
+  .program-schedule-notice__body {
     grid-column: 2;
     max-width: 42rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    align-items: center;
+  }
+
+  .program-schedule-notice__body p {
     margin: 0;
     color: var(--color-text-muted);
     font-size: var(--text-sm);
@@ -558,6 +576,11 @@ const jsonLd = {
     .program-schedule-notice h2 {
       margin-bottom: var(--space-2);
       font-size: var(--text-xl);
+    }
+
+    .program-schedule-notice__body {
+      display: grid;
+      gap: var(--space-4);
     }
   }
 </style>

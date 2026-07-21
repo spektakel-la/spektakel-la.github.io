@@ -28,10 +28,11 @@ export const de = {
   },
   program: {
     title: 'Spielplan',
-    scheduleNoticeEyebrow: 'Schon mal stöbern',
+    scheduleNoticeEyebrow: 'Line-up entdecken',
     scheduleNoticeTitle: 'Die Spielzeiten stimmen wir noch ab',
     scheduleNoticeText:
-      'Der genaue Zeitplan steht noch nicht fest. Du kannst dir aber jetzt schon die Künstlerinnen und Künstler ansehen und vormerken, worauf du dich freuen möchtest.',
+      'Der genaue Zeitplan steht noch nicht fest. Auf der Künstlerseite kannst du dir aber schon ansehen, wer 2026 dabei ist und vormerken, worauf du dich freuen möchtest.',
+    scheduleNoticeCta: 'Alle Künstler ansehen',
     friday: 'Freitag',
     saturday: 'Samstag',
     sunday: 'Sonntag',
