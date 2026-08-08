@@ -4,7 +4,6 @@ import { festival } from '../../../data/festival';
 import { useTranslations } from '../../../i18n/utils';
 import Page from '../../../layouts/Page.astro';
 import {
-  getCategoryGenreLabel,
   getMacroCategoryFromCategories,
   getMacroCategoryFromRaw,
 } from '../../../utils/categories';
@@ -114,7 +113,6 @@ const sameAs: string[] = [
   homepage,
 ].filter((u): u is string => typeof u === 'string' && u.length > 0);
 
-const genre = macroCategory ? getCategoryGenreLabel(macroCategory, locale) : undefined;
 const keywords = locData.tags && locData.tags.length > 0 ? locData.tags.join(', ') : undefined;
 
 const performerRef: Record<string, unknown> = { '@type': 'PerformingGroup', name, url: artistUrl };
@@ -150,7 +148,6 @@ const jsonLd: Record<string, unknown> = {
 };
 if (mainImageUrl) jsonLd.image = mainImageUrl;
 if (locData.country) jsonLd.nationality = locData.country;
-if (genre) jsonLd.genre = genre;
 if (keywords) jsonLd.keywords = keywords;
 if (sameAs.length > 0) jsonLd.sameAs = sameAs;
 if (performerIn.length > 0) jsonLd.performerIn = performerIn;
