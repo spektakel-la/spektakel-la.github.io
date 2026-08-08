@@ -20,6 +20,9 @@ const objectPosition = imagePositionToObjectPosition(image_position);
 const locData = locale === 'en' ? (artist.data.en ?? artist.data.de) : artist.data.de;
 const img = images?.[0] ?? null;
 const href = `${basePath}/artists/${artist.id}/`;
+const imageAlt = locale === 'en'
+  ? `${name} at Spektakel Landshut 2026`
+  : `${name} beim Spektakel Landshut 2026`;
 
 const DAY_SHORT: Record<string, string> = {
   '2026-09-18': 'Fr',
@@ -46,7 +49,7 @@ const timeLine = entries
     {img ? (
       <Picture
         src={img}
-        alt={name}
+        alt={imageAlt}
         loading="lazy"
         decoding="async"
         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"

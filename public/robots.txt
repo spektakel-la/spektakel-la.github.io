@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /assets/img/artists/2025/
 
 Sitemap: https://spektakel.la/sitemap.xml

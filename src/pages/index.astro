@@ -472,6 +472,9 @@ const announcementEvents = locale === 'en'
           {featuredArtists.map((artist, index) => {
             const firstCat = artist.data[locale]?.categories?.[0];
             const objectPosition = imagePositionToObjectPosition(artist.data.image_position);
+            const imageAlt = locale === 'en'
+              ? `${artist.data.name} at Spektakel Landshut 2026`
+              : `${artist.data.name} beim Spektakel Landshut 2026`;
             return (
               <a
                 href={localize(artistPath(artist.data.artist_id))}
@@ -484,7 +487,7 @@ const announcementEvents = locale === 'en'
                 <div class="aspect-[3/4] overflow-hidden bg-gray-100">
                   <Picture
                     src={artist.data.images![0]}
-                    alt={artist.data.name}
+                    alt={imageAlt}
                     class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                     style={`object-position: ${objectPosition};`}
                     loading="lazy"

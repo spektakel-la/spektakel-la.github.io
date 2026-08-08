@@ -27,7 +27,8 @@ const {
 
 const isEn = locale === 'en';
 const siteName = 'Spektakel Landshut';
-const fullTitle = title.includes('SPEKTAKEL') ? title : `${title} – ${siteName}`;
+const titleIncludesSiteName = title.toLocaleLowerCase().includes(siteName.toLocaleLowerCase());
+const fullTitle = titleIncludesSiteName ? title : `${title} – ${siteName}`;
 const canonical = new URL(canonicalUrl);
 const localizedPath = isEn
   ? canonical.pathname.replace(/^\/en(?=\/|$)/, '') || '/'

@@ -47,7 +47,21 @@ function createMetaDescription(description: string, maxLength = 160): string {
   return `${normalized.slice(0, end).trim()}...`;
 }
 
-const metaDescription = createMetaDescription(locData.description);
+const primaryCategory = locData.categories[0];
+const artistTitle = primaryCategory
+  ? locale === 'en'
+    ? `${name} | ${primaryCategory} at Spektakel Landshut 2026`
+    : `${name} | ${primaryCategory} beim Spektakel Landshut 2026`
+  : locale === 'en'
+    ? `${name} | Artist at Spektakel Landshut 2026`
+    : `${name} | Künstler beim Spektakel Landshut 2026`;
+const metaIntro = locale === 'en'
+  ? `${name} at Spektakel Landshut 2026: `
+  : `${name} beim Spektakel Landshut 2026: `;
+const metaDescription = createMetaDescription(`${metaIntro}${locData.description}`);
+const artistImageAlt = locale === 'en'
+  ? `${name} at Spektakel Landshut 2026`
+  : `${name} beim Spektakel Landshut 2026`;
 
 const macroCategory = getMacroCategoryFromCategories(locData.categories ?? []);
 
@@ -69,6 +83,7 @@ const dayFull: Record<string, string> = {
 
 const mainImage = images?.[0] ?? null;
 const mainImageForMetadata = mainImage ? preferWebp(mainImage) : null;
+const mainImageUrl = mainImageForMetadata ? new URL(mainImageForMetadata, festival.siteUrl).href : null;
 const extraImages = images?.slice(1) ?? [];
 
 const catChipLabel = macroCategory ? (locData.categories[0] ?? macroCategory) : '';
@@ -103,7 +118,7 @@ const genre = macroCategory ? getCategoryGenreLabel(macroCategory, locale) : und
 const keywords = locData.tags && locData.tags.length > 0 ? locData.tags.join(', ') : undefined;
 
 const performerRef: Record<string, unknown> = { '@type': 'PerformingGroup', name, url: artistUrl };
-if (mainImageForMetadata) performerRef.image = mainImageForMetadata;
+if (mainImageUrl) performerRef.image = mainImageUrl;
 
 const performerIn = merged.map((entry) => {
   const loc = locationMap[entry.location_id];
@@ -114,7 +129,7 @@ const performerIn = merged.map((entry) => {
     endDate: entry.endTime.toISOString(),
     url: programUrl,
     performer: performerRef,
-    image: mainImageForMetadata ?? undefined,
+    image: mainImageUrl ?? undefined,
     duration: durationISO,
     location: loc
       ? {
@@ -128,25 +143,51 @@ const performerIn = merged.map((entry) => {
 const jsonLd: Record<string, unknown> = {
   '@context': 'https://schema.org',
   '@type': 'Person',
+  '@id': `${artistUrl}#artist`,
   name,
   url: artistUrl,
-  description: locData.description?.slice(0, 300),
+  description: metaDescription,
 };
-if (mainImageForMetadata) jsonLd.image = mainImageForMetadata;
+if (mainImageUrl) jsonLd.image = mainImageUrl;
 if (locData.country) jsonLd.nationality = locData.country;
 if (genre) jsonLd.genre = genre;
 if (keywords) jsonLd.keywords = keywords;
 if (sameAs.length > 0) jsonLd.sameAs = sameAs;
 if (performerIn.length > 0) jsonLd.performerIn = performerIn;
+
+const webPageJsonLd: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': `${artistUrl}#webpage`,
+  url: artistUrl,
+  name: artistTitle,
+  description: metaDescription,
+  inLanguage: locale === 'en' ? 'en-US' : 'de-DE',
+  isPartOf: {
+    '@type': 'WebSite',
+    name: 'Spektakel Landshut',
+    url: siteUrl,
+  },
+  mainEntity: {
+    '@id': `${artistUrl}#artist`,
+  },
+};
+if (mainImageUrl) {
+  webPageJsonLd.primaryImageOfPage = {
+    '@type': 'ImageObject',
+    url: mainImageUrl,
+  };
+}
 ---
 
 <Page
   locale={locale}
-  title={name}
+  title={artistTitle}
   description={metaDescription}
   ogImage={mainImageForMetadata ?? undefined}
 >
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(webPageJsonLd)} />
   <!-- ─── Top Bar: Back + Favorit ──────────────────────────────────────────── -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-5 pb-2 flex items-center justify-between">
     <a href={`${basePath}/artists/`} class="text-sm text-dark/50 hover:text-primary transition-colors">
@@ -344,7 +385,7 @@ if (performerIn.length > 0) jsonLd.performerIn = performerIn;
             <div class="grid grid-cols-3 gap-2">
               {extraImages.slice(0, 3).map((img: string) => (
                 <div class="rounded-lg overflow-hidden aspect-[4/3] bg-gray-100">
-                  <Picture src={img} alt={name} loading="lazy" class="w-full h-full object-cover" />
+                  <Picture src={img} alt={artistImageAlt} loading="lazy" class="w-full h-full object-cover" />
                 </div>
               ))}
             </div>
@@ -458,7 +499,7 @@ if (performerIn.length > 0) jsonLd.performerIn = performerIn;
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
         {extraImages.map((img: string) => (
           <div class="rounded-xl overflow-hidden aspect-[4/3] bg-gray-100">
-            <Picture src={img} alt={name} loading="lazy" class="w-full h-full object-cover" />
+            <Picture src={img} alt={artistImageAlt} loading="lazy" class="w-full h-full object-cover" />
           </div>
         ))}
       </div>
