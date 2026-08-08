@@ -34,6 +34,21 @@ const descriptionParagraphs = locData.description
   .map((paragraph) => paragraph.trim())
   .filter(Boolean);
 
+function createMetaDescription(description: string, maxLength = 160): string {
+  const normalized = description.replace(/\s+/g, ' ').trim();
+  if (normalized.length <= maxLength) return normalized;
+
+  const limit = maxLength - 3;
+  const sentenceEnd = normalized.slice(0, limit + 1).search(/[.!?](?=\s|$)[^.!?]*$/);
+  if (sentenceEnd > 80) return `${normalized.slice(0, sentenceEnd + 1).trim()}`;
+
+  const wordEnd = normalized.lastIndexOf(' ', limit);
+  const end = wordEnd > 80 ? wordEnd : limit;
+  return `${normalized.slice(0, end).trim()}...`;
+}
+
+const metaDescription = createMetaDescription(locData.description);
+
 const macroCategory = getMacroCategoryFromCategories(locData.categories ?? []);
 
 // Auftritte laden
@@ -127,8 +142,9 @@ if (performerIn.length > 0) jsonLd.performerIn = performerIn;
 
 <Page
   locale={locale}
-  title={`${name} – Spektakel Landshut`}
-  description={locData.description?.slice(0, 160)}
+  title={name}
+  description={metaDescription}
+  ogImage={mainImageForMetadata ?? undefined}
 >
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
   <!-- ─── Top Bar: Back + Favorit ──────────────────────────────────────────── -->
