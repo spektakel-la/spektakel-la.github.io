@@ -32,14 +32,14 @@ const { days, locale, listViewLabel, tableViewLabel } = Astro.props;
         data-day={day.iso}
         data-tab
         class:list={[
-          'day-tab flex flex-col items-center justify-center px-4 sm:px-6 py-3 border-b-2 transition-colors',
+          'day-tab flex flex-col items-center justify-center px-3 sm:px-6 py-3 border-b-2 transition-colors',
           i === 0
             ? 'border-primary text-primary'
             : 'border-transparent text-dark/50 hover:text-dark hover:border-dark/30',
         ]}
       >
         <!-- Mobile: Kurzname + Datum einzeilig, z. B. „Fr. 19.09." -->
-        <span class="sm:hidden font-display text-sm leading-tight">
+        <span class="sm:hidden font-display text-base leading-tight">
           {day.label.slice(0, 2)}. {day.shortDate}
         </span>
         <!-- Desktop: Langname + Datum zweizeilig -->

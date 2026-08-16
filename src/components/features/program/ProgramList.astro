@@ -39,9 +39,8 @@ const {
       const isOrg = artist?.data.organizational ?? false;
       const artistName = artist?.data.name ?? entry.artist_id;
       const artistSlug = artist?.id ?? '';
-      const timeLabel = entry.slotCount > 1
-        ? `${formatTime(entry.startTime)} – ${formatTime(entry.endTime)}`
-        : formatTime(entry.startTime);
+      const locationLabel = location?.data.description ?? entry.location_id;
+      const timeLabel = `${formatTime(entry.startTime)} – ${formatTime(entry.endTime)}`;
 
       return (
         <div
@@ -53,7 +52,7 @@ const {
           data-time-start={entry.startTime.toISOString()}
           data-time-end={entry.endTime.toISOString()}
         >
-          <span class="font-mono text-sm font-semibold text-dark/60 shrink-0 whitespace-nowrap">
+          <span class="program-entry-time font-mono text-base sm:text-lg font-semibold text-dark/60 shrink-0 whitespace-nowrap">
             {timeLabel}
           </span>
           <span
@@ -80,10 +79,13 @@ const {
             {entry.notes && (
               <span class="ml-2 text-xs text-dark/40">{entry.notes}</span>
             )}
+            <span class="program-entry-location mt-1 block sm:hidden text-xs font-medium leading-tight text-dark/45">
+              {locationLabel}
+            </span>
           </div>
 
           <span class="text-sm text-dark/50 shrink-0 hidden sm:inline">
-            {location?.data.description ?? entry.location_id}
+            {locationLabel}
           </span>
 
           {cat && (
@@ -91,7 +93,8 @@ const {
               category={cat || undefined}
               label={catLabels[cat] ?? cat}
               active={false}
-              class="shrink-0 text-xs pointer-events-none"
+              size="sm"
+              class="shrink-0 pointer-events-none"
             />
           )}
         </div>

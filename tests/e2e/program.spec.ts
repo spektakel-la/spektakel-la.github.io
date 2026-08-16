@@ -37,6 +37,66 @@ test('Kategorie-Filter zeigt nur passende Programmeinträge', async ({ page }) =
   await expect(activePanel.locator(`.program-entry:not([data-category="${filterCategory}"]).hidden`).first()).toBeAttached();
 });
 
+test('Listenansicht zeigt bei 30-Minuten-Auftritten Endzeit und Spielort', async ({ page }) => {
+  const activePanel = page.locator('[data-day-panel]:not(.hidden)');
+  const halfHourEntry = activePanel.locator('.program-entry[data-artist="companiaexpress"]').filter({
+    hasText: 'Cia Express',
+  }).first();
+
+  await expect(halfHourEntry).toContainText('18:30 – 19:00');
+  await expect(halfHourEntry).toContainText('Obere Altstadt');
+});
+
+test('Tabellenansicht hält die Zeitspalte beim horizontalen Scrollen sichtbar', async ({ page }) => {
+  await page.locator('#view-table-btn').click();
+
+  const activePanel = page.locator('[data-day-panel]:not(.hidden)');
+  const tablePanel = activePanel.locator('[data-view-panel="table"]');
+  const scroller = tablePanel.locator('[data-program-grid-scroll]');
+  const timeCell = scroller.locator('tbody tr:not(.hidden) .program-grid-time-cell').first();
+
+  await expect(tablePanel).toBeVisible();
+  await expect(timeCell).toBeVisible();
+
+  const before = await timeCell.boundingBox();
+  expect(before).not.toBeNull();
+
+  await scroller.evaluate((element) => {
+    element.scrollLeft = 320;
+  });
+  await expect.poll(() => scroller.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
+
+  const after = await timeCell.boundingBox();
+  expect(after).not.toBeNull();
+  expect(Math.abs(after!.x - before!.x)).toBeLessThan(2);
+});
+
+test('Tabellenansicht zeigt horizontale Scroll-Hinweise nur bei weiterem Inhalt', async ({ page }) => {
+  await page.locator('#view-table-btn').click();
+
+  const activePanel = page.locator('[data-day-panel]:not(.hidden)');
+  const tablePanel = activePanel.locator('[data-view-panel="table"]');
+  const scroller = tablePanel.locator('[data-program-grid-scroll]');
+
+  await expect(tablePanel).toBeVisible();
+  await expect(tablePanel).toHaveAttribute('data-scroll-left', 'false');
+  await expect(tablePanel).toHaveAttribute('data-scroll-right', 'true');
+
+  await scroller.evaluate((element) => {
+    element.scrollLeft = 320;
+  });
+
+  await expect(tablePanel).toHaveAttribute('data-scroll-left', 'true');
+  await expect(tablePanel).toHaveAttribute('data-scroll-right', 'true');
+
+  await scroller.evaluate((element) => {
+    element.scrollLeft = element.scrollWidth;
+  });
+
+  await expect(tablePanel).toHaveAttribute('data-scroll-left', 'true');
+  await expect(tablePanel).toHaveAttribute('data-scroll-right', 'false');
+});
+
 test('URL-Parameter öffnen einen konkreten Tag und Spielort', async ({ page }) => {
   await page.goto('/program/?day=2026-09-19&venue=1&view=list&artist=organization_vogelstimmen');
 

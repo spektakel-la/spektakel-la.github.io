@@ -19,6 +19,8 @@ interface Props {
   label: string;
   /** Chip ist gerade aktiv/ausgewählt */
   active?: boolean;
+  /** Größe des Chips. `filter` ist für Programmfilter, `sm` für Metadaten in Karten/Listen. */
+  size?: 'sm' | 'filter' | 'md';
   href?: string;
   /** Wird nur für <button>-Chips benötigt */
   'data-category'?: Category | '';
@@ -29,6 +31,7 @@ const {
   category,
   label,
   active = false,
+  size = 'md',
   href,
   class: className,
   'data-category': dataCategory,
@@ -40,7 +43,7 @@ const dotColor = category ? (CATEGORY_COLORS[category] ?? null) : null;
 {href ? (
   <a
     href={href}
-    class:list={['chip', active && 'chip--active', className]}
+    class:list={['chip', size !== 'md' && `chip--${size}`, active && 'chip--active', className]}
     aria-current={active ? 'true' : undefined}
   >
     {dotColor && <span class="chip__dot" style={`background-color: ${dotColor};`} aria-hidden="true" />}
@@ -50,7 +53,7 @@ const dotColor = category ? (CATEGORY_COLORS[category] ?? null) : null;
   <button
     type="button"
     data-category={dataCategory ?? category}
-    class:list={['chip', active && 'chip--active', className]}
+    class:list={['chip', size !== 'md' && `chip--${size}`, active && 'chip--active', className]}
     aria-pressed={active ? 'true' : 'false'}
   >
     {dotColor && <span class="chip__dot" style={`background-color: ${dotColor};`} aria-hidden="true" />}
@@ -83,6 +86,30 @@ const dotColor = category ? (CATEGORY_COLORS[category] ?? null) : null;
   .chip:hover {
     border-color: var(--color-primary);
     color: var(--color-primary);
+  }
+
+  .chip:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  .chip:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .chip--filter {
+    min-height: 2rem;
+    padding: 0.3em 0.8em;
+    font-size: 0.8125rem;
+    letter-spacing: 0.045em;
+    line-height: 1.32;
+  }
+
+  .chip--sm {
+    padding: 0.25em 0.7em;
+    font-size: var(--text-xs);
+    letter-spacing: 0.04em;
+    line-height: 1.25;
   }
 
   .chip--active {

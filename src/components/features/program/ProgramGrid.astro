@@ -29,88 +29,190 @@ const LOCATION_COL_W = 120;
 const tableMinWidth = `${TIME_COL_W + grid.locations.length * LOCATION_COL_W}px`;
 ---
 
-<div data-view-panel="table" class="hidden overflow-x-auto -mx-4 sm:mx-0">
-  <table class="w-full table-fixed border-collapse text-sm" style={`min-width: ${tableMinWidth};`}>
-    <colgroup>
-      <col class="w-14" />
-      {grid.locations.map((loc) => (
-        <col data-col-id={loc.data.location_id} />
-      ))}
-    </colgroup>
-    <thead>
-      <tr class="border-b-2 border-dark/20">
-        <th class="text-left py-2 px-1.5 font-display text-dark/60 w-14">
-          {locale === 'de' ? 'Zeit' : 'Time'}
-        </th>
+<div
+  data-view-panel="table"
+  data-program-grid-frame
+  data-scroll-left="false"
+  data-scroll-right="false"
+  class="program-grid-frame hidden -mx-4 sm:mx-0"
+>
+  <div data-program-grid-scroll class="program-grid-scroll overflow-x-auto">
+    <table class="w-full table-fixed border-collapse text-sm" style={`min-width: ${tableMinWidth};`}>
+      <colgroup>
+        <col class="program-grid-time-col" />
         {grid.locations.map((loc) => (
-          <th class="text-left py-2 px-1.5 font-display text-dark text-sm overflow-hidden" title={loc.data.description} data-col-id={loc.data.location_id}>
-            <span set:html={loc.data.description.replace(/\//g, '/<wbr>')} />
-          </th>
+          <col data-col-id={loc.data.location_id} />
         ))}
-      </tr>
-    </thead>
-    <tbody>
-      {grid.rows.map((row) => (
-        <tr
-          class="table-row border-b border-gray-100 hover:bg-bg/60 transition-colors h-12"
-          data-time-start={row.isoTime}
-        >
-          <td class="py-2 px-1.5 font-mono text-xs text-dark/50 align-top whitespace-nowrap">
-            <span class="flex items-center gap-1">
-              {row.timeStr}
-              <span
-                class="live-dot hidden w-2 h-2 rounded-full bg-primary animate-pulse"
-                aria-hidden="true"
-              />
-            </span>
-          </td>
-          {grid.locations.map((loc) => {
-            const cell = row.cells[loc.data.location_id];
-            if (!cell || cell.kind === 'spanned') return null;
-            if (cell.kind === 'empty') return <td class="py-2 px-1.5 align-top" data-col-id={loc.data.location_id} />;
-            const { entry, rowspan } = cell;
-            const artist = artistMap[entry.artist_id];
-            const cat = categoryMap[entry.artist_id] ?? '';
-            const isOrg = artist?.data.organizational ?? false;
-            const catColorVar = cat ? `var(--color-cat-${cat})` : 'var(--color-bg-light)';
-            // Innere Div-Höhe = rowspan × ROW_H − vertikale td-Padding (py-1.5 = 6px × 2 = 12px)
-            const divHeight = rowspan * ROW_H - 12;
-            return (
-              <td
-                rowspan={rowspan > 1 ? rowspan : undefined}
-                class="py-1.5 px-1.5 align-top"
-                data-location={entry.location_id}
-                data-category={cat}
-                data-col-id={loc.data.location_id}
-              >
-                <div
-                  class="program-grid-entry relative rounded px-1 py-1 text-xs leading-tight overflow-hidden"
-                  style={`height: ${divHeight}px; border-left: 3px solid ${catColorVar}; background: color-mix(in srgb, ${catColorVar} 12%, white);`}
-                  lang={locale}
-                >
-                  {isOrg ? (
-                    <span class="program-grid-entry__title text-dark/70">
-                      {artist?.data.name ?? entry.artist_id}
-                    </span>
-                  ) : (
-                    <a
-                      href={`${basePath}/artists/${artist?.id ?? entry.artist_id}/`}
-                      class="program-grid-entry__title font-semibold text-dark hover:text-primary transition-colors after:absolute after:inset-0"
-                    >
-                      {artist?.data.name ?? entry.artist_id}
-                    </a>
-                  )}
-                </div>
-              </td>
-            );
-          })}
+      </colgroup>
+      <thead>
+        <tr class="border-b-2 border-dark/20">
+          <th class="program-grid-time-header text-left py-2 px-1.5 font-display text-dark/60">
+            {locale === 'de' ? 'Zeit' : 'Time'}
+          </th>
+          {grid.locations.map((loc) => (
+            <th class="text-left py-2 px-1.5 font-display text-dark text-sm overflow-hidden" title={loc.data.description} data-col-id={loc.data.location_id}>
+              <span set:html={loc.data.description.replace(/\//g, '/<wbr>')} />
+            </th>
+          ))}
         </tr>
-      ))}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {grid.rows.map((row) => (
+          <tr
+            class="table-row border-b border-gray-100 hover:bg-bg/60 transition-colors h-12"
+            data-time-start={row.isoTime}
+          >
+            <td class="program-grid-time-cell py-2 px-1.5 font-mono text-xs text-dark/50 align-top whitespace-nowrap">
+              <span class="flex items-center gap-1">
+                {row.timeStr}
+                <span
+                  class="live-dot hidden w-2 h-2 rounded-full bg-primary animate-pulse"
+                  aria-hidden="true"
+                />
+              </span>
+            </td>
+            {grid.locations.map((loc) => {
+              const cell = row.cells[loc.data.location_id];
+              if (!cell || cell.kind === 'spanned') return null;
+              if (cell.kind === 'empty') return <td class="py-2 px-1.5 align-top" data-col-id={loc.data.location_id} />;
+              const { entry, rowspan } = cell;
+              const artist = artistMap[entry.artist_id];
+              const cat = categoryMap[entry.artist_id] ?? '';
+              const isOrg = artist?.data.organizational ?? false;
+              const catColorVar = cat ? `var(--color-cat-${cat})` : 'var(--color-bg-light)';
+              // Innere Div-Höhe = rowspan × ROW_H − vertikale td-Padding (py-1.5 = 6px × 2 = 12px)
+              const divHeight = rowspan * ROW_H - 12;
+              return (
+                <td
+                  rowspan={rowspan > 1 ? rowspan : undefined}
+                  class="py-1.5 px-1.5 align-top"
+                  data-location={entry.location_id}
+                  data-category={cat}
+                  data-col-id={loc.data.location_id}
+                >
+                  <div
+                    class="program-grid-entry relative rounded px-1 py-1 text-xs leading-tight overflow-hidden"
+                    style={`height: ${divHeight}px; border-left: 3px solid ${catColorVar}; background: color-mix(in srgb, ${catColorVar} 12%, white);`}
+                    lang={locale}
+                  >
+                    {isOrg ? (
+                      <span class="program-grid-entry__title text-dark/70">
+                        {artist?.data.name ?? entry.artist_id}
+                      </span>
+                    ) : (
+                      <a
+                        href={`${basePath}/artists/${artist?.id ?? entry.artist_id}/`}
+                        class="program-grid-entry__title font-semibold text-dark hover:text-primary transition-colors after:absolute after:inset-0"
+                      >
+                        {artist?.data.name ?? entry.artist_id}
+                      </a>
+                    )}
+                  </div>
+                </td>
+              );
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
 </div>
 
+<script>
+  function initProgramGridScrollHints() {
+    document.querySelectorAll<HTMLElement>('[data-program-grid-frame]').forEach((frame) => {
+      if (frame.dataset.scrollHintsReady === 'true') return;
+      const scroller = frame.querySelector<HTMLElement>('[data-program-grid-scroll]');
+      if (!scroller) return;
+
+      frame.dataset.scrollHintsReady = 'true';
+
+      const updateScrollHints = () => {
+        const maxScroll = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+        frame.dataset.scrollLeft = String(scroller.scrollLeft > 1);
+        frame.dataset.scrollRight = String(scroller.scrollLeft < maxScroll - 1);
+      };
+
+      const scheduleUpdate = () => window.requestAnimationFrame(updateScrollHints);
+      scroller.addEventListener('scroll', updateScrollHints, { passive: true });
+      window.addEventListener('resize', scheduleUpdate);
+
+      const resizeObserver = new ResizeObserver(scheduleUpdate);
+      resizeObserver.observe(scroller);
+      const table = scroller.querySelector('table');
+      if (table) resizeObserver.observe(table);
+
+      const mutationObserver = new MutationObserver(scheduleUpdate);
+      mutationObserver.observe(scroller, {
+        attributes: true,
+        attributeFilter: ['class', 'style'],
+        subtree: true,
+      });
+
+      scheduleUpdate();
+    });
+  }
+
+  initProgramGridScrollHints();
+</script>
+
 <style>
+  .program-grid-frame {
+    position: relative;
+  }
+
+  .program-grid-frame::before,
+  .program-grid-frame::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 4;
+    width: 2.5rem;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 160ms ease;
+  }
+
+  .program-grid-frame::before {
+    left: 4.5rem;
+    background: linear-gradient(90deg, rgb(26 26 26 / 0.16), rgb(26 26 26 / 0));
+  }
+
+  .program-grid-frame::after {
+    right: 0;
+    background: linear-gradient(270deg, rgb(26 26 26 / 0.18), rgb(26 26 26 / 0));
+  }
+
+  .program-grid-frame[data-scroll-left="true"]::before,
+  .program-grid-frame[data-scroll-right="true"]::after {
+    opacity: 1;
+  }
+
+  .program-grid-time-col {
+    width: 4.5rem;
+  }
+
+  .program-grid-time-header,
+  .program-grid-time-cell {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    width: 4.5rem;
+    min-width: 4.5rem;
+    max-width: 4.5rem;
+    background: var(--color-bg);
+    box-shadow: 1px 0 0 rgb(0 0 0 / 0.06), 10px 0 16px -16px rgb(0 0 0 / 0.45);
+  }
+
+  .program-grid-time-header {
+    z-index: 3;
+  }
+
+  .table-row:hover .program-grid-time-cell {
+    background: color-mix(in srgb, var(--color-bg) 72%, var(--color-bg-light));
+  }
+
   .program-grid-entry__title {
     display: block;
     white-space: normal;
