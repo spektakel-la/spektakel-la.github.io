@@ -130,9 +130,9 @@ const announcementEvents = locale === 'en'
         detail: 'Opening of the 20th Spektakel La.',
       },
       {
-        date: 'Friday, 18 Sept. - Sunday, 20 Sept.',
-        time: '',
-        location: 'Rathaus Prunksaal, Salzstadel, Landtor and old town',
+        date: 'Saturday, 19 Sept.',
+        time: '14:30',
+        location: 'Jungheinrich Bühne',
         title: 'Who will tweet their way to victory?',
         summary: 'Germany’s first bird-call imitation competition is looking for the best imitations of European wild birds.',
         detail: [
@@ -140,6 +140,8 @@ const announcementEvents = locale === 'en'
           'Whether blackbird, gull, cuckoo or owl - any European wild bird may be imitated, using only mouth and hands, with no aids.',
           'The competition takes place in two categories: children up to 12 years, and teenagers & adults from 12 years. A jury will judge the performances, with small prizes included. To take part, send your registration to dervogelphilipp@gmail.com. If there are still slots available, you can also show your imitation spontaneously on stage.',
         ],
+        href: localize(`${ROUTES.program}?day=2026-09-19&venue=1&view=list&artist=organization_vogelstimmen`),
+        linkLabel: 'View in programme',
       },
       {
         date: 'Friday, 18 Sept. - Sunday, 20 Sept.',
@@ -164,9 +166,9 @@ const announcementEvents = locale === 'en'
         detail: 'Eröffnung 20. Spektakel La.',
       },
       {
-        date: 'Freitag 18. Sept. – Sonntag 20. Sept.',
-        time: '',
-        location: 'Rathaus Prunksaal, Salzstadel, Ländtor und Altstadt',
+        date: 'Samstag, 19. Sept.',
+        time: '14:30',
+        location: 'Jungheinrich Bühne',
         title: 'Wer zwitschert sich zum Sieg?',
         summary: 'Deutschlands erster Vogelstimmenimitationswettbewerb sucht die besten Imitationen europäischer Wildvögel.',
         detail: [
@@ -174,6 +176,8 @@ const announcementEvents = locale === 'en'
           'Ob Amsel, Möwe, Kuckuck oder Eule - jeder europäische Wildvogel darf imitiert werden, ausschließlich mit Mund und Händen, ohne Hilfsmittel.',
           'Der Wettbewerb findet in zwei Kategorien statt: Kinder bis 12 Jahre und Jugendliche & Erwachsene ab 12 Jahren. Eine Jury bewertet die Auftritte, kleine Preise inklusive. Wer teilnehmen möchte, schickt seine Anmeldung an dervogelphilipp@gmail.com. Falls noch Platz ist, kann man seine Imitation auch spontan vor Ort auf der Bühne zeigen.',
         ],
+        href: localize(`${ROUTES.program}?day=2026-09-19&venue=1&view=list&artist=organization_vogelstimmen`),
+        linkLabel: 'Im Programm ansehen',
       },
       {
         date: 'Freitag 18. Sept. – Sonntag 20. Sept.',
@@ -388,6 +392,15 @@ const announcementEvents = locale === 'en'
                       {event.detail}
                     </p>
                   )
+                )}
+                {event.href && (
+                  <a
+                    href={event.href}
+                    class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-dark transition-colors"
+                  >
+                    {event.linkLabel}
+                    <span aria-hidden="true">→</span>
+                  </a>
                 )}
               </div>
             </li>

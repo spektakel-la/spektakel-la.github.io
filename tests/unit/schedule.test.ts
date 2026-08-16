@@ -29,9 +29,31 @@ const fixturePath = (() => {
 })();
 
 describe('loadSchedule', () => {
-  it('lädt die produktive CSV aktuell als leeren 2026-Spielplan', () => {
+  it('lädt den produktiven 2026-Spielplan', () => {
     const entries = loadSchedule(csvPath);
-    expect(entries).toHaveLength(0);
+    expect(entries).toHaveLength(387);
+    expect(getFestivalDays(entries)).toEqual(['2026-09-18', '2026-09-19', '2026-09-20']);
+    expect(entries).toContainEqual(expect.objectContaining({
+      location_id: '3',
+      artist_id: 'organization_opening',
+      festivalDay: '2026-09-18',
+    }));
+    expect(entries).toContainEqual(expect.objectContaining({
+      location_id: '1',
+      artist_id: 'organization_vogelstimmen',
+      festivalDay: '2026-09-19',
+    }));
+    expect(entries).toContainEqual(expect.objectContaining({
+      location_id: '14',
+      artist_id: 'brunitus',
+      notes: 'Special Show',
+      festivalDay: '2026-09-19',
+    }));
+    expect(entries).toContainEqual(expect.objectContaining({
+      location_id: '12',
+      artist_id: 'organization_finale',
+      festivalDay: '2026-09-20',
+    }));
   });
 
   it('lädt eine CSV und gibt ein nicht-leeres Array zurück', () => {

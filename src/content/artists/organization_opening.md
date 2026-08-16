@@ -7,13 +7,13 @@ organizational: true
 de:
   country: ''
   description: >
-    Die feierliche Eröffnung des Spektakels 2025 ist der Startschuss für ein unvergessliches Festival voller Kunst, Kultur und Gemeinschaft.
+    Die feierliche Eröffnung des Spektakels 2026 ist der Startschuss für ein unvergessliches Festival voller Kunst, Kultur und Gemeinschaft.
 
   categories: []
 en:
   country: ''
   description: >
-    The ceremonial opening of Spektakel 2025 marks the beginning of an unforgettable festival full of art, culture and community.
+    The ceremonial opening of Spektakel 2026 marks the beginning of an unforgettable festival full of art, culture and community.
 
   categories: []
 ---

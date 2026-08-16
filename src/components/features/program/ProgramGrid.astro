@@ -24,10 +24,13 @@ const { grid, artistMap, categoryMap, basePath, locale } = Astro.props;
 
 /** Fixe Zeilenhöhe in px. 1 Slot (30 min) = 1 Reihe = ROW_H px. */
 const ROW_H = 48;
+const TIME_COL_W = 72;
+const LOCATION_COL_W = 120;
+const tableMinWidth = `${TIME_COL_W + grid.locations.length * LOCATION_COL_W}px`;
 ---
 
 <div data-view-panel="table" class="hidden overflow-x-auto -mx-4 sm:mx-0">
-  <table class="w-full table-fixed border-collapse text-sm min-w-[600px]">
+  <table class="w-full table-fixed border-collapse text-sm" style={`min-width: ${tableMinWidth};`}>
     <colgroup>
       <col class="w-14" />
       {grid.locations.map((loc) => (
@@ -81,17 +84,18 @@ const ROW_H = 48;
                 data-col-id={loc.data.location_id}
               >
                 <div
-                  class="relative rounded px-1 py-1 text-xs overflow-hidden"
+                  class="program-grid-entry relative rounded px-1 py-1 text-xs leading-tight overflow-hidden"
                   style={`height: ${divHeight}px; border-left: 3px solid ${catColorVar}; background: color-mix(in srgb, ${catColorVar} 12%, white);`}
+                  lang={locale}
                 >
                   {isOrg ? (
-                    <span class="text-dark/40 italic">
+                    <span class="program-grid-entry__title text-dark/70">
                       {artist?.data.name ?? entry.artist_id}
                     </span>
                   ) : (
                     <a
                       href={`${basePath}/artists/${artist?.id ?? entry.artist_id}/`}
-                      class="font-semibold text-dark hover:text-primary transition-colors after:absolute after:inset-0"
+                      class="program-grid-entry__title font-semibold text-dark hover:text-primary transition-colors after:absolute after:inset-0"
                     >
                       {artist?.data.name ?? entry.artist_id}
                     </a>
@@ -105,3 +109,13 @@ const ROW_H = 48;
     </tbody>
   </table>
 </div>
+
+<style>
+  .program-grid-entry__title {
+    display: block;
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+</style>

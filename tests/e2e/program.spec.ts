@@ -36,3 +36,17 @@ test('Kategorie-Filter zeigt nur passende Programmeinträge', async ({ page }) =
   await expect(activePanel.locator(`.program-entry[data-category="${filterCategory}"]:not(.hidden)`).first()).toBeAttached();
   await expect(activePanel.locator(`.program-entry:not([data-category="${filterCategory}"]).hidden`).first()).toBeAttached();
 });
+
+test('URL-Parameter öffnen einen konkreten Tag und Spielort', async ({ page }) => {
+  await page.goto('/program/?day=2026-09-19&venue=1&view=list&artist=organization_vogelstimmen');
+
+  await expect(page.locator('#tab-2026-09-19')).toHaveAttribute('aria-selected', 'true');
+  await expect(page.locator('#panel-2026-09-19')).toBeVisible();
+  await expect(page.locator('#venue-filter')).toHaveValue('1');
+  await expect(page.locator('#view-list-btn')).toHaveAttribute('aria-pressed', 'true');
+  const linkedEntry = page.locator('#panel-2026-09-19 .program-entry[data-location="1"][data-artist="organization_vogelstimmen"]:not(.hidden)').filter({
+    hasText: 'Vogelstimmen-Imitationswettbewerb',
+  });
+  await expect(linkedEntry).toBeAttached();
+  await expect(linkedEntry).toHaveAttribute('data-deep-link-highlight', 'true');
+});

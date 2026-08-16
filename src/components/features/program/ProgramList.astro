@@ -46,6 +46,8 @@ const {
       return (
         <div
           class="program-entry flex flex-wrap sm:flex-nowrap items-center gap-3 py-3 px-2 rounded-lg hover:bg-bg transition-colors"
+          tabindex="-1"
+          data-artist={entry.artist_id}
           data-location={entry.location_id}
           data-category={cat}
           data-time-start={entry.startTime.toISOString()}
@@ -61,11 +63,11 @@ const {
 
           <div class="flex-1 min-w-0">
             {isOrg ? (
-              <span class="font-display text-base text-dark/40 italic">{artistName}</span>
+              <span class="block font-display text-base leading-tight text-dark/70 break-words hyphens-auto">{artistName}</span>
             ) : (
               <a
                 href={`${basePath}/artists/${artistSlug}/`}
-                class="font-display text-base text-dark hover:text-primary transition-colors"
+                class="inline-block font-display text-base leading-tight text-dark hover:text-primary transition-colors break-words hyphens-auto"
               >
                 {artistName}
               </a>
@@ -101,3 +103,15 @@ const {
     {noResultsLabel}
   </p>
 </div>
+
+<style>
+  .program-entry[data-deep-link-highlight="true"] {
+    background: color-mix(in srgb, var(--color-primary) 9%, white);
+    box-shadow: inset 4px 0 0 var(--color-primary);
+  }
+
+  .program-entry:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+</style>

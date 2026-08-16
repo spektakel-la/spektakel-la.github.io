@@ -319,20 +319,20 @@ const jsonLd = {
     window.spektakel?.analytics?.track(eventName, params);
   };
 
-  // ─── Day-Tabs ────────────────────────────────────────────────────────────────
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      activeDay = tab.dataset.day ?? '';
-      tabs.forEach((t) => {
-        const active = t.dataset.day === activeDay;
-        t.setAttribute('aria-selected', String(active));
-        t.classList.toggle('border-primary', active);
-        t.classList.toggle('text-primary', active);
-        t.classList.toggle('border-transparent', !active);
-        t.classList.toggle('text-dark/50', !active);
-      });
-      dayPanels.forEach((p) => p.classList.toggle('hidden', p.dataset.dayPanel !== activeDay));
-      const visibleResults = applyFilters();
+  function setDay(day: string, shouldTrack = false) {
+    if (!day || !document.querySelector(`[data-day-panel="${day}"]`)) return;
+    activeDay = day;
+    tabs.forEach((t) => {
+      const active = t.dataset.day === activeDay;
+      t.setAttribute('aria-selected', String(active));
+      t.classList.toggle('border-primary', active);
+      t.classList.toggle('text-primary', active);
+      t.classList.toggle('border-transparent', !active);
+      t.classList.toggle('text-dark/50', !active);
+    });
+    dayPanels.forEach((p) => p.classList.toggle('hidden', p.dataset.dayPanel !== activeDay));
+    const visibleResults = applyFilters();
+    if (shouldTrack) {
       track('program_day_selected', {
         day: activeDay,
         category: activeCategory || undefined,
@@ -340,6 +340,13 @@ const jsonLd = {
         view: activeView,
         visible_results: visibleResults,
       });
+    }
+  }
+
+  // ─── Day-Tabs ────────────────────────────────────────────────────────────────
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      setDay(tab.dataset.day ?? '', true);
     });
   });
 
@@ -495,6 +502,43 @@ const jsonLd = {
 
     return visible;
   }
+
+  function applyInitialUrlState() {
+    const params = new URLSearchParams(window.location.search);
+    const requestedDay = params.get('day') ?? '';
+    const requestedVenue = params.get('venue') ?? '';
+    const requestedView = params.get('view') ?? '';
+    const requestedArtist = params.get('artist') ?? '';
+
+    if (requestedVenue && venueSelect?.querySelector(`option[value="${CSS.escape(requestedVenue)}"]`)) {
+      activeVenue = requestedVenue;
+      venueSelect.value = requestedVenue;
+    }
+
+    if (requestedView === 'list' || requestedView === 'table') {
+      setView(requestedView);
+    } else if (requestedVenue || requestedArtist) {
+      setView('list');
+    }
+
+    setDay(requestedDay);
+    applyFilters();
+
+    if (requestedArtist) {
+      window.requestAnimationFrame(() => {
+        const activePanel = document.querySelector<HTMLElement>(`[data-day-panel="${activeDay}"]`);
+        const target = activePanel?.querySelector<HTMLElement>(
+          `.program-entry[data-artist="${CSS.escape(requestedArtist)}"]:not(.hidden)`,
+        );
+        if (!target) return;
+        target.dataset.deepLinkHighlight = 'true';
+        target.focus({ preventScroll: true });
+        target.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      });
+    }
+  }
+
+  applyInitialUrlState();
 
   // ─── Live-Indikator ──────────────────────────────────────────────────────────
   function updateLive() {
