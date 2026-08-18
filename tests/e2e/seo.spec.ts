@@ -46,12 +46,19 @@ test('liefert valides Festival-, Event- und Künstler-JSON-LD', async ({ page })
       if (jsonLd.subEvent.length > 0) {
         expect(jsonLd.subEvent[0].location['@type']).toBe('Place');
         expect(jsonLd.subEvent[0].performer.name).toBeTruthy();
+        expect(jsonLd.subEvent[0].description.trim().length).toBeGreaterThanOrEqual(20);
+        expect(jsonLd.subEvent[0].offers.validFrom).toBeTruthy();
       }
+    }
+    if (route === '/artists/adamkadabra/') {
+      expect(jsonLd.performerIn[0].description.trim().length).toBeGreaterThanOrEqual(20);
+      expect(jsonLd.performerIn[0].offers.validFrom).toBeTruthy();
     }
     if (route === '/') {
       expect(jsonLd.endDate).toBeTruthy();
       expect(jsonLd.performer.length).toBeGreaterThan(0);
       expect(jsonLd.offers.price).toBe(0);
+      expect(jsonLd.offers.validFrom).toBeTruthy();
     }
   }
 });

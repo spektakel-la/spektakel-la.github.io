@@ -88,6 +88,7 @@ const festivalJsonLd = {
     const location = locationMap[entry.location_id];
     return createFestivalEvent({
       name: `${artist.data.name} – ${festival.organizerName}`,
+      description: locale === 'en' ? artist.data.en.description : artist.data.de.description,
       startDate: entry.startTime.toISOString(),
       endDate: entry.endTime.toISOString(),
       url: programUrl,

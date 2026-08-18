@@ -47,6 +47,25 @@ test('Listenansicht zeigt bei 30-Minuten-Auftritten Endzeit und Spielort', async
   await expect(halfHourEntry).toContainText('Obere Altstadt');
 });
 
+test('Favorisierte Künstler werden im Programm markiert', async ({ page }) => {
+  await page.evaluate(() => {
+    localStorage.setItem('spektakel-favorites', JSON.stringify(['companiaexpress']));
+  });
+  await page.reload({ waitUntil: 'load' });
+
+  const activePanel = page.locator('[data-day-panel]:not(.hidden)');
+  const favoriteListEntry = activePanel.locator('.program-entry[data-artist="companiaexpress"]').filter({
+    hasText: 'Cia Express',
+  }).first();
+
+  await page.locator('#view-list-btn').click();
+  await expect(favoriteListEntry).toHaveAttribute('data-favorite', 'true');
+  await expect(favoriteListEntry.locator('.program-favorite-star')).toBeVisible();
+
+  await page.locator('#view-table-btn').click();
+  await expect(activePanel.locator('[data-program-grid-entry][data-artist="companiaexpress"]').first()).toHaveAttribute('data-favorite', 'true');
+});
+
 test('Tabellenansicht hält die Zeitspalte beim horizontalen Scrollen sichtbar', async ({ page }) => {
   await page.locator('#view-table-btn').click();
 

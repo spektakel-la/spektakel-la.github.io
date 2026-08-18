@@ -181,9 +181,11 @@ const jsonLdSubEvents = mergeConsecutiveSlots(schedule)
     const artist = artistMap[e.artist_id];
     const location = locationMap[e.location_id];
     const artistUrl = `${siteUrl}${basePath}/artists/${artist.data.artist_id}/`;
+    const artistDescription = locale === 'en' ? artist.data.en.description : artist.data.de.description;
     const image = artist.data.images?.[0] ? new URL(preferWebp(artist.data.images[0]), siteUrl).href : undefined;
     return createFestivalEvent({
       name: `${artist.data.name} – ${festival.organizerName}`,
+      description: artistDescription,
       startDate: e.startTime.toISOString(),
       endDate: e.endTime.toISOString(),
       url: programUrl,
@@ -202,6 +204,9 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'EventSeries',
   name: festival.name,
+  description: locale === 'de'
+    ? 'Alle Auftritte beim Spektakel Landshut 2026 in der Landshuter Altstadt.'
+    : 'All performances at Spektakel Landshut 2026 in Landshut historic city centre.',
   startDate: festival.startDate,
   endDate: festival.endDate,
   url: programUrl,
@@ -310,6 +315,8 @@ const jsonLd = {
 </Page>
 
 <script>
+  import { getFavorites } from '../../../utils/favorites';
+
   // ─── Zustand ────────────────────────────────────────────────────────────────
   let activeDay = (document.querySelector<HTMLButtonElement>('[data-tab]'))?.dataset.day ?? '';
   let activeCategory = '';
@@ -324,6 +331,13 @@ const jsonLd = {
   const track = (eventName: string, params: Record<string, unknown> = {}) => {
     window.spektakel?.analytics?.track(eventName, params);
   };
+
+  function applyFavoriteMarkers() {
+    const favorites = getFavorites();
+    document.querySelectorAll<HTMLElement>('.program-entry[data-artist], [data-program-grid-entry][data-artist]').forEach((entry) => {
+      entry.dataset.favorite = String(favorites.has(entry.dataset.artist ?? ''));
+    });
+  }
 
   function setDay(day: string, shouldTrack = false) {
     if (!day || !document.querySelector(`[data-day-panel="${day}"]`)) return;
@@ -545,6 +559,8 @@ const jsonLd = {
   }
 
   applyInitialUrlState();
+  applyFavoriteMarkers();
+  window.addEventListener('pageshow', applyFavoriteMarkers);
 
   // ─── Live-Indikator ──────────────────────────────────────────────────────────
   function updateLive() {

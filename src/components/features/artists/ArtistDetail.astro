@@ -123,6 +123,7 @@ const performerIn = merged.map((entry) => {
   const programUrl = locale === 'en' ? `${siteUrl}/en/program/` : `${siteUrl}/program/`;
   return createFestivalEvent({
     name: `${name} – ${festival.organizerName}`,
+    description: metaDescription,
     startDate: entry.startTime.toISOString(),
     endDate: entry.endTime.toISOString(),
     url: programUrl,

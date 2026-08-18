@@ -63,16 +63,23 @@ const {
           />
 
           <div class="flex-1 min-w-0">
-            {isOrg ? (
-              <span class="block font-display text-base leading-tight text-dark/70 break-words hyphens-auto">{artistName}</span>
-            ) : (
-              <a
-                href={`${basePath}/artists/${artistSlug}/`}
-                class="inline-block font-display text-base leading-tight text-dark hover:text-primary transition-colors break-words hyphens-auto"
-              >
-                {artistName}
-              </a>
-            )}
+            <span class="program-entry-title-row inline-flex max-w-full items-center gap-1.5 align-top">
+              {isOrg ? (
+                <span class="block font-display text-base leading-tight text-dark/70 break-words hyphens-auto">{artistName}</span>
+              ) : (
+                <a
+                  href={`${basePath}/artists/${artistSlug}/`}
+                  class="inline-block font-display text-base leading-tight text-dark hover:text-primary transition-colors break-words hyphens-auto"
+                >
+                  {artistName}
+                </a>
+              )}
+              <span class="program-favorite-star hidden shrink-0 text-primary" aria-hidden="true">
+                <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="currentColor">
+                  <path d="m12 2.4 2.9 6 6.6 1-4.8 4.7 1.1 6.6L12 17.6l-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1L12 2.4Z" />
+                </svg>
+              </span>
+            </span>
             {artist?.data.hut_act && (
               <span class="ml-2 inline-block text-xs bg-lime text-dark px-2 py-0.5 rounded font-display">
                 🎩 {hutActLabel}
@@ -117,6 +124,24 @@ const {
 <style>
   .program-entry[data-deep-link-highlight="true"] {
     background: color-mix(in srgb, var(--color-primary) 9%, white);
+    box-shadow: inset 4px 0 0 var(--color-primary);
+  }
+
+  .program-entry[data-favorite="true"] {
+    background: color-mix(in srgb, var(--color-primary) 5%, white);
+    box-shadow: inset 3px 0 0 color-mix(in srgb, var(--color-primary) 82%, white);
+  }
+
+  .program-entry[data-favorite="true"] .program-favorite-star {
+    display: inline-flex;
+  }
+
+  .program-entry[data-favorite="true"]:hover {
+    background: color-mix(in srgb, var(--color-primary) 7%, var(--color-bg));
+  }
+
+  .program-entry[data-deep-link-highlight="true"][data-favorite="true"] {
+    background: color-mix(in srgb, var(--color-primary) 10%, white);
     box-shadow: inset 4px 0 0 var(--color-primary);
   }
 

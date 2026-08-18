@@ -89,14 +89,22 @@ const tableMinWidth = `${TIME_COL_W + grid.locations.length * LOCATION_COL_W}px`
                   class="py-1.5 px-1.5 align-top"
                   data-location={entry.location_id}
                   data-category={cat}
+                  data-artist={entry.artist_id}
                   data-col-id={loc.data.location_id}
                 >
                   <div
                     class="program-grid-entry relative rounded px-1 py-1 text-xs leading-tight overflow-hidden"
                     style={`height: ${divHeight}px; border-left: 3px solid ${catColorVar}; background: color-mix(in srgb, ${catColorVar} 12%, white);`}
+                    data-program-grid-entry
+                    data-artist={entry.artist_id}
                     lang={locale}
                     title={specialLabel ? `${artist?.data.name ?? entry.artist_id} - ${specialLabel}` : undefined}
                   >
+                    <span class="program-grid-favorite-star hidden text-primary" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" class="h-3 w-3" fill="currentColor">
+                        <path d="m12 2.4 2.9 6 6.6 1-4.8 4.7 1.1 6.6L12 17.6l-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1L12 2.4Z" />
+                      </svg>
+                    </span>
                     {isOrg ? (
                       <span class="program-grid-entry__title text-dark/70">
                         {artist?.data.name ?? entry.artist_id}
@@ -243,5 +251,22 @@ const tableMinWidth = `${TIME_COL_W + grid.locations.length * LOCATION_COL_W}px`
     word-break: normal;
     overflow-wrap: break-word;
     hyphens: auto;
+  }
+
+  .program-grid-entry[data-favorite="true"] {
+    outline: 1px solid color-mix(in srgb, var(--color-primary) 26%, transparent);
+    background-image: linear-gradient(color-mix(in srgb, var(--color-primary) 6%, transparent), color-mix(in srgb, var(--color-primary) 6%, transparent));
+  }
+
+  .program-grid-entry[data-favorite="true"] .program-grid-entry__title {
+    padding-right: 0.9rem;
+  }
+
+  .program-grid-entry[data-favorite="true"] .program-grid-favorite-star {
+    display: inline-flex;
+    position: absolute;
+    top: 0.25rem;
+    right: 0.25rem;
+    z-index: 1;
   }
 </style>
