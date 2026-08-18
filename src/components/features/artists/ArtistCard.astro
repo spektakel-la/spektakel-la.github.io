@@ -2,6 +2,7 @@
 import { type CollectionEntry } from 'astro:content';
 import { type Category } from '../../../utils/categories';
 import { imagePositionToObjectPosition } from '../../../utils/imagePosition';
+import { getArtistCardImageSrc } from '../../../utils/imageVariants';
 import { type MergedEntry, formatTime } from '../../../utils/schedule';
 import CategoryChip from '../../ui/CategoryChip.astro';
 import Picture from '../../ui/Picture.astro';
@@ -19,6 +20,7 @@ const { name, images, hut_act, image_position } = artist.data;
 const objectPosition = imagePositionToObjectPosition(image_position);
 const locData = locale === 'en' ? (artist.data.en ?? artist.data.de) : artist.data.de;
 const img = images?.[0] ?? null;
+const cardImg = img ? getArtistCardImageSrc(img) : null;
 const href = `${basePath}/artists/${artist.id}/`;
 const imageAlt = locale === 'en'
   ? `${name} at Spektakel Landshut 2026`
@@ -46,9 +48,9 @@ const timeLine = entries
 >
   <!-- Bild + Favorit-Stern -->
   <div class="relative aspect-[4/3] overflow-hidden bg-gray-100">
-    {img ? (
+    {cardImg ? (
       <Picture
-        src={img}
+        src={cardImg}
         alt={imageAlt}
         loading="lazy"
         decoding="async"

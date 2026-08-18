@@ -21,3 +21,14 @@ export function getImageVariants(src: string): ImageVariants {
 export function preferWebp(src: string): string {
   return getImageVariants(src).src;
 }
+
+export function getArtistCardImageSrc(src: string): string {
+  const webpSrc = preferWebp(src);
+  const artistImagePrefix = '/assets/img/artists/';
+
+  if (!webpSrc.startsWith(artistImagePrefix) || webpSrc.includes('/2025/')) {
+    return webpSrc;
+  }
+
+  return webpSrc.replace(artistImagePrefix, `${artistImagePrefix}cards/`);
+}

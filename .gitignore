@@ -3,6 +3,7 @@
 /dist
 /.astro
 /dev-dist
+/public/assets/img/artists/cards
 /test-results
 /test_results
 /playwright-report

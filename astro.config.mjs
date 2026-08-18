@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 import { execFileSync } from 'node:child_process';
 import { existsSync, readdirSync } from 'node:fs';
+import { generateArtistCardImages } from './scripts/artist-card-images.mjs';
 
 const buildTimestamp = new Date();
 const lastmodCache = new Map();
@@ -73,6 +74,34 @@ function sourcePathsForPage(url) {
   return [...commonPaths, ...(routeSources[localePath] ?? [`src/pages${localePath}index.astro`])];
 }
 
+function artistCardImageIntegration() {
+  let pendingGeneration = Promise.resolve();
+  const generate = () => {
+    pendingGeneration = pendingGeneration.then(() => generateArtistCardImages());
+    return pendingGeneration;
+  };
+
+  return {
+    name: 'artist-card-images',
+    hooks: {
+      'astro:build:start': generate,
+      'astro:server:setup': async ({ server }) => {
+        await generate();
+        server.watcher.add('public/assets/img/artists/*.webp');
+        server.watcher.on('add', (path) => {
+          if (path.includes('/public/assets/img/artists/') && path.endsWith('.webp')) void generate();
+        });
+        server.watcher.on('change', (path) => {
+          if (path.includes('/public/assets/img/artists/') && path.endsWith('.webp')) void generate();
+        });
+        server.watcher.on('unlink', (path) => {
+          if (path.includes('/public/assets/img/artists/') && path.endsWith('.webp')) void generate();
+        });
+      },
+    },
+  };
+}
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://spektakel.la',
@@ -90,6 +119,7 @@ export default defineConfig({
   },
 
   integrations: [
+    artistCardImageIntegration(),
     sitemap({
       // Alte /impressum-Aliasse haben /imprint als Canonical und gehören
       // deshalb nicht als eigenständige URLs in den Sitemap-Index.
