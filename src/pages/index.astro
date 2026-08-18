@@ -12,7 +12,7 @@ import { imagePositionToObjectPosition } from '../utils/imagePosition';
 import { preferWebp } from '../utils/imageVariants';
 import { createFestivalEvent, createOffer, createOrganizer, createPlace } from '../utils/jsonLd';
 import { artistPath, ROUTES } from '../utils/routes';
-import { loadSchedule, mergeConsecutiveSlots } from '../utils/schedule';
+import { createPerformanceId, loadSchedule, mergeConsecutiveSlots } from '../utils/schedule';
 
 // ─── Assets ────────────────────────────────────────────────────────────────
 import heroImg from '../assets/hero/hero2.webp';
@@ -86,12 +86,15 @@ const festivalJsonLd = {
   subEvent: publicPerformances.map(entry => {
     const artist = artistMap[entry.artist_id];
     const location = locationMap[entry.location_id];
+    const eventId = createPerformanceId(entry);
+    const eventUrl = `${programUrl}#${eventId}`;
     return createFestivalEvent({
+      id: eventUrl,
       name: `${artist.data.name} – ${festival.organizerName}`,
       description: locale === 'en' ? artist.data.en.description : artist.data.de.description,
       startDate: entry.startTime.toISOString(),
       endDate: entry.endTime.toISOString(),
-      url: programUrl,
+      url: eventUrl,
       image: artist.data.images?.[0] ? new URL(preferWebp(artist.data.images[0]), siteUrl).href : undefined,
       performer: { '@type': 'PerformingGroup', name: artist.data.name },
       location: {
@@ -191,6 +194,7 @@ const announcementEvents = locale === 'en'
   locale={locale}
 >
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(festivalJsonLd)} />
+  <link rel="alternate" type="application/json" href={`${siteUrl}/program.json`} slot="head" />
 
   <!-- ═══ HERO ══════════════════════════════════════════════════════════════ -->
   <section class="relative min-h-[calc(100svh-4rem)] md:min-h-screen bg-white overflow-hidden flex items-start md:items-center">

@@ -282,6 +282,26 @@ export interface MergedEntry {
   festivalDay: string;
 }
 
+function slugPart(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
+/**
+ * Stable public identifier for one merged performance entry.
+ * Used by JSON-LD, /program.json, and fragment links.
+ */
+export function createPerformanceId(entry: MergedEntry): string {
+  const timestamp = entry.startTime
+    .toISOString()
+    .replace(/[-:]/g, '')
+    .replace(/\.\d{3}Z$/, 'z')
+    .toLowerCase();
+  return `event-${entry.festivalDay}-${slugPart(entry.location_id)}-${slugPart(entry.artist_id)}-${timestamp}`;
+}
+
 function hasSameSlotMetadata(a: ScheduleEntry | MergedEntry, b: ScheduleEntry | MergedEntry): boolean {
   return a.notes === b.notes && a.label_de === b.label_de && a.label_en === b.label_en;
 }

@@ -10,7 +10,7 @@ import {
 import { imagePositionToObjectPosition } from '../../../utils/imagePosition';
 import { preferWebp } from '../../../utils/imageVariants';
 import { createFestivalEvent } from '../../../utils/jsonLd';
-import { formatTime, loadSchedule, mergeConsecutiveSlots } from '../../../utils/schedule';
+import { createPerformanceId, formatTime, loadSchedule, mergeConsecutiveSlots } from '../../../utils/schedule';
 import CategoryChip from '../../ui/CategoryChip.astro';
 import MapPin from '../../ui/MapPin.astro';
 import PaintSplatter from '../../ui/PaintSplatter.astro';
@@ -121,12 +121,15 @@ if (mainImageUrl) performerRef.image = mainImageUrl;
 const performerIn = merged.map((entry) => {
   const loc = locationMap[entry.location_id];
   const programUrl = locale === 'en' ? `${siteUrl}/en/program/` : `${siteUrl}/program/`;
+  const eventId = createPerformanceId(entry);
+  const eventUrl = `${programUrl}#${eventId}`;
   return createFestivalEvent({
+    id: eventUrl,
     name: `${name} – ${festival.organizerName}`,
     description: metaDescription,
     startDate: entry.startTime.toISOString(),
     endDate: entry.endTime.toISOString(),
-    url: programUrl,
+    url: eventUrl,
     performer: performerRef,
     image: mainImageUrl ?? undefined,
     duration: durationISO,

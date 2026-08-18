@@ -3,6 +3,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import { useTranslations } from '../../../i18n/utils';
 import {
   formatTime,
+  createPerformanceId,
   getFestivalDays,
   groupByDay,
   loadSchedule,
@@ -181,14 +182,17 @@ const jsonLdSubEvents = mergeConsecutiveSlots(schedule)
     const artist = artistMap[e.artist_id];
     const location = locationMap[e.location_id];
     const artistUrl = `${siteUrl}${basePath}/artists/${artist.data.artist_id}/`;
+    const eventId = createPerformanceId(e);
+    const eventUrl = `${programUrl}#${eventId}`;
     const artistDescription = locale === 'en' ? artist.data.en.description : artist.data.de.description;
     const image = artist.data.images?.[0] ? new URL(preferWebp(artist.data.images[0]), siteUrl).href : undefined;
     return createFestivalEvent({
+      id: eventUrl,
       name: `${artist.data.name} – ${festival.organizerName}`,
       description: artistDescription,
       startDate: e.startTime.toISOString(),
       endDate: e.endTime.toISOString(),
-      url: programUrl,
+      url: eventUrl,
       performer: { '@type': 'PerformingGroup', name: artist.data.name, url: artistUrl },
       image,
       location: location
@@ -226,6 +230,7 @@ const jsonLd = {
     : 'All performances at Spektakel Landshut – Friday to Sunday.'}
 >
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
+  <link rel="alternate" type="application/json" href={`${siteUrl}/program.json`} slot="head" />
 
   <PageHero
     eyebrow="SPEKTAKEL LANDSHUT 2026"

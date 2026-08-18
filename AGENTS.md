@@ -12,6 +12,7 @@ Arbeitsanweisungen fuer Codex und andere Coding-Agents in diesem Repository.
 - Produktionsdomain: `https://spektakel.la`.
 - SEO-, Canonical-, Sitemap-, robots.txt- und JSON-LD-URLs sollen diese Domain verwenden.
 - Die Website ist statisch gebaut und verwendet produktiv WebP-only-Bildpfade.
+- Agentenfreundliche Inhalte wie JSON-LD, `llms.txt`, `agents.txt`, `/program.json`, `/artists.json` und `/locations.json` muessen programmatisch aus den zentralen Datenquellen erzeugt werden; keine manuell gepflegten Kopien fuer kurzfristig aenderbare Programmdaten.
 
 ## Laufzeit und Package Manager
 

@@ -1,7 +1,7 @@
 ---
 import { type CollectionEntry } from 'astro:content';
 import { type Category } from '../../../utils/categories';
-import { formatTime, type MergedEntry } from '../../../utils/schedule';
+import { createPerformanceId, formatTime, type MergedEntry } from '../../../utils/schedule';
 import CategoryChip from '../../ui/CategoryChip.astro';
 
 interface Props {
@@ -43,9 +43,11 @@ const {
       const locationLabel = location?.data.description ?? entry.location_id;
       const timeLabel = `${formatTime(entry.startTime)} – ${formatTime(entry.endTime)}`;
       const specialLabel = locale === 'en' ? entry.label_en : entry.label_de;
+      const performanceId = createPerformanceId(entry);
 
       return (
         <div
+          id={performanceId}
           class="program-entry flex flex-wrap sm:flex-nowrap items-center gap-3 py-3 px-2 rounded-lg hover:bg-bg transition-colors"
           tabindex="-1"
           data-artist={entry.artist_id}

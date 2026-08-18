@@ -44,6 +44,8 @@ test('liefert valides Festival-, Event- und Künstler-JSON-LD', async ({ page })
       expect(jsonLd.startDate).toBeTruthy();
       expect(Array.isArray(jsonLd.subEvent)).toBe(true);
       if (jsonLd.subEvent.length > 0) {
+        expect(jsonLd.subEvent[0]['@id']).toMatch(/^https:\/\/spektakel\.la\/program\/#event-/);
+        expect(jsonLd.subEvent[0].url).toMatch(/^https:\/\/spektakel\.la\/program\/#event-/);
         expect(jsonLd.subEvent[0].location['@type']).toBe('Place');
         expect(jsonLd.subEvent[0].performer.name).toBeTruthy();
         expect(jsonLd.subEvent[0].description.trim().length).toBeGreaterThanOrEqual(20);
@@ -69,4 +71,35 @@ test('stellt robots.txt und Sitemap bereit', async ({ request }) => {
   await expect(robots.text()).resolves.toContain(`Sitemap: ${siteUrl}/sitemap.xml`);
 
   // Der Dev-Server generiert keine Sitemap; deren Existenz und Inhalte werden im Build geprüft.
+});
+
+test('stellt agentenfreundliche Discovery- und JSON-Ressourcen bereit', async ({ request }) => {
+  const llms = await request.get('/llms.txt');
+  expect(llms.ok()).toBe(true);
+  await expect(llms.text()).resolves.toContain('Program JSON: https://spektakel.la/program.json');
+
+  const agents = await request.get('/agents.txt');
+  expect(agents.ok()).toBe(true);
+  await expect(agents.text()).resolves.toContain('Use /program.json for performance lookups.');
+
+  const program = await request.get('/program.json');
+  expect(program.ok()).toBe(true);
+  expect(program.headers()['content-type']).toContain('application/json');
+  const programJson = await program.json();
+  expect(programJson.festival.name).toBe('Spektakel Landshut 2026');
+  expect(programJson.events.length).toBeGreaterThan(0);
+  expect(programJson.events[0].id).toMatch(/^event-/);
+  expect(programJson.events[0].url).toMatch(/^https:\/\/spektakel\.la\/program\/#event-/);
+  expect(programJson.events[0].artist.description.de.length).toBeGreaterThan(20);
+  expect(programJson.events[0].location.geo.latitude).toBeTruthy();
+
+  const artists = await request.get('/artists.json');
+  expect(artists.ok()).toBe(true);
+  const artistsJson = await artists.json();
+  expect(artistsJson.artists.find((artist: { id: string }) => artist.id === 'adamkadabra')).toBeTruthy();
+
+  const locations = await request.get('/locations.json');
+  expect(locations.ok()).toBe(true);
+  const locationsJson = await locations.json();
+  expect(locationsJson.locations.length).toBeGreaterThan(0);
 });

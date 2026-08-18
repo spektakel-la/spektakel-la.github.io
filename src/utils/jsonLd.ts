@@ -3,6 +3,7 @@ import { festival } from '../data/festival';
 type GeoPoint = readonly [number, number];
 
 type FestivalEventInput = {
+  id?: string;
   name: string;
   description?: string;
   startDate: string;
@@ -78,7 +79,9 @@ export function createFestivalEvent(input: FestivalEventInput): Record<string, u
     eventStatus: 'https://schema.org/EventScheduled',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     offers: createOffer(input.url),
+    isAccessibleForFree: festival.admissionPrice === 0,
   };
+  if (input.id) eventObj['@id'] = input.id;
   if (description) eventObj.description = description;
   if (input.image) eventObj.image = input.image;
   if (input.duration) eventObj.duration = input.duration;
