@@ -12,7 +12,7 @@ import { imagePositionToObjectPosition } from '../utils/imagePosition';
 import { preferWebp } from '../utils/imageVariants';
 import { createFestivalEvent, createOffer, createOrganizer, createPlace } from '../utils/jsonLd';
 import { artistPath, ROUTES } from '../utils/routes';
-import { formatTime, getFestivalDays, groupByDay, loadSchedule, mergeConsecutiveSlots } from '../utils/schedule';
+import { loadSchedule, mergeConsecutiveSlots } from '../utils/schedule';
 
 // ─── Assets ────────────────────────────────────────────────────────────────
 import heroImg from '../assets/hero/hero2.webp';
@@ -49,14 +49,7 @@ const artistsWithImages = allArtists.filter(
 );
 const featuredArtists = artistsWithImages;
 
-// ─── Spielplan-Vorschau ────────────────────────────────────────────────────
 const schedule = loadSchedule();
-const days = getFestivalDays(schedule);
-const byDay = groupByDay(schedule);
-const previewDay = days[0] ?? '';
-const previewEntries = (byDay[previewDay] ?? [])
-  .filter(e => !e.artist_id.startsWith('organization_'))
-  .slice(0, 5);
 const artistMap = Object.fromEntries(allArtists.map(a => [a.data.artist_id, a]));
 const locationMap = Object.fromEntries(allLocations.map(location => [location.data.location_id, location]));
 const publicScheduleEntries = schedule.filter(entry => {
@@ -644,42 +637,6 @@ const announcementEvents = locale === 'en'
 
           startRotation();
         </script>
-
-      </div>
-    </section>
-  )}
-
-  <!-- ═══ SPIELPLAN-VORSCHAU ════════════════════════════════════════════════ -->
-  {previewEntries.length > 0 && (
-    <section class="py-20 sm:py-28 bg-dark">
-      <div class="max-w-3xl mx-auto px-6">
-
-        <div class="flex items-baseline justify-between mb-3">
-          <h2 class="font-display text-5xl text-white">{t.home.schedule_heading}</h2>
-          <a href={localize(ROUTES.program)} class="text-lime font-semibold hover:underline text-sm sm:text-base shrink-0 ml-4">
-            {t.home.schedule_link}
-          </a>
-        </div>
-        <p class="text-white/40 text-sm mb-10">{dayLabels[previewDay] ?? previewDay}</p>
-
-        <ul class="list-none p-0 m-0">
-          {previewEntries.map(entry => {
-            const artist = artistMap[entry.artist_id];
-            return (
-              <li class="flex items-center gap-5 py-4 border-b border-white/10 last:border-0">
-                <span class="font-display text-2xl text-lime w-16 shrink-0 tabular-nums">
-                  {formatTime(entry.time)}
-                </span>
-                <div class="min-w-0">
-                  <p class="text-white font-semibold truncate">
-                    {artist?.data.name ?? entry.artist_id}
-                  </p>
-                  <p class="text-white/40 text-xs mt-0.5">{entry.location_id}</p>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
 
       </div>
     </section>

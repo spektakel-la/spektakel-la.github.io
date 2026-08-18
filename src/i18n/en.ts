@@ -111,7 +111,5 @@ export const en = {
     hut_text:
       'Spektakel Landshut is a hat festival – admission is free! The artists rely on your appreciation. Show your applause and toss a coin (or more!) into the hat.',
     featured_heading: 'From the line-up',
-    schedule_heading: 'Programme preview',
-    schedule_link: 'Full programme →',
   },
 } as const;
