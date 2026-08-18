@@ -17,6 +17,7 @@ for (const route of ['/', '/program/', '/artists/', '/artists/adamkadabra/', '/l
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'index, follow, max-image-preview:large');
     await expect(page.locator('meta[name="googlebot"]')).toHaveAttribute('content', 'index, follow, max-image-preview:large');
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${siteUrl}${pathname}`);
+    await expect(page.locator('link[rel="describedby"][type="text/markdown"][title="LLMs.txt"]')).toHaveAttribute('href', `${siteUrl}/llms.txt`);
     await expect(page.locator('link[rel="llms"]')).toHaveAttribute('href', `${siteUrl}/llms.txt`);
     await expect(page.locator('link[rel="agent"]')).toHaveAttribute('href', `${siteUrl}/agents.txt`);
     await expect(page.locator('link[rel="alternate"][type="text/plain"][title="LLMS full text"]')).toHaveAttribute('href', `${siteUrl}/llms-full.txt`);
@@ -87,6 +88,7 @@ test('stellt robots.txt und Sitemap bereit', async ({ request }) => {
   expect(robotsText).toContain('Allow: /agents.txt');
   expect(robotsText).toContain('Allow: /agents.json');
   expect(robotsText).toContain('Allow: /locations.geojson');
+  expect(robotsText).toContain(`LLMs-Txt: ${siteUrl}/llms.txt`);
 
   // Der Dev-Server generiert keine Sitemap; deren Existenz und Inhalte werden im Build geprüft.
 });
@@ -95,22 +97,26 @@ test('stellt agentenfreundliche Discovery- und JSON-Ressourcen bereit', async ({
   const llms = await request.get('/llms.txt');
   expect(llms.ok()).toBe(true);
   expect(llms.headers()['access-control-allow-origin']).toBe('*');
+  expect(llms.headers()['link']).toContain(`<${siteUrl}/llms.txt>; rel="describedby"; type="text/markdown"; title="LLMs.txt"`);
   const llmsText = await llms.text();
-  expect(llmsText).toContain('Program JSON: https://spektakel.la/program.json');
-  expect(llmsText).toContain('Agents JSON: https://spektakel.la/agents.json');
-  expect(llmsText).toContain('LLMS Full Text: https://spektakel.la/llms-full.txt');
-  expect(llmsText).toContain('Locations GeoJSON: https://spektakel.la/locations.geojson');
+  expect(llmsText).toContain('> The 20th international street art festival');
+  expect(llmsText).toContain('- [Program JSON](https://spektakel.la/program.json):');
+  expect(llmsText).toContain('- [Agents JSON](https://spektakel.la/agents.json):');
+  expect(llmsText).toContain('- [LLMS Full Text](https://spektakel.la/llms-full.txt):');
+  expect(llmsText).toContain('- [Locations GeoJSON](https://spektakel.la/locations.geojson):');
   expect(llmsText).toContain('Coordinate reference system: WGS84 / EPSG:4326.');
-  expect(llmsText).toContain('Jungheinrich Bühne: latitude 48.53734783, longitude 12.15219281');
+  expect(llmsText).toContain('- [1 / Jungheinrich Bühne](https://spektakel.la/locations/#venue-1): latitude 48.53734783, longitude 12.15219281');
 
   const llmsFull = await request.get('/llms-full.txt');
   expect(llmsFull.ok()).toBe(true);
   expect(llmsFull.headers()['access-control-allow-origin']).toBe('*');
+  expect(llmsFull.headers()['link']).toContain(`<${siteUrl}/llms.txt>; rel="describedby"`);
   await expect(llmsFull.text()).resolves.toContain('## Performances');
 
   const agents = await request.get('/agents.txt');
   expect(agents.ok()).toBe(true);
   expect(agents.headers()['access-control-allow-origin']).toBe('*');
+  expect(agents.headers()['link']).toContain(`<${siteUrl}/llms.txt>; rel="describedby"`);
   const agentsText = await agents.text();
   expect(agentsText).toContain('# JSON: https://spektakel.la/agents.json');
   expect(agentsText).toContain('Use /program.json for performance lookups.');

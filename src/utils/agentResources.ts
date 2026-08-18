@@ -1,11 +1,6 @@
 import { festival } from '../data/festival';
 import { ROUTES } from './routes';
 
-export const agentResponseHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Cache-Control': 'public, max-age=300',
-} as const;
-
 export type AgentLocation = {
   id: string;
   label: string;
@@ -74,6 +69,16 @@ function absoluteUrl(path: string): string {
   return new URL(path, festival.siteUrl).href;
 }
 
+export function createLlmsTxtLinkHeader(): string {
+  return `<${absoluteUrl('/llms.txt')}>; rel="describedby"; type="text/markdown"; title="LLMs.txt"`;
+}
+
+export const agentResponseHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Cache-Control': 'public, max-age=300',
+  Link: createLlmsTxtLinkHeader(),
+} as const;
+
 function siteHost(): string {
   return new URL(festival.siteUrl).host;
 }
@@ -94,7 +99,7 @@ Program JSON and Locations JSON use named geo.latitude and geo.longitude fields.
 GeoJSON uses RFC 7946 coordinate order: [longitude, latitude].
 
 ${locations
-  .map((location) => `- ${location.label} / ${location.name}: latitude ${location.latitude}, longitude ${location.longitude} (${absoluteUrl(`${ROUTES.locations}#venue-${location.id}`)})`)
+  .map((location) => `- [${location.label} / ${location.name}](${absoluteUrl(`${ROUTES.locations}#venue-${location.id}`)}): latitude ${location.latitude}, longitude ${location.longitude}`)
   .join('\n')}
 `;
 }
@@ -102,20 +107,21 @@ ${locations
 export function createLlmsTxt(locations: AgentLocation[] = []): string {
   return `# ${festival.siteName}
 
+> ${festival.summary.en}
+
+${festival.fullDescription.en}
+The ${festival.name} festival runs from ${festival.startDate} to ${festival.endDate} ${festival.locationDescription.en}.
 Official site: ${festival.siteUrl}
 Production domain: ${festival.siteUrl}
 Languages: ${festival.languages.join(', ')}
 
-${festival.fullDescription.en}
-The ${festival.name} festival runs from ${festival.startDate} to ${festival.endDate} ${festival.locationDescription.en}.
-
 ## Important Pages
 
-${importantPages.map(([label, path]) => `- ${label}: ${absoluteUrl(path)}`).join('\n')}
+${importantPages.map(([label, path]) => `- [${label}](${absoluteUrl(path)}): Human-facing ${label.toLowerCase()} page.`).join('\n')}
 
 ## Machine-Readable Resources
 
-${machineResources.map(([label, path]) => `- ${label}: ${absoluteUrl(path)}`).join('\n')}
+${machineResources.map(([label, path, description]) => `- [${label}](${absoluteUrl(path)}): ${description}`).join('\n')}
 ${renderLocationCoordinates(locations)}
 
 ## Notes For Agents
@@ -170,6 +176,7 @@ Allow: /locations.json
 Allow: /locations.geojson
 Disallow: /assets/img/artists/2025/
 
+LLMs-Txt: ${absoluteUrl('/llms.txt')}
 Sitemap: ${absoluteUrl('/sitemap.xml')}
 `;
 }
