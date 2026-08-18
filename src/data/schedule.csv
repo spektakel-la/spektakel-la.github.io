@@ -1,4 +1,4 @@
-time,location_id,artist_id,notes
+time,location_id,artist_id,notes,label_de,label_en
 2026-09-18T14:00:00Z,3,organization_opening,
 2026-09-18T15:00:00Z,12,tribalneed,
 2026-09-18T15:00:00Z,2,jonkenzie,
@@ -185,7 +185,7 @@ time,location_id,artist_id,notes
 2026-09-19T15:30:00Z,7,secretcircus,
 2026-09-19T15:30:00Z,8,mrvita,
 2026-09-19T16:00:00Z,11,charliecaper,
-2026-09-19T16:00:00Z,14,brunitus,Special Show
+2026-09-19T16:00:00Z,14,brunitus,Special Show,Special Show im Salzstadel,Special show at Salzstadel
 2026-09-19T16:00:00Z,15,woidwoife,
 2026-09-19T16:00:00Z,3,samantha,
 2026-09-19T16:00:00Z,4,lesgoulus,
@@ -204,7 +204,7 @@ time,location_id,artist_id,notes
 2026-09-19T16:30:00Z,9,markusk,
 2026-09-19T17:00:00Z,1,elflechanegra,
 2026-09-19T17:00:00Z,10,tribalneed,
-2026-09-19T17:00:00Z,12,surfinclaire,
+2026-09-19T17:00:00Z,12,surfinclaire,,mit Landshuter Rockabilly Tanzgruppe,with Landshut rockabilly dance group
 2026-09-19T17:00:00Z,15,doriangray,
 2026-09-19T17:00:00Z,3,mrbananashow,
 2026-09-19T17:00:00Z,4,mrvita,
@@ -213,7 +213,7 @@ time,location_id,artist_id,notes
 2026-09-19T17:00:00Z,7,samuelito,
 2026-09-19T17:00:00Z,9,thismaag,
 2026-09-19T17:30:00Z,10,tribalneed,
-2026-09-19T17:30:00Z,12,surfinclaire,
+2026-09-19T17:30:00Z,12,surfinclaire,,mit Landshuter Rockabilly Tanzgruppe,with Landshut rockabilly dance group
 2026-09-19T17:30:00Z,15,doriangray,
 2026-09-19T17:30:00Z,3,mrbananashow,
 2026-09-19T17:30:00Z,4,mrvita,
@@ -236,7 +236,7 @@ time,location_id,artist_id,notes
 2026-09-19T18:30:00Z,10,brunitus,
 2026-09-19T18:30:00Z,12,blechsalat,
 2026-09-19T18:30:00Z,14,lesfrikis,
-2026-09-19T18:30:00Z,15,charliecaper,
+2026-09-19T18:30:00Z,15,charliecaper,,Zauberweltmeister-Special,magic world champion special
 2026-09-19T18:30:00Z,3,billykidd,
 2026-09-19T18:30:00Z,4,lesgoulus,
 2026-09-19T18:30:00Z,5,anneklinge,
@@ -246,7 +246,7 @@ time,location_id,artist_id,notes
 2026-09-19T18:30:00Z,9,nimu,
 2026-09-19T19:00:00Z,10,brunitus,
 2026-09-19T19:00:00Z,12,blechsalat,
-2026-09-19T19:00:00Z,15,charliecaper,
+2026-09-19T19:00:00Z,15,charliecaper,,Zauberweltmeister-Special,magic world champion special
 2026-09-19T19:00:00Z,2,radiocantaconnoi,
 2026-09-19T19:00:00Z,3,mrbananashow,
 2026-09-19T19:00:00Z,4,dado,
@@ -266,11 +266,11 @@ time,location_id,artist_id,notes
 2026-09-19T19:30:00Z,9,samuelito,
 2026-09-19T20:00:00Z,1,elflechanegra,
 2026-09-19T20:00:00Z,12,tribalneed,
-2026-09-19T20:00:00Z,15,organization_comedy_variete,
+2026-09-19T20:00:00Z,15,organization_comedy_variete,,Varieté-Programm mit verschiedenen Künstlern,variety programme with multiple artists
 2026-09-19T20:00:00Z,7,shivagrings,
 2026-09-19T20:30:00Z,1,elflechanegra,
 2026-09-19T20:30:00Z,12,tribalneed,
-2026-09-19T20:30:00Z,15,organization_comedy_variete,
+2026-09-19T20:30:00Z,15,organization_comedy_variete,,Varieté-Programm mit verschiedenen Künstlern,variety programme with multiple artists
 2026-09-20T10:30:00Z,1,blechsalat,
 2026-09-20T10:30:00Z,10,markusk,
 2026-09-20T10:30:00Z,12,surfinclaire,

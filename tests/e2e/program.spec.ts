@@ -71,6 +71,25 @@ test('Tabellenansicht hält die Zeitspalte beim horizontalen Scrollen sichtbar',
   expect(Math.abs(after!.x - before!.x)).toBeLessThan(2);
 });
 
+test('Mobile Sticky-Filter bleiben unter dem Seitenkopf', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 667 });
+  const header = page.locator('header[role="banner"]');
+  const filters = page.locator('#program-filters');
+
+  await page.evaluate(() => window.scrollTo(0, 480));
+
+  await expect(header).toBeVisible();
+  await expect(filters).toBeVisible();
+  await expect.poll(async () => {
+    const boxes = await Promise.all([
+      header.boundingBox(),
+      filters.boundingBox(),
+    ]);
+    if (!boxes[0] || !boxes[1]) return Number.NEGATIVE_INFINITY;
+    return boxes[1].y - (boxes[0].y + boxes[0].height);
+  }).toBeGreaterThanOrEqual(-1);
+});
+
 test('Tabellenansicht zeigt horizontale Scroll-Hinweise nur bei weiterem Inhalt', async ({ page }) => {
   await page.locator('#view-table-btn').click();
 

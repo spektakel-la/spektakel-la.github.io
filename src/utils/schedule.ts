@@ -16,6 +16,8 @@ export interface RawScheduleRow {
   location_id: string;
   artist_id: string;
   notes: string;
+  label_de: string;
+  label_en: string;
 }
 
 export interface ScheduleEntry {
@@ -26,6 +28,8 @@ export interface ScheduleEntry {
   location_id: string;
   artist_id: string;
   notes: string;
+  label_de: string;
+  label_en: string;
 }
 
 export type ScheduleByDay = Record<string, ScheduleEntry[]>;
@@ -46,20 +50,49 @@ export const NIGHT_CUTOFF_HOUR = 3;
 
 // ─── Parser ─────────────────────────────────────────────────────────────────
 
+function parseCsvLine(line: string): string[] {
+  const values: string[] = [];
+  let current = '';
+  let inQuotes = false;
+
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    const next = line[i + 1];
+
+    if (char === '"' && inQuotes && next === '"') {
+      current += '"';
+      i++;
+    } else if (char === '"') {
+      inQuotes = !inQuotes;
+    } else if (char === ',' && !inQuotes) {
+      values.push(current);
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+
+  values.push(current);
+  return values;
+}
+
 /**
- * Parst eine CSV-Zeile nach dem Format:
- * time,location_id,artist_id,notes
+ * Parst eine CSV-Zeile nach Header-Spalten. `label_de` und `label_en` sind
+ * optional, damit ältere Fixtures mit vier Spalten weiter funktionieren.
  */
-function parseRow(line: string): RawScheduleRow | null {
-  const parts = line.split(',');
+function parseRow(line: string, header: string[]): RawScheduleRow | null {
+  const parts = parseCsvLine(line);
   if (parts.length < 3) return null;
-  const [time, location_id, artist_id, ...notesParts] = parts;
+  const row = Object.fromEntries(header.map((key, index) => [key, parts[index]?.trim() ?? '']));
+  const { time, location_id, artist_id } = row;
   if (!time || !location_id || !artist_id) return null;
   return {
-    time: time.trim(),
-    location_id: location_id.trim(),
-    artist_id: artist_id.trim(),
-    notes: notesParts.join(',').trim(),
+    time,
+    location_id,
+    artist_id,
+    notes: row.notes ?? '',
+    label_de: row.label_de ?? '',
+    label_en: row.label_en ?? '',
   };
 }
 
@@ -132,12 +165,13 @@ export function loadSchedule(csvPath?: string): ScheduleEntry[] {
   const lines = raw.split('\n').filter(Boolean);
 
   // Erste Zeile ist Header
-  const [, ...dataLines] = lines;
+  const [headerLine, ...dataLines] = lines;
+  const header = parseCsvLine(headerLine).map((value) => value.trim());
 
   const entries: ScheduleEntry[] = [];
 
   for (const line of dataLines) {
-    const row = parseRow(line);
+    const row = parseRow(line, header);
     if (!row) continue;
 
     const time = new Date(row.time);
@@ -149,6 +183,8 @@ export function loadSchedule(csvPath?: string): ScheduleEntry[] {
       location_id: row.location_id,
       artist_id: row.artist_id,
       notes: row.notes,
+      label_de: row.label_de,
+      label_en: row.label_en,
     });
   }
 
@@ -241,7 +277,13 @@ export interface MergedEntry {
   /** Anzahl gemergter Slots – dient als rowspan im Tabellen-Grid */
   slotCount: number;
   notes: string;
+  label_de: string;
+  label_en: string;
   festivalDay: string;
+}
+
+function hasSameSlotMetadata(a: ScheduleEntry | MergedEntry, b: ScheduleEntry | MergedEntry): boolean {
+  return a.notes === b.notes && a.label_de === b.label_de && a.label_en === b.label_en;
 }
 
 /**
@@ -263,7 +305,7 @@ export function mergeConsecutiveSlots(entries: ScheduleEntry[]): MergedEntry[] {
     const key = `${entry.location_id}__${entry.artist_id}`;
     const existing = runs.get(key);
 
-    if (existing && entry.time.getTime() === existing.endTime.getTime()) {
+    if (existing && entry.time.getTime() === existing.endTime.getTime() && hasSameSlotMetadata(existing, entry)) {
       // Nahtlose Fortsetzung → Run verlängern
       existing.endTime = new Date(entry.time.getTime() + SLOT_MS);
       existing.slotCount++;
@@ -277,6 +319,8 @@ export function mergeConsecutiveSlots(entries: ScheduleEntry[]): MergedEntry[] {
         endTime: new Date(entry.time.getTime() + SLOT_MS),
         slotCount: 1,
         notes: entry.notes,
+        label_de: entry.label_de,
+        label_en: entry.label_en,
         festivalDay: entry.festivalDay,
       });
     }

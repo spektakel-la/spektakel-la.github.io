@@ -27,6 +27,7 @@ const {
   noResultsLabel,
   liveNowLabel,
   hutActLabel,
+  locale,
 } = Astro.props;
 ---
 
@@ -41,6 +42,7 @@ const {
       const artistSlug = artist?.id ?? '';
       const locationLabel = location?.data.description ?? entry.location_id;
       const timeLabel = `${formatTime(entry.startTime)} – ${formatTime(entry.endTime)}`;
+      const specialLabel = locale === 'en' ? entry.label_en : entry.label_de;
 
       return (
         <div
@@ -76,8 +78,13 @@ const {
                 🎩 {hutActLabel}
               </span>
             )}
-            {entry.notes && (
+            {entry.notes && !specialLabel && (
               <span class="ml-2 text-xs text-dark/40">{entry.notes}</span>
+            )}
+            {specialLabel && (
+              <span class="mt-1 block w-fit rounded-sm bg-primary/10 px-2 py-0.5 text-xs font-semibold leading-tight text-primary">
+                {specialLabel}
+              </span>
             )}
             <span class="program-entry-location mt-1 block sm:hidden text-xs font-medium leading-tight text-dark/45">
               {locationLabel}

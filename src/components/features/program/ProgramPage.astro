@@ -132,7 +132,13 @@ function buildTableGrid(dayStr: string): TableGrid {
       let j = i + 1;
       while (j < timeSlots.length) {
         const next = grid[timeSlots[j]][locId];
-        if (next.kind === 'entry' && next.entry.artist_id === cell.entry.artist_id) {
+        if (
+          next.kind === 'entry' &&
+          next.entry.artist_id === cell.entry.artist_id &&
+          next.entry.notes === cell.entry.notes &&
+          next.entry.label_de === cell.entry.label_de &&
+          next.entry.label_en === cell.entry.label_en
+        ) {
           cell.rowspan++;
           grid[timeSlots[j]][locId] = { kind: 'spanned' };
           j++;
@@ -234,7 +240,7 @@ const jsonLd = {
   {hasSchedule ? (
     <>
       <!-- ─── Sticky Filter-Bar ────────────────────────────────────────────────── -->
-      <div id="program-filters" class="sticky top-0 z-30 bg-white border-b border-gray-200 shadow-sm">
+      <div id="program-filters" class="sticky top-16 z-30 bg-white border-b border-gray-200 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
           <DayTabs
             days={dayItems}

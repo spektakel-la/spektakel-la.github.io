@@ -45,12 +45,12 @@ const tableMinWidth = `${TIME_COL_W + grid.locations.length * LOCATION_COL_W}px`
         ))}
       </colgroup>
       <thead>
-        <tr class="border-b-2 border-dark/20">
+        <tr class="program-grid-head-row border-b-2 border-dark/20">
           <th class="program-grid-time-header text-left py-2 px-1.5 font-display text-dark/60">
             {locale === 'de' ? 'Zeit' : 'Time'}
           </th>
           {grid.locations.map((loc) => (
-            <th class="text-left py-2 px-1.5 font-display text-dark text-sm overflow-hidden" title={loc.data.description} data-col-id={loc.data.location_id}>
+            <th class="text-left py-2 px-1.5 text-xs font-semibold uppercase text-dark/55 overflow-hidden" title={loc.data.description} data-col-id={loc.data.location_id}>
               <span set:html={loc.data.description.replace(/\//g, '/<wbr>')} />
             </th>
           ))}
@@ -80,6 +80,7 @@ const tableMinWidth = `${TIME_COL_W + grid.locations.length * LOCATION_COL_W}px`
               const cat = categoryMap[entry.artist_id] ?? '';
               const isOrg = artist?.data.organizational ?? false;
               const catColorVar = cat ? `var(--color-cat-${cat})` : 'var(--color-bg-light)';
+              const specialLabel = locale === 'en' ? entry.label_en : entry.label_de;
               // Innere Div-Höhe = rowspan × ROW_H − vertikale td-Padding (py-1.5 = 6px × 2 = 12px)
               const divHeight = rowspan * ROW_H - 12;
               return (
@@ -94,6 +95,7 @@ const tableMinWidth = `${TIME_COL_W + grid.locations.length * LOCATION_COL_W}px`
                     class="program-grid-entry relative rounded px-1 py-1 text-xs leading-tight overflow-hidden"
                     style={`height: ${divHeight}px; border-left: 3px solid ${catColorVar}; background: color-mix(in srgb, ${catColorVar} 12%, white);`}
                     lang={locale}
+                    title={specialLabel ? `${artist?.data.name ?? entry.artist_id} - ${specialLabel}` : undefined}
                   >
                     {isOrg ? (
                       <span class="program-grid-entry__title text-dark/70">
@@ -106,6 +108,11 @@ const tableMinWidth = `${TIME_COL_W + grid.locations.length * LOCATION_COL_W}px`
                       >
                         {artist?.data.name ?? entry.artist_id}
                       </a>
+                    )}
+                    {specialLabel && divHeight >= 60 && (
+                      <span class="program-grid-entry__label mt-1 block text-[0.65rem] font-semibold leading-tight text-primary">
+                        {specialLabel}
+                      </span>
                     )}
                   </div>
                 </td>
@@ -158,7 +165,24 @@ const tableMinWidth = `${TIME_COL_W + grid.locations.length * LOCATION_COL_W}px`
 
 <style>
   .program-grid-frame {
+    --program-grid-line: rgb(26 26 26 / 0.085);
+    --program-grid-line-strong: rgb(26 26 26 / 0.14);
     position: relative;
+  }
+
+  @media (max-width: 639px) {
+    .program-grid-frame {
+      --program-grid-line: rgb(26 26 26 / 0.105);
+      --program-grid-line-strong: rgb(26 26 26 / 0.16);
+    }
+  }
+
+  .program-grid-head-row {
+    border-color: var(--program-grid-line-strong);
+  }
+
+  .table-row {
+    border-color: var(--program-grid-line);
   }
 
   .program-grid-frame::before,
@@ -202,7 +226,7 @@ const tableMinWidth = `${TIME_COL_W + grid.locations.length * LOCATION_COL_W}px`
     min-width: 4.5rem;
     max-width: 4.5rem;
     background: var(--color-bg);
-    box-shadow: 1px 0 0 rgb(0 0 0 / 0.06), 10px 0 16px -16px rgb(0 0 0 / 0.45);
+    box-shadow: 1px 0 0 var(--program-grid-line-strong), 10px 0 16px -16px rgb(0 0 0 / 0.45);
   }
 
   .program-grid-time-header {

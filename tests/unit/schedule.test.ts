@@ -6,6 +6,7 @@ import {
   getFestivalDays,
   groupByDay,
   loadSchedule,
+  mergeConsecutiveSlots,
 } from '@utils/schedule';
 import { mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -47,6 +48,15 @@ describe('loadSchedule', () => {
       location_id: '14',
       artist_id: 'brunitus',
       notes: 'Special Show',
+      label_de: 'Special Show im Salzstadel',
+      label_en: 'Special show at Salzstadel',
+      festivalDay: '2026-09-19',
+    }));
+    expect(entries).toContainEqual(expect.objectContaining({
+      location_id: '12',
+      artist_id: 'surfinclaire',
+      label_de: 'mit Landshuter Rockabilly Tanzgruppe',
+      label_en: 'with Landshut rockabilly dance group',
       festivalDay: '2026-09-19',
     }));
     expect(entries).toContainEqual(expect.objectContaining({
@@ -75,6 +85,19 @@ describe('loadSchedule', () => {
       expect(e.artist_id).toBeTruthy();
       expect(e.location_id).toBeTruthy();
     }
+  });
+
+  it('liest optionale zweisprachige Slot-Labels', () => {
+    const entries = loadSchedule(csvPath);
+    const special = entries.find((e) => (
+      e.artist_id === 'organization_comedy_variete' &&
+      e.location_id === '15' &&
+      formatTime(e.time) === '22:00'
+    ));
+    expect(special).toEqual(expect.objectContaining({
+      label_de: 'Varieté-Programm mit verschiedenen Künstlern',
+      label_en: 'variety programme with multiple artists',
+    }));
   });
 
   it('ist chronologisch sortiert', () => {
@@ -122,6 +145,29 @@ describe('groupByDay', () => {
     for (const day of days) {
       expect(grouped[day].every((e) => e.festivalDay === day)).toBe(true);
     }
+  });
+});
+
+describe('mergeConsecutiveSlots', () => {
+  it('merged nur Slots mit identischen Labels und Notes', () => {
+    const entries = loadSchedule(csvPath);
+    const merged = mergeConsecutiveSlots(entries);
+
+    expect(merged).toContainEqual(expect.objectContaining({
+      artist_id: 'surfinclaire',
+      location_id: '12',
+      slotCount: 2,
+      label_de: 'mit Landshuter Rockabilly Tanzgruppe',
+      label_en: 'with Landshut rockabilly dance group',
+    }));
+
+    expect(merged).toContainEqual(expect.objectContaining({
+      artist_id: 'charliecaper',
+      location_id: '15',
+      slotCount: 2,
+      label_de: 'Zauberweltmeister-Special',
+      label_en: 'magic world champion special',
+    }));
   });
 });
 
