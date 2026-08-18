@@ -5,6 +5,7 @@ Allow: /agents.txt
 Allow: /program.json
 Allow: /artists.json
 Allow: /locations.json
+Allow: /locations.geojson
 Disallow: /assets/img/artists/2025/
 
 Sitemap: https://spektakel.la/sitemap.xml

@@ -83,7 +83,7 @@ const mapJson = JSON.stringify(locations);
         mapEl.dispatchEvent(
           new CustomEvent('venue-selected', { detail: { ...loc, source: 'map' }, bubbles: true })
         );
-        history.replaceState(null, '', `#${loc.id}`);
+        history.replaceState(null, '', `#venue-${loc.id}`);
       });
       marker.addTo(map);
       return { marker, id: loc.id };
@@ -92,7 +92,7 @@ const mapJson = JSON.stringify(locations);
     map.fitBounds(L.latLngBounds(locations.map((l: any) => l.gps)), { padding: [20, 20] });
 
     // Hash-basiertes Öffnen beim Laden
-    const hashId = window.location.hash.slice(1);
+    const hashId = window.location.hash.slice(1).replace(/^venue-/, '');
     if (hashId) {
       const loc = locations.find((l: any) => l.id === hashId);
       if (loc) {

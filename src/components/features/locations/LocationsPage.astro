@@ -11,6 +11,7 @@ import { festival } from '../../../data/festival';
 import { useTranslations } from '../../../i18n/utils';
 import { loadSchedule, mergeConsecutiveSlots } from '../../../utils/schedule';
 import { ROUTES } from '../../../utils/routes';
+import { createPlace } from '../../../utils/jsonLd';
 import Page from '../../../layouts/Page.astro';
 import PaintSplatter from '../../ui/PaintSplatter.astro';
 import Picture from '../../ui/Picture.astro';
@@ -63,9 +64,28 @@ const mapLocations: MapLocation[] = sortedLocations.map((loc) => {
 });
 
 const venueList = sortedLocations.filter((l) => !l.data.organizational);
+const locationsUrl = `${festival.siteUrl}${basePath}${ROUTES.locations}`;
+const locationsJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  '@id': `${locationsUrl}#venues`,
+  name: locale === 'en' ? 'Spektakel Landshut venues' : 'Spielorte Spektakel Landshut',
+  url: locationsUrl,
+  itemListElement: venueList.map((location, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    item: {
+      ...createPlace(location.data.description, location.data.gps),
+      '@id': `${locationsUrl}#venue-${location.data.location_id}`,
+      url: `${locationsUrl}#venue-${location.data.location_id}`,
+      identifier: location.data.location_id,
+    },
+  })),
+};
 ---
 
 <Page locale={locale} title={t.locations.title} description={t.locations.tagline}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(locationsJsonLd)} />
 
   <!-- Haupt-Layout: vollbreite Karte -->
   <div id="locations-layout" class="relative" style="height: clamp(500px, 75vh, 800px);">
@@ -110,6 +130,7 @@ const venueList = sortedLocations.filter((l) => !l.data.organizational);
       {venueList.map((loc) => (
         <li>
           <button
+            id={`venue-${loc.data.location_id}`}
             data-venue-id={loc.data.location_id}
             class="venue-list-btn w-full flex items-center gap-3 px-4 py-4 hover:bg-gray-50 text-left border-b border-gray-100"
           >

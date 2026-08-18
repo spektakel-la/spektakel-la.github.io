@@ -60,6 +60,7 @@ const enUrl = new URL(`/en${localizedPath === '/' ? '/' : localizedPath}`, canon
     <link rel="canonical" href={canonical.href} />
     <link rel="llms" href={new URL('/llms.txt', canonical.origin).href} />
     <link rel="agent" href={new URL('/agents.txt', canonical.origin).href} />
+    <link rel="alternate" type="application/geo+json" href={new URL('/locations.geojson', canonical.origin).href} />
 
     <!-- Hreflang -->
     <link rel="alternate" hreflang="de" href={deUrl} />

@@ -17,6 +17,7 @@ for (const route of ['/', '/program/', '/artists/', '/artists/adamkadabra/', '/l
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${siteUrl}${pathname}`);
     await expect(page.locator('link[rel="llms"]')).toHaveAttribute('href', `${siteUrl}/llms.txt`);
     await expect(page.locator('link[rel="agent"]')).toHaveAttribute('href', `${siteUrl}/agents.txt`);
+    await expect(page.locator('link[rel="alternate"][type="application/geo+json"]')).toHaveAttribute('href', `${siteUrl}/locations.geojson`);
     await expect(page.locator('link[rel="alternate"][hreflang="de"]')).toHaveAttribute('href', `${siteUrl}${pathname}`);
     await expect(page.locator('link[rel="alternate"][hreflang="en"]')).toHaveAttribute('href', `${siteUrl}/en${pathname}`);
     await expect(page.locator('link[rel="alternate"][hreflang="x-default"]')).toHaveAttribute('href', `${siteUrl}${pathname}`);
@@ -74,6 +75,7 @@ test('stellt robots.txt und Sitemap bereit', async ({ request }) => {
   expect(robotsText).toContain(`Sitemap: ${siteUrl}/sitemap.xml`);
   expect(robotsText).toContain('Allow: /llms.txt');
   expect(robotsText).toContain('Allow: /agents.txt');
+  expect(robotsText).toContain('Allow: /locations.geojson');
 
   // Der Dev-Server generiert keine Sitemap; deren Existenz und Inhalte werden im Build geprüft.
 });
@@ -81,11 +83,17 @@ test('stellt robots.txt und Sitemap bereit', async ({ request }) => {
 test('stellt agentenfreundliche Discovery- und JSON-Ressourcen bereit', async ({ request }) => {
   const llms = await request.get('/llms.txt');
   expect(llms.ok()).toBe(true);
-  await expect(llms.text()).resolves.toContain('Program JSON: https://spektakel.la/program.json');
+  const llmsText = await llms.text();
+  expect(llmsText).toContain('Program JSON: https://spektakel.la/program.json');
+  expect(llmsText).toContain('Locations GeoJSON: https://spektakel.la/locations.geojson');
+  expect(llmsText).toContain('Coordinate reference system: WGS84 / EPSG:4326.');
+  expect(llmsText).toContain('Jungheinrich Bühne: latitude 48.53734783, longitude 12.15219281');
 
   const agents = await request.get('/agents.txt');
   expect(agents.ok()).toBe(true);
-  await expect(agents.text()).resolves.toContain('Use /program.json for performance lookups.');
+  const agentsText = await agents.text();
+  expect(agentsText).toContain('Use /program.json for performance lookups.');
+  expect(agentsText).toContain('GeoJSON coordinates are longitude, latitude.');
 
   const program = await request.get('/program.json');
   expect(program.ok()).toBe(true);
@@ -97,6 +105,7 @@ test('stellt agentenfreundliche Discovery- und JSON-Ressourcen bereit', async ({
   expect(programJson.events[0].url).toMatch(/^https:\/\/spektakel\.la\/program\/#event-/);
   expect(programJson.events[0].artist.description.de.length).toBeGreaterThan(20);
   expect(programJson.events[0].location.geo.latitude).toBeTruthy();
+  expect(programJson.events[0].location.geo.longitude).toBeTruthy();
 
   const artists = await request.get('/artists.json');
   expect(artists.ok()).toBe(true);
@@ -107,4 +116,29 @@ test('stellt agentenfreundliche Discovery- und JSON-Ressourcen bereit', async ({
   expect(locations.ok()).toBe(true);
   const locationsJson = await locations.json();
   expect(locationsJson.locations.length).toBeGreaterThan(0);
+  expect(locationsJson.locations[0].geo).toEqual({
+    latitude: 48.53734783,
+    longitude: 12.15219281,
+  });
+
+  const geojson = await request.get('/locations.geojson');
+  expect(geojson.ok()).toBe(true);
+  expect(geojson.headers()['content-type']).toContain('application/geo+json');
+  const geojsonData = await geojson.json();
+  expect(geojsonData.features[0].properties.name).toBe('Jungheinrich Bühne');
+  expect(geojsonData.features[0].geometry.coordinates).toEqual([12.15219281, 48.53734783]);
+});
+
+test('liefert Spielorte als Place-JSON-LD mit Koordinaten aus', async ({ page }) => {
+  await page.goto('/locations/');
+  const scripts = await page.locator('script[type="application/ld+json"]').allTextContents();
+  const itemList = scripts.map((script) => JSON.parse(script)).find((jsonLd) => jsonLd['@type'] === 'ItemList');
+  expect(itemList).toBeTruthy();
+  expect(itemList.itemListElement[0].item['@type']).toBe('Place');
+  expect(itemList.itemListElement[0].item['@id']).toBe(`${siteUrl}/locations/#venue-1`);
+  expect(itemList.itemListElement[0].item.geo).toEqual({
+    '@type': 'GeoCoordinates',
+    latitude: 48.53734783,
+    longitude: 12.15219281,
+  });
 });
