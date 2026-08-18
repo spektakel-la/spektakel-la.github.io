@@ -92,13 +92,29 @@ const socialLinks = [
     </div>
 
     <!-- Bottom bar -->
-    <div class="mt-10 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="mt-10 pt-8 border-t border-white/10 flex flex-col gap-3">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
       <p class="text-xs text-gray-500">
         &copy; {new Date().getFullYear()} Spektakel Landshut
       </p>
-      <p class="text-xs text-gray-600">
-        {locale === 'en' ? 'All rights reserved.' : 'Alle Rechte vorbehalten.'}
-      </p>
+      <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-gray-600 sm:justify-end">
+        <nav aria-label={t.footer.machineReadableDataLink}>
+          <a
+            href="/llms.txt"
+            type="text/plain"
+            rel="help alternate"
+            title={t.footer.machineReadableDataLink}
+            aria-label={t.footer.machineReadableDataLink}
+            data-agent-discovery="llms"
+            data-machine-readable-resource="llms.txt"
+            class="text-gray-700 hover:text-gray-500 transition-colors"
+          >
+            {locale === 'en' ? 'Data' : 'Daten'}
+          </a>
+        </nav>
+        <span>{locale === 'en' ? 'All rights reserved.' : 'Alle Rechte vorbehalten.'}</span>
+      </div>
+      </div>
     </div>
   </div>
 </footer>

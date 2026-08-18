@@ -78,6 +78,7 @@ export const en = {
     sponsors: 'Sponsors',
     imprint: 'Imprint',
     cookieSettings: 'Cookie settings',
+    machineReadableDataLink: 'Machine-readable data and LLM information',
   },
   sponsors: {
     title: 'Our sponsors',

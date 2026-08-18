@@ -28,6 +28,10 @@ for (const route of ['/', '/program/', '/artists/', '/artists/adamkadabra/', '/l
     await expect(page.locator('link[rel="alternate"][hreflang="x-default"]')).toHaveAttribute('href', `${siteUrl}${pathname}`);
     await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', /\S+/);
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /^https:\/\//);
+    await expect(page.getByRole('navigation', { name: 'Maschinenlesbare Daten und LLM-Informationen' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Maschinenlesbare Daten und LLM-Informationen' })).toHaveAttribute('href', '/llms.txt');
+    await expect(page.getByRole('link', { name: 'Maschinenlesbare Daten und LLM-Informationen' })).toHaveAttribute('type', 'text/plain');
+    await expect(page.getByRole('link', { name: 'Maschinenlesbare Daten und LLM-Informationen' })).toHaveAttribute('data-agent-discovery', 'llms');
   });
 }
 
