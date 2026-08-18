@@ -15,6 +15,8 @@ for (const route of ['/', '/program/', '/artists/', '/artists/adamkadabra/', '/l
     const description = await page.locator('meta[name="description"]').getAttribute('content');
     expect(description?.trim().length).toBeGreaterThanOrEqual(20);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${siteUrl}${pathname}`);
+    await expect(page.locator('link[rel="llms"]')).toHaveAttribute('href', `${siteUrl}/llms.txt`);
+    await expect(page.locator('link[rel="agent"]')).toHaveAttribute('href', `${siteUrl}/agents.txt`);
     await expect(page.locator('link[rel="alternate"][hreflang="de"]')).toHaveAttribute('href', `${siteUrl}${pathname}`);
     await expect(page.locator('link[rel="alternate"][hreflang="en"]')).toHaveAttribute('href', `${siteUrl}/en${pathname}`);
     await expect(page.locator('link[rel="alternate"][hreflang="x-default"]')).toHaveAttribute('href', `${siteUrl}${pathname}`);
@@ -68,7 +70,10 @@ test('liefert valides Festival-, Event- und Künstler-JSON-LD', async ({ page })
 test('stellt robots.txt und Sitemap bereit', async ({ request }) => {
   const robots = await request.get('/robots.txt');
   expect(robots.ok()).toBe(true);
-  await expect(robots.text()).resolves.toContain(`Sitemap: ${siteUrl}/sitemap.xml`);
+  const robotsText = await robots.text();
+  expect(robotsText).toContain(`Sitemap: ${siteUrl}/sitemap.xml`);
+  expect(robotsText).toContain('Allow: /llms.txt');
+  expect(robotsText).toContain('Allow: /agents.txt');
 
   // Der Dev-Server generiert keine Sitemap; deren Existenz und Inhalte werden im Build geprüft.
 });

@@ -1,5 +1,10 @@
 User-agent: *
 Allow: /
+Allow: /llms.txt
+Allow: /agents.txt
+Allow: /program.json
+Allow: /artists.json
+Allow: /locations.json
 Disallow: /assets/img/artists/2025/
 
 Sitemap: https://spektakel.la/sitemap.xml
