@@ -209,8 +209,8 @@ const jsonLd = {
   '@type': 'EventSeries',
   name: festival.name,
   description: locale === 'de'
-    ? 'Alle Auftritte beim Spektakel Landshut 2026 in der Landshuter Altstadt.'
-    : 'All performances at Spektakel Landshut 2026 in Landshut historic city centre.',
+    ? `Alle Auftritte beim ${festival.name} ${festival.locationDescription.de}.`
+    : `All performances at ${festival.name} ${festival.locationDescription.en}.`,
   startDate: festival.startDate,
   endDate: festival.endDate,
   url: programUrl,

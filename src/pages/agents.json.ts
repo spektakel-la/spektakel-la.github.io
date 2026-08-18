@@ -1,17 +1,20 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
-import { agentResponseHeaders, createAgentLocations, createAgentsTxt } from '../utils/agentResources';
+import {
+  agentResponseHeaders,
+  createAgentLocations,
+  createAgentsJson,
+} from '../utils/agentResources';
 
 export const prerender = true;
 
 export const GET: APIRoute = async () => {
   const locations = await getCollection('locations');
-  const venueCoordinates = createAgentLocations(locations);
 
-  return new Response(createAgentsTxt(venueCoordinates), {
+  return new Response(JSON.stringify(createAgentsJson(createAgentLocations(locations)), null, 2), {
     headers: {
       ...agentResponseHeaders,
-      'Content-Type': 'text/plain; charset=utf-8',
+      'Content-Type': 'application/json; charset=utf-8',
     },
   });
 };

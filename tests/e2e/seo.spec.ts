@@ -14,9 +14,14 @@ for (const route of ['/', '/program/', '/artists/', '/artists/adamkadabra/', '/l
     await expect(page).toHaveTitle(/\S+/);
     const description = await page.locator('meta[name="description"]').getAttribute('content');
     expect(description?.trim().length).toBeGreaterThanOrEqual(20);
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'index, follow, max-image-preview:large');
+    await expect(page.locator('meta[name="googlebot"]')).toHaveAttribute('content', 'index, follow, max-image-preview:large');
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${siteUrl}${pathname}`);
     await expect(page.locator('link[rel="llms"]')).toHaveAttribute('href', `${siteUrl}/llms.txt`);
     await expect(page.locator('link[rel="agent"]')).toHaveAttribute('href', `${siteUrl}/agents.txt`);
+    await expect(page.locator('link[rel="alternate"][type="text/plain"][title="LLMS full text"]')).toHaveAttribute('href', `${siteUrl}/llms-full.txt`);
+    await expect(page.locator('link[rel="alternate"][type="application/json"][title="Agents JSON"]')).toHaveAttribute('href', `${siteUrl}/agents.json`);
+    await expect(page.locator('link[rel="alternate"][type="application/json"][title="Program JSON"]')).toHaveAttribute('href', `${siteUrl}/program.json`);
     await expect(page.locator('link[rel="alternate"][type="application/geo+json"]')).toHaveAttribute('href', `${siteUrl}/locations.geojson`);
     await expect(page.locator('link[rel="alternate"][hreflang="de"]')).toHaveAttribute('href', `${siteUrl}${pathname}`);
     await expect(page.locator('link[rel="alternate"][hreflang="en"]')).toHaveAttribute('href', `${siteUrl}/en${pathname}`);
@@ -74,7 +79,9 @@ test('stellt robots.txt und Sitemap bereit', async ({ request }) => {
   const robotsText = await robots.text();
   expect(robotsText).toContain(`Sitemap: ${siteUrl}/sitemap.xml`);
   expect(robotsText).toContain('Allow: /llms.txt');
+  expect(robotsText).toContain('Allow: /llms-full.txt');
   expect(robotsText).toContain('Allow: /agents.txt');
+  expect(robotsText).toContain('Allow: /agents.json');
   expect(robotsText).toContain('Allow: /locations.geojson');
 
   // Der Dev-Server generiert keine Sitemap; deren Existenz und Inhalte werden im Build geprüft.
@@ -83,20 +90,38 @@ test('stellt robots.txt und Sitemap bereit', async ({ request }) => {
 test('stellt agentenfreundliche Discovery- und JSON-Ressourcen bereit', async ({ request }) => {
   const llms = await request.get('/llms.txt');
   expect(llms.ok()).toBe(true);
+  expect(llms.headers()['access-control-allow-origin']).toBe('*');
   const llmsText = await llms.text();
   expect(llmsText).toContain('Program JSON: https://spektakel.la/program.json');
+  expect(llmsText).toContain('Agents JSON: https://spektakel.la/agents.json');
+  expect(llmsText).toContain('LLMS Full Text: https://spektakel.la/llms-full.txt');
   expect(llmsText).toContain('Locations GeoJSON: https://spektakel.la/locations.geojson');
   expect(llmsText).toContain('Coordinate reference system: WGS84 / EPSG:4326.');
   expect(llmsText).toContain('Jungheinrich Bühne: latitude 48.53734783, longitude 12.15219281');
 
+  const llmsFull = await request.get('/llms-full.txt');
+  expect(llmsFull.ok()).toBe(true);
+  expect(llmsFull.headers()['access-control-allow-origin']).toBe('*');
+  await expect(llmsFull.text()).resolves.toContain('## Performances');
+
   const agents = await request.get('/agents.txt');
   expect(agents.ok()).toBe(true);
+  expect(agents.headers()['access-control-allow-origin']).toBe('*');
   const agentsText = await agents.text();
+  expect(agentsText).toContain('# JSON: https://spektakel.la/agents.json');
   expect(agentsText).toContain('Use /program.json for performance lookups.');
   expect(agentsText).toContain('GeoJSON coordinates are longitude, latitude.');
 
+  const agentsJson = await request.get('/agents.json');
+  expect(agentsJson.ok()).toBe(true);
+  expect(agentsJson.headers()['access-control-allow-origin']).toBe('*');
+  const agentsJsonData = await agentsJson.json();
+  expect(agentsJsonData.discovery.llmsFull).toBe(`${siteUrl}/llms-full.txt`);
+  expect(agentsJsonData.data.locationsGeoJson.coordinateOrder).toBe('longitude, latitude');
+
   const program = await request.get('/program.json');
   expect(program.ok()).toBe(true);
+  expect(program.headers()['access-control-allow-origin']).toBe('*');
   expect(program.headers()['content-type']).toContain('application/json');
   const programJson = await program.json();
   expect(programJson.festival.name).toBe('Spektakel Landshut 2026');

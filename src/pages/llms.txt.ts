@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
-import { createAgentLocations, createLlmsTxt } from '../utils/agentResources';
+import { agentResponseHeaders, createAgentLocations, createLlmsTxt } from '../utils/agentResources';
 
 export const prerender = true;
 
@@ -10,8 +10,8 @@ export const GET: APIRoute = async () => {
 
   return new Response(createLlmsTxt(venueCoordinates), {
     headers: {
+      ...agentResponseHeaders,
       'Content-Type': 'text/plain; charset=utf-8',
-      'Cache-Control': 'public, max-age=300',
     },
   });
 };

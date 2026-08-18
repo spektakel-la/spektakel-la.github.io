@@ -1,5 +1,6 @@
 import { getCollection } from 'astro:content';
 import type { APIRoute } from 'astro';
+import { agentResponseHeaders } from '../utils/agentResources';
 import { festival } from '../data/festival';
 import { getArtistMacroCategory } from '../utils/categories';
 import { preferWebp } from '../utils/imageVariants';
@@ -51,8 +52,8 @@ export const GET: APIRoute = async () => {
     artists: data,
   }, null, 2), {
     headers: {
+      ...agentResponseHeaders,
       'Content-Type': 'application/json; charset=utf-8',
-      'Cache-Control': 'public, max-age=300',
     },
   });
 };

@@ -24,7 +24,7 @@ const localize = (path: string) => localePath(path, locale);
 const meta = locale === 'en'
   ? {
       title: 'Spektakel Landshut – 20th international street art festival',
-      description: 'The 20th international street art festival in Landshut: acrobatics, juggling, music, comedy and street art in the historic city centre.',
+      description: festival.summary.en,
       accessibleTitle: 'Spektakel Landshut – 20th international street art festival',
       heroTop: '20TH INTERNATIONAL',
       heroMiddle: 'STREET ART',
@@ -33,7 +33,7 @@ const meta = locale === 'en'
     }
   : {
       title: 'Spektakel Landshut – 20. internationales Straßenkunstfestival',
-      description: 'Das 20. internationale Straßenkunst-Festival in Landshut: Akrobatik, Jonglage, Musik, Comedy und Street Art mitten in der Altstadt.',
+      description: festival.summary.de,
       accessibleTitle: 'Spektakel Landshut – 20. internationales Straßenkunstfestival',
       heroTop: '20. INTERNATIONALES',
       heroMiddle: 'STRASSENKUNST',

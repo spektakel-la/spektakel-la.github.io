@@ -8,6 +8,7 @@ import interLatin700 from '@fontsource/inter/files/inter-latin-700-normal.woff2?
 import interLatinExt400 from '@fontsource/inter/files/inter-latin-ext-400-normal.woff2?url';
 import interLatinExt600 from '@fontsource/inter/files/inter-latin-ext-600-normal.woff2?url';
 import interLatinExt700 from '@fontsource/inter/files/inter-latin-ext-700-normal.woff2?url';
+import { festival } from '../data/festival';
 
 interface Props {
   title?: string;
@@ -18,15 +19,15 @@ interface Props {
 }
 
 const {
-  title = 'Spektakel Landshut – Strassenkunst Festival',
-  description = 'Das Strassenkunst-Festival in Landshut: Akrobatik, Jonglage, Musik, Comedy und Street Art mitten in der Altstadt.',
+  title = `${festival.siteName} – Strassenkunst Festival`,
+  description = festival.summary.de,
   ogImage = '/assets/img/logo/logo.webp',
   locale = 'de',
   canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).href,
 } = Astro.props;
 
 const isEn = locale === 'en';
-const siteName = 'Spektakel Landshut';
+const siteName = festival.siteName;
 const titleIncludesSiteName = title.toLocaleLowerCase().includes(siteName.toLocaleLowerCase());
 const fullTitle = titleIncludesSiteName ? title : `${title} – ${siteName}`;
 const canonical = new URL(canonicalUrl);
@@ -43,6 +44,8 @@ const enUrl = new URL(`/en${localizedPath === '/' ? '/' : localizedPath}`, canon
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#ff2d7a" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="googlebot" content="index, follow, max-image-preview:large" />
 
     <link rel="preload" href={bebasNeueLatin} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={bebasNeueLatinExt} as="font" type="font/woff2" crossorigin />
@@ -60,6 +63,12 @@ const enUrl = new URL(`/en${localizedPath === '/' ? '/' : localizedPath}`, canon
     <link rel="canonical" href={canonical.href} />
     <link rel="llms" href={new URL('/llms.txt', canonical.origin).href} />
     <link rel="agent" href={new URL('/agents.txt', canonical.origin).href} />
+    <link rel="alternate" type="text/plain" title="LLMS.txt" href={new URL('/llms.txt', canonical.origin).href} />
+    <link rel="alternate" type="text/plain" title="LLMS full text" href={new URL('/llms-full.txt', canonical.origin).href} />
+    <link rel="alternate" type="application/json" title="Agents JSON" href={new URL('/agents.json', canonical.origin).href} />
+    <link rel="alternate" type="application/json" title="Program JSON" href={new URL('/program.json', canonical.origin).href} />
+    <link rel="alternate" type="application/json" title="Artists JSON" href={new URL('/artists.json', canonical.origin).href} />
+    <link rel="alternate" type="application/json" title="Locations JSON" href={new URL('/locations.json', canonical.origin).href} />
     <link rel="alternate" type="application/geo+json" href={new URL('/locations.geojson', canonical.origin).href} />
 
     <!-- Hreflang -->
