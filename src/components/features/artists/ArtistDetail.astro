@@ -9,7 +9,7 @@ import {
 } from '../../../utils/categories';
 import { imagePositionToObjectPosition } from '../../../utils/imagePosition';
 import { preferWebp } from '../../../utils/imageVariants';
-import { createFestivalEvent } from '../../../utils/jsonLd';
+import { createFestivalEvent, createFestivalLocationPlace, formatSchemaDateTime } from '../../../utils/jsonLd';
 import { createPerformanceId, formatTime, loadSchedule, mergeConsecutiveSlots } from '../../../utils/schedule';
 import CategoryChip from '../../ui/CategoryChip.astro';
 import MapPin from '../../ui/MapPin.astro';
@@ -103,6 +103,10 @@ const durationISO = durationToISO(duration);
 // ─── JSON-LD Person ──────────────────────────────────────────────────────────
 const siteUrl = festival.siteUrl;
 const artistUrl = `${siteUrl}${basePath}/artists/${artist_id}/`;
+const programUrl = locale === 'en' ? `${siteUrl}/en/program/` : `${siteUrl}/program/`;
+const locationsUrl = locale === 'en' ? `${siteUrl}/en/locations/` : `${siteUrl}/locations/`;
+const eventSeriesId = `${programUrl}#event-series`;
+const festivalLocationPlace = createFestivalLocationPlace(locationsUrl);
 
 const sameAs: string[] = [
   instagram,
@@ -115,28 +119,31 @@ const sameAs: string[] = [
 
 const keywords = locData.tags && locData.tags.length > 0 ? locData.tags.join(', ') : undefined;
 
-const performerRef: Record<string, unknown> = { '@type': 'PerformingGroup', name, url: artistUrl };
+const performerRef: Record<string, unknown> = { '@type': 'PerformingGroup', '@id': `${artistUrl}#artist`, name, url: artistUrl };
 if (mainImageUrl) performerRef.image = mainImageUrl;
 
 const performerIn = merged.map((entry) => {
   const loc = locationMap[entry.location_id];
-  const programUrl = locale === 'en' ? `${siteUrl}/en/program/` : `${siteUrl}/program/`;
   const eventId = createPerformanceId(entry);
   const eventUrl = `${programUrl}#${eventId}`;
+  const venueUrl = loc ? `${locationsUrl}#venue-${loc.data.location_id}` : undefined;
   return createFestivalEvent({
     id: eventUrl,
     name: `${name} – ${festival.organizerName}`,
     description: metaDescription,
-    startDate: entry.startTime.toISOString(),
-    endDate: entry.endTime.toISOString(),
+    startDate: formatSchemaDateTime(entry.startTime),
+    endDate: formatSchemaDateTime(entry.endTime),
     url: eventUrl,
     performer: performerRef,
     image: mainImageUrl ?? undefined,
     duration: durationISO,
     location: loc
       ? {
+        id: venueUrl,
         name: loc.data.description,
         gps: loc.data.gps,
+        url: venueUrl,
+        containedInPlace: festivalLocationPlace,
       }
       : undefined,
   });
@@ -149,6 +156,7 @@ const jsonLd: Record<string, unknown> = {
   name,
   url: artistUrl,
   description: metaDescription,
+  mainEntityOfPage: `${artistUrl}#webpage`,
 };
 if (mainImageUrl) jsonLd.image = mainImageUrl;
 if (locData.country) jsonLd.nationality = locData.country;

@@ -23,7 +23,12 @@ import ProgramList from './ProgramList.astro';
 import ProgramGrid from './ProgramGrid.astro';
 import { getArtistMacroCategory, getCategoryLabels, type Category } from '../../../utils/categories';
 import { preferWebp } from '../../../utils/imageVariants';
-import { createFestivalEvent, createOrganizer, createPlace } from '../../../utils/jsonLd';
+import {
+  createFestivalEvent,
+  createFestivalLocationPlace,
+  createOrganizer,
+  formatSchemaDateTime,
+} from '../../../utils/jsonLd';
 import { festival } from '../../../data/festival';
 
 interface Props {
@@ -172,6 +177,9 @@ const mergedByDay: Record<string, MergedEntry[]> = Object.fromEntries(
 
 const siteUrl = festival.siteUrl;
 const programUrl = locale === 'en' ? `${siteUrl}/en/program/` : `${siteUrl}/program/`;
+const locationsUrl = locale === 'en' ? `${siteUrl}/en/locations/` : `${siteUrl}/locations/`;
+const eventSeriesId = `${programUrl}#event-series`;
+const festivalLocationPlace = createFestivalLocationPlace(locationsUrl);
 
 const jsonLdSubEvents = mergeConsecutiveSlots(schedule)
   .filter((e) => {
@@ -184,22 +192,26 @@ const jsonLdSubEvents = mergeConsecutiveSlots(schedule)
     const artistUrl = `${siteUrl}${basePath}/artists/${artist.data.artist_id}/`;
     const eventId = createPerformanceId(e);
     const eventUrl = `${programUrl}#${eventId}`;
+    const venueUrl = location ? `${locationsUrl}#venue-${location.data.location_id}` : undefined;
     const artistDescription = locale === 'en' ? artist.data.en.description : artist.data.de.description;
     const image = artist.data.images?.[0] ? new URL(preferWebp(artist.data.images[0]), siteUrl).href : undefined;
     return createFestivalEvent({
       id: eventUrl,
       name: `${artist.data.name} – ${festival.organizerName}`,
       description: artistDescription,
-      startDate: e.startTime.toISOString(),
-      endDate: e.endTime.toISOString(),
+      startDate: formatSchemaDateTime(e.startTime),
+      endDate: formatSchemaDateTime(e.endTime),
       url: eventUrl,
-      performer: { '@type': 'PerformingGroup', name: artist.data.name, url: artistUrl },
+      performer: { '@type': 'PerformingGroup', '@id': `${artistUrl}#artist`, name: artist.data.name, url: artistUrl },
       image,
       location: location
         ? {
-        name: location.data.description,
-        gps: location.data.gps,
-      }
+            id: venueUrl,
+            name: location.data.description,
+            gps: location.data.gps,
+            url: venueUrl,
+            containedInPlace: festivalLocationPlace,
+          }
         : undefined,
     });
   });
@@ -207,6 +219,7 @@ const jsonLdSubEvents = mergeConsecutiveSlots(schedule)
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'EventSeries',
+  '@id': eventSeriesId,
   name: festival.name,
   description: locale === 'de'
     ? `Alle Auftritte beim ${festival.name} ${festival.locationDescription.de}.`
@@ -215,9 +228,12 @@ const jsonLd = {
   endDate: festival.endDate,
   url: programUrl,
   location: {
-    ...createPlace(festival.locationName),
+    ...festivalLocationPlace,
   },
   organizer: createOrganizer(),
+  eventStatus: 'https://schema.org/EventScheduled',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  isAccessibleForFree: festival.admissionPrice === 0,
   subEvent: jsonLdSubEvents,
 };
 ---

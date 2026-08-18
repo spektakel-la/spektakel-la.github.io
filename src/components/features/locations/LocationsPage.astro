@@ -11,7 +11,7 @@ import { festival } from '../../../data/festival';
 import { useTranslations } from '../../../i18n/utils';
 import { loadSchedule, mergeConsecutiveSlots } from '../../../utils/schedule';
 import { ROUTES } from '../../../utils/routes';
-import { createPlace } from '../../../utils/jsonLd';
+import { createFestivalLocationPlace, createPlace } from '../../../utils/jsonLd';
 import Page from '../../../layouts/Page.astro';
 import PaintSplatter from '../../ui/PaintSplatter.astro';
 import Picture from '../../ui/Picture.astro';
@@ -65,6 +65,7 @@ const mapLocations: MapLocation[] = sortedLocations.map((loc) => {
 
 const venueList = sortedLocations.filter((l) => !l.data.organizational);
 const locationsUrl = `${festival.siteUrl}${basePath}${ROUTES.locations}`;
+const festivalLocationPlace = createFestivalLocationPlace(locationsUrl);
 const locationsJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
@@ -75,9 +76,11 @@ const locationsJsonLd = {
     '@type': 'ListItem',
     position: index + 1,
     item: {
-      ...createPlace(location.data.description, location.data.gps),
-      '@id': `${locationsUrl}#venue-${location.data.location_id}`,
-      url: `${locationsUrl}#venue-${location.data.location_id}`,
+      ...createPlace(location.data.description, location.data.gps, {
+        id: `${locationsUrl}#venue-${location.data.location_id}`,
+        url: `${locationsUrl}#venue-${location.data.location_id}`,
+        containedInPlace: festivalLocationPlace,
+      }),
       identifier: location.data.location_id,
     },
   })),

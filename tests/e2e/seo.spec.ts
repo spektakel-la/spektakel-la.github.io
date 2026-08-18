@@ -60,7 +60,11 @@ test('liefert valides Festival-, Event- und Künstler-JSON-LD', async ({ page })
         expect(jsonLd.subEvent[0]['@id']).toMatch(/^https:\/\/spektakel\.la\/program\/#event-/);
         expect(jsonLd.subEvent[0].url).toMatch(/^https:\/\/spektakel\.la\/program\/#event-/);
         expect(jsonLd.subEvent[0].location['@type']).toBe('Place');
+        expect(jsonLd.subEvent[0].location['@id']).toMatch(/^https:\/\/spektakel\.la\/locations\/#venue-/);
+        expect(jsonLd.subEvent[0].location.containedInPlace.name).toBe('Altstadt Landshut');
         expect(jsonLd.subEvent[0].performer.name).toBeTruthy();
+        expect(jsonLd.subEvent[0].performer['@id']).toMatch(/^https:\/\/spektakel\.la\/artists\/[^/]+\/#artist$/);
+        expect(jsonLd.subEvent[0].startDate).toMatch(/^2026-09-\d{2}T\d{2}:\d{2}:\d{2}\+02:00$/);
         expect(jsonLd.subEvent[0].description.trim().length).toBeGreaterThanOrEqual(20);
         expect(jsonLd.subEvent[0].offers.validFrom).toBeTruthy();
       }
@@ -68,12 +72,16 @@ test('liefert valides Festival-, Event- und Künstler-JSON-LD', async ({ page })
     if (route === '/artists/adamkadabra/') {
       expect(jsonLd.performerIn[0].description.trim().length).toBeGreaterThanOrEqual(20);
       expect(jsonLd.performerIn[0].offers.validFrom).toBeTruthy();
+      expect(jsonLd.performerIn[0].startDate).toMatch(/^2026-09-\d{2}T\d{2}:\d{2}:\d{2}\+02:00$/);
+      expect(jsonLd.mainEntityOfPage).toBe('https://spektakel.la/artists/adamkadabra/#webpage');
     }
     if (route === '/') {
+      expect(jsonLd['@id']).toBe('https://spektakel.la/#festival');
       expect(jsonLd.endDate).toBeTruthy();
       expect(jsonLd.performer.length).toBeGreaterThan(0);
       expect(jsonLd.offers.price).toBe(0);
       expect(jsonLd.offers.validFrom).toBeTruthy();
+      expect(jsonLd.isAccessibleForFree).toBe(true);
     }
   }
 });
@@ -171,6 +179,7 @@ test('liefert Spielorte als Place-JSON-LD mit Koordinaten aus', async ({ page })
   expect(itemList).toBeTruthy();
   expect(itemList.itemListElement[0].item['@type']).toBe('Place');
   expect(itemList.itemListElement[0].item['@id']).toBe(`${siteUrl}/locations/#venue-1`);
+  expect(itemList.itemListElement[0].item.containedInPlace['@id']).toBe(`${siteUrl}/locations/#place-altstadt-landshut`);
   expect(itemList.itemListElement[0].item.geo).toEqual({
     '@type': 'GeoCoordinates',
     latitude: 48.53734783,

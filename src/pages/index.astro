@@ -10,7 +10,13 @@ import { localePath, useTranslations, type Locale } from '../i18n/utils';
 import Page from '../layouts/Page.astro';
 import { imagePositionToObjectPosition } from '../utils/imagePosition';
 import { preferWebp } from '../utils/imageVariants';
-import { createFestivalEvent, createOffer, createOrganizer, createPlace } from '../utils/jsonLd';
+import {
+  createFestivalEvent,
+  createFestivalLocationPlace,
+  createOffer,
+  createOrganizer,
+  formatSchemaDateTime,
+} from '../utils/jsonLd';
 import { artistPath, ROUTES } from '../utils/routes';
 import { createPerformanceId, loadSchedule, mergeConsecutiveSlots } from '../utils/schedule';
 
@@ -62,44 +68,55 @@ const showProgramCta = publicScheduleEntries.length > 0;
 const siteUrl = festival.siteUrl;
 const homeUrl = locale === 'en' ? `${siteUrl}/en/` : `${siteUrl}/`;
 const programUrl = locale === 'en' ? `${siteUrl}/en/program/` : `${siteUrl}/program/`;
+const locationsUrl = locale === 'en' ? `${siteUrl}/en/locations/` : `${siteUrl}/locations/`;
+const festivalId = `${homeUrl}#festival`;
+const festivalLocationPlace = createFestivalLocationPlace(locationsUrl);
 const publicPerformances = mergeConsecutiveSlots(publicScheduleEntries);
 const festivalPerformers = featuredArtists.map(artist => ({
   '@type': 'PerformingGroup',
+  '@id': `${siteUrl}${locale === 'en' ? '/en' : ''}${artistPath(artist.data.artist_id)}#artist`,
   name: artist.data.name,
   url: `${siteUrl}${locale === 'en' ? '/en' : ''}${artistPath(artist.data.artist_id)}`,
 }));
 const festivalJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Festival',
+  '@id': festivalId,
   name: festival.name,
   description: meta.description,
-  startDate: publicPerformances[0]?.startTime.toISOString() ?? festival.startDate,
-  endDate: publicPerformances.at(-1)?.endTime.toISOString() ?? festival.endDate,
+  startDate: publicPerformances[0] ? formatSchemaDateTime(publicPerformances[0].startTime) : festival.startDate,
+  endDate: publicPerformances.at(-1) ? formatSchemaDateTime(publicPerformances.at(-1)!.endTime) : festival.endDate,
   url: homeUrl,
   image: `${siteUrl}/assets/img/logo/logo.webp`,
   performer: festivalPerformers,
   eventStatus: 'https://schema.org/EventScheduled',
   eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-  location: createPlace(festival.locationName),
+  location: festivalLocationPlace,
   organizer: createOrganizer(),
   offers: createOffer(programUrl),
+  isAccessibleForFree: festival.admissionPrice === 0,
   subEvent: publicPerformances.map(entry => {
     const artist = artistMap[entry.artist_id];
     const location = locationMap[entry.location_id];
     const eventId = createPerformanceId(entry);
     const eventUrl = `${programUrl}#${eventId}`;
+    const artistUrl = `${siteUrl}${locale === 'en' ? '/en' : ''}${artistPath(artist.data.artist_id)}`;
+    const venueUrl = `${locationsUrl}#venue-${location.data.location_id}`;
     return createFestivalEvent({
       id: eventUrl,
       name: `${artist.data.name} – ${festival.organizerName}`,
       description: locale === 'en' ? artist.data.en.description : artist.data.de.description,
-      startDate: entry.startTime.toISOString(),
-      endDate: entry.endTime.toISOString(),
+      startDate: formatSchemaDateTime(entry.startTime),
+      endDate: formatSchemaDateTime(entry.endTime),
       url: eventUrl,
       image: artist.data.images?.[0] ? new URL(preferWebp(artist.data.images[0]), siteUrl).href : undefined,
-      performer: { '@type': 'PerformingGroup', name: artist.data.name },
+      performer: { '@type': 'PerformingGroup', '@id': `${artistUrl}#artist`, name: artist.data.name, url: artistUrl },
       location: {
+        id: venueUrl,
         name: location.data.description,
         gps: location.data.gps,
+        url: venueUrl,
+        containedInPlace: festivalLocationPlace,
       },
     });
   }),
