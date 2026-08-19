@@ -40,6 +40,7 @@ export const de = {
     listView: 'Listen-Ansicht',
     noResults: 'Keine Einträge gefunden.',
     liveNow: 'Jetzt live',
+    timeUntil: 'bis',
     catAkrobatik: 'Akrobatik',
     catMusik: 'Musik',
     catComedy: 'Comedy',

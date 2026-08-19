@@ -15,6 +15,7 @@ interface Props {
   noResultsLabel: string;
   liveNowLabel: string;
   hutActLabel: string;
+  timeUntilLabel: string;
 }
 
 const {
@@ -27,12 +28,13 @@ const {
   noResultsLabel,
   liveNowLabel,
   hutActLabel,
+  timeUntilLabel,
   locale,
 } = Astro.props;
 ---
 
-<div data-view-panel="list">
-  <div class="divide-y divide-gray-100">
+<div data-view-panel="list" class="program-list-panel sm:mx-auto sm:max-w-5xl">
+  <div class="program-list-entries divide-y divide-gray-200/70 sm:divide-gray-100">
     {entries.map((entry) => {
       const artist = artistMap[entry.artist_id];
       const location = locationMap[entry.location_id];
@@ -41,14 +43,16 @@ const {
       const artistName = artist?.data.name ?? entry.artist_id;
       const artistSlug = artist?.id ?? '';
       const locationLabel = location?.data.description ?? entry.location_id;
-      const timeLabel = `${formatTime(entry.startTime)} – ${formatTime(entry.endTime)}`;
+      const startTimeLabel = formatTime(entry.startTime);
+      const endTimeLabel = formatTime(entry.endTime);
+      const timeLabel = `${startTimeLabel} – ${endTimeLabel}`;
       const specialLabel = locale === 'en' ? entry.label_en : entry.label_de;
       const performanceId = createPerformanceId(entry);
 
       return (
         <div
           id={performanceId}
-          class="program-entry flex flex-wrap sm:flex-nowrap items-center gap-3 py-3 px-2 rounded-lg hover:bg-bg transition-colors"
+          class="program-entry grid grid-cols-[4.75rem_minmax(0,1fr)] items-start gap-x-4 gap-y-2 py-4 px-3 sm:flex sm:flex-nowrap sm:items-center sm:gap-3 sm:py-3 sm:px-2 lg:grid lg:grid-cols-[11rem_minmax(12rem,1fr)_minmax(10rem,14rem)_auto] lg:gap-5 rounded-lg hover:bg-bg transition-colors"
           tabindex="-1"
           data-artist={entry.artist_id}
           data-location={entry.location_id}
@@ -56,8 +60,12 @@ const {
           data-time-start={entry.startTime.toISOString()}
           data-time-end={entry.endTime.toISOString()}
         >
-          <span class="program-entry-time font-mono text-base sm:text-lg font-semibold text-dark/60 shrink-0 whitespace-nowrap">
-            {timeLabel}
+          <span class="program-entry-time font-mono text-[1.0625rem] leading-tight sm:text-lg sm:leading-7 font-bold sm:font-semibold text-dark/80 sm:text-dark/60 shrink-0 whitespace-nowrap">
+            <span class="flex flex-col gap-0.5 sm:hidden">
+              <span>{startTimeLabel}</span>
+              <span class="text-[0.8125rem] font-semibold leading-tight text-dark/60">{timeUntilLabel} {endTimeLabel}</span>
+            </span>
+            <span class="hidden sm:inline">{timeLabel}</span>
           </span>
           <span
             class="live-dot hidden shrink-0 w-2 h-2 rounded-full bg-primary animate-pulse"
@@ -67,11 +75,11 @@ const {
           <div class="flex-1 min-w-0">
             <span class="program-entry-title-row inline-flex max-w-full items-center gap-1.5 align-top">
               {isOrg ? (
-                <span class="block font-display text-base leading-tight text-dark/70 break-words hyphens-auto">{artistName}</span>
+                <span class="block font-display text-lg sm:text-base leading-[1.08] sm:leading-tight text-dark/85 sm:text-dark/70 break-words hyphens-auto">{artistName}</span>
               ) : (
                 <a
                   href={`${basePath}/artists/${artistSlug}/`}
-                  class="inline-block font-display text-base leading-tight text-dark hover:text-primary transition-colors break-words hyphens-auto"
+                  class="inline-block font-display text-lg sm:text-base leading-[1.08] sm:leading-tight text-dark hover:text-primary transition-colors break-words hyphens-auto"
                 >
                   {artistName}
                 </a>
@@ -95,23 +103,36 @@ const {
                 {specialLabel}
               </span>
             )}
-            <span class="program-entry-location mt-1 block sm:hidden text-xs font-medium leading-tight text-dark/45">
+            <span class="program-entry-location mt-1 block sm:hidden text-sm font-medium leading-snug text-dark/65">
               {locationLabel}
             </span>
+            {cat && (
+              <span class="mt-2 block sm:hidden">
+                <CategoryChip
+                  category={cat || undefined}
+                  label={catLabels[cat] ?? cat}
+                  active={false}
+                  size="sm"
+                  class="program-entry-category pointer-events-none"
+                />
+              </span>
+            )}
           </div>
 
-          <span class="text-sm text-dark/50 shrink-0 hidden sm:inline">
+          <span class="text-sm text-dark/50 shrink-0 hidden sm:inline lg:justify-self-end lg:text-right">
             {locationLabel}
           </span>
 
           {cat && (
-            <CategoryChip
-              category={cat || undefined}
-              label={catLabels[cat] ?? cat}
-              active={false}
-              size="sm"
-              class="shrink-0 pointer-events-none"
-            />
+            <span class="hidden shrink-0 sm:inline-flex">
+              <CategoryChip
+                category={cat || undefined}
+                label={catLabels[cat] ?? cat}
+                active={false}
+                size="sm"
+                class="program-entry-category pointer-events-none"
+              />
+            </span>
           )}
         </div>
       );
@@ -150,5 +171,32 @@ const {
   .program-entry:focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 3px;
+  }
+
+  @media (min-width: 1024px) {
+    .program-list-entries {
+      border-top: 1px solid color-mix(in srgb, var(--color-dark) 10%, transparent);
+    }
+
+    .program-list-entries > .program-entry {
+      border-color: color-mix(in srgb, var(--color-dark) 10%, transparent);
+    }
+  }
+
+  @media (max-width: 639px) {
+    :global(.program-entry-category.chip) {
+      gap: 0.35em;
+      padding: 0.2em 0.65em;
+      border-color: color-mix(in srgb, var(--color-border) 82%, var(--color-dark));
+      color: color-mix(in srgb, var(--color-dark) 88%, var(--color-white));
+      font-size: 0.8125rem;
+      letter-spacing: 0.035em;
+      line-height: 1.2;
+    }
+
+    :global(.program-entry-category.chip .chip__dot) {
+      width: 7px;
+      height: 7px;
+    }
   }
 </style>
