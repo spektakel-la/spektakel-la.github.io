@@ -58,13 +58,17 @@ export function createPostalAddress(): Record<string, unknown> {
   };
 }
 
-export function createOffer(url: string): Record<string, unknown> {
+export function createOffer(url: string, description = festival.summary.de): Record<string, unknown> {
   return {
     '@type': 'Offer',
+    name: festival.admissionPrice === 0
+      ? `Freier Eintritt - ${festival.name}`
+      : `Eintritt - ${festival.name}`,
+    description: normalizeDescription(description) ?? festival.summary.de,
     price: festival.admissionPrice,
     priceCurrency: festival.currency,
     url,
-    validFrom: festival.startDate,
+    validFrom: festival.liveStart,
     availability: 'https://schema.org/InStock',
   };
 }
@@ -121,7 +125,7 @@ export function createFestivalEvent(input: FestivalEventInput): Record<string, u
     organizer: createOrganizer(),
     eventStatus: 'https://schema.org/EventScheduled',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-    offers: createOffer(input.url),
+    offers: createOffer(input.url, description),
     isAccessibleForFree: festival.admissionPrice === 0,
   };
   if (input.id) eventObj['@id'] = input.id;
