@@ -38,6 +38,7 @@ type LocalizedCategoryData = {
 
 type ArtistCategoryData = {
   organizational?: boolean;
+  filter_category?: Category;
   de?: LocalizedCategoryData;
   en?: LocalizedCategoryData;
 };
@@ -76,7 +77,7 @@ export function getMacroCategoryFromCategories(categories: readonly string[]): C
 
 export function getArtistMacroCategory(artist: ArtistCategoryData, locale: Locale): Category | '' {
   if (artist.organizational) return '';
-  return getMacroCategoryFromCategories(getLocalizedArtistCategories(artist, locale));
+  return artist.filter_category ?? getMacroCategoryFromCategories(getLocalizedArtistCategories(artist, locale));
 }
 
 export function getCategoryLabels(t: CategoryLabelTranslations): Record<Category, string> {

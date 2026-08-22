@@ -32,6 +32,7 @@ const artists = defineCollection({
     vimeo: z.string().url().nullish(),
     tiktok: z.string().url().nullish(),
     homepage: z.string().url().nullish(),
+    filter_category: z.enum(['akrobatik', 'musik', 'comedy', 'magie', 'sonstiges']).optional(),
     organizational: z.boolean().optional(),
     de: localizedArtistSchema,
     en: localizedArtistSchema,

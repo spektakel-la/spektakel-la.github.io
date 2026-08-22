@@ -22,7 +22,9 @@ const artistSchema = z.object({
   instagram: z.string().url().nullish(),
   youtube: z.string().url().nullish(),
   vimeo: z.string().url().nullish(),
+  tiktok: z.string().url().nullish(),
   homepage: z.string().url().nullish(),
+  filter_category: z.enum(['akrobatik', 'musik', 'comedy', 'magie', 'sonstiges']).optional(),
   organizational: z.boolean().optional(),
   de: z.object({
     country: z.string().optional(),

@@ -5,6 +5,7 @@ images:
   - "/assets/img/artists/doriangray.webp"
 facebook: https://www.facebook.com/thomas.ecker.79
 instagram: https://www.instagram.com/thomas_ecker_storytelling/
+filter_category: sonstiges
 de:
   country: "Deutschland"
   description: |
