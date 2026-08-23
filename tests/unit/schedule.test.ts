@@ -32,7 +32,7 @@ const fixturePath = (() => {
 describe('loadSchedule', () => {
   it('lädt den produktiven 2026-Spielplan', () => {
     const entries = loadSchedule(csvPath);
-    expect(entries).toHaveLength(387);
+    expect(entries).toHaveLength(393);
     expect(getFestivalDays(entries)).toEqual(['2026-09-18', '2026-09-19', '2026-09-20']);
     expect(entries).toContainEqual(expect.objectContaining({
       location_id: '3',
