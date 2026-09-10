@@ -3,6 +3,7 @@ import { type CollectionEntry } from 'astro:content';
 import { type Category } from '../../../utils/categories';
 import { createPerformanceId, formatTime, type MergedEntry } from '../../../utils/schedule';
 import CategoryChip from '../../ui/CategoryChip.astro';
+import { formatLocationLabel } from '../../../utils/locations';
 
 interface Props {
   entries: MergedEntry[];
@@ -42,7 +43,13 @@ const {
       const isOrg = artist?.data.organizational ?? false;
       const artistName = artist?.data.name ?? entry.artist_id;
       const artistSlug = artist?.id ?? '';
-      const locationLabel = location?.data.description ?? entry.location_id;
+      const locationLabel = location
+        ? formatLocationLabel(
+            location.data.location_id,
+            location.data.description,
+            location.data.location_label,
+          )
+        : entry.location_id;
       const startTimeLabel = formatTime(entry.startTime);
       const endTimeLabel = formatTime(entry.endTime);
       const timeLabel = `${startTimeLabel} – ${endTimeLabel}`;

@@ -12,6 +12,7 @@ import { useTranslations } from '../../../i18n/utils';
 import { loadSchedule, mergeConsecutiveSlots } from '../../../utils/schedule';
 import { ROUTES } from '../../../utils/routes';
 import { createFestivalLocationPlace, createPlace } from '../../../utils/jsonLd';
+import { formatLocationLabel } from '../../../utils/locations';
 import Page from '../../../layouts/Page.astro';
 import PaintSplatter from '../../ui/PaintSplatter.astro';
 import Picture from '../../ui/Picture.astro';
@@ -56,6 +57,7 @@ const mapLocations: MapLocation[] = sortedLocations.map((loc) => {
   return {
     id: locId,
     description: loc.data.description,
+    displayLabel: formatLocationLabel(locId, loc.data.description, loc.data.location_label),
     gps: loc.data.gps,
     color: loc.data.marker_color,
     label: loc.data.location_label ?? locId,
@@ -139,7 +141,7 @@ const locationsJsonLd = {
           >
             <Picture src={`/assets/img/map/marker-${loc.data.marker_color}.webp`} alt="" ariaHidden="true" width="24" height="32" class="flex-shrink-0" />
             <span class="font-semibold text-sm text-[var(--color-dark)]">
-              {loc.data.location_id} – {loc.data.description}
+              {formatLocationLabel(loc.data.location_id, loc.data.description, loc.data.location_label)}
             </span>
           </button>
         </li>
@@ -164,7 +166,7 @@ const locationsJsonLd = {
           class="venue-list-btn inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gray-50 border border-gray-200 text-xs font-medium hover:border-[var(--color-primary)] transition-colors"
         >
           <Picture src={`/assets/img/map/marker-${loc.data.marker_color}.webp`} alt="" ariaHidden="true" width="14" height="18" />
-          {loc.data.description}
+          {formatLocationLabel(loc.data.location_id, loc.data.description, loc.data.location_label)}
         </button>
       ))}
     </div>
@@ -206,7 +208,7 @@ const locationsJsonLd = {
     const basePath = lang === 'en' ? '/en' : '';
     const allEntries = loc.entries ?? [];
 
-    let html = `<h2 class="font-display text-2xl uppercase tracking-wide text-[var(--color-dark)] mb-4 leading-tight">${loc.description}</h2>`;
+    let html = `<h2 class="font-display text-2xl uppercase tracking-wide text-[var(--color-dark)] mb-4 leading-tight">${loc.displayLabel}</h2>`;
 
     if (duringFestival) {
       const current  = allEntries.filter((e) => new Date(e.time).getTime() <= now && new Date(e.endTime).getTime() > now);

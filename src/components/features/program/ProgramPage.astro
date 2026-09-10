@@ -30,6 +30,7 @@ import {
   formatSchemaDateTime,
 } from '../../../utils/jsonLd';
 import { festival } from '../../../data/festival';
+import { formatLocationLabel } from '../../../utils/locations';
 
 interface Props {
   locale: 'de' | 'en';
@@ -79,7 +80,10 @@ const dayItems = days.map((d) => ({ iso: d, label: getDayLabel(d), shortDate: ge
 const venueOptions = allLocations
   .filter((l) => !l.data.organizational)
   .sort((a, b) => (a.data.sort_order ?? 99) - (b.data.sort_order ?? 99))
-  .map((l) => ({ id: l.data.location_id, label: l.data.description }));
+  .map((l) => ({
+    id: l.data.location_id,
+    label: formatLocationLabel(l.data.location_id, l.data.description, l.data.location_label),
+  }));
 
 // ─── Tabellen-Grid (für ProgramGrid) ────────────────────────────────────────
 

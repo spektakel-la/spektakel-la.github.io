@@ -10,6 +10,7 @@ import {
 import { imagePositionToObjectPosition } from '../../../utils/imagePosition';
 import { preferWebp } from '../../../utils/imageVariants';
 import { createFestivalEvent, createFestivalLocationPlace, formatSchemaDateTime } from '../../../utils/jsonLd';
+import { formatLocationLabel } from '../../../utils/locations';
 import { createPerformanceId, formatTime, loadSchedule, mergeConsecutiveSlots } from '../../../utils/schedule';
 import CategoryChip from '../../ui/CategoryChip.astro';
 import MapPin from '../../ui/MapPin.astro';
@@ -335,7 +336,13 @@ if (mainImageUrl) {
             {merged.map((entry) => {
               const loc = locationMap[entry.location_id];
               const timeStr = `${formatTime(entry.startTime)} – ${formatTime(entry.endTime)}`;
-              const locName = loc?.data.description ?? entry.location_id;
+              const locName = loc
+                ? formatLocationLabel(
+                    loc.data.location_id,
+                    loc.data.description,
+                    loc.data.location_label,
+                  )
+                : entry.location_id;
               return (
                 <div class="rounded-xl border border-gray-200 p-4">
                   <p class="font-display text-xs tracking-widest text-dark/50 uppercase mb-1">

@@ -1,6 +1,7 @@
 ---
 import { type CollectionEntry } from 'astro:content';
 import { type ScheduleEntry } from '../../../utils/schedule';
+import { formatLocationLabel, splitLocationLabel } from '../../../utils/locations';
 
 type GridCell =
   | { kind: 'entry'; entry: ScheduleEntry; rowspan: number }
@@ -25,7 +26,7 @@ const { grid, artistMap, categoryMap, basePath, locale } = Astro.props;
 /** Fixe Zeilenhöhe in px. 1 Slot (30 min) = 1 Reihe = ROW_H px. */
 const ROW_H = 48;
 const TIME_COL_W = 72;
-const LOCATION_COL_W = 120;
+const LOCATION_COL_W = 136;
 const tableMinWidth = `${TIME_COL_W + grid.locations.length * LOCATION_COL_W}px`;
 ---
 
@@ -49,11 +50,28 @@ const tableMinWidth = `${TIME_COL_W + grid.locations.length * LOCATION_COL_W}px`
           <th class="program-grid-time-header text-left py-2 px-1.5 font-display text-dark/60">
             {locale === 'de' ? 'Zeit' : 'Time'}
           </th>
-          {grid.locations.map((loc) => (
-            <th class="text-left py-2 px-1.5 text-xs font-semibold uppercase text-dark/55 overflow-hidden" title={loc.data.description} data-col-id={loc.data.location_id}>
-              <span set:html={loc.data.description.replace(/\//g, '/<wbr>')} />
-            </th>
-          ))}
+          {grid.locations.map((loc) => {
+            const locationLabel = formatLocationLabel(
+              loc.data.location_id,
+              loc.data.description,
+              loc.data.location_label,
+            );
+            const locationLabelParts = splitLocationLabel(
+              loc.data.location_id,
+              loc.data.description,
+              loc.data.location_label,
+            );
+            return (
+              <th class="text-left py-2 px-1.5 text-xs font-semibold uppercase text-dark/55 overflow-hidden" title={locationLabel} data-col-id={loc.data.location_id}>
+                <span class="whitespace-nowrap">{locationLabelParts.nonBreakingPrefix}</span>{locationLabelParts.remainder && (
+                  <>
+                    {locationLabelParts.breakAtSlash ? <wbr /> : ' '}
+                    {locationLabelParts.remainder}
+                  </>
+                )}
+              </th>
+            );
+          })}
         </tr>
       </thead>
       <tbody>

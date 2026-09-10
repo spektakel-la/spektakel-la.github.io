@@ -44,7 +44,17 @@ test('Listenansicht zeigt bei 30-Minuten-Auftritten Endzeit und Spielort', async
   }).first();
 
   await expect(halfHourEntry).toContainText('18:30 – 19:00');
-  await expect(halfHourEntry).toContainText('Obere Altstadt');
+  await expect(halfHourEntry).toContainText('8\u00a0–\u00a0Obere Altstadt');
+});
+
+test('Spielorte sind in Liste, Tabelle und Filter gekennzeichnet', async ({ page }) => {
+  const activePanel = page.locator('[data-day-panel]:not(.hidden)');
+
+  await expect(page.locator('#venue-filter option[value="1"]')).toHaveText('1\u00a0–\u00a0Jungheinrich Bühne');
+  await expect(activePanel.locator('.program-entry[data-location="8"]').first()).toContainText('8\u00a0–\u00a0Obere Altstadt');
+
+  await page.locator('#view-table-btn').click();
+  await expect(activePanel.locator('th[data-col-id="1"]')).toContainText('1\u00a0–\u00a0Jungheinrich Bühne');
 });
 
 test('Favorisierte Künstler werden im Programm markiert', async ({ page }) => {
