@@ -66,10 +66,6 @@ const copy = isEn
         <section aria-labelledby="contact-heading">
           <h2 id="contact-heading" class="font-display text-3xl text-dark sm:text-4xl">{copy.contact}</h2>
           <p class="mt-4 leading-8">
-            {isEn ? 'Telephone' : 'Telefon'}:
-            <a class="ml-2 text-primary underline decoration-primary/30 underline-offset-4 hover:decoration-primary" href={`tel:${imprint.phoneHref}`}>
-              {imprint.phoneDisplay}
-            </a><br />
             E-Mail:
             <a class="ml-2 break-all text-primary underline decoration-primary/30 underline-offset-4 hover:decoration-primary" href={`mailto:${imprint.email}`}>
               {imprint.email}

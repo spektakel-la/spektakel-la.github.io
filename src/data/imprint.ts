@@ -5,8 +5,7 @@
  * Pflichtfelder: § 5 DDG und ggf. § 18 MStV.
  * Quellenstand 21.06.2026:
  * - Altprojekt: Spektakel Production, Martin Hilz, stadtspektakel@gmail.com
- * - Öffentliches Veranstalterprofil: Höhenfeldstraße 14, 84036 Landshut,
- *   +49 151 10765567
+ * - Öffentliches Veranstalterprofil: Höhenfeldstraße 14, 84036 Landshut
  */
 export const imprint = {
   businessName: 'Spektakel Production',
@@ -16,6 +15,4 @@ export const imprint = {
   city: 'Landshut',
   country: 'Deutschland',
   email: 'stadtspektakel@gmail.com',
-  phoneDisplay: '+49 151 10765567',
-  phoneHref: '+4915110765567',
 } as const;
