@@ -4,7 +4,7 @@ name: "Markus K."
 images:
   - "/assets/img/artists/markusk.webp"
 image_position: 20
-homepage: https://www.streetjelly.com/Markus-K
+homepage: https://linktr.ee/markus_k
 facebook: https://www.facebook.com/search/top?q=markus k
 instagram: https://www.instagram.com/markuskstreetconcerts/
 youtube: https://www.youtube.com/watch?v=QikKRwUHGHo&list=RDEMBlsgh8FIA5aw8A0IaoYiMA&start_radio=1
