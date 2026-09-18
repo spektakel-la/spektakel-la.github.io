@@ -64,6 +64,36 @@ test('Listenansicht zeigt bei 30-Minuten-Auftritten Endzeit und Spielort', async
   await expect(halfHourEntry).toContainText('8\u00a0–\u00a0Obere Altstadt');
 });
 
+test('Künstler-Kurzinfos öffnen sich mit Bild direkt in der Listenansicht', async ({ page }) => {
+  await page.locator('#view-list-btn').click();
+  const activePanel = page.locator('[data-day-panel]:not(.hidden)');
+  const entry = activePanel.locator('.program-entry[data-artist="companiaexpress"]').first();
+  const toggle = entry.locator('[data-program-preview-toggle]');
+  const preview = entry.locator('[data-program-preview]');
+
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  await expect(preview).toBeHidden();
+
+  await toggle.click();
+
+  await expect(page).toHaveURL(/\/program\/$/);
+  await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  await expect(preview).toBeVisible();
+  await expect(preview.getByRole('img', { name: 'Cia Express' })).toBeVisible();
+  await expect(preview).toContainText('zwei Detektive');
+  await expect(preview.getByRole('link', { name: /Mehr über Cia Express/ })).toHaveAttribute(
+    'href',
+    '/artists/companiaexpress/',
+  );
+
+  const secondToggle = activePanel
+    .locator('.program-entry:not([data-artist="companiaexpress"]) [data-program-preview-toggle]')
+    .first();
+  await secondToggle.click();
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  await expect(preview).toBeHidden();
+});
+
 test('Live-Zustand verändert die Grid-Struktur der Programmeinträge nicht', async ({ page }) => {
   await expect(page.locator('.program-entry .live-dot')).toHaveCount(0);
   await expect(page.locator('.program-entry[data-live]').first()).toHaveAttribute(
