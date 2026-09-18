@@ -616,7 +616,43 @@ const jsonLd = {
       el.dataset.live = String(now >= start && now < end);
     });
   }
+
+  function scrollToFirstLiveEntry() {
+    const params = new URLSearchParams(window.location.search);
+    if (
+      params.has('artist') ||
+      activeView !== 'list' ||
+      activeDay !== getCurrentFestivalDay()
+    ) return;
+
+    const activePanel = document.querySelector<HTMLElement>(`[data-day-panel="${activeDay}"]`);
+    const firstLiveEntry = activePanel?.querySelector<HTMLElement>(
+      '.program-entry[data-live="true"]:not(.hidden)',
+    );
+    const filterBar = document.querySelector<HTMLElement>('#program-filters');
+    if (!firstLiveEntry || !filterBar) return;
+
+    const positionEntry = () => {
+      window.requestAnimationFrame(() => {
+        const stickyTop = Number.parseFloat(window.getComputedStyle(filterBar).top) || 0;
+        const targetTop = firstLiveEntry.getBoundingClientRect().top
+          + window.scrollY
+          - stickyTop
+          - filterBar.offsetHeight
+          - 8;
+        const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+        document.documentElement.style.scrollBehavior = 'auto';
+        window.scrollTo({ top: Math.max(0, targetTop), behavior: 'auto' });
+        document.documentElement.style.scrollBehavior = previousScrollBehavior;
+      });
+    };
+
+    if (document.readyState === 'complete') positionEntry();
+    else window.addEventListener('load', positionEntry, { once: true });
+  }
+
   updateLive();
+  scrollToFirstLiveEntry();
   setInterval(updateLive, 60_000);
 </script>
 

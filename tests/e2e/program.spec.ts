@@ -40,6 +40,39 @@ test('Aktueller Festivaltag wird beim Öffnen automatisch ausgewählt', async ({
   await expect(saturday).toHaveAttribute('aria-selected', 'false');
 });
 
+test('Listenansicht springt am aktuellen Festivaltag direkt zum ersten Live-Eintrag', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 667 });
+  await page.addInitScript(() => {
+    Date.now = () => Date.parse('2026-09-18T18:45:00+02:00');
+  });
+  await page.reload({ waitUntil: 'load' });
+
+  const activePanel = page.locator('[data-day-panel]:not(.hidden)');
+  const firstLiveEntry = activePanel.locator('.program-entry[data-live="true"]:not(.hidden)').first();
+  const filters = page.locator('#program-filters');
+
+  await expect(page.locator('#tab-2026-09-18')).toHaveAttribute('aria-selected', 'true');
+  await expect(page.locator('#view-list-btn')).toHaveAttribute('aria-pressed', 'true');
+  await expect(firstLiveEntry).toBeVisible();
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+  await expect.poll(async () => {
+    const [entryBox, filterBox] = await Promise.all([
+      firstLiveEntry.boundingBox(),
+      filters.boundingBox(),
+    ]);
+    if (!entryBox || !filterBox) return Number.NEGATIVE_INFINITY;
+    return entryBox.y - (filterBox.y + filterBox.height);
+  }).toBeGreaterThanOrEqual(6);
+  await expect.poll(async () => {
+    const [entryBox, filterBox] = await Promise.all([
+      firstLiveEntry.boundingBox(),
+      filters.boundingBox(),
+    ]);
+    if (!entryBox || !filterBox) return Number.POSITIVE_INFINITY;
+    return entryBox.y - (filterBox.y + filterBox.height);
+  }).toBeLessThanOrEqual(10);
+});
+
 test('Kategorie-Filter zeigt nur passende Programmeinträge', async ({ page }) => {
   const activePanel = page.locator('[data-day-panel]:not(.hidden)');
   const filterCategory = await activePanel.locator('.program-entry[data-category]:not([data-category=""])').first().getAttribute('data-category');
