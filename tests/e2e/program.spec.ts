@@ -23,6 +23,23 @@ test('Tagesauswahl wechselt das sichtbare Programm', async ({ page }) => {
   await expect(page.locator(`#${firstPanelId}`)).toBeHidden();
 });
 
+test('Aktueller Festivaltag wird beim Öffnen automatisch ausgewählt', async ({ page }) => {
+  await page.addInitScript(() => {
+    Date.now = () => Date.parse('2026-09-19T10:00:00.000Z');
+  });
+  await page.reload({ waitUntil: 'load' });
+
+  const friday = page.locator('#tab-2026-09-18');
+  const saturday = page.locator('#tab-2026-09-19');
+
+  await expect(saturday).toHaveAttribute('aria-selected', 'true');
+  await expect(page.locator('#panel-2026-09-19')).toBeVisible();
+
+  await friday.click();
+  await expect(friday).toHaveAttribute('aria-selected', 'true');
+  await expect(saturday).toHaveAttribute('aria-selected', 'false');
+});
+
 test('Kategorie-Filter zeigt nur passende Programmeinträge', async ({ page }) => {
   const activePanel = page.locator('[data-day-panel]:not(.hidden)');
   const filterCategory = await activePanel.locator('.program-entry[data-category]:not([data-category=""])').first().getAttribute('data-category');

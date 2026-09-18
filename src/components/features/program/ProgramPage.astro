@@ -388,6 +388,18 @@ const jsonLd = {
     }
   }
 
+  function getCurrentFestivalDay(): string {
+    const parts = new Intl.DateTimeFormat('en', {
+      timeZone: 'Europe/Berlin',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).formatToParts(new Date(Date.now()));
+    const part = (type: Intl.DateTimeFormatPartTypes) =>
+      parts.find((item) => item.type === type)?.value ?? '';
+    return `${part('year')}-${part('month')}-${part('day')}`;
+  }
+
   // ─── Day-Tabs ────────────────────────────────────────────────────────────────
   tabs.forEach((tab) => {
     tab.addEventListener('click', () => {
@@ -566,7 +578,9 @@ const jsonLd = {
       setView('list');
     }
 
-    setDay(requestedDay);
+    const currentFestivalDay = getCurrentFestivalDay();
+    const initialDay = requestedDay || currentFestivalDay;
+    setDay(initialDay);
     applyFilters();
 
     if (requestedArtist) {
@@ -594,7 +608,9 @@ const jsonLd = {
     document.querySelectorAll<HTMLElement>('[data-time-start]').forEach((el) => {
       const start = new Date(el.dataset.timeStart ?? '').getTime();
       if (isNaN(start)) return;
-      el.dataset.live = String(now >= start && now < start + SLOT);
+      const configuredEnd = new Date(el.dataset.timeEnd ?? '').getTime();
+      const end = Number.isNaN(configuredEnd) ? start + SLOT : configuredEnd;
+      el.dataset.live = String(now >= start && now < end);
     });
   }
   updateLive();
