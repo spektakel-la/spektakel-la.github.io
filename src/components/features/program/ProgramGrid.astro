@@ -81,13 +81,7 @@ const tableMinWidth = `${TIME_COL_W + grid.locations.length * LOCATION_COL_W}px`
             data-time-start={row.isoTime}
           >
             <td class="program-grid-time-cell py-2 px-1.5 font-mono text-xs text-dark/50 align-top whitespace-nowrap">
-              <span class="flex items-center gap-1">
-                {row.timeStr}
-                <span
-                  class="live-dot hidden w-2 h-2 rounded-full bg-primary animate-pulse"
-                  aria-hidden="true"
-                />
-              </span>
+              {row.timeStr}
             </td>
             {grid.locations.map((loc) => {
               const cell = row.cells[loc.data.location_id];

@@ -47,6 +47,14 @@ test('Listenansicht zeigt bei 30-Minuten-Auftritten Endzeit und Spielort', async
   await expect(halfHourEntry).toContainText('8\u00a0–\u00a0Obere Altstadt');
 });
 
+test('Live-Zustand verändert die Grid-Struktur der Programmeinträge nicht', async ({ page }) => {
+  await expect(page.locator('.program-entry .live-dot')).toHaveCount(0);
+  await expect(page.locator('.program-entry[data-live]').first()).toHaveAttribute(
+    'data-live',
+    /^(true|false)$/,
+  );
+});
+
 test('Spielorte sind in Liste, Tabelle und Filter gekennzeichnet', async ({ page }) => {
   const activePanel = page.locator('[data-day-panel]:not(.hidden)');
 

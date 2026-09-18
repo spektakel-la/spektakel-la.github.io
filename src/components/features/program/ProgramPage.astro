@@ -307,7 +307,6 @@ const jsonLd = {
               basePath={basePath}
               locale={locale}
               noResultsLabel={t.program.noResults}
-              liveNowLabel={t.program.liveNow}
               hutActLabel={t.common.hutAct}
               timeUntilLabel={t.program.timeUntil}
             />
@@ -588,15 +587,14 @@ const jsonLd = {
   applyFavoriteMarkers();
   window.addEventListener('pageshow', applyFavoriteMarkers);
 
-  // ─── Live-Indikator ──────────────────────────────────────────────────────────
+  // ─── Live-Zustand ────────────────────────────────────────────────────────────
   function updateLive() {
     const now = Date.now();
     const SLOT = 30 * 60 * 1000;
     document.querySelectorAll<HTMLElement>('[data-time-start]').forEach((el) => {
       const start = new Date(el.dataset.timeStart ?? '').getTime();
       if (isNaN(start)) return;
-      const live = now >= start && now < start + SLOT;
-      el.querySelectorAll<HTMLElement>('.live-dot').forEach((d) => d.classList.toggle('hidden', !live));
+      el.dataset.live = String(now >= start && now < start + SLOT);
     });
   }
   updateLive();

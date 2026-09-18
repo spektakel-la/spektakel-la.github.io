@@ -14,7 +14,6 @@ interface Props {
   basePath: string;
   locale: 'de' | 'en';
   noResultsLabel: string;
-  liveNowLabel: string;
   hutActLabel: string;
   timeUntilLabel: string;
 }
@@ -27,7 +26,6 @@ const {
   catLabels,
   basePath,
   noResultsLabel,
-  liveNowLabel,
   hutActLabel,
   timeUntilLabel,
   locale,
@@ -74,10 +72,6 @@ const {
             </span>
             <span class="hidden sm:inline">{timeLabel}</span>
           </span>
-          <span
-            class="live-dot hidden shrink-0 w-2 h-2 rounded-full bg-primary animate-pulse"
-            aria-label={liveNowLabel}
-          />
 
           <div class="flex-1 min-w-0">
             <span class="program-entry-title-row inline-flex max-w-full items-center gap-1.5 align-top">
