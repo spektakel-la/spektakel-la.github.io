@@ -5,6 +5,7 @@ import { createPerformanceId, formatTime, type MergedEntry } from '../../../util
 import CategoryChip from '../../ui/CategoryChip.astro';
 import { formatLocationLabel } from '../../../utils/locations';
 import { imagePositionToObjectPosition } from '../../../utils/imagePosition';
+import { getArtistCardImageSrc } from '../../../utils/imageVariants';
 import Picture from '../../ui/Picture.astro';
 
 interface Props {
@@ -69,7 +70,8 @@ const {
       const previewDescription = localizedArtistData?.description
         .split(/\n\s*\n/)[0]
         ?.trim() ?? '';
-      const previewImage = artist?.data.images?.[0] ?? '';
+      const artistImage = artist?.data.images?.[0] ?? '';
+      const previewImage = artistImage ? getArtistCardImageSrc(artistImage) : '';
       const previewImagePosition = imagePositionToObjectPosition(artist?.data.image_position);
       const previewId = `${performanceId}-preview`;
       const hasPreview = !isOrg && Boolean(artist && (previewImage || previewDescription));

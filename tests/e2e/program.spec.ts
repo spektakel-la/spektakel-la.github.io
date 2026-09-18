@@ -112,7 +112,12 @@ test('Künstler-Kurzinfos öffnen sich mit Bild direkt in der Listenansicht', as
   await expect(page).toHaveURL(/\/program\/$/);
   await expect(toggle).toHaveAttribute('aria-expanded', 'true');
   await expect(preview).toBeVisible();
-  await expect(preview.getByRole('img', { name: 'Cia Express' })).toBeVisible();
+  const previewImage = preview.getByRole('img', { name: 'Cia Express' });
+  await expect(previewImage).toBeVisible();
+  await expect(previewImage).toHaveAttribute(
+    'src',
+    '/assets/img/artists/cards/companiaexpress.webp',
+  );
   await expect(preview).toContainText('zwei Detektive');
   await expect(preview.getByRole('link', { name: /Mehr über Cia Express/ })).toHaveAttribute(
     'href',
