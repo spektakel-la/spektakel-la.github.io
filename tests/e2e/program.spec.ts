@@ -107,9 +107,27 @@ test('Künstler-Kurzinfos öffnen sich mit Bild direkt in der Listenansicht', as
   await expect(toggle).toHaveAttribute('aria-expanded', 'false');
   await expect(preview).toBeHidden();
 
-  await toggle.click();
+  const [toggleBox, summaryBox, timeBox] = await Promise.all([
+    toggle.boundingBox(),
+    entry.locator('.program-entry-summary').boundingBox(),
+    entry.locator('.program-entry-time').boundingBox(),
+  ]);
+  expect(toggleBox).not.toBeNull();
+  expect(summaryBox).not.toBeNull();
+  expect(timeBox).not.toBeNull();
+  expect(toggleBox!.width).toBeGreaterThan(summaryBox!.width - timeBox!.width - 50);
+
+  await toggle.click({ position: { x: toggleBox!.width - 8, y: toggleBox!.height / 2 } });
 
   await expect(page).toHaveURL(/\/program\/$/);
+  await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  await expect(preview).toBeVisible();
+
+  await toggle.focus();
+  await page.keyboard.press('Space');
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  await expect(preview).toBeHidden();
+  await page.keyboard.press('Enter');
   await expect(toggle).toHaveAttribute('aria-expanded', 'true');
   await expect(preview).toBeVisible();
   const previewImage = preview.getByRole('img', { name: 'Cia Express' });

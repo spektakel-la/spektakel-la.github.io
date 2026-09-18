@@ -7,7 +7,7 @@ import { type Category, CATEGORY_COLORS } from '../../utils/categories';
  * Inaktiver Chip: Grauer Rahmen, optionaler Farbpunkt.
  *
  * Kann als <button> (onClick) oder als <a> (href) gerendert werden.
- * Für rein dekorative Nutzung: `class="pointer-events-none"` übergeben.
+ * Für rein dekorative Nutzung: `decorative={true}` übergeben.
  *
  * Farben kommen aus `CATEGORY_COLORS` in `src/utils/categories.ts`.
  */
@@ -22,6 +22,8 @@ interface Props {
   /** Größe des Chips. `filter` ist für Programmfilter, `sm` für Metadaten in Karten/Listen. */
   size?: 'sm' | 'filter' | 'md';
   href?: string;
+  /** Rendert einen nicht-interaktiven <span>, z. B. innerhalb einer größeren Schaltfläche. */
+  decorative?: boolean;
   /** Wird nur für <button>-Chips benötigt */
   'data-category'?: Category | '';
   class?: string;
@@ -33,6 +35,7 @@ const {
   active = false,
   size = 'md',
   href,
+  decorative = false,
   class: className,
   'data-category': dataCategory,
 } = Astro.props;
@@ -40,7 +43,15 @@ const {
 const dotColor = category ? (CATEGORY_COLORS[category] ?? null) : null;
 ---
 
-{href ? (
+{decorative ? (
+  <span
+    class:list={['chip', size !== 'md' && `chip--${size}`, active && 'chip--active', className]}
+    aria-hidden="true"
+  >
+    {dotColor && <span class="chip__dot" style={`background-color: ${dotColor};`} aria-hidden="true" />}
+    {label}
+  </span>
+) : href ? (
   <a
     href={href}
     class:list={['chip', size !== 'md' && `chip--${size}`, active && 'chip--active', className]}

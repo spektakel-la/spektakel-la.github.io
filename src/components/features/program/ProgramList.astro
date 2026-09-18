@@ -87,8 +87,8 @@ const {
           data-time-start={entry.startTime.toISOString()}
           data-time-end={entry.endTime.toISOString()}
         >
-          <div class="program-entry-summary grid grid-cols-[4.75rem_minmax(0,1fr)] items-start gap-x-4 gap-y-2 py-4 px-3 sm:flex sm:flex-nowrap sm:items-center sm:gap-3 sm:py-3 sm:px-2 lg:grid lg:grid-cols-[11rem_minmax(12rem,1fr)_minmax(10rem,14rem)_auto] lg:gap-5">
-            <span class="program-entry-time font-mono text-[1.0625rem] leading-tight sm:text-lg sm:leading-7 font-bold sm:font-semibold text-dark/80 sm:text-dark/60 shrink-0 whitespace-nowrap">
+          <div class="program-entry-summary grid grid-cols-[4.75rem_minmax(0,1fr)] items-start gap-x-4 gap-y-2 py-4 px-3 sm:grid-cols-[11rem_minmax(0,1fr)_minmax(10rem,14rem)_auto] sm:items-center sm:gap-3 sm:py-3 sm:px-2 lg:gap-5">
+            <span class="program-entry-time col-start-1 row-start-1 font-mono text-[1.0625rem] leading-tight sm:text-lg sm:leading-7 font-bold sm:font-semibold text-dark/80 sm:text-dark/60 shrink-0 whitespace-nowrap">
               <span class="flex flex-col gap-0.5 sm:hidden">
                 <span>{startTimeLabel}</span>
                 <span class="text-[0.8125rem] font-semibold leading-tight text-dark/60">{timeUntilLabel} {endTimeLabel}</span>
@@ -96,27 +96,36 @@ const {
               <span class="hidden sm:inline">{timeLabel}</span>
             </span>
 
-            <div class="flex-1 min-w-0">
+            {hasPreview && (
+              <button
+                type="button"
+                class="program-entry-preview-toggle col-start-2 col-end-[-1] row-start-1 h-full w-full rounded-lg text-left"
+                aria-expanded="false"
+                aria-controls={previewId}
+                aria-label={`${showArtistInfoLabel}: ${artistName}`}
+                data-program-preview-toggle
+                data-label-open={showArtistInfoLabel}
+                data-label-close={hideArtistInfoLabel}
+                data-artist-name={artistName}
+              >
+                <span class="sr-only">{showArtistInfoLabel}: {artistName}</span>
+              </button>
+            )}
+
+            <div class:list={[
+              'col-start-2 row-start-1 min-w-0',
+              hasPreview && 'program-entry-preview-content relative z-10 pointer-events-none',
+            ]}>
               <span class="program-entry-title-row inline-flex max-w-full items-center gap-1.5 align-top">
                 {isOrg ? (
                   <span class="block font-display text-lg sm:text-base leading-[1.08] sm:leading-tight text-dark/85 sm:text-dark/70 break-words hyphens-auto">{artistName}</span>
                 ) : hasPreview ? (
-                  <button
-                    type="button"
-                    class="program-entry-preview-toggle inline-flex max-w-full items-center gap-1.5 text-left font-display text-lg sm:text-base leading-[1.08] sm:leading-tight text-dark hover:text-primary transition-colors break-words hyphens-auto"
-                    aria-expanded="false"
-                    aria-controls={previewId}
-                    aria-label={`${showArtistInfoLabel}: ${artistName}`}
-                    data-program-preview-toggle
-                    data-label-open={showArtistInfoLabel}
-                    data-label-close={hideArtistInfoLabel}
-                    data-artist-name={artistName}
-                  >
+                  <span class="program-entry-preview-title inline-flex max-w-full items-center gap-1.5 text-left font-display text-lg sm:text-base leading-[1.08] sm:leading-tight text-dark transition-colors break-words hyphens-auto">
                     <span>{artistName}</span>
                     <svg class="program-entry-preview-chevron h-3.5 w-3.5 shrink-0 transition-transform" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                       <path d="m5 7.5 5 5 5-5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-                  </button>
+                  </span>
                 ) : (
                   <a
                     href={`${basePath}/artists/${artistSlug}/`}
@@ -154,24 +163,32 @@ const {
                     label={catLabels[cat] ?? cat}
                     active={false}
                     size="sm"
-                    class="program-entry-category pointer-events-none"
+                    decorative={true}
+                    class="program-entry-category"
                   />
                 </span>
               )}
             </div>
 
-            <span class="text-sm text-dark/50 shrink-0 hidden sm:inline lg:justify-self-end lg:text-right">
+            <span class:list={[
+              'program-entry-location col-start-3 row-start-1 text-sm text-dark/50 shrink-0 hidden sm:inline justify-self-end text-right',
+              hasPreview && 'relative z-10 pointer-events-none',
+            ]}>
               {locationLabel}
             </span>
 
             {cat && (
-              <span class="hidden shrink-0 sm:inline-flex">
+              <span class:list={[
+                'col-start-4 row-start-1 hidden shrink-0 sm:inline-flex',
+                hasPreview && 'relative z-10 pointer-events-none',
+              ]}>
                 <CategoryChip
                   category={cat || undefined}
                   label={catLabels[cat] ?? cat}
                   active={false}
                   size="sm"
-                  class="program-entry-category pointer-events-none"
+                  decorative={true}
+                  class="program-entry-category"
                 />
               </span>
             )}
@@ -236,7 +253,9 @@ const {
     const artistName = toggle.dataset.artistName ?? '';
     const label = expanded ? toggle.dataset.labelClose : toggle.dataset.labelOpen;
     toggle.setAttribute('aria-label', `${label ?? ''}: ${artistName}`);
-    toggle.querySelector('.program-entry-preview-chevron')?.classList.toggle('rotate-180', expanded);
+    toggle.closest('.program-entry')
+      ?.querySelector('.program-entry-preview-chevron')
+      ?.classList.toggle('rotate-180', expanded);
     preview.hidden = !expanded;
   }
 
@@ -295,6 +314,16 @@ const {
   .program-entry:focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 3px;
+  }
+
+  .program-entry-preview-toggle:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .program-entry-summary:has(.program-entry-preview-toggle:hover) .program-entry-preview-title,
+  .program-entry-summary:has(.program-entry-preview-toggle:focus-visible) .program-entry-preview-title {
+    color: var(--color-primary);
   }
 
   .program-entry-preview-description {
