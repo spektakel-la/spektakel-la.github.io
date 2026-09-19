@@ -9,7 +9,12 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { festival } from '../../../data/festival';
 import { useTranslations } from '../../../i18n/utils';
-import { loadSchedule, mergeConsecutiveSlots } from '../../../utils/schedule';
+import {
+  FESTIVAL_TZ,
+  NIGHT_CUTOFF_HOUR,
+  loadSchedule,
+  mergeConsecutiveSlots,
+} from '../../../utils/schedule';
 import { ROUTES } from '../../../utils/routes';
 import { createFestivalLocationPlace, createPlace } from '../../../utils/jsonLd';
 import { formatLocationLabel } from '../../../utils/locations';
@@ -27,6 +32,8 @@ const t = useTranslations(locale);
 const basePath = locale === 'en' ? '/en' : '';
 const festivalLiveStart = festival.liveStart;
 const festivalLiveEnd = festival.liveEnd;
+const festivalTimeZone = FESTIVAL_TZ;
+const festivalDayCutoffHour = NIGHT_CUTOFF_HOUR;
 
 const allLocations: CollectionEntry<'locations'>[] = await getCollection('locations');
 const allArtists: CollectionEntry<'artists'>[] = await getCollection('artists');
@@ -173,10 +180,9 @@ const locationsJsonLd = {
   </section>
 </Page>
 
-<script define:vars={{ festivalLiveStart, festivalLiveEnd }}>
+<script define:vars={{ festivalLiveStart, festivalLiveEnd, festivalTimeZone, festivalDayCutoffHour }}>
   const FESTIVAL_START = new Date(festivalLiveStart).getTime();
   const FESTIVAL_END   = new Date(festivalLiveEnd).getTime();
-  const THREE_HOURS    = 3 * 60 * 60 * 1000;
 
   function fmt(iso) {
     return new Date(iso).toLocaleTimeString('de-DE', {
@@ -189,6 +195,27 @@ const locationsJsonLd = {
       lang === 'en' ? 'en-GB' : 'de-DE',
       { weekday: 'long', day: '2-digit', month: '2-digit' }
     );
+  }
+
+  function getFestivalDay(timestamp) {
+    const parts = Object.fromEntries(
+      new Intl.DateTimeFormat('en-CA', {
+        timeZone: festivalTimeZone,
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        hourCycle: 'h23',
+      }).formatToParts(new Date(timestamp)).map(({ type, value }) => [type, value])
+    );
+    const calendarDay = `${parts.year}-${parts.month}-${parts.day}`;
+    const localHour = Number(parts.hour) % 24;
+
+    if (localHour >= festivalDayCutoffHour) return calendarDay;
+
+    const previousDay = new Date(`${calendarDay}T12:00:00Z`);
+    previousDay.setUTCDate(previousDay.getUTCDate() - 1);
+    return previousDay.toISOString().slice(0, 10);
   }
 
   function entryHtml(e, basePath) {
@@ -211,8 +238,9 @@ const locationsJsonLd = {
     let html = `<h2 class="font-display text-2xl uppercase tracking-wide text-[var(--color-dark)] mb-4 leading-tight">${loc.displayLabel}</h2>`;
 
     if (duringFestival) {
+      const currentFestivalDay = getFestivalDay(now);
       const current  = allEntries.filter((e) => new Date(e.time).getTime() <= now && new Date(e.endTime).getTime() > now);
-      const upcoming = allEntries.filter((e) => new Date(e.time).getTime() > now && new Date(e.time).getTime() <= now + THREE_HOURS);
+      const upcoming = allEntries.filter((e) => e.festivalDay === currentFestivalDay && new Date(e.time).getTime() > now);
 
       if (current.length > 0) {
         html += `<div class="mb-5">
@@ -222,12 +250,12 @@ const locationsJsonLd = {
       }
       if (upcoming.length > 0) {
         html += `<div class="mb-5">
-          <p class="text-xs uppercase tracking-widest font-semibold text-gray-400 mb-2">${lang === 'en' ? 'Next 3 hours' : 'Nächste 3 Stunden'}</p>
+          <p class="text-xs uppercase tracking-widest font-semibold text-gray-400 mb-2">${lang === 'en' ? 'Later today' : 'Später heute'}</p>
           ${upcoming.map((e) => entryHtml(e, basePath)).join('')}
         </div>`;
       }
       if (current.length === 0 && upcoming.length === 0) {
-        html += `<p class="text-gray-400 italic text-sm mb-4">${lang === 'en' ? 'No programme right now.' : 'Gerade kein Programm.'}</p>`;
+        html += `<p class="text-gray-400 italic text-sm mb-4">${lang === 'en' ? 'No more programme here today.' : 'Heute kein weiteres Programm.'}</p>`;
       }
     } else {
       // Außerhalb Festival: alle Einträge nach Tag

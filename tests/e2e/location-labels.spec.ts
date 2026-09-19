@@ -16,6 +16,56 @@ for (const [locale, path] of [
   });
 }
 
+async function openLowerAltstadt(page: import('@playwright/test').Page, projectName: string) {
+  if (projectName === 'Mobile Chrome') {
+    await page.locator('#mobile-list-btn').click();
+    await page.locator('#mobile-overlay button[data-venue-id="2"]').click();
+    return page.locator('#mobile-panel-content');
+  }
+
+  await page.locator('section button[data-venue-id="2"]').click();
+  return page.locator('#venue-panel-content');
+}
+
+test('während des Festivals blendet ein Spielort vergangene Termine aus und zeigt alle noch kommenden', async ({ page }, testInfo) => {
+  await page.clock.install({ time: new Date('2026-09-19T15:00:00+02:00') });
+  await page.goto('/locations/');
+
+  const panel = await openLowerAltstadt(page, testInfo.project.name);
+
+  await expect(panel).toContainText('Später heute');
+  await expect(panel).toContainText('16:30 – 17:00');
+  await expect(panel).toContainText('21:00 – 22:00');
+  await expect(panel).not.toContainText('14:00 – 14:30');
+  await expect(panel).not.toContainText('Gerade kein Programm.');
+});
+
+test('der Festivaltag wechselt um 03:00 Uhr', async ({ page }, testInfo) => {
+  await page.clock.install({ time: new Date('2026-09-20T03:00:00+02:00') });
+  await page.goto('/locations/');
+
+  const panel = await openLowerAltstadt(page, testInfo.project.name);
+
+  await expect(panel).toContainText('Später heute');
+  await expect(panel).toContainText('15:00 – 15:30');
+  await expect(panel).toContainText('16:30 – 17:00');
+  await expect(panel).not.toContainText('21:00 – 22:00');
+});
+
+test('außerhalb der Festivaltage bleiben alle Termine nach Tagen gruppiert sichtbar', async ({ page }, testInfo) => {
+  await page.clock.install({ time: new Date('2026-09-17T12:00:00+02:00') });
+  await page.goto('/locations/');
+
+  const panel = await openLowerAltstadt(page, testInfo.project.name);
+
+  await expect(panel).toContainText('Freitag, 18.09.');
+  await expect(panel).toContainText('Samstag, 19.09.');
+  await expect(panel).toContainText('Sonntag, 20.09.');
+  await expect(panel).toContainText('17:00 – 18:00');
+  await expect(panel).toContainText('21:00 – 22:00');
+  await expect(panel).toContainText('15:00 – 15:30');
+});
+
 for (const [locale, path] of [
   ['de', '/locations/'],
   ['en', '/en/locations/'],
