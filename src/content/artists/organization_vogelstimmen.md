@@ -2,7 +2,7 @@
 artist_id: 'organization_vogelstimmen'
 name: 'Vogelstimmen-Imitationswettbewerb'
 images:
-  - '/assets/img/spektakel-logo.webp'
+  - '/assets/img/logo/logo.webp'
 organizational: true
 de:
   country: ''

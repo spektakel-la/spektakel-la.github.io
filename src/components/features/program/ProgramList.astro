@@ -2,11 +2,10 @@
 import { type CollectionEntry } from 'astro:content';
 import { type Category } from '../../../utils/categories';
 import { createPerformanceId, formatTime, type MergedEntry } from '../../../utils/schedule';
+import { createArtistPreview } from '../../../utils/artistPreview';
 import CategoryChip from '../../ui/CategoryChip.astro';
 import { formatLocationLabel } from '../../../utils/locations';
-import { imagePositionToObjectPosition } from '../../../utils/imagePosition';
-import { getArtistCardImageSrc } from '../../../utils/imageVariants';
-import Picture from '../../ui/Picture.astro';
+import ArtistPreview from '../artists/ArtistPreview.astro';
 
 interface Props {
   entries: MergedEntry[];
@@ -41,7 +40,7 @@ const {
 } = Astro.props;
 ---
 
-<div data-view-panel="list" class="program-list-panel sm:mx-auto sm:max-w-5xl">
+<div data-view-panel="list" data-artist-preview-group class="program-list-panel sm:mx-auto sm:max-w-5xl">
   <div class="program-list-entries divide-y divide-gray-200/70 sm:divide-gray-100">
     {entries.map((entry) => {
       const artist = artistMap[entry.artist_id];
@@ -62,19 +61,9 @@ const {
       const timeLabel = `${startTimeLabel} – ${endTimeLabel}`;
       const specialLabel = locale === 'en' ? entry.label_en : entry.label_de;
       const performanceId = createPerformanceId(entry);
-      const localizedArtistData = artist
-        ? locale === 'en'
-          ? (artist.data.en ?? artist.data.de)
-          : artist.data.de
-        : null;
-      const previewDescription = localizedArtistData?.description
-        .split(/\n\s*\n/)[0]
-        ?.trim() ?? '';
-      const artistImage = artist?.data.images?.[0] ?? '';
-      const previewImage = artistImage ? getArtistCardImageSrc(artistImage) : '';
-      const previewImagePosition = imagePositionToObjectPosition(artist?.data.image_position);
+      const preview = artist ? createArtistPreview(artist, locale, basePath) : null;
       const previewId = `${performanceId}-preview`;
-      const hasPreview = !isOrg && Boolean(artist && (previewImage || previewDescription));
+      const hasPreview = Boolean(preview);
 
       return (
         <div
@@ -86,6 +75,7 @@ const {
           data-category={cat}
           data-time-start={entry.startTime.toISOString()}
           data-time-end={entry.endTime.toISOString()}
+          data-artist-preview-entry
         >
           <div class="program-entry-summary grid grid-cols-[4.75rem_minmax(0,1fr)] items-start gap-x-4 gap-y-2 py-4 px-3 sm:grid-cols-[11rem_minmax(0,1fr)_minmax(10rem,14rem)_auto] sm:items-center sm:gap-3 sm:py-3 sm:px-2 lg:gap-5">
             <span class="program-entry-time col-start-1 row-start-1 font-mono text-[1.0625rem] leading-tight sm:text-lg sm:leading-7 font-bold sm:font-semibold text-dark/80 sm:text-dark/60 shrink-0 whitespace-nowrap">
@@ -104,6 +94,7 @@ const {
                 aria-controls={previewId}
                 aria-label={`${showArtistInfoLabel}: ${artistName}`}
                 data-program-preview-toggle
+                data-artist-preview-toggle
                 data-label-open={showArtistInfoLabel}
                 data-label-close={hideArtistInfoLabel}
                 data-artist-name={artistName}
@@ -117,15 +108,15 @@ const {
               hasPreview && 'program-entry-preview-content relative z-10 pointer-events-none',
             ]}>
               <span class="program-entry-title-row inline-flex max-w-full items-center gap-1.5 align-top">
-                {isOrg ? (
-                  <span class="block font-display text-lg sm:text-base leading-[1.08] sm:leading-tight text-dark/85 sm:text-dark/70 break-words hyphens-auto">{artistName}</span>
-                ) : hasPreview ? (
-                  <span class="program-entry-preview-title inline-flex max-w-full items-center gap-1.5 text-left font-display text-lg sm:text-base leading-[1.08] sm:leading-tight text-dark transition-colors break-words hyphens-auto">
+                {hasPreview ? (
+                  <span class="program-entry-preview-title inline-flex max-w-full items-center gap-1.5 text-left font-display text-lg sm:text-base leading-[1.08] sm:leading-tight text-dark transition-colors break-words hyphens-auto" data-artist-preview-title>
                     <span>{artistName}</span>
-                    <svg class="program-entry-preview-chevron h-3.5 w-3.5 shrink-0 transition-transform" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                    <svg class="program-entry-preview-chevron h-3.5 w-3.5 shrink-0 transition-transform" data-artist-preview-chevron viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                       <path d="m5 7.5 5 5 5-5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                   </span>
+                ) : isOrg ? (
+                  <span class="block font-display text-lg sm:text-base leading-[1.08] sm:leading-tight text-dark/85 sm:text-dark/70 break-words hyphens-auto">{artistName}</span>
                 ) : (
                   <a
                     href={`${basePath}/artists/${artistSlug}/`}
@@ -199,38 +190,12 @@ const {
               id={previewId}
               class="program-entry-preview px-3 pb-4 sm:px-2 sm:pb-3"
               data-program-preview
+              data-artist-preview
               hidden
             >
-              <div class:list={[
-                'grid gap-3 pt-3 sm:gap-4',
-                previewImage ? 'grid-cols-[5.5rem_minmax(0,1fr)] sm:grid-cols-[7rem_minmax(0,1fr)]' : 'grid-cols-1',
-              ]}>
-                {previewImage && (
-                  <div class="aspect-square overflow-hidden rounded-lg bg-gray-100">
-                    <Picture
-                      src={previewImage}
-                      alt={artistName}
-                      loading="lazy"
-                      decoding="async"
-                      class="h-full w-full object-cover"
-                      style={`object-position: ${previewImagePosition};`}
-                    />
-                  </div>
-                )}
-                <div class="min-w-0 self-center">
-                  {previewDescription && (
-                    <p class="program-entry-preview-description text-sm leading-relaxed text-dark/70">
-                      {previewDescription}
-                    </p>
-                  )}
-                  <a
-                    href={`${basePath}/artists/${artistSlug}/`}
-                    class="mt-2 inline-block text-sm font-semibold text-primary hover:underline"
-                  >
-                    {moreAboutArtistLabel} {artistName} →
-                  </a>
-                </div>
-              </div>
+              {preview && (
+                <ArtistPreview preview={preview} moreAboutLabel={moreAboutArtistLabel} />
+              )}
             </div>
           )}
         </div>
@@ -242,36 +207,6 @@ const {
     {noResultsLabel}
   </p>
 </div>
-
-<script>
-  function setProgramPreviewExpanded(toggle: HTMLButtonElement, expanded: boolean) {
-    const previewId = toggle.getAttribute('aria-controls');
-    const preview = previewId ? document.getElementById(previewId) : null;
-    if (!preview) return;
-
-    toggle.setAttribute('aria-expanded', String(expanded));
-    const artistName = toggle.dataset.artistName ?? '';
-    const label = expanded ? toggle.dataset.labelClose : toggle.dataset.labelOpen;
-    toggle.setAttribute('aria-label', `${label ?? ''}: ${artistName}`);
-    toggle.closest('.program-entry')
-      ?.querySelector('.program-entry-preview-chevron')
-      ?.classList.toggle('rotate-180', expanded);
-    preview.hidden = !expanded;
-  }
-
-  document.querySelectorAll<HTMLButtonElement>('[data-program-preview-toggle]').forEach((toggle) => {
-    if (toggle.dataset.previewReady === 'true') return;
-    toggle.dataset.previewReady = 'true';
-    toggle.addEventListener('click', () => {
-      const shouldExpand = toggle.getAttribute('aria-expanded') !== 'true';
-      document.querySelectorAll<HTMLButtonElement>('[data-program-preview-toggle][aria-expanded="true"]')
-        .forEach((openToggle) => {
-          if (openToggle !== toggle) setProgramPreviewExpanded(openToggle, false);
-        });
-      setProgramPreviewExpanded(toggle, shouldExpand);
-    });
-  });
-</script>
 
 <style>
   .program-entry {
@@ -316,21 +251,9 @@ const {
     outline-offset: 3px;
   }
 
-  .program-entry-preview-toggle:focus-visible {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
-  }
-
   .program-entry-summary:has(.program-entry-preview-toggle:hover) .program-entry-preview-title,
   .program-entry-summary:has(.program-entry-preview-toggle:focus-visible) .program-entry-preview-title {
     color: var(--color-primary);
-  }
-
-  .program-entry-preview-description {
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
   }
 
   @media (min-width: 1024px) {

@@ -2,7 +2,7 @@
 artist_id: 'organization_opening'
 name: 'Eröffnung Spektakel'
 images:
-  - '/assets/img/spektakel-logo.webp'
+  - '/assets/img/logo/logo.webp'
 organizational: true
 de:
   country: ''

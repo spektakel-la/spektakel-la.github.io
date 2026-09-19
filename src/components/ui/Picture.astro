@@ -7,6 +7,7 @@ interface Props {
   width?: string | number;
   height?: string | number;
   loading?: 'eager' | 'lazy';
+  deferred?: boolean;
   decoding?: 'async' | 'auto' | 'sync';
   class?: string;
   style?: string;
@@ -19,6 +20,7 @@ const {
   width,
   height,
   loading,
+  deferred = false,
   decoding,
   class: className,
   style,
@@ -28,7 +30,8 @@ const image = getImageVariants(src);
 ---
 
 <img
-  src={image.src}
+  src={deferred ? undefined : image.src}
+  data-src={deferred ? image.src : undefined}
   alt={alt}
   width={width}
   height={height}

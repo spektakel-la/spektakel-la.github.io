@@ -98,14 +98,28 @@ test('Listenansicht zeigt bei 30-Minuten-Auftritten Endzeit und Spielort', async
 });
 
 test('Künstler-Kurzinfos öffnen sich mit Bild direkt in der Listenansicht', async ({ page }) => {
+  const previewImageRequests: string[] = [];
+  page.on('request', (request) => {
+    if (request.url().endsWith('/assets/img/artists/cards/companiaexpress.webp')) {
+      previewImageRequests.push(request.url());
+    }
+  });
+  await page.reload({ waitUntil: 'load' });
   await page.locator('#view-list-btn').click();
   const activePanel = page.locator('[data-day-panel]:not(.hidden)');
   const entry = activePanel.locator('.program-entry[data-artist="companiaexpress"]').first();
   const toggle = entry.locator('[data-program-preview-toggle]');
   const preview = entry.locator('[data-program-preview]');
+  const previewImage = preview.locator('img');
 
   await expect(toggle).toHaveAttribute('aria-expanded', 'false');
   await expect(preview).toBeHidden();
+  await expect(previewImage).not.toHaveAttribute('src', /.+/);
+  await expect(previewImage).toHaveAttribute(
+    'data-src',
+    '/assets/img/artists/cards/companiaexpress.webp',
+  );
+  expect(previewImageRequests).toHaveLength(0);
 
   const [toggleBox, summaryBox, timeBox] = await Promise.all([
     toggle.boundingBox(),
@@ -130,12 +144,12 @@ test('Künstler-Kurzinfos öffnen sich mit Bild direkt in der Listenansicht', as
   await page.keyboard.press('Enter');
   await expect(toggle).toHaveAttribute('aria-expanded', 'true');
   await expect(preview).toBeVisible();
-  const previewImage = preview.getByRole('img', { name: 'Cia Express' });
   await expect(previewImage).toBeVisible();
   await expect(previewImage).toHaveAttribute(
     'src',
     '/assets/img/artists/cards/companiaexpress.webp',
   );
+  await expect.poll(() => previewImageRequests).toHaveLength(1);
   await expect(preview).toContainText('zwei Detektive');
   await expect(preview.getByRole('link', { name: /Mehr über Cia Express/ })).toHaveAttribute(
     'href',
@@ -148,6 +162,21 @@ test('Künstler-Kurzinfos öffnen sich mit Bild direkt in der Listenansicht', as
   await secondToggle.click();
   await expect(toggle).toHaveAttribute('aria-expanded', 'false');
   await expect(preview).toBeHidden();
+});
+
+test('Organisatorische Termine verwenden dieselbe Kurzinfo ohne Detail-Link', async ({ page }) => {
+  await page.locator('#tab-2026-09-19').click();
+  await page.locator('#view-list-btn').click();
+  const entry = page
+    .locator('#panel-2026-09-19 .program-entry[data-artist="organization_vogelstimmen"]')
+    .first();
+
+  await entry.locator('[data-program-preview-toggle]').click();
+
+  const preview = entry.locator('[data-program-preview]');
+  await expect(preview).toBeVisible();
+  await expect(preview).toContainText('Singen, piepen, zwitschern');
+  await expect(preview.getByRole('link')).toHaveCount(0);
 });
 
 test('Live-Zustand verändert die Grid-Struktur der Programmeinträge nicht', async ({ page }) => {

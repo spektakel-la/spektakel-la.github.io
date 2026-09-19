@@ -1,0 +1,86 @@
+---
+import type { ArtistPreviewData } from '../../../utils/artistPreview';
+import Picture from '../../ui/Picture.astro';
+
+interface Props {
+  preview: ArtistPreviewData;
+  moreAboutLabel: string;
+  variant?: 'program' | 'location';
+}
+
+const { preview, moreAboutLabel, variant = 'program' } = Astro.props;
+const imageColumns = variant === 'location'
+  ? 'grid-cols-[4.5rem_minmax(0,1fr)]'
+  : 'grid-cols-[5.5rem_minmax(0,1fr)] sm:grid-cols-[7rem_minmax(0,1fr)]';
+const imageClass = preview.imageFit === 'contain'
+  ? 'h-full w-full object-contain p-1'
+  : 'h-full w-full object-cover';
+---
+
+<div
+  class:list={[
+    'artist-preview grid gap-3 pt-3',
+    variant === 'program' && 'sm:gap-4',
+    preview.imageSrc ? imageColumns : 'grid-cols-1',
+  ]}
+  data-artist-preview-content
+  data-variant={variant}
+>
+  {preview.imageSrc && (
+    <div class="aspect-square overflow-hidden rounded-lg bg-gray-100">
+      <Picture
+        src={preview.imageSrc}
+        alt={preview.artistName}
+        loading="lazy"
+        deferred
+        decoding="async"
+        class={imageClass}
+        style={`object-position: ${preview.imagePosition};`}
+      />
+    </div>
+  )}
+  <div class="min-w-0 self-center">
+    {preview.description && (
+      <p class="artist-preview-description text-sm leading-relaxed text-dark/70">
+        {preview.description}
+      </p>
+    )}
+    {preview.detailUrl && (
+      <a
+        href={preview.detailUrl}
+        class="mt-2 inline-block text-sm font-semibold text-primary hover:underline"
+      >
+        {moreAboutLabel} {preview.artistName} →
+      </a>
+    )}
+  </div>
+</div>
+
+<script>
+  import { initArtistPreviewDisclosures } from '../../../utils/artistPreviewDisclosure';
+
+  initArtistPreviewDisclosures(document);
+</script>
+
+<style>
+  .artist-preview-description {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+  }
+
+  [data-variant='location'] .artist-preview-description {
+    -webkit-line-clamp: 5;
+  }
+
+  :global([data-artist-preview-toggle]:focus-visible) {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  :global([data-artist-preview-toggle]:hover [data-artist-preview-title]),
+  :global([data-artist-preview-toggle]:focus-visible [data-artist-preview-title]) {
+    color: var(--color-primary);
+  }
+</style>

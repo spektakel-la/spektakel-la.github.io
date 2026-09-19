@@ -71,7 +71,7 @@ test('organisatorische Termine sind im Spielort-Panel typografisch gleichwertig'
   await page.goto('/locations/');
 
   const panel = await openVenue(page, testInfo.project.name, '1');
-  const artist = panel.getByRole('link').first();
+  const artist = panel.getByText('Surfin`Claire and The Whisky Rockers', { exact: true });
   const organizational = panel.getByText('Vogelstimmen-Imitationswettbewerb', { exact: true });
 
   await expect(artist).toBeVisible();
@@ -79,6 +79,82 @@ test('organisatorische Termine sind im Spielort-Panel typografisch gleichwertig'
   await expect(organizational).toHaveCSS('font-weight', '600');
   await expect(organizational).toHaveCSS('font-style', 'normal');
   await expect(organizational).toHaveCSS('color', await artist.evaluate((element) => getComputedStyle(element).color));
+});
+
+test('Künstler-Kurzinfos lassen sich direkt im Spielort-Panel aufklappen', async ({ page }, testInfo) => {
+  const previewImageRequests: string[] = [];
+  page.on('request', (request) => {
+    if (request.url().endsWith('/assets/img/artists/cards/surfinclaire.webp')) {
+      previewImageRequests.push(request.url());
+    }
+  });
+  await page.clock.install({ time: new Date('2026-09-19T10:09:00+02:00') });
+  await page.goto('/locations/');
+
+  const panel = await openVenue(page, testInfo.project.name, '1');
+  const artistEntry = panel.locator('[data-location-artist="surfinclaire"]');
+  const toggle = artistEntry.locator('[data-artist-preview-toggle]');
+  const preview = artistEntry.locator('[data-artist-preview]');
+
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  await expect(preview).toBeHidden();
+  expect(previewImageRequests).toHaveLength(0);
+
+  await toggle.click();
+
+  await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  await expect(preview).toBeVisible();
+  await expect(preview.getByRole('img', { name: 'Surfin`Claire and The Whisky Rockers' })).toHaveAttribute(
+    'src',
+    '/assets/img/artists/cards/surfinclaire.webp',
+  );
+  await expect.poll(() => previewImageRequests).toHaveLength(1);
+  await expect(preview).toContainText('Die Band vereint Professionalität, Energie und Leidenschaft.');
+  await expect(preview.getByRole('link', { name: /Mehr über Surfin`Claire/ })).toHaveAttribute(
+    'href',
+    '/artists/surfinclaire/',
+  );
+
+  await toggle.focus();
+  await page.keyboard.press('Space');
+  await expect(preview).toBeHidden();
+  await page.keyboard.press('Enter');
+  await expect(preview).toBeVisible();
+
+  const secondToggle = panel
+    .locator('[data-location-artist="petershub"] [data-artist-preview-toggle]');
+  await secondToggle.click();
+  await expect(preview).toBeHidden();
+});
+
+test('organisatorische Termine zeigen eine Kurzinfo ohne toten Detail-Link', async ({ page }, testInfo) => {
+  await page.clock.install({ time: new Date('2026-09-19T10:09:00+02:00') });
+  await page.goto('/locations/');
+
+  const panel = await openVenue(page, testInfo.project.name, '1');
+  const entry = panel.locator('[data-location-artist="organization_vogelstimmen"]');
+  await entry.locator('[data-artist-preview-toggle]').click();
+
+  const preview = entry.locator('[data-artist-preview]');
+  await expect(preview).toBeVisible();
+  await expect(preview).toContainText('Singen, piepen, zwitschern');
+  await expect(preview.getByRole('link')).toHaveCount(0);
+});
+
+test('Künstler-Kurzinfos sind in der englischen Spielortansicht lokalisiert', async ({ page }, testInfo) => {
+  await page.clock.install({ time: new Date('2026-09-19T10:09:00+02:00') });
+  await page.goto('/en/locations/');
+
+  const panel = await openVenue(page, testInfo.project.name, '1');
+  const entry = panel.locator('[data-location-artist="surfinclaire"]');
+  await entry.locator('[data-artist-preview-toggle]').click();
+
+  const preview = entry.locator('[data-artist-preview]');
+  await expect(preview).toContainText('The band combines professionalism, energy and passion.');
+  await expect(preview.getByRole('link', { name: /More about Surfin`Claire/ })).toHaveAttribute(
+    'href',
+    '/en/artists/surfinclaire/',
+  );
 });
 
 for (const [locale, path] of [

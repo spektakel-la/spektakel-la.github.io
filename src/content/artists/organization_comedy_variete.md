@@ -2,7 +2,7 @@
 artist_id: 'organization_comedy_variete'
 name: 'Spektakel Comedy Variete'
 images:
-  - '/assets/img/spektakel-logo.webp'
+  - '/assets/img/logo/logo.webp'
 organizational: true
 de:
   country: ''

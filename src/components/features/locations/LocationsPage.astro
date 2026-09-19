@@ -18,9 +18,11 @@ import {
 import { ROUTES } from '../../../utils/routes';
 import { createFestivalLocationPlace, createPlace } from '../../../utils/jsonLd';
 import { formatLocationLabel } from '../../../utils/locations';
+import { createArtistPreview } from '../../../utils/artistPreview';
 import Page from '../../../layouts/Page.astro';
 import PaintSplatter from '../../ui/PaintSplatter.astro';
 import Picture from '../../ui/Picture.astro';
+import ArtistPreview from '../artists/ArtistPreview.astro';
 import LocationMap, { type MapLocation, type MapEntry } from './LocationMap.astro';
 
 interface Props {
@@ -34,11 +36,20 @@ const festivalLiveStart = festival.liveStart;
 const festivalLiveEnd = festival.liveEnd;
 const festivalTimeZone = FESTIVAL_TZ;
 const festivalDayCutoffHour = NIGHT_CUTOFF_HOUR;
+const showArtistInfoLabel = t.program.showArtistInfo;
+const hideArtistInfoLabel = t.program.hideArtistInfo;
 
 const allLocations: CollectionEntry<'locations'>[] = await getCollection('locations');
 const allArtists: CollectionEntry<'artists'>[] = await getCollection('artists');
 const schedule = loadSchedule();
 const artistMap = Object.fromEntries(allArtists.map((a) => [a.data.artist_id, a]));
+const artistPreviews = allArtists.flatMap((artist) => {
+  const preview = createArtistPreview(artist, locale, basePath);
+  return preview ? [preview] : [];
+});
+const artistPreviewMap = Object.fromEntries(
+  artistPreviews.map((preview) => [preview.artistId, preview]),
+);
 
 const sortedLocations = [...allLocations].sort(
   (a, b) => (a.data.sort_order ?? 99) - (b.data.sort_order ?? 99)
@@ -57,6 +68,7 @@ const mapLocations: MapLocation[] = sortedLocations.map((loc) => {
       artistName: (artist?.data as any)?.short_name ?? artist?.data.name ?? e.artist_id,
       artistSlug: e.artist_id,
       isOrganizational: artist?.data.organizational ?? false,
+      previewTemplateId: artistPreviewMap[e.artist_id]?.templateId,
       festivalDay: e.festivalDay,
     } satisfies MapEntry;
   });
@@ -100,6 +112,18 @@ const locationsJsonLd = {
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(locationsJsonLd)} />
 
   <!-- Haupt-Layout: vollbreite Karte -->
+  <div class="hidden" aria-hidden="true">
+    {artistPreviews.map((preview) => (
+      <template id={preview.templateId}>
+        <ArtistPreview
+          preview={preview}
+          moreAboutLabel={t.program.moreAboutArtist}
+          variant="location"
+        />
+      </template>
+    ))}
+  </div>
+
   <div id="locations-layout" class="relative" style="height: clamp(500px, 75vh, 800px);">
 
     <!-- Karte (vollbreite) -->
@@ -112,7 +136,7 @@ const locationsJsonLd = {
       <div class="flex items-center justify-end px-4 py-3 border-b-2 border-[var(--color-primary)] bg-white">
         <button id="panel-close-btn" aria-label="Schließen" class="text-2xl leading-none text-gray-400 hover:text-gray-700">×</button>
       </div>
-      <div id="venue-panel-content" class="flex-1 overflow-y-auto px-4 py-4"></div>
+      <div id="venue-panel-content" data-artist-preview-group class="flex-1 overflow-y-auto px-4 py-4"></div>
     </div>
 
   </div>
@@ -161,7 +185,7 @@ const locationsJsonLd = {
     <div class="flex items-center justify-end px-4 py-3 border-b-2 border-[var(--color-primary)] sticky top-0 bg-white z-10">
       <button id="mobile-panel-close" class="text-2xl text-gray-400">×</button>
     </div>
-    <div id="mobile-panel-content" class="flex-1 overflow-y-auto px-4 py-4"></div>
+    <div id="mobile-panel-content" data-artist-preview-group class="flex-1 overflow-y-auto px-4 py-4"></div>
   </div>
 
   <!-- Legende (nur Desktop) -->
@@ -180,7 +204,20 @@ const locationsJsonLd = {
   </section>
 </Page>
 
-<script define:vars={{ festivalLiveStart, festivalLiveEnd, festivalTimeZone, festivalDayCutoffHour }}>
+<script>
+  import { initArtistPreviewDisclosures } from '../../../utils/artistPreviewDisclosure';
+
+  initArtistPreviewDisclosures(document);
+</script>
+
+<script define:vars={{
+  festivalLiveStart,
+  festivalLiveEnd,
+  festivalTimeZone,
+  festivalDayCutoffHour,
+  showArtistInfoLabel,
+  hideArtistInfoLabel,
+}}>
   const FESTIVAL_START = new Date(festivalLiveStart).getTime();
   const FESTIVAL_END   = new Date(festivalLiveEnd).getTime();
 
@@ -218,19 +255,59 @@ const locationsJsonLd = {
     return previousDay.toISOString().slice(0, 10);
   }
 
-  function entryHtml(e, basePath) {
+  function escapeHtml(value) {
+    return String(value)
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
+  }
+
+  function safeIdPart(value) {
+    return String(value).replace(/[^a-zA-Z0-9_-]/g, '-');
+  }
+
+  function entryHtml(e, basePath, panelPrefix) {
     const time = `${fmt(e.time)} – ${fmt(e.endTime)}`;
     const nameClasses = 'font-semibold text-[var(--color-dark)] text-sm';
-    const nameHtml = e.isOrganizational
-      ? `<span class="${nameClasses}">${e.artistName}</span>`
-      : `<a href="${basePath}/artists/${e.artistSlug}/" class="${nameClasses} hover:text-[var(--color-primary)] transition-colors">${e.artistName}</a>`;
-    return `<div class="py-2 border-b border-gray-100 last:border-0">
+    const artistName = escapeHtml(e.artistName);
+    const previewId = `${panelPrefix}-artist-preview-${safeIdPart(e.artistId)}-${new Date(e.time).getTime()}`;
+    const hasPreview = Boolean(e.previewTemplateId);
+    const nameHtml = hasPreview
+      ? `<button
+          type="button"
+          class="w-full rounded text-left"
+          aria-expanded="false"
+          aria-controls="${previewId}"
+          aria-label="${escapeHtml(showArtistInfoLabel)}: ${artistName}"
+          data-artist-preview-toggle
+          data-preview-template-id="${escapeHtml(e.previewTemplateId)}"
+          data-label-open="${escapeHtml(showArtistInfoLabel)}"
+          data-label-close="${escapeHtml(hideArtistInfoLabel)}"
+          data-artist-name="${artistName}"
+        >
+          <span class="${nameClasses} inline-flex items-center gap-1.5 transition-colors" data-artist-preview-title>
+            <span>${artistName}</span>
+            <svg class="h-3.5 w-3.5 shrink-0 transition-transform" data-artist-preview-chevron viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+              <path d="m5 7.5 5 5 5-5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </span>
+        </button>`
+      : e.isOrganizational
+        ? `<span class="${nameClasses}">${artistName}</span>`
+        : `<a href="${basePath}/artists/${escapeHtml(e.artistSlug)}/" class="${nameClasses} hover:text-[var(--color-primary)] transition-colors">${artistName}</a>`;
+    const previewHtml = hasPreview
+      ? `<div id="${previewId}" class="pb-1" data-artist-preview hidden></div>`
+      : '';
+    return `<div class="py-2 border-b border-gray-100 last:border-0" data-artist-preview-entry data-location-artist="${escapeHtml(e.artistId)}">
       <span class="text-xs text-gray-400 tabular-nums block">${time}</span>
       ${nameHtml}
+      ${previewHtml}
     </div>`;
   }
 
-  function buildPanelContent(loc, lang) {
+  function buildPanelContent(loc, lang, panelPrefix) {
     const now = Date.now();
     const duringFestival = now >= FESTIVAL_START && now <= FESTIVAL_END;
     const basePath = lang === 'en' ? '/en' : '';
@@ -246,13 +323,13 @@ const locationsJsonLd = {
       if (current.length > 0) {
         html += `<div class="mb-5">
           <p class="text-xs uppercase tracking-widest font-semibold text-[var(--color-primary)] mb-2">${lang === 'en' ? 'Now' : 'Jetzt'}</p>
-          ${current.map((e) => entryHtml(e, basePath)).join('')}
+          ${current.map((e) => entryHtml(e, basePath, panelPrefix)).join('')}
         </div>`;
       }
       if (upcoming.length > 0) {
         html += `<div class="mb-5">
           <p class="text-xs uppercase tracking-widest font-semibold text-gray-400 mb-2">${lang === 'en' ? 'Later today' : 'Später heute'}</p>
-          ${upcoming.map((e) => entryHtml(e, basePath)).join('')}
+          ${upcoming.map((e) => entryHtml(e, basePath, panelPrefix)).join('')}
         </div>`;
       }
       if (current.length === 0 && upcoming.length === 0) {
@@ -268,7 +345,7 @@ const locationsJsonLd = {
         html += Object.keys(byDay).sort().map((day) =>
           `<div class="mb-5">
             <p class="text-xs uppercase tracking-widest font-semibold text-gray-400 mb-2">${getDayLabel(day, lang)}</p>
-            ${byDay[day].map((e) => entryHtml(e, basePath)).join('')}
+            ${byDay[day].map((e) => entryHtml(e, basePath, panelPrefix)).join('')}
           </div>`
         ).join('');
       }
@@ -278,8 +355,9 @@ const locationsJsonLd = {
   }
 
   function openPanel(loc, lang) {
-    const content = buildPanelContent(loc, lang);
-    if (window.innerWidth < 768) {
+    const isMobile = window.innerWidth < 768;
+    const content = buildPanelContent(loc, lang, isMobile ? 'mobile' : 'desktop');
+    if (isMobile) {
       const overlay = document.getElementById('mobile-panel-overlay');
       const contentEl = document.getElementById('mobile-panel-content');
       if (!overlay || !contentEl) return;
