@@ -8,13 +8,19 @@ interface Props {
   locale: 'de' | 'en';
   /** Kein Zeilenumbruch – für horizontales Scrollen in der Filter-Bar */
   nowrap?: boolean;
+  /** Verdichtet die Chips auf sehr schmalen Displays. */
+  compactMobile?: boolean;
 }
 
-const { catLabels, allLabel, locale, nowrap = false } = Astro.props;
+const { catLabels, allLabel, locale, nowrap = false, compactMobile = false } = Astro.props;
 ---
 
 <div
-  class={`flex gap-1.5 ${nowrap ? 'flex-nowrap' : 'flex-wrap'}`}
+  class:list={[
+    'flex gap-1.5',
+    nowrap ? 'flex-nowrap' : 'flex-wrap',
+    compactMobile && 'category-filter--compact-mobile',
+  ]}
   role="group"
   aria-label={locale === 'de' ? 'Kategorie-Filter' : 'Category filter'}
 >
@@ -23,3 +29,19 @@ const { catLabels, allLabel, locale, nowrap = false } = Astro.props;
     <CategoryChip category={key as Category} label={label} active={false} size="filter" data-category={key as Category} />
   ))}
 </div>
+
+<style>
+  @media (max-width: 479px) {
+    .category-filter--compact-mobile :global(.chip--filter) {
+      min-height: 1.75rem;
+      padding: 0.2em 0.62em;
+      font-size: clamp(0.65rem, 3vw, 0.75rem);
+      letter-spacing: 0.035em;
+    }
+
+    .category-filter--compact-mobile :global(.chip__dot) {
+      width: 7px;
+      height: 7px;
+    }
+  }
+</style>

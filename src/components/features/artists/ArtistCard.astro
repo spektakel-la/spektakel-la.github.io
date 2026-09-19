@@ -32,10 +32,10 @@ const DAY_SHORT: Record<string, string> = {
   '2026-09-20': 'So',
 };
 
-// Kompakte Spielzeiten: "Fr 16:00 | Sa 18:00"
-const timeLine = entries
-  .map((e) => `${DAY_SHORT[e.festivalDay] ?? e.festivalDay} ${formatTime(e.startTime)}`)
-  .join(' | ');
+// Kompakte Spielzeiten: Tag und Uhrzeit bleiben jeweils untrennbar zusammen.
+const timeItems = entries.map(
+  (e) => `${DAY_SHORT[e.festivalDay] ?? e.festivalDay}\u00A0${formatTime(e.startTime)}`
+);
 ---
 
 <a
@@ -90,8 +90,14 @@ const timeLine = entries
     </div>
 
     <!-- Kompakte Spielzeiten -->
-    {timeLine && (
-      <p class="text-xs text-dark/40 mb-2 leading-snug">{timeLine}</p>
+    {timeItems.length > 0 && (
+      <p class="text-xs text-dark/40 mb-2 leading-snug">
+        {timeItems.map((item, index) => (
+          <span class="inline-block whitespace-nowrap" data-time-slot>
+            {index < timeItems.length - 1 ? `${item} |` : item}
+          </span>
+        ))}
+      </p>
     )}
 
     <!-- Kategorie-Chip -->

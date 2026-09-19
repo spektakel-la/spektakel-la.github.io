@@ -87,9 +87,9 @@ const catLabels = getCategoryLabels(t);
 
   <!-- ─── Filter-Bar ─────────────────────────────────────────────────────────── -->
   <div id="artists-filters" class="sticky top-16 z-30 bg-white border-b border-gray-200 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex items-center gap-3">
-      <!-- Suche (fixe Breite, kein Schrumpfen) -->
-      <div class="relative shrink-0 w-40 sm:w-56">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex flex-col min-[480px]:flex-row items-stretch min-[480px]:items-center gap-2 min-[480px]:gap-3">
+      <!-- Auf sehr schmalen Displays nutzt die Suche eine eigene Zeile. -->
+      <div class="relative shrink-0 w-full min-[480px]:w-40 sm:w-56">
         <svg class="absolute left-2.5 top-1/2 -translate-y-1/2 text-dark/30 pointer-events-none" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
           <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.242 1.4a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z"/>
         </svg>
@@ -104,7 +104,7 @@ const catLabels = getCategoryLabels(t);
       </div>
       <!-- Kategorie-Chips wrappend -->
       <div class="flex-1 min-w-0">
-        <CategoryFilter catLabels={catLabels} allLabel={t.common.all} locale={locale} />
+        <CategoryFilter catLabels={catLabels} allLabel={t.common.all} locale={locale} compactMobile={true} />
       </div>
     </div>
   </div>
