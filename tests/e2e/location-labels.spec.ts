@@ -16,14 +16,14 @@ for (const [locale, path] of [
   });
 }
 
-async function openLowerAltstadt(page: import('@playwright/test').Page, projectName: string) {
+async function openVenue(page: import('@playwright/test').Page, projectName: string, venueId: string) {
   if (projectName === 'Mobile Chrome') {
     await page.locator('#mobile-list-btn').click();
-    await page.locator('#mobile-overlay button[data-venue-id="2"]').click();
+    await page.locator(`#mobile-overlay button[data-venue-id="${venueId}"]`).click();
     return page.locator('#mobile-panel-content');
   }
 
-  await page.locator('section button[data-venue-id="2"]').click();
+  await page.locator(`section button[data-venue-id="${venueId}"]`).click();
   return page.locator('#venue-panel-content');
 }
 
@@ -31,7 +31,7 @@ test('während des Festivals blendet ein Spielort vergangene Termine aus und zei
   await page.clock.install({ time: new Date('2026-09-19T15:00:00+02:00') });
   await page.goto('/locations/');
 
-  const panel = await openLowerAltstadt(page, testInfo.project.name);
+  const panel = await openVenue(page, testInfo.project.name, '2');
 
   await expect(panel).toContainText('Später heute');
   await expect(panel).toContainText('16:30 – 17:00');
@@ -44,7 +44,7 @@ test('der Festivaltag wechselt um 03:00 Uhr', async ({ page }, testInfo) => {
   await page.clock.install({ time: new Date('2026-09-20T03:00:00+02:00') });
   await page.goto('/locations/');
 
-  const panel = await openLowerAltstadt(page, testInfo.project.name);
+  const panel = await openVenue(page, testInfo.project.name, '2');
 
   await expect(panel).toContainText('Später heute');
   await expect(panel).toContainText('15:00 – 15:30');
@@ -56,7 +56,7 @@ test('außerhalb der Festivaltage bleiben alle Termine nach Tagen gruppiert sich
   await page.clock.install({ time: new Date('2026-09-17T12:00:00+02:00') });
   await page.goto('/locations/');
 
-  const panel = await openLowerAltstadt(page, testInfo.project.name);
+  const panel = await openVenue(page, testInfo.project.name, '2');
 
   await expect(panel).toContainText('Freitag, 18.09.');
   await expect(panel).toContainText('Samstag, 19.09.');
@@ -64,6 +64,21 @@ test('außerhalb der Festivaltage bleiben alle Termine nach Tagen gruppiert sich
   await expect(panel).toContainText('17:00 – 18:00');
   await expect(panel).toContainText('21:00 – 22:00');
   await expect(panel).toContainText('15:00 – 15:30');
+});
+
+test('organisatorische Termine sind im Spielort-Panel typografisch gleichwertig', async ({ page }, testInfo) => {
+  await page.clock.install({ time: new Date('2026-09-19T10:09:00+02:00') });
+  await page.goto('/locations/');
+
+  const panel = await openVenue(page, testInfo.project.name, '1');
+  const artist = panel.getByRole('link').first();
+  const organizational = panel.getByText('Vogelstimmen-Imitationswettbewerb', { exact: true });
+
+  await expect(artist).toBeVisible();
+  await expect(organizational).toBeVisible();
+  await expect(organizational).toHaveCSS('font-weight', '600');
+  await expect(organizational).toHaveCSS('font-style', 'normal');
+  await expect(organizational).toHaveCSS('color', await artist.evaluate((element) => getComputedStyle(element).color));
 });
 
 for (const [locale, path] of [

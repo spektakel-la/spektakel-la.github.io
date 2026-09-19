@@ -220,9 +220,10 @@ const locationsJsonLd = {
 
   function entryHtml(e, basePath) {
     const time = `${fmt(e.time)} – ${fmt(e.endTime)}`;
+    const nameClasses = 'font-semibold text-[var(--color-dark)] text-sm';
     const nameHtml = e.isOrganizational
-      ? `<span class="italic text-gray-400 text-sm">${e.artistName}</span>`
-      : `<a href="${basePath}/artists/${e.artistSlug}/" class="font-semibold text-[var(--color-dark)] hover:text-[var(--color-primary)] transition-colors text-sm">${e.artistName}</a>`;
+      ? `<span class="${nameClasses}">${e.artistName}</span>`
+      : `<a href="${basePath}/artists/${e.artistSlug}/" class="${nameClasses} hover:text-[var(--color-primary)] transition-colors">${e.artistName}</a>`;
     return `<div class="py-2 border-b border-gray-100 last:border-0">
       <span class="text-xs text-gray-400 tabular-nums block">${time}</span>
       ${nameHtml}
