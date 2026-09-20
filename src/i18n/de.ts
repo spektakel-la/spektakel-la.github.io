@@ -110,6 +110,9 @@ export const de = {
     cta_program: 'Zum Programm',
     cta_artists: 'Alle Künstler',
     categories_heading: 'Was erwartet dich?',
+    thank_you_heading: 'Danke für ein unvergessliches Spektakel!',
+    thank_you_text:
+      'Was für besondere Tage! Unser Dank gilt all den großartigen Menschen, die dieses Festival möglich und so einzigartig gemacht haben: den Kunstschaffenden, Sponsoren, Unterstützenden, Helfenden und unseren zahlreichen Gästen. Danke, dass ihr Teil davon wart!',
     announcements_heading: 'Ankündigungen & Aktuelles',
     announcements_text:
       'Das 20. Spektakel Landshut beginnt 2026 mit besonderen Auftaktterminen, bevor die Altstadt drei Tage lang zur großen Straßenkunstbühne wird.',

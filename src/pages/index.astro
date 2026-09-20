@@ -216,6 +216,20 @@ const announcementEvents = (locale === 'en'
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(festivalJsonLd)} />
   <link rel="alternate" type="application/json" href={`${siteUrl}/program.json`} slot="head" />
 
+  <!-- ═══ DANKESGRUSS ═══════════════════════════════════════════════════════ -->
+  <section class="relative bg-white py-14 sm:py-20" aria-labelledby="thank-you-heading">
+    <div class="mx-auto max-w-5xl px-6 text-center">
+      <span class="mx-auto mb-6 block h-1.5 w-20 bg-primary" aria-hidden="true"></span>
+      <h2 id="thank-you-heading" class="font-display text-5xl leading-none text-dark sm:text-6xl lg:text-7xl">
+        {t.home.thank_you_heading}
+      </h2>
+      <p class="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-dark/80 sm:text-xl sm:leading-relaxed">
+        {t.home.thank_you_text}
+      </p>
+    </div>
+    <div class="absolute inset-x-0 bottom-0 h-2 bg-primary" aria-hidden="true"></div>
+  </section>
+
   <!-- ═══ HERO ══════════════════════════════════════════════════════════════ -->
   <section class="relative min-h-[calc(100svh-4rem)] md:min-h-screen bg-white overflow-hidden flex items-start md:items-center">
 
