@@ -1,7 +1,10 @@
 import { expect, test } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
-  await page.addInitScript(() => localStorage.setItem('gtm-consent', 'declined'));
+  await page.addInitScript(() => {
+    localStorage.setItem('gtm-consent', 'declined');
+    Date.now = () => Date.parse('2026-09-18T10:00:00.000Z');
+  });
   await page.goto('/program/');
 });
 
@@ -95,6 +98,19 @@ test('Listenansicht zeigt bei 30-Minuten-Auftritten Endzeit und Spielort', async
 
   await expect(halfHourEntry).toContainText('18:30 – 19:00');
   await expect(halfHourEntry).toContainText('8\u00a0–\u00a0Obere Altstadt');
+});
+
+test('Listenansicht sortiert gleichzeitige Auftritte nach der Spielort-Reihenfolge', async ({ page }) => {
+  await page.goto('/program/?day=2026-09-20&view=list');
+
+  const simultaneousEntries = page.locator(
+    '#panel-2026-09-20 .program-entry[data-time-start="2026-09-20T10:30:00.000Z"]',
+  );
+
+  await expect(simultaneousEntries).toHaveCount(4);
+  await expect(simultaneousEntries.evaluateAll((entries) => (
+    entries.map((entry) => entry.getAttribute('data-location'))
+  ))).resolves.toEqual(['1', '6', '10', '12']);
 });
 
 test('Künstler-Kurzinfos öffnen sich mit Bild direkt in der Listenansicht', async ({ page }) => {

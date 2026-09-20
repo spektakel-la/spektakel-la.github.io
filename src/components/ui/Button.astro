@@ -15,6 +15,9 @@ interface Props {
   target?: string;
   rel?: string;
   'aria-label'?: string;
+  'data-analytics-event'?: string;
+  'data-analytics-cta'?: string;
+  'data-analytics-placement'?: string;
 }
 
 const {
@@ -27,6 +30,9 @@ const {
   target,
   rel,
   'aria-label': ariaLabel,
+  'data-analytics-event': analyticsEvent,
+  'data-analytics-cta': analyticsCta,
+  'data-analytics-placement': analyticsPlacement,
 } = Astro.props;
 
 const sizeMap = {
@@ -42,6 +48,9 @@ const sizeMap = {
     target={target}
     rel={rel ?? (target === '_blank' ? 'noopener noreferrer' : undefined)}
     aria-label={ariaLabel}
+    data-analytics-event={analyticsEvent}
+    data-analytics-cta={analyticsCta}
+    data-analytics-placement={analyticsPlacement}
     class:list={['btn', `btn--${variant}`, sizeMap[size], className]}
   >
     <slot />
@@ -51,6 +60,9 @@ const sizeMap = {
     type={type}
     disabled={disabled}
     aria-label={ariaLabel}
+    data-analytics-event={analyticsEvent}
+    data-analytics-cta={analyticsCta}
+    data-analytics-placement={analyticsPlacement}
     class:list={['btn', `btn--${variant}`, sizeMap[size], className]}
   >
     <slot />

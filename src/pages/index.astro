@@ -128,7 +128,7 @@ const dayLabels: Record<string, string> = {
   '2026-09-20': locale === 'en' ? 'Sunday, 20 September' : 'Sonntag, 20. September',
 };
 
-const announcementEvents = locale === 'en'
+const announcementEvents = (locale === 'en'
   ? [
       {
         date: 'Wednesday, 16 Sept.',
@@ -202,7 +202,10 @@ const announcementEvents = locale === 'en'
         title: 'Spektakel Landshut',
         detail: 'Über 200 Shows in drei Tagen ...',
       },
-    ];
+    ]).map((event, index) => ({
+      ...event,
+      id: ['preview_dorian_gray', 'bmw_gala', 'vogelstimmen_wettbewerb', 'festival_overview'][index],
+    }));
 ---
 
 <Page
@@ -317,9 +320,23 @@ const announcementEvents = locale === 'en'
         <!-- CTAs (außerhalb des Glas-Wrappers) -->
         <div class="flex flex-wrap gap-4 mt-8">
           {showProgramCta && (
-            <Button href={localize(ROUTES.program)} variant="primary" size="lg">{t.home.cta_program}</Button>
+            <Button
+              href={localize(ROUTES.program)}
+              variant="primary"
+              size="lg"
+              data-analytics-event="home_cta_clicked"
+              data-analytics-cta="program"
+              data-analytics-placement="hero"
+            >{t.home.cta_program}</Button>
           )}
-          <Button href={localize(ROUTES.artists)} variant={showProgramCta ? 'ghost' : 'primary'} size="lg">
+          <Button
+            href={localize(ROUTES.artists)}
+            variant={showProgramCta ? 'ghost' : 'primary'}
+            size="lg"
+            data-analytics-event="home_cta_clicked"
+            data-analytics-cta="artists"
+            data-analytics-placement="hero"
+          >
             {t.home.cta_artists}
           </Button>
         </div>
@@ -349,6 +366,8 @@ const announcementEvents = locale === 'en'
           <a
             href="mailto:stadtspektakel@gmail.com"
             class="inline-flex items-center gap-3 mt-8 bg-primary text-white font-display text-xl px-5 py-3 rounded-sm shadow-md hover:bg-dark transition-colors"
+            data-analytics-event="contact_email_clicked"
+            data-analytics-placement="announcements"
           >
             {t.home.announcements_contact}
             <span aria-hidden="true">→</span>
@@ -392,7 +411,7 @@ const announcementEvents = locale === 'en'
                 )}
                 {event.detail && (
                   Array.isArray(event.detail) ? (
-                    <details class="group mt-3" data-stable-announcement-details>
+                    <details class="group mt-3" data-stable-announcement-details data-announcement-id={event.id}>
                       <summary class="inline-flex cursor-pointer list-none items-center gap-2 font-semibold text-primary hover:text-dark transition-colors">
                         <span class="group-open:hidden">{locale === 'de' ? 'Mehr erfahren' : 'Read more'}</span>
                         <span class="hidden group-open:inline">{locale === 'de' ? 'Weniger anzeigen' : 'Show less'}</span>
@@ -414,6 +433,9 @@ const announcementEvents = locale === 'en'
                   <a
                     href={event.href}
                     class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-dark transition-colors"
+                    data-analytics-event="announcement_link_clicked"
+                    data-announcement-id={event.id}
+                    data-analytics-placement="announcements"
                   >
                     {event.linkLabel}
                     <span aria-hidden="true">→</span>
@@ -438,6 +460,12 @@ const announcementEvents = locale === 'en'
         });
 
         details.addEventListener('toggle', () => {
+          if (details.open) {
+            window.spektakel?.analytics?.track('announcement_expanded', {
+              announcement_id: details.dataset.announcementId,
+              placement: 'announcements',
+            });
+          }
           if (summaryTopBeforeToggle === null) return;
 
           requestAnimationFrame(() => {
@@ -513,6 +541,12 @@ const announcementEvents = locale === 'en'
                   index >= 4 && 'hidden',
                 ]}
                 data-featured-artist
+                data-analytics-event="featured_artist_clicked"
+                data-artist-id={artist.data.artist_id}
+                data-artist-name={artist.data.name}
+                data-category={firstCat}
+                data-artist-position={index + 1}
+                data-analytics-placement="home_featured_artists"
               >
                 <div class="aspect-[3/4] overflow-hidden bg-gray-100">
                   <Picture

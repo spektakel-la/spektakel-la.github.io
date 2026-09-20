@@ -47,12 +47,12 @@ const homeHref = localePath('/', lang);
         <Navigation locale={locale} />
 
         <!-- Sprachumschalter -->
-        <LanguageSwitchLink href={switchLangHref()} locale={otherLocale} />
+        <LanguageSwitchLink href={switchLangHref()} locale={otherLocale} fromLocale={lang} />
       </div>
 
       <!-- Mobile: Sprachumschalter + Hamburger -->
       <div class="flex lg:hidden items-center gap-3">
-        <LanguageSwitchLink href={switchLangHref()} locale={otherLocale} variant="mobile" />
+        <LanguageSwitchLink href={switchLangHref()} locale={otherLocale} fromLocale={lang} variant="mobile" />
 
         <button
           id="menu-toggle"
@@ -124,6 +124,7 @@ const homeHref = localePath('/', lang);
     toggle?.setAttribute('aria-label', 'Menü schließen');
     iconOpen?.classList.add('hidden');
     iconClose?.classList.remove('hidden');
+    window.spektakel?.analytics?.track('mobile_menu_opened', { source: 'header' });
   }
 
   toggle?.addEventListener('click', () => {

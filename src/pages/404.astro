@@ -25,4 +25,9 @@ import Page from '../layouts/Page.astro';
       </a>
     </div>
   </section>
+  <script>
+    window.spektakel?.analytics?.track('not_found_viewed', {
+      requested_path: window.location.pathname,
+    });
+  </script>
 </Page>

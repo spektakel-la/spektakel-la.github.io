@@ -171,6 +171,13 @@ const catLabels = getCategoryLabels(t);
         search_active: searchTerm.length > 0,
         visible_results: visibleResults,
       });
+      if (visibleResults === 0) {
+        track('artist_no_results', {
+          source: 'artist_category',
+          category: activeCategory || 'all',
+          search_active: searchTerm.length > 0,
+        });
+      }
     });
   });
 
@@ -184,6 +191,13 @@ const catLabels = getCategoryLabels(t);
         category: activeCategory || undefined,
         visible_results: visibleResults,
       });
+      if (visibleResults === 0) {
+        track('artist_no_results', {
+          source: 'artist_search',
+          category: activeCategory || 'all',
+          search_length: searchTerm.length,
+        });
+      }
     }, 600);
   });
 

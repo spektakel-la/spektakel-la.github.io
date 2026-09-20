@@ -173,8 +173,21 @@ const tableGrids = Object.fromEntries(days.map((d) => [d, buildTableGrid(d)]));
 
 // ─── Merged Entries für Listenansicht ────────────────────────────────────────
 
+function sortProgramListEntries(entries: MergedEntry[]): MergedEntry[] {
+  return [...entries].sort((a, b) => {
+    const timeDifference = a.startTime.getTime() - b.startTime.getTime();
+    if (timeDifference !== 0) return timeDifference;
+
+    const locationDifference = (locationMap[a.location_id]?.data.sort_order ?? Number.MAX_SAFE_INTEGER)
+      - (locationMap[b.location_id]?.data.sort_order ?? Number.MAX_SAFE_INTEGER);
+    if (locationDifference !== 0) return locationDifference;
+
+    return a.location_id.localeCompare(b.location_id, 'en', { numeric: true });
+  });
+}
+
 const mergedByDay: Record<string, MergedEntry[]> = Object.fromEntries(
-  days.map((d) => [d, mergeConsecutiveSlots(byDay[d] ?? [])])
+  days.map((d) => [d, sortProgramListEntries(mergeConsecutiveSlots(byDay[d] ?? []))])
 );
 
 // ─── JSON-LD Events ──────────────────────────────────────────────────────────

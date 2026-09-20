@@ -268,7 +268,7 @@ const locationsJsonLd = {
     return String(value).replace(/[^a-zA-Z0-9_-]/g, '-');
   }
 
-  function entryHtml(e, basePath, panelPrefix) {
+  function entryHtml(e, basePath, panelPrefix, loc) {
     const time = `${fmt(e.time)} – ${fmt(e.endTime)}`;
     const nameClasses = 'font-semibold text-[var(--color-dark)] text-sm';
     const artistName = escapeHtml(e.artistName);
@@ -296,7 +296,16 @@ const locationsJsonLd = {
         </button>`
       : e.isOrganizational
         ? `<span class="${nameClasses}">${artistName}</span>`
-        : `<a href="${basePath}/artists/${escapeHtml(e.artistSlug)}/" class="${nameClasses} hover:text-[var(--color-primary)] transition-colors">${artistName}</a>`;
+        : `<a
+            href="${basePath}/artists/${escapeHtml(e.artistSlug)}/"
+            class="${nameClasses} hover:text-[var(--color-primary)] transition-colors"
+            data-analytics-event="venue_artist_clicked"
+            data-artist-id="${escapeHtml(e.artistId)}"
+            data-artist-name="${artistName}"
+            data-venue-id="${escapeHtml(loc.id)}"
+            data-venue-name="${escapeHtml(loc.description)}"
+            data-source="${panelPrefix}_venue_panel"
+          >${artistName}</a>`;
     const previewHtml = hasPreview
       ? `<div id="${previewId}" class="pb-1" data-artist-preview hidden></div>`
       : '';
@@ -323,13 +332,13 @@ const locationsJsonLd = {
       if (current.length > 0) {
         html += `<div class="mb-5">
           <p class="text-xs uppercase tracking-widest font-semibold text-[var(--color-primary)] mb-2">${lang === 'en' ? 'Now' : 'Jetzt'}</p>
-          ${current.map((e) => entryHtml(e, basePath, panelPrefix)).join('')}
+          ${current.map((e) => entryHtml(e, basePath, panelPrefix, loc)).join('')}
         </div>`;
       }
       if (upcoming.length > 0) {
         html += `<div class="mb-5">
           <p class="text-xs uppercase tracking-widest font-semibold text-gray-400 mb-2">${lang === 'en' ? 'Later today' : 'Später heute'}</p>
-          ${upcoming.map((e) => entryHtml(e, basePath, panelPrefix)).join('')}
+          ${upcoming.map((e) => entryHtml(e, basePath, panelPrefix, loc)).join('')}
         </div>`;
       }
       if (current.length === 0 && upcoming.length === 0) {
@@ -345,7 +354,7 @@ const locationsJsonLd = {
         html += Object.keys(byDay).sort().map((day) =>
           `<div class="mb-5">
             <p class="text-xs uppercase tracking-widest font-semibold text-gray-400 mb-2">${getDayLabel(day, lang)}</p>
-            ${byDay[day].map((e) => entryHtml(e, basePath, panelPrefix)).join('')}
+            ${byDay[day].map((e) => entryHtml(e, basePath, panelPrefix, loc)).join('')}
           </div>`
         ).join('');
       }
@@ -362,6 +371,9 @@ const locationsJsonLd = {
       const contentEl = document.getElementById('mobile-panel-content');
       if (!overlay || !contentEl) return;
       contentEl.innerHTML = content;
+      overlay.dataset.venueId = loc.id;
+      overlay.dataset.venueName = loc.description;
+      overlay.dataset.source = 'mobile_venue_panel';
       overlay.classList.remove('hidden'); overlay.classList.add('flex');
       document.getElementById('mobile-overlay')?.classList.add('hidden');
       document.getElementById('mobile-overlay')?.classList.remove('flex');
@@ -370,12 +382,20 @@ const locationsJsonLd = {
       const contentEl = document.getElementById('venue-panel-content');
       if (!overlay || !contentEl) return;
       contentEl.innerHTML = content;
+      overlay.dataset.venueId = loc.id;
+      overlay.dataset.venueName = loc.description;
+      overlay.dataset.source = 'desktop_venue_panel';
       overlay.classList.remove('hidden'); overlay.classList.add('flex');
     }
   }
 
   function closePanel() {
-    window.spektakel?.analytics?.track('venue_panel_closed');
+    const activePanel = document.querySelector('#mobile-panel-overlay:not(.hidden), #venue-panel-overlay:not(.hidden)');
+    window.spektakel?.analytics?.track('venue_panel_closed', {
+      venue_id: activePanel?.dataset.venueId,
+      venue_name: activePanel?.dataset.venueName,
+      source: activePanel?.dataset.source,
+    });
     document.dispatchEvent(new CustomEvent('venue-closed'));
     history.replaceState(null, '', ' ');
     const overlay = document.getElementById('venue-panel-overlay');
@@ -411,7 +431,7 @@ const locationsJsonLd = {
     document.getElementById('mobile-list-btn')?.addEventListener('click', () => {
       const overlay = document.getElementById('mobile-overlay');
       overlay?.classList.remove('hidden'); overlay?.classList.add('flex');
-      window.spektakel?.analytics?.track('mobile_venue_list_opened');
+      window.spektakel?.analytics?.track('mobile_venue_list_opened', { source: 'locations_page' });
     });
     document.getElementById('mobile-close-btn')?.addEventListener('click', () => {
       const overlay = document.getElementById('mobile-overlay');

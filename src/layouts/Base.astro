@@ -176,6 +176,27 @@ const enUrl = new URL(`/en${localizedPath === '/' ? '/' : localizedPath}`, canon
         var link = target.closest('a[href]');
         if (!(link instanceof HTMLAnchorElement)) return;
 
+        var analyticsEvent = link.dataset.analyticsEvent;
+        if (analyticsEvent) {
+          window.spektakel.analytics.track(analyticsEvent, {
+            artist_id: link.dataset.artistId,
+            artist_name: link.dataset.artistName,
+            artist_position: link.dataset.artistPosition,
+            category: link.dataset.category,
+            venue_id: link.dataset.venueId,
+            venue_name: link.dataset.venueName,
+            source: link.dataset.source,
+            cta: link.dataset.analyticsCta,
+            placement: link.dataset.analyticsPlacement,
+            destination: link.dataset.analyticsDestination,
+            announcement_id: link.dataset.announcementId,
+            sponsor_name: link.dataset.sponsorName,
+            language_from: link.dataset.languageFrom,
+            language_to: link.dataset.languageTo,
+          });
+          return;
+        }
+
         var url;
         try {
           url = new URL(link.href, window.location.href);
@@ -196,7 +217,9 @@ const enUrl = new URL(`/en${localizedPath === '/' ? '/' : localizedPath}`, canon
           destination_domain: url.hostname.replace(/^www\./, ''),
           link_type: linkType,
           artist_id: link.dataset.artistId,
-          youtube_id: link.dataset.youtubeId
+          youtube_id: link.dataset.youtubeId,
+          sponsor_name: link.dataset.sponsorName,
+          placement: link.dataset.analyticsPlacement,
         });
       });
     </script>

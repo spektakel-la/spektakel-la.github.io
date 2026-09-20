@@ -43,6 +43,9 @@ const navItems = [
               : 'text-[var(--color-dark)]',
           ]}
           aria-current={isActive(href) ? 'page' : undefined}
+          data-analytics-event="navigation_clicked"
+          data-analytics-destination={key}
+          data-analytics-placement={mobile ? 'mobile_menu' : 'header'}
         >
           {t.nav[key]}
         </a>
