@@ -111,6 +111,9 @@ export const en = {
     thank_you_heading: 'Thank you for an unforgettable festival!',
     thank_you_text:
       'What special days they were! Our thanks go to all the wonderful people who made this festival possible and truly unique: the artists, sponsors, supporters, volunteers, and our many guests. Thank you for being part of it!',
+    thank_you_video_text:
+      'If you would like to relive those wonderful moments, watch the impressions from Spektakel Landshut 2026 here.',
+    thank_you_video_title: 'Impressions from Spektakel Landshut 2026',
     announcements_heading: 'Announcements & News',
     announcements_text:
       'The 20th Spektakel Landshut opens in 2026 with special preview events before the old town becomes a three-day street art stage.',

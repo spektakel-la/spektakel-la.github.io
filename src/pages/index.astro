@@ -226,6 +226,20 @@ const announcementEvents = (locale === 'en'
       <p class="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-dark/80 sm:text-xl sm:leading-relaxed">
         {t.home.thank_you_text}
       </p>
+      <p class="mx-auto mt-8 max-w-3xl text-lg font-semibold leading-relaxed text-dark sm:text-xl sm:leading-relaxed">
+        {t.home.thank_you_video_text}
+      </p>
+      <div class="mx-auto mt-6 max-w-4xl overflow-hidden rounded-sm bg-dark shadow-xl">
+        <iframe
+          class="aspect-video w-full"
+          src="https://www.youtube-nocookie.com/embed/TvI-kyNMxKQ"
+          title={t.home.thank_you_video_title}
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
     </div>
     <div class="absolute inset-x-0 bottom-0 h-2 bg-primary" aria-hidden="true"></div>
   </section>

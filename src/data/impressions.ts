@@ -31,6 +31,7 @@ function video(id: string, caption: string, youtubeId: string): GalleryItem {
 }
 
 const videos: GalleryItem[] = [
+  video('TvI-kyNMxKQ', 'Spektakel Landshut 2026', 'TvI-kyNMxKQ'),
   video('D3KfsBdXNYs', 'Spektakel Landshut 2025', 'D3KfsBdXNYs'),
   video('JLMxkFEwCkI', 'Spektakel Landshut 2024', 'JLMxkFEwCkI'),
   video('DeXdXV5E7XQ', 'Spektakel Landshut 2023', 'DeXdXV5E7XQ'),

@@ -113,6 +113,9 @@ export const de = {
     thank_you_heading: 'Danke für ein unvergessliches Spektakel!',
     thank_you_text:
       'Was für besondere Tage! Unser Dank gilt all den großartigen Menschen, die dieses Festival möglich und so einzigartig gemacht haben: den Kunstschaffenden, Sponsoren, Unterstützenden, Helfenden und unseren zahlreichen Gästen. Danke, dass ihr Teil davon wart!',
+    thank_you_video_text:
+      'Wer noch einmal in den schönen Momenten schwelgen möchte, kann hier die Impressionen des Spektakels 2026 ansehen.',
+    thank_you_video_title: 'Impressionen vom Spektakel Landshut 2026',
     announcements_heading: 'Ankündigungen & Aktuelles',
     announcements_text:
       'Das 20. Spektakel Landshut beginnt 2026 mit besonderen Auftaktterminen, bevor die Altstadt drei Tage lang zur großen Straßenkunstbühne wird.',

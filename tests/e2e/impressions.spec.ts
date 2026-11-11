@@ -5,10 +5,17 @@ test.beforeEach(async ({ page }) => {
   await page.goto('/impressions/');
 });
 
+test('zeigt das Video von 2026 als erstes Galerieelement', async ({ page }) => {
+  const firstTile = page.locator('#gallery-grid > *').first();
+
+  await expect(firstTile).toHaveAttribute('href', 'https://www.youtube.com/watch?v=TvI-kyNMxKQ');
+  await expect(firstTile).toContainText('Spektakel Landshut 2026');
+});
+
 test('Lightbox lässt sich öffnen, navigieren und schließen', async ({ page }) => {
   const lightbox = page.getByRole('dialog', { name: 'Vollbildgalerie' });
 
-  await page.getByRole('button', { name: 'Bild öffnen 4', exact: true }).click();
+  await page.getByRole('button', { name: 'Bild öffnen 5', exact: true }).click();
   await expect(lightbox).toBeVisible();
   const initialCounter = await lightbox.locator('.lightbox__counter').textContent();
   const imageCount = initialCounter?.match(/^1 \/ (\d+)$/)?.[1];
